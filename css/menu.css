@@ -1,0 +1,385 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+p{
+    margin: 0px;
+}
+input{
+    outline: none;
+}
+/*computador*/
+@media screen and (min-width:1000px){
+    .bloco .bloco-left{
+        width: 220px;
+    }
+    .bloco .bloco-left .categoria .topo i{
+        font-size: 1.5em;
+    }
+    .bloco .bloco-left .categoria .topo  p{
+        font-size: 1.1em;
+    }
+    .bloco .bloco-left .categoria .topo{
+        padding:20px;
+    }
+    .bloco .bloco-left .categoria nav ul li p{
+        font-size: 0.9em;
+    }
+    .bloco .bloco-left .categoria nav ul li p i{
+        font-size: 1.1em;
+    }
+    .bloco .bloco-left .categoria nav ul ul li a{
+        font-size: 0.85em;
+    }
+    .bloco .bloco-right .topo .left p{
+        font-size: 1.2em;
+
+    }
+    .bloco .bloco-right .topo .right{
+    
+        right: 50px;
+      
+    }
+    .bloco .bloco-left .categoria .footer p{
+        font-size: 0.6em;
+
+     }
+}
+
+/*celular*/
+@media screen and (max-width:1000px){
+    .bloco .bloco-left{
+        width: 220px;
+    }
+    .bloco .bloco-left .categoria{
+        width: 100px;
+    }
+    .bloco .bloco-left .categoria .topo i{
+        font-size: 1.0em;
+    }
+    .bloco .bloco-left .categoria .topo  p{
+        font-size:0.8em;
+        display: none;
+    }  .bloco .bloco-left .categoria .topo{
+        padding: 15px;
+    }
+    .bloco .bloco-left .categoria nav ul li p{
+        font-size: 0.8em;
+    }
+    .bloco .bloco-left .categoria nav ul li p i{
+        font-size: 0.8em;
+    }
+    .bloco .bloco-left .categoria nav ul ul li a{
+        font-size: 0.7em;
+    }
+    .bloco .bloco-right .topo .left p{
+        font-size: 0.9em;
+
+    }
+    .bloco .bloco-right .topo .right{
+    
+        right: 20px
+      
+    }
+    .bloco .bloco-left .categoria .footer p{
+        font-size: 0.4em;
+
+     }
+}
+
+.bloco{
+   
+    display: flex;
+
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+.bloco .bloco-left{
+
+    height: 100%;
+    background-color: #024b61;
+}
+
+.bloco .bloco-left .categoria {
+ position: relative;
+ height: 100%;
+
+  
+}
+.bloco .bloco-left .categoria .topo{
+ 
+    text-align: center;
+    color: white;
+   
+
+}
+
+.bloco .bloco-left .categoria nav{
+
+    margin-top: 10px;
+    position: relative;
+}
+.bloco .bloco-left .categoria nav ul {
+    padding: 0px;
+
+    cursor: pointer;
+}
+
+.bloco .bloco-left .categoria nav ul li{
+    list-style: none;
+    color: white;
+    text-decoration: none;
+    padding: 0px;
+    padding-left: 5px;
+    margin-bottom: 7px;
+}.bloco .bloco-left .categoria nav ul li:hover{
+    background-color: #03303d;
+}
+
+.bloco .bloco-left .categoria nav ul li p{
+    padding: 7px;
+}
+.bloco .bloco-left .categoria nav ul li p i{
+    margin-right: 5px;
+
+}
+.bloco .bloco-left .categoria nav ul ul{
+    display: none;
+    left: 0;
+	right: 0px;
+
+    padding: 0px;
+
+
+}
+.bloco .bloco-left .categoria nav ul ul li{
+    padding: 2px;
+ 
+}
+
+.bloco .bloco-left .categoria nav ul ul li:hover{
+    border-left: 2px solid white;
+}
+.bloco .bloco-left .categoria nav ul ul li a{
+
+	padding: 0px;
+	font-weight:500;
+    padding: 7px;
+	color: #bbbbbb;
+	display: block;
+	transition: all 0.2s ease-in-out;
+    text-decoration: none;
+}
+.bloco .bloco-left .categoria nav ul ul li a:hover{
+    margin-left: 5px;
+}
+.bloco .bloco-left .categoria nav ul ul li a:hover{
+	color: var(--yellow);
+}
+.bloco .bloco-left .categoria nav  ul li:hover ul{
+	display: block;
+
+}
+.bloco .bloco-left .categoria .footer{
+    position: absolute;
+    bottom: 0;
+    padding: 10px;
+    text-align: center;
+}
+.bloco .bloco-left .categoria .footer p{
+
+   color: #bbbbbb;
+}
+
+.bloco .bloco-right {
+
+    width: 100vw;
+    position: relative;
+    min-width: 900px;
+    height: 100%;
+    min-height: 500px;
+    margin-bottom: 0px;
+}
+.bloco .bloco-right .topo{ 
+    background-color: #024b61;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    position: relative;
+    
+}
+.bloco .bloco-right .topo .left{
+
+}
+
+.bloco .bloco-right .topo .left p{
+  
+    font-weight: 600;
+    color: white;
+}
+
+.bloco .bloco-right .topo .right{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    
+}
+
+.bloco .bloco-right .topo .right ul {
+    padding: 0px;
+  
+    cursor: pointer;
+}
+.bloco .bloco-right .topo .right ul li{
+    list-style: none;
+    padding: 10px;
+
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.bloco .bloco-right .topo .right ul li i{
+color: white;
+font-size: 1.3em;
+
+}
+
+
+
+
+
+.bloco .bloco-right .topo .right ul ul{
+    display: none;
+    right:  1px;
+    position: absolute;
+    padding: 0px;
+    border: 1px solid;
+    width: 120px;
+    padding: 7px;
+    cursor: pointer;
+    background: rgba( 3, 48, 61, 0.85 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 4px );
+    -webkit-backdrop-filter: blur( 4px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    z-index: 2;
+}
+
+.bloco .bloco-right .topo .right ul ul li{
+    padding: 3px;
+    transition: 0.3s ease-in-out;
+}
+.bloco .bloco-right .topo .right ul ul li a{
+    color: white;
+    text-decoration: none;
+}
+
+.bloco .bloco-right .topo .right ul ul li:hover{
+    margin-left: 3px;
+    color: #bbbbbb;
+}
+.bloco .bloco-right .topo .right ul li:hover ul{
+	display: block;
+
+}
+
+.bloco .bloco-right .topo .right #seta_dropdown{
+    color: white;
+    margin-left: 10px;
+    cursor: pointer;
+ 
+}
+.bloco .bloco-right .topo .user{
+ 
+   
+}
+.bloco .bloco-right .topo .user p{
+    color: white;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+
+
+
+.bloco .bloco-right .bloco-pesquisa{
+    height: 80vh;
+    position: relative;
+}
+
+.bloco .bloco-right .group-pesquisa{
+display: flex;
+justify-content:space-around;
+align-items:center;
+padding-top: 50px;
+position: relative;
+
+}
+
+.bloco .bloco-right .bloco-pesquisa .bloco-pesquisa-1{
+    width: 100%;
+    width: fit-content;
+
+}
+.bloco .bloco-right .bloco-pesquisa .bloco-pesquisa-1 .input-pesquisa{
+    border: 1px solid rgb(179, 179, 179);
+    width: fit-content;
+    border-radius: 2px;
+    padding: 3px;
+  
+}
+.bloco .bloco-right .bloco-pesquisa .bloco-pesquisa-1 .input-pesquisa input{
+    width: 350px;
+    padding: 3px;
+    border: 0px;
+    outline: none;
+}
+.bloco .bloco-right .bloco-pesquisa .bloco-pesquisa-1 .input-pesquisa i{
+    font-size: 1.2em;
+    cursor: pointer;
+}
+.bloco .bloco-right .bloco-pesquisa .bloco-pesquisa-2 .group-input-data{
+    display: flex;
+}
+.bloco .bloco-right .bloco-pesquisa .bloco-pesquisa-2 {
+    text-align: center;
+}
+.bloco .bloco-right .bloco-pesquisa .bloco-pesquisa-2 .group-input-data input{
+    width: 120px;
+    padding: 2px;
+    margin: 5px;
+}
+
+.bloco .bloco-right .bloco-pesquisa .tabela{
+    padding: 50px;
+    height: 90%;
+    margin: 0px;
+
+    overflow: auto;
+
+}
+
+
+.bloco .bloco-right .bloco-pesquisa .tabela .thead-dark{
+    background-color: rgb(238, 238, 238);
+}
+
+.bloco-pesquisa .bloco-btn{
+ 
+}
+.bloco-pesquisa .bloco-btn .btn-add{
+    padding:5px 10px 5px 10px;
+    color: white;
+    background-color: #03303d;
+    border-radius: 2px;
+}
+
+.bloco-pesquisa .bloco-btn a{
+    text-decoration: none;
+    
+}

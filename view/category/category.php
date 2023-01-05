@@ -1,0 +1,45 @@
+<div class="categoria">
+    <div class="topo">
+        <i class="fa-solid fa-circle-half-stroke"></i>
+        <p> System Day</p>
+    </div>
+    <nav>
+        <ul>
+            <li><p><i class="fa-solid fa-house"></i><a style="text-decoration: none;color:white" href="?menu">Inicial</a> </p></li>
+            <?php
+            while($row = mysqli_fetch_assoc($consultar_categoria)){
+                $id_categoria = $row['cl_id'];
+                $categoria = $row['cl_categoria'];
+                $icone = $row['cl_icone'];
+            ?>
+            <li>
+                <p><?php echo $icone?> <?php echo $categoria; ?></p>
+                <ul>
+                    <?php 
+                     $select = "SELECT * from tb_subcategorias where cl_categoria = $id_categoria";
+                     $consultar_subcategoria= mysqli_query($conecta,$select);
+                    while($row = mysqli_fetch_assoc($consultar_subcategoria)){
+                        $id_subcategoria = $row['cl_id'];
+                        $subcategoria = $row['cl_subcategoria'];
+                        $diretorio = $row['cl_diretorio'];
+                        $url = $row['cl_url'];
+                    ?>
+                    <li><a
+                            href="?menu&ctg=<?php echo $categoria; ?>&<?php echo $url; ?>&id=<?php echo $id_subcategoria; ?>"><?php echo $subcategoria; ?></a>
+                    </li>
+                    <?php 
+                    }
+                    ?>
+                </ul>
+            </li>
+
+            <?php
+            }
+            ?>
+        </ul>
+
+    </nav>
+    <div class="footer">
+        <p>@Todos os direitos reservados a effmax</p>
+    </div>
+</div>    
