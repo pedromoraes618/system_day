@@ -32,12 +32,8 @@
 
 
 
+
 <script src="js/jquery.js"></script>
-<script>
-    $(document).ready(function(){
-      $('input').inputmask('(99) 99999-9999');
-    });
-  </script>
 <script>
 $("#buscar_pesquisa").click(function(e) {
 
