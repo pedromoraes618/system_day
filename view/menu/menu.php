@@ -14,6 +14,7 @@
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link href="css/menu.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e8ff50f1be.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.4/jquery.inputmask.bundle.js"></script>
 </head>
 
 <body>

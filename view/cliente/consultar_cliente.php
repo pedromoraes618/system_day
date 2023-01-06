@@ -1,10 +1,12 @@
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.4/jquery.inputmask.bundle.js"></script>
 <div class="bloco-pesquisa">
     <div class="group-pesquisa">
         <div class="bloco-pesquisa-2">
             <p>Data</p>
             <div class="group-input-data">
-                <input type="text">
-                <input type="text">
+                <input type="text" data-mask="00/00/0000">
+                <input type="text" data-mask="00/00/0000">
             </div>
         </div>
         <div class="bloco-pesquisa-1">
@@ -28,7 +30,14 @@
     </div>
 </div>
 
+
+
 <script src="js/jquery.js"></script>
+<script>
+    $(document).ready(function(){
+      $('input').inputmask('(99) 99999-9999');
+    });
+  </script>
 <script>
 $("#buscar_pesquisa").click(function(e) {
 
