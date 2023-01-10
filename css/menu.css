@@ -257,7 +257,7 @@ font-size: 1.3em;
     position: absolute;
     padding: 0px;
     border: 1px solid;
-    width: 120px;
+    width: 140px;
     padding: 7px;
     cursor: pointer;
     background: rgba( 3, 48, 61, 0.85 );
@@ -276,6 +276,7 @@ font-size: 1.3em;
 .bloco .bloco-right .topo .right ul ul li a{
     color: white;
     text-decoration: none;
+    display: block;
 }
 
 .bloco .bloco-right .topo .right ul ul li:hover{

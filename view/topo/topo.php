@@ -1,12 +1,5 @@
 <?php 
-if ($_SESSION["user_session_portal"]) {
-    $user = $_SESSION["user_session_portal"];
-    $consulta  = "SELECT * FROM tb_users WHERE cl_id = $user";
-    $consulta_users = mysqli_query($conecta, $consulta);
-    $row = mysqli_fetch_assoc($consulta_users);
-    $usuario = $row['cl_usuario'];
 
-}
 if(isset($_GET['ctg'])){
     $categoria = $_GET['ctg'];
 }else{
@@ -25,6 +18,11 @@ if(isset($_GET['ctg'])){
                     <li>
                         <a href="?menu&user">Meu usuário</a>
                     </li>
+                    <?php if($tipo == "adm"){ ?>
+                    <li>
+                        <a href="?menu&acessosuser">Acessos usuário</a>
+                    </li>
+                    <?php }?>
                     <li>
                         <a href="?menu&logout">Sair</a>
                     </li>
@@ -34,7 +32,7 @@ if(isset($_GET['ctg'])){
         <div class="user">
             <p><?php echo $usuario; ?></p>
         </div>
-        
+
     </div>
 
 </div>

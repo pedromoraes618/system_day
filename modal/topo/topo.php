@@ -6,6 +6,7 @@ if ($_SESSION["user_session_portal"]) {
     $consulta_users = mysqli_query($conecta, $consulta);
     $row = mysqli_fetch_assoc($consulta_users);
     $usuario = $row['cl_usuario'];
+    $tipo = $row['cl_tipo'];
 
 }
 if(isset($_GET['ctg'])){
