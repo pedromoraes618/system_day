@@ -1,5 +1,4 @@
 <?php 
-    session_start();
     include "modal/login.php";
     include "parameters/parameters.php";
 

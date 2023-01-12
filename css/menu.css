@@ -8,6 +8,12 @@ p{
 input{
     outline: none;
 }
+:root {
+	--cor_principal: #0F111A;
+    --borda_princiapl:#31374a;
+    --cor_principal_hover: #31333e;
+}
+
 /*computador*/
 @media screen and (min-width:1000px){
     .bloco .bloco-left{
@@ -100,7 +106,10 @@ input{
 .bloco .bloco-left{
 
     height: 100%;
-    background-color: #024b61;
+    /* background-color: #024b61; */
+    background-color: var(--cor_principal);
+    border-right: 1px solid var(--borda_princiapl);
+ 
 }
 
 .bloco .bloco-left .categoria {
@@ -136,7 +145,7 @@ input{
     padding-left: 5px;
     margin-bottom: 7px;
 }.bloco .bloco-left .categoria nav ul li:hover{
-    background-color: #03303d;
+    background-color: var(--cor_principal_hover);
 }
 
 .bloco .bloco-left .categoria nav ul li p{
@@ -202,9 +211,12 @@ input{
     height: 100%;
     min-height: 500px;
     margin-bottom: 0px;
+
 }
 .bloco .bloco-right .topo{ 
-    background-color: #024b61;
+    background-color: var(--cor_principal);
+    border-bottom: 1px solid var(--borda_princiapl);
+    border-left: 1px solid var(--borda_princiapl);
     width: 100%;
     padding: 20px;
     display: flex;
@@ -226,6 +238,7 @@ input{
     display: flex;
     justify-content: center;
     align-items: baseline;
+    cursor: pointer;
     
 }
 
@@ -252,6 +265,7 @@ font-size: 1.3em;
 
 
 .bloco .bloco-right .topo .right ul ul{
+    transition: all 0.5s ease-in-out;
     display: none;
     right:  1px;
     position: absolute;
@@ -282,11 +296,13 @@ font-size: 1.3em;
 .bloco .bloco-right .topo .right ul ul li:hover{
     margin-left: 3px;
     color: #bbbbbb;
+ 
 }
-.bloco .bloco-right .topo .right ul li:hover ul{
+
+/* .bloco .bloco-right .topo .right ul li:hover ul{
 	display: block;
 
-}
+} */
 
 .bloco .bloco-right .topo .right #seta_dropdown{
     color: white;
@@ -370,8 +386,8 @@ position: relative;
     background-color: rgb(238, 238, 238);
 }
 
-.bloco-pesquisa .bloco-btn{
- 
+.bloco-pesquisa{
+ position: relative;
 }
 .bloco-pesquisa .bloco-btn .btn-add{
     padding:5px 10px 5px 10px;
@@ -383,4 +399,158 @@ position: relative;
 .bloco-pesquisa .bloco-btn a{
     text-decoration: none;
     
+}
+
+.bloco-topo{
+   
+    padding: 3px;
+    background-color: #0f111a;
+
+}
+ .bloco-topo p{
+    color: #bbbbbb;
+    font-size: 0.9em;
+    font-weight: 600;
+    margin-left: 20px
+}
+
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-1{
+
+   padding: 30px;
+  
+   width: 100%;
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+
+}
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-1 .msg{
+
+    position:absolute;
+    right: 50px;
+    z-index: 5px;
+    cursor: pointer;
+}
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-1 .msg p{
+    display: none;
+    width: 170px;
+    background-color: #0F111A;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-1 .group-input{
+    display: block;
+   margin-left: 35px;
+}
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-1 input, select{
+    display: block;
+}
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-1 select{
+    width: 180px;
+    background-color: var(--cor_principal_hover);
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    border: 0px;
+}
+
+
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-1 label{
+margin-bottom: 5px;
+font-size: 1.1em;
+font-weight: 500;
+}
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-2{
+    display: flex;
+    justify-content:space-around;
+    padding-top: 30px;
+    width: 100%;
+  
+}
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-2 .sub_bloco{
+    border: 1px solid var(--borda_princiapl);
+    width: 40%;
+    text-align: start;
+    border-radius: 5px; 
+}
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-2 .sub_bloco .titulo{
+    padding: 5px 0px 5px 5px;
+    background-color: var(--cor_principal_hover);
+}
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-2 .sub_bloco .titulo p{
+    color: white;
+}
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-2 .sub_bloco .sub_bloco_info{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    justify-content: start;
+    position: relative;
+}
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-2 .sub_bloco .sub_bloco_info .card_acess{
+
+    border-radius: 10px;
+    background-color: #eae8e8;
+    width: fit-content;
+    padding: 5px;
+    font-size: 0.9em;
+    margin: 10px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0px;
+    padding-bottom: 0px;
+
+position: relative;
+border: 2px solid var(--cor_principal);
+cursor: pointer;
+}
+
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-2 .sub_bloco .sub_bloco_info .card_acess p{
+    margin-right: 5px;
+}
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-2 .sub_bloco .sub_bloco_info .card_acess .acao_access{
+    cursor: pointer;
+    border-radius: 45%;
+    color: white;
+    background-color: green;
+    right: 0px;
+        position: absolute;
+        top: 0px;
+}
+
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-2 .sub_bloco .sub_bloco_info .card_acess .acao_access i{
+    padding: 2px;
+    font-size: 0.8em;
+
+}   
+
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-2 .sub_bloco .sub_bloco_info-2 {
+    padding: 10px;
+}
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-2 .sub_bloco .sub_bloco_info-2 ul li ul li{
+    display: flex;
+    width: 100%;
+    font-size: 1.0em;
+    position: relative;
+
+    margin-bottom: 10px;
+
+}
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-2 .sub_bloco .sub_bloco_info-2 ul li ul li p{
+    width: 80%;
+ 
+}
+.bloco .bloco-right .bloco-pesquisa_config .bloco-pesquisa-2 .sub_bloco .sub_bloco_info-2 ul li ul li a{
+    width: 40%;
+    border-radius: 10px;
+    background-color: red;
+    text-align: center;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: block;
+
 }

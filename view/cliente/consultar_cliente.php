@@ -1,5 +1,7 @@
-
- <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.4/jquery.inputmask.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.4/jquery.inputmask.bundle.js"></script>
+<div class="bloco-topo">
+    <p> <?php echo $categoria; ?> > Controle de acesso </p>
+</div>
 <div class="bloco-pesquisa">
     <div class="group-pesquisa">
         <div class="bloco-pesquisa-2">

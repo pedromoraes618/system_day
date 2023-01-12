@@ -13,7 +13,7 @@
                 $id_categoria = $row['cl_id'];
                 $categoria = utf8_encode($row['cl_categoria']);
                 $icone = $row['cl_icone'];
-                if(consultar_acesso_categoria($id_user,$id_categoria)>0){
+                if(consultar_acesso_categoria($id_user,$id_categoria)>0 or ($tipo == "adm")){ // verificar se o usuario tem acesso / usuario adm tem todos os acessos
             ?>
             <li>
                 <p><?php echo $icone?> <?php echo $categoria; ?></p>
@@ -28,7 +28,7 @@
                         $diretorio = $row['cl_diretorio'];
                         $url = $row['cl_url'];
                         
-                        if(consultar_acesso_subcategoria($id_user,$id_subcategoria) > 0){
+                        if(consultar_acesso_subcategoria($id_user,$id_subcategoria) > 0 or  ($tipo == "adm")){ // usuario adm tem todos os acessos
                     ?>
                 
                     <li><a

@@ -43,3 +43,13 @@ $diretorio = $row['cl_diretorio'];
 return $diretorio;
  }
 
+//passar o diretorio da subcategoria via url
+function consultar_diretorio_bd($id_subctg){
+    include 'conexao/conexao.php';
+    $select = "SELECT * FROM tb_subcategorias where cl_id = $id_subctg";
+    $consultar_subcategoria = mysqli_query($conecta,$select);
+    $row = mysqli_fetch_assoc($consultar_subcategoria);
+    $diretorio_bd = $row['cl_diretorio_bd'];
+    return $diretorio_bd;
+}
+    

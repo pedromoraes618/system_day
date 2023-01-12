@@ -11,18 +11,14 @@ if(isset($_GET['ctg'])){
     <div class="left">
         <p><?php echo $categoria; ?></p>
     </div>
-    <div class="right">
+    <div class="right" id='dropdown_user' aria-expanded="false">
         <ul>
             <li><i class="fa-solid fa-user"></i>
-                <ul class="menu_user">
+                <ul  class="menu_user">
                     <li>
                         <a href="?menu&user">Meu usuário</a>
                     </li>
-                    <?php if($tipo == "adm"){ ?>
-                    <li>
-                        <a href="?menu&acessosuser">Acessos usuário</a>
-                    </li>
-                    <?php }?>
+                   
                     <li>
                         <a href="?menu&logout">Sair</a>
                     </li>
@@ -39,3 +35,15 @@ if(isset($_GET['ctg'])){
 
 
 <script src="js/jquery.js"></script>
+<script>
+    const acesso_menu_user = document.getElementById('dropdown_user');
+    document.addEventListener('mousedown',(event)=>{
+        if(acesso_menu_user.contains(event.target)){
+            $(".right ul li ul").css("display","block")
+         
+        }else{
+            $(".right ul li ul").css("display","none")
+        }
+    })
+   
+</script>
