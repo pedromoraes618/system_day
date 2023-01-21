@@ -35,16 +35,12 @@ if(isset($_POST['addicionaracesso']) and (isset($_POST['idsubcategoria'])) and (
         $update_alterar_ativo = mysqli_query($conecta,$update);
         if($update_alterar_ativo){
             $retornar["sucesso"] = true;
-        }else{
-            $retornar["sucesso"] = false;
         }
     }else{//se o acesso não exister, fazer um inset do acesso para o usuario
         $insert = "INSERT INTO tb_acessos (cl_usuario_id,cl_subcategoria,cl_acesso_ativo) values ('$usuario_id','$id_subcategoria','1')";
         $insert_acesso_usuario = mysqli_query($conecta,$insert);
-        if($update_alterar_ativo){
+        if($insert_acesso_usuario){
             $retornar["sucesso"] = true;
-        }else{
-            $retornar["sucesso"] = false;
         }
 
     }

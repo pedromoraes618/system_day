@@ -10,6 +10,17 @@ $(document).keydown(function(event) {
     }
 })
 
+
+
+// $("#senha").keyup(function(){
+//     var senha_digitada = $("#senha").val
+//     if(senha_digitada){
+//         btn_login.removeAttribute("disabled", "disabled");
+//     }else{
+//         btn_login.setAttribute("disabled", "disabled");
+//     }
+// })
+
 $("#mostrar_senha").click(function() {
     if (senha.type == "password") {
         senha.type = "text";

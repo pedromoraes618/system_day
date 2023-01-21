@@ -1,7 +1,6 @@
 <?php 
-    include "modal/login.php";
+   
     include "parameters/parameters.php";
-
 ?>
 
 <!DOCTYPE html>
@@ -31,24 +30,21 @@
                     <hr>
                 </div>
 
-                <form action="../<?php echo $empresa; ?>/" method="POST">
+                <form id="form-login">
                     <div class="group-input">
                         <div class="gp-input">
-                            <input type="text" class="form-control" name="usuario" id="usuario" value="<?php if(($_POST)){
-                                echo $usuario;
-                            } ?>" placeholder="Usuário">
+                            <input type="text" class="form-control" name="usuario" id="usuario" value=""
+                                placeholder="Usuário">
                         </div>
 
                         <div class="gp-input">
-                            <input type="password" class="form-control" name="senha" id="senha" value="<?php if(($_POST)){
-                                echo $senha;
-                            } ?>" placeholder="Senha">
+                            <input type="password" class="form-control" name="senha" id="senha" value=""
+                                placeholder="Senha">
                             <i id="mostrar_senha" class="fa-solid fa-eye"></i>
                         </div>
                     </div>
                     <div class="btn-gp">
-                        <button type="submit" name="btn_login" id="btn_login" disabled
-                            class="btn btn-success">Login</button>
+                        <button type="button" name="btn_login" id="btn_login" disabled class="btn btn-success">Login</button>
                         <!-- <button type="submit" name="btn_cadastrar" id="btn_cadastar"
                             class="btn btn-success">cadastrar</button> -->
                     </div>
@@ -81,13 +77,58 @@
 
 </html>
 <script src="js/jquery.js"></script>
+<script src="js/login.js"></script>
+
+<script>
+// Recupera os valores do formulário
+
+$("#btn_login").click(function(e) {
+
+    var usuario = document.getElementById("usuario").value;
+    var senha = document.getElementById("senha").value;
+
+
+    // Cria um objeto XMLHttpRequest
+    var xhr = new XMLHttpRequest();
+
+    // Configura a requisição
+    xhr.open("POST", "modal/login/login.php", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    // Envia a requisição
+    xhr.send("usuario=" + usuario + "&senha=" + senha);
+
+    // Verifica o status da requisição
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Recupera a resposta do servidor
+            var resposta = xhr.responseText;
+
+            // Verifica se a resposta é "ok"
+            if (resposta === "ok") {
+                // Redireciona para a página inicial
+                window.location.href = "?menu";
+            } else {
+                // Exibe uma mensagem de erro
+             
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: resposta,
+                    footer: ''
+                })
+            }
+        }
+    }
+})
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
     integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous">
 </script>
-<script src="sweetalert2.all.min.js"></script>
-<script src="js/login.js">
+
 
 </script>

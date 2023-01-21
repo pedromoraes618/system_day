@@ -1,6 +1,7 @@
 <?php
- $select = "SELECT * from tb_categorias";
+ $select = "SELECT * from tb_categorias order by cl_ordem";
  $consultar_categoria = mysqli_query($conecta,$select);
+ $consultar_categoria_mobile = mysqli_query($conecta,$select);
 
 //pegar o id
 if ($_SESSION["user_session_portal"]) {

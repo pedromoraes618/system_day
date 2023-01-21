@@ -1,7 +1,7 @@
 <?php
 //consultar usuario
 
-$select = "SELECT * from tb_users where cl_tipo = 'usuario'";
+$select = "SELECT * from tb_users where cl_tipo = 'usuario' and cl_ativo = 1";
 $consultar_usuarios = mysqli_query($conecta, $select);
 if(!$consultar_usuarios){
 die("Falha no banco de dados"); // colocar o svg do erro
@@ -16,4 +16,5 @@ function consultar_ativo_acesso_usuario($usuario_id,$id_subcategoria_b){
     return $cont;
     }
     
+
 

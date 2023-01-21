@@ -1,11 +1,10 @@
 <?php
 if(isset($_GET['resetar_password'])){
-    include "resetar_password.php";
-
+    include "view/resetar_senha/resetar_password.php";
 }elseif(isset($_GET['menu'])){
-    include "conexao/sessao.php";
     include "view/menu/menu.php";
-}else{
-    header("Location:?menu");
+}elseif(isset($_GET['logout'])){ // se for definido logout 
+    include 'parameters/parameters.php';
+    include 'logout.php';
 }
 ?>

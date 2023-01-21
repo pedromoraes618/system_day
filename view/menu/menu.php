@@ -9,12 +9,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link href="css/menu.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e8ff50f1be.js" crossorigin="anonymous"></script>
-   
+
+    <link href="js/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+
+
 </head>
 
 <body>
@@ -23,7 +29,7 @@
         <div class="bloco-left">
             <?php 
             include "modal/category/consultar_categoria.php";
-           include "view/category/category.php";
+            include "view/nav/menu_desktop.php";
            ?>
         </div>
         <!-- parte principal -->
@@ -34,7 +40,7 @@
             include "controllers/menu.php";
              ?>
         </div>
-  
+
     </div>
 
 
@@ -42,6 +48,10 @@
 </body>
 
 </html>
+<script src="sweetalert2.all.min.js">
+
+</script>
+<link href="js/bootstrp/bootstrap.min.css" rel="stylesheet">
 <script src="js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">

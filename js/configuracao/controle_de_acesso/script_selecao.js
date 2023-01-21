@@ -1,14 +1,13 @@
 let usuario_id = document.getElementById("select_user");
 $("#select_user").change(function() {
     if (usuario_id.value != 0) {
-        $(".sub_bloco_info .card_acess").css("display", "block")
-        $(".sub_bloco_info-2 ul").css("display", "block")
+     
         $.ajax({
             type: 'GET',
             data: "clienteID=" + usuario_id.value,
             url: "view/configuracao/acesso_user/acessos_disponiveis.php",
             success: function(result) {
-                return $(".sub_bloco_info").html(result);
+                return $("#card-body-1").html(result);
             },
         });
         $.ajax({

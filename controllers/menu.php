@@ -10,7 +10,8 @@ if(isset($_GET['menu'])){
             include "view/".consultar_subcategoria($id_subctg);
             
         }
-    }elseif(isset($_GET['logout'])){
-     include "logout.php";  
     }
+    include "view/title/titulo.php";
+}else{
+    include "view/title/titulo.php";
 }
