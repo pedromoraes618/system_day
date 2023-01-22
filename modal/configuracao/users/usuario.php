@@ -31,7 +31,8 @@ if(isset($_POST['formulario_cadastrar_usuario'])){
     include "../../../conexao/conexao.php";
     include "../../../funcao/funcao.php";
         $retornar = array();
-        
+        $nome_usuario_logado = $_POST["nome_usuario_logado"];
+        $id_usuario_logado = $_POST["id_usuario_logado"];
         $nome = $_POST["nome"];
         $usuario = $_POST["usuario"];
         $senha = $_POST["senha"];
@@ -67,6 +68,9 @@ if(isset($_POST['formulario_cadastrar_usuario'])){
                 $operacao_inserir = mysqli_query($conecta, $inset);
                 if($operacao_inserir){
                 $retornar["sucesso"] = true;
+                //registrar no log
+                $mensagem =  utf8_decode("Usúario $nome_usuario_logado cadastrou o novo usúario $usuario");
+                registrar_log($conecta,$id_usuario_logado,$data,$mensagem);
                 }
             }
             
@@ -92,22 +96,25 @@ if(isset($_GET['editar_user'])==true or isset($_GET['resetar_senha'])==true){
     $senha_b = base64_decode($linha['cl_senha']);
     $perfil_b = $linha['cl_tipo'];
     $situacao_b = $linha['cl_ativo'];
+    
 }
+
 
 if(isset($_POST['formulario_editar_usuario'])){
     include "../../../conexao/conexao.php";
     include "../../../funcao/funcao.php";
         $retornar = array();
+        $nome_usuario_logado = $_POST["nome_usuario_logado"];
+        $id_usuario_logado = $_POST["id_usuario_logado"];
         $id_user = $_POST["id_user"];
         $nome = $_POST["nome"];
         $usuario = $_POST["usuario"];
         $perfil = $_POST["perfil"];
         $situacao =  $_POST["situacao"];
+       
 
         if($nome == ""){
             $retornar["mensagem"] =mensagem_alerta_cadastro("nome");
-        }elseif($usuario =="" ){
-            $retornar["mensagem"] =mensagem_alerta_cadastro("usúario");
         }elseif($perfil == "0" ){
             $retornar["mensagem"] =mensagem_alerta_cadastro("perfil");
         }elseif($situacao == "s" ){
@@ -116,10 +123,13 @@ if(isset($_POST['formulario_editar_usuario'])){
         else{
       
             if(verificar_user($conecta,$usuario,"editar") == $id_user or verificar_user($conecta,$usuario,"editar") == ""){
-            $update = "UPDATE tb_users set cl_nome = '$nome',cl_usuario = '$usuario',cl_tipo = '$perfil',cl_ativo ='$situacao' where cl_id = $id_user ";
+            $update = "UPDATE tb_users set cl_nome = '$nome',cl_tipo = '$perfil',cl_ativo ='$situacao' where cl_id = $id_user ";
             $operacao_update = mysqli_query($conecta, $update);
             if($operacao_update){
             $retornar["sucesso"] = true;
+            //registrar no log
+            $mensagem =  utf8_decode("Usúario $nome_usuario_logado alterou dados do usúario $usuario");
+            registrar_log($conecta,$id_usuario_logado,$data,$mensagem);
             }  
         }else{
             $retornar["mensagem"] = "Já existe uma pessoa com o mesmo nome de usúario, favor verifique!";
@@ -137,6 +147,8 @@ if(isset($_POST['formulario_resetar_senha_usuario'])){
     include "../../../conexao/conexao.php";
     include "../../../funcao/funcao.php";
         $retornar = array();
+        $nome_usuario_logado = $_POST["nome_usuario_logado"];
+        $id_usuario_logado = $_POST["id_usuario_logado"];
         $id_user = $_POST["id_user"];
         $senha = $_POST["senha"];
         $confirmar_Senha = $_POST["confirmar_senha"];
@@ -154,6 +166,8 @@ if(isset($_POST['formulario_resetar_senha_usuario'])){
         $operacao_update = mysqli_query($conecta, $update);
         if($operacao_update){
         $retornar["sucesso"] = true;
+        $mensagem =  utf8_decode("Usúario $nome_usuario_logado Resetou a senha do usúario ".verificar_user_usuario($conecta,$id_user));
+        registrar_log($conecta,$id_usuario_logado,$data,$mensagem);
         }  
     
             
@@ -162,6 +176,7 @@ if(isset($_POST['formulario_resetar_senha_usuario'])){
     
     echo json_encode($retornar);
 }
+
 
 
 ?>

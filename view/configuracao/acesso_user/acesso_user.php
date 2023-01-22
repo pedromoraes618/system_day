@@ -1,4 +1,4 @@
-<div class="bloco-pesquisa_config">
+<div class="bloco-pesquisa-menu">
     <div class="bloco-pesquisa-1">
         <div class="col-sm-2  mb-1">
             <label for="select_user">Usuário</label>

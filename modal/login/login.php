@@ -10,6 +10,7 @@ if($consulta_login ){
 $user_acess = mysqli_fetch_assoc($consulta_login);
 if (empty($user_acess)){
 echo "login sem Sucesso";
+
 }else{
         $senha_bd = $user_acess['cl_senha'];
         $senha_bd = base64_decode($senha_bd);

@@ -28,6 +28,7 @@
         <!-- menu -->
         <div class="bloco-left">
             <?php 
+           
             include "modal/category/consultar_categoria.php";
             include "view/nav/menu_desktop.php";
            ?>
@@ -35,6 +36,7 @@
         <!-- parte principal -->
         <div class="bloco-right">
             <?php 
+          
           include "modal/topo/topo.php";
             include "view/topo/topo.php";
             include "controllers/menu.php";

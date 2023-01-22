@@ -6,6 +6,9 @@
         <hr>
         <div class="row">
             <input type="hidden" name="formulario_cadastrar_usuario">
+            
+            <?php include "../../input_include/usuario_logado.php"?>
+
             <div class="col-sm  mb-1">
                 <label for="nome" class="form-label">Nome</label>
                 <input type="text" class="form-control" id="nome" name="nome" placeholder="" value="">
@@ -48,8 +51,12 @@
 </form>
 
 <script src="js/funcao.js"></script>
+<script src="js/configuracao/users/user_logado.js"></script>
 <script>
+
+
 $("#cadastrar_usuario").submit(function(e) {
+
     e.preventDefault()
     var cadastrar_user = $(this);
     var retorno = cadastrar_usuario(cadastrar_user)
@@ -99,21 +106,21 @@ function cadastrar_usuario(dados) {
                     return $(".tabela").html(result);
                 },
             });
-    
 
-} else {
-    Swal.fire({
-        icon: 'error',
-        title: $mensagem,
 
-    })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: $mensagem,
 
-}
-}
+            })
 
-function falha() {
-    console.log("erro");
-}
+        }
+    }
+
+    function falha() {
+        console.log("erro");
+    }
 
 }
 </script>

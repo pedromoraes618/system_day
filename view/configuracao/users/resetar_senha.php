@@ -9,6 +9,7 @@ include "../../../modal/configuracao/users/usuario.php";
         <hr>
         <div class="row">
             <input type="hidden" name="formulario_resetar_senha_usuario">
+            <?php include "../../input_include/usuario_logado.php"?>
             <input type="hidden" value="<?php echo $id_user; ?>" name="id_user">
         
             <div class="col-sm-3  mb-1">
@@ -39,18 +40,17 @@ include "../../../modal/configuracao/users/usuario.php";
 </form>
 
 
-
 <script>
 $("#voltar_cadastro").click(function(e) {
-    $('.bloco-pesquisa_config .bloco-pesquisa-1').css("display", 'none')
-    $('.bloco-pesquisa_config .bloco-pesquisa-1').fadeIn(200)
+    $('.bloco-pesquisa-menu.bloco-pesquisa-1').css("display", 'none')
+    $('.bloco-pesquisa-menu .bloco-pesquisa-1').fadeIn(200)
 
     $.ajax({
         type: 'GET',
         data: "cadastrar=",
         url: "view/configuracao/users/cadastrar_user.php",
         success: function(result) {
-            return $(".bloco-pesquisa_config .bloco-pesquisa-1").html(result);
+            return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result);
         },
     });
 })
@@ -58,6 +58,7 @@ $("#voltar_cadastro").click(function(e) {
 
 //editar usuario
 $("#resetar_senha_usuario").submit(function(e) {
+    alert("ok")
     e.preventDefault()
     var resetar_senha = $(this);
     var retorno = resetar_senha_usuario(resetar_senha)
@@ -88,10 +89,10 @@ function resetar_senha_usuario(dados) {
             //recarregar a tabela de usúarios
             $.ajax({
                 type: 'GET',
-                data: "consultar_user=",
+                data: "consultar_user=true",
                 url: "view/configuracao/users/consultar_user.php",
                 success: function(result) {
-                    return $(".bloco-pesquisa_config .bloco-pesquisa-2").html(result);
+                    return $(".bloco-pesquisa-menu .bloco-pesquisa-2").html(result);
                 },
             });
 

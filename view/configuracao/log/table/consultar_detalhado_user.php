@@ -16,7 +16,7 @@ include "../../../../modal/configuracao/users/usuario.php";
         </tr>
     </thead>
     <tbody>
-        <?php while($row = mysqli_fetch_assoc($consultar_usuarios)){
+        <?php while($row = mysqli_fetch_assoc($consultar_usuarios_detalhado)){
                 $id_user_b = $row['cl_id'];
                 $nome_b = $row['cl_nome'];
                 $usuario_b = $row['cl_usuario'];
@@ -48,4 +48,7 @@ include "../../../../modal/configuracao/users/usuario.php";
         <?php }?>
     </tbody>
 </table>
-<script src="js/configuracao/users/editar_user.js"></script>
+
+<script src="js/configuracao/users/editar_user.js">
+
+</script>
