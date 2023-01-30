@@ -6,7 +6,7 @@
     aria-labelledby="offcanvasWithBothOptionsLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Effmax</h5>
-        <button type="button"  data-bs-dismiss="offcanvas" aria-label="Close"><i class="bi bi-x-lg"></i>    </button>
+        <button type="button" data-bs-dismiss="offcanvas" aria-label="Close"><i class="bi bi-x-lg"></i> </button>
     </div>
     <nav>
         <ul>
@@ -20,7 +20,8 @@
                 $id_categoria = $row['cl_id'];
                 $categoria = utf8_encode($row['cl_categoria']);
                 $icone = $row['cl_icone'];
-                if(consultar_acesso_categoria($id_user,$id_categoria)>0 or ($tipo == "adm")){ // verificar se o usuario tem acesso / usuario adm tem todos os acessos
+                if(consultar_acesso_categoria($id_user,$id_categoria)>0 or ($tipo == "adm") or ($tipo == "suporte")){ // verificar se o usuario tem acesso / usuario adm tem todos os acessos
+                 
             ?>
             <li>
                 <p><?php echo $icone?> <?php echo $categoria; ?></p>
@@ -35,7 +36,7 @@
                         $diretorio = $row['cl_diretorio'];
                         $url = $row['cl_url'];
                         
-                        if(consultar_acesso_subcategoria($id_user,$id_subcategoria) > 0 or  ($tipo == "adm")){ // usuario adm tem todos os acessos
+                        if(consultar_acesso_subcategoria($id_user,$id_subcategoria) > 0 or  ($tipo == "adm") or ($tipo == "suporte")){ // usuario adm tem todos os acessos
                     ?>
 
                     <li><a
@@ -44,6 +45,7 @@
                     <?php 
                         }
                     }
+              
                     ?>
                 </ul>
             </li>

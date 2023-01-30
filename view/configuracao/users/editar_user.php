@@ -19,7 +19,7 @@ include "../../../modal/configuracao/users/usuario.php";
             </div>
             <div class="col-sm  mb-1">
                 <label for="usuario" class="form-label">Usúario</label>
-                <input type="text" readonly  class="form-control" id="usuario" name="usuario" placeholder=""
+                <input type="text" readonly class="form-control" id="usuario" name="usuario" placeholder=""
                     value="<?php echo $usuario_b; ?>">
             </div>
             <div class="col-sm mb-1">
@@ -120,16 +120,15 @@ function editar_usuario(dados) {
 
 
             })
-            //recarregar a tabela de usúarios
+            //consultar inicial
             $.ajax({
                 type: 'GET',
-                data: "consultar_user=",
-                url: "view/configuracao/users/consultar_user.php",
+                data: "consultar_user=inicial",
+                url: "view/configuracao/users/table/consultar_user.php",
                 success: function(result) {
-                    return $(".bloco-pesquisa-menu .bloco-pesquisa-2").html(result);
+                    return $(".tabela").html(result);
                 },
             });
-
 
         } else {
             Swal.fire({

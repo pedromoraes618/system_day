@@ -5,10 +5,11 @@ $(".editar_user").click(function(e) {
 
     $.ajax({
         type: 'GET',
-        data: "editar_user=true&"+"id_user="+id_user,
+        data: "editar_user=true&id_user="+id_user,
         url: "view/configuracao/users/editar_user.php",
         success: function(result) {
             return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result);
         },
     });
 })
+

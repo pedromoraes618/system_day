@@ -14,7 +14,7 @@ include "../../../modal/configuracao/users/usuario.php";
         
             <div class="col-sm-3  mb-1">
                 <label for="usuario" class="form-label">Usúario</label>
-                <input type="text" disabled class="form-control" id="usuario" name="usuario" placeholder=""
+                <input type="text" readonly class="form-control" id="usuario" name="usuario" placeholder=""
                     value="<?php echo $usuario_b; ?>">
             </div>
             <div class="col-sm-3 mb-1">
@@ -39,7 +39,7 @@ include "../../../modal/configuracao/users/usuario.php";
     </div>
 </form>
 
-
+<script src="js/configuracao/users/user_logado.js"></script>
 <script>
 $("#voltar_cadastro").click(function(e) {
     $('.bloco-pesquisa-menu.bloco-pesquisa-1').css("display", 'none')
@@ -58,7 +58,7 @@ $("#voltar_cadastro").click(function(e) {
 
 //editar usuario
 $("#resetar_senha_usuario").submit(function(e) {
-    alert("ok")
+
     e.preventDefault()
     var resetar_senha = $(this);
     var retorno = resetar_senha_usuario(resetar_senha)
@@ -86,15 +86,16 @@ function resetar_senha_usuario(dados) {
 
 
             })
-            //recarregar a tabela de usúarios
-            $.ajax({
+           //consultar inicial
+           $.ajax({
                 type: 'GET',
-                data: "consultar_user=true",
-                url: "view/configuracao/users/consultar_user.php",
+                data: "consultar_user=inicial",
+                url: "view/configuracao/users/table/consultar_user.php",
                 success: function(result) {
-                    return $(".bloco-pesquisa-menu .bloco-pesquisa-2").html(result);
+                    return $(".tabela").html(result);
                 },
             });
+
 
 
         } else {

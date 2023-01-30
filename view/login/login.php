@@ -1,7 +1,4 @@
-<?php 
-   
-    include "parameters/parameters.php";
-?>
+<?php  include "parameters/parameters.php"; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">

@@ -26,4 +26,4 @@ while($linha = mysqli_fetch_assoc($consulta_acessos_usuario)){
 }?>
 
 
-<script src="js/configuracao/controle_de_acesso/script.js"></script>
+<script src="js/configuracao/controle_de_acesso/script_add_access.js"></script>

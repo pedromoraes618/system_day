@@ -1,5 +1,6 @@
 <?php
 include "../conexao/conexao.php";
+include "../funcao/funcao.php";
 if(isset($_POST['post_resetar_senha'])){
     $retorno = array();
     $usuario =  $_POST["usuario"];
@@ -26,18 +27,28 @@ if(isset($_POST['post_resetar_senha'])){
                     $operacao_update_senha = mysqli_query($conecta, $update);
                     if($operacao_update_senha){
                         $retorno["sucesso"] = true;
+                        $mensagem =  utf8_decode("Tentativa de resetar a senha do usúario $usuario, Com sucesso!! ");
+                        registrar_log($conecta,$usuario,$data,$mensagem);
                     }else{
                         $retorno["sucesso"] = false;
+                        $mensagem =  utf8_decode("Tentativa de resetar a senha do usúario $usuario, Erro no banco de dados, contatar suporte!! ");
+                        registrar_log($conecta,$usuario,$data,$mensagem);
                     }   
                     
                 }else{
                     $retorno["mensagem"] = "A confirmação de senha não esá igual a sua nova senha, favor verifique";
+                    $mensagem =  utf8_decode("Tentativa de resetar a senha do usúario $usuario, sem sucesso! ");
+                    registrar_log($conecta,$usuario,$data,$mensagem);
                 }
             }else{
                 $retorno["mensagem"] = "Senha atual incorreta, Favor verifique";
+                $mensagem =  utf8_decode("Tentativa de resetar a senha do usúario $usuario, sem sucesso! ");
+                registrar_log($conecta,$usuario,$data,$mensagem);
             }
         }else{
             $retorno["mensagem"] = "Usuário inexistente";
+            $mensagem =  utf8_decode("Tentativa de resetar a senha do usúario $usuario, sem sucesso! ");
+            registrar_log($conecta,$usuario,$data,$mensagem);
 
         }
 

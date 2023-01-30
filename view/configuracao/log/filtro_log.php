@@ -19,7 +19,6 @@ include "../../../modal/configuracao/log/log.php";
             value="<?php echo $data_final_log;?>">
     </div>
 
-
     <div class="col-md-2 mb-1">
         <select name="usuario" class="form-select" id="usuario">
             <option value="s">Selecione o usúario</option>
@@ -27,7 +26,7 @@ include "../../../modal/configuracao/log/log.php";
                 $id_user = $linha['cl_id'];
                 $usuario = $linha['cl_usuario'];
                 ?>
-            <option value="<?php echo $id_user; ?>"><?php echo $usuario  ?></option>
+            <option value="<?php echo $usuario; ?>"><?php echo $usuario  ?></option>
 
             <?php
             } ?>
@@ -42,6 +41,7 @@ include "../../../modal/configuracao/log/log.php";
     </Div>
 </div>
 <?php include '../../../funcao/funcaojavascript.jar'; ?>
+
 <script>
 $("#pesquisa_conteudo").click(function(e) {
     $('.tabela').css("display", 'none')
@@ -52,7 +52,7 @@ $("#pesquisa_conteudo").click(function(e) {
     let conteudo = document.getElementById("conteudo").value;
     $.ajax({
         type: 'GET',
-        data: "consultar_log=detelhado&data_inicial="+data_inicial+"&data_final="+data_final+"&usuario_id="+usuario+"&conteudo="+conteudo,
+        data: "consultar_log=detelhado&data_inicial="+data_inicial+"&data_final="+data_final+"&usuario="+usuario+"&conteudo="+conteudo,
         url: "view/configuracao/log/table/consultar_log.php",
         success: function(result) {
             return $(".bloco-pesquisa-2 .table").html(result);

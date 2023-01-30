@@ -14,7 +14,7 @@ function consultar_ativo_acesso_usuario($usuario_id,$id_subcategoria_b){
     $consulta_acessos_atuais_usuario = mysqli_query($conecta,$select);
     $cont = mysqli_num_rows($consulta_acessos_atuais_usuario);
     return $cont;
-    }
-    
+}
+
 
 

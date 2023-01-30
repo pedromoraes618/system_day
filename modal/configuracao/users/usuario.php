@@ -1,27 +1,27 @@
 <?php  
 //consultar usuario sem filtro
-if(isset($_GET['consultar_incial'])==true){
-$select = "SELECT * from tb_users ";
-$consultar_usuarios = mysqli_query($conecta, $select);
-if(!$consultar_usuarios){
-die("Falha no banco de dados"); // colocar o svg do erro
-}
-}
-//consultar usuario com filtro
-if(isset($_GET['consultar_detalhada_user'])==true){
-    $pesquisa_user = $_GET['consultar_detalhada_user'];
-    $situacao_user = $_GET['situacao_user'];
-    $select = "SELECT * from tb_users where cl_usuario LIKE '%{$pesquisa_user}%' ";
-    if($situacao_user != "s"){
-        $select .=" and cl_ativo = '$situacao_user'";
+if(isset($_GET['consultar_user'])){
+    $consulta_user = $_GET['consultar_user'];
+    if($consulta_user == "inicial"){
+        $select = "SELECT * from tb_users ";
+        $consultar_usuarios = mysqli_query($conecta, $select);
+        if(!$consultar_usuarios){
+        die("Falha no banco de dados"); // colocar o svg do erro
+        }
+    }elseif($consulta_user =="detalhado"){
+        $pesquisa_user = $_GET['conteudo_pesquisa'];
+        $situacao_user = $_GET['situacao_user'];
+        $select = "SELECT * from tb_users where cl_usuario LIKE '%{$pesquisa_user}%' ";
+        if($situacao_user != "s"){
+            $select .=" and cl_ativo = '$situacao_user'";
+        }
+        $consultar_usuarios = mysqli_query($conecta, $select);
+        if(!$consultar_usuarios){
+        die("Falha no banco de dados"); // colocar o svg do erro
+        }
     }
- 
-    $consultar_usuarios_detalhado = mysqli_query($conecta, $select);
-    if(!$consultar_usuarios_detalhado){
-    die("Falha no banco de dados"); // colocar o svg do erro
-    }
+
 }
-    
 
 
 
@@ -70,13 +70,12 @@ if(isset($_POST['formulario_cadastrar_usuario'])){
                 $retornar["sucesso"] = true;
                 //registrar no log
                 $mensagem =  utf8_decode("Usúario $nome_usuario_logado cadastrou o novo usúario $usuario");
-                registrar_log($conecta,$id_usuario_logado,$data,$mensagem);
+                registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
                 }
             }
             
         }
         
-    
     echo json_encode($retornar);
 }
 
@@ -112,7 +111,6 @@ if(isset($_POST['formulario_editar_usuario'])){
         $perfil = $_POST["perfil"];
         $situacao =  $_POST["situacao"];
        
-
         if($nome == ""){
             $retornar["mensagem"] =mensagem_alerta_cadastro("nome");
         }elseif($perfil == "0" ){
@@ -129,7 +127,7 @@ if(isset($_POST['formulario_editar_usuario'])){
             $retornar["sucesso"] = true;
             //registrar no log
             $mensagem =  utf8_decode("Usúario $nome_usuario_logado alterou dados do usúario $usuario");
-            registrar_log($conecta,$id_usuario_logado,$data,$mensagem);
+            registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
             }  
         }else{
             $retornar["mensagem"] = "Já existe uma pessoa com o mesmo nome de usúario, favor verifique!";
@@ -150,6 +148,7 @@ if(isset($_POST['formulario_resetar_senha_usuario'])){
         $nome_usuario_logado = $_POST["nome_usuario_logado"];
         $id_usuario_logado = $_POST["id_usuario_logado"];
         $id_user = $_POST["id_user"];
+        $usuario = $_POST["usuario"];
         $senha = $_POST["senha"];
         $confirmar_Senha = $_POST["confirmar_senha"];
 
@@ -166,8 +165,8 @@ if(isset($_POST['formulario_resetar_senha_usuario'])){
         $operacao_update = mysqli_query($conecta, $update);
         if($operacao_update){
         $retornar["sucesso"] = true;
-        $mensagem =  utf8_decode("Usúario $nome_usuario_logado Resetou a senha do usúario ".verificar_user_usuario($conecta,$id_user));
-        registrar_log($conecta,$id_usuario_logado,$data,$mensagem);
+        $mensagem =  utf8_decode("Usúario $nome_usuario_logado Resetou a senha do  usúario $usuario");
+        registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
         }  
     
             

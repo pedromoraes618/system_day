@@ -13,7 +13,7 @@
               }?>
             </select>
         </div>
-    
+
         <div id="duvida" class="msg">
             <i class="fa-solid fa-comments"></i>
 
@@ -40,7 +40,7 @@
                 </div>
                 <div class="card-body">
 
-                    <div class="sub_bloco_info-2">
+                    <div class="sub_bloco_info-2" id="card-body-2">
 
                     </div>
                 </div>
@@ -58,9 +58,8 @@
 
 </div>
 
-
 <script src="js/configuracao/controle_de_acesso/script_selecao.js"></script>
 
 
 
-</script>
+

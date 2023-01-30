@@ -1,7 +1,7 @@
 let usuario_id = document.getElementById("select_user");
 $("#select_user").change(function() {
     if (usuario_id.value != 0) {
-     
+
         $.ajax({
             type: 'GET',
             data: "clienteID=" + usuario_id.value,

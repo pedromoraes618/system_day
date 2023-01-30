@@ -11,7 +11,7 @@ if(isset($_GET['consultar_log'])){
     if($consulta == "inical"){
     $data_incial_log_m  = date('Y-01-01 01:01:01');
     $data_final_log_m = date('Y-m-31 23:59:59');
-    $select = "SELECT log.cl_data_modificacao , user.cl_usuario,log.cl_descricao from tb_log as log inner join tb_users as user on user.cl_id = log.cl_usuario where log.cl_data_modificacao 
+    $select = "SELECT log.cl_data_modificacao , log.cl_usuario,log.cl_descricao from tb_log as log where log.cl_data_modificacao 
     between '$data_incial_log_m' and '$data_final_log_m'";
     $consultar_log = mysqli_query($conecta, $select);
     if(!$consultar_log){
@@ -19,7 +19,6 @@ if(isset($_GET['consultar_log'])){
     }
 }elseif($consulta == "detelhado"){
     //pegar as data pelo filtro // FILTRO PELA DATA USUARIO E DESCRICAO
-
     $data_incial_log_d = $_GET['data_inicial'];
     $data_final_log_d =$_GET['data_final'];
   
@@ -40,13 +39,13 @@ if(isset($_GET['consultar_log'])){
         $data_final_log_d  = date('Y-m-31 23:59:59');
     }
 
-    $usuario_id = $_GET['usuario_id'];
+    $usuario= $_GET['usuario'];
     $conteudo = $_GET['conteudo'];
 
-    $select = "SELECT log.cl_data_modificacao , user.cl_usuario,log.cl_descricao from tb_log as log inner join tb_users as user on user.cl_id = log.cl_usuario where log.cl_data_modificacao 
+    $select = "SELECT log.cl_data_modificacao , log.cl_usuario,log.cl_descricao from tb_log as log where log.cl_data_modificacao 
     between '$data_incial_log_d' and '$data_final_log_d' and log.cl_descricao LIKE '%{$conteudo}%' ";
-    if($usuario_id !="s"){
-    $select .=" and log.cl_usuario = $usuario_id";
+    if($usuario !="s"){
+    $select .=" and log.cl_usuario = '$usuario'";
     }
     $consultar_log = mysqli_query($conecta, $select);
     if(!$consultar_log){

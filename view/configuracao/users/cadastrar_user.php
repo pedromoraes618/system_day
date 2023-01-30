@@ -6,7 +6,7 @@
         <hr>
         <div class="row">
             <input type="hidden" name="formulario_cadastrar_usuario">
-            
+
             <?php include "../../input_include/usuario_logado.php"?>
 
             <div class="col-sm  mb-1">
@@ -53,8 +53,6 @@
 <script src="js/funcao.js"></script>
 <script src="js/configuracao/users/user_logado.js"></script>
 <script>
-
-
 $("#cadastrar_usuario").submit(function(e) {
 
     e.preventDefault()
@@ -100,8 +98,8 @@ function cadastrar_usuario(dados) {
             //consultar inicial
             $.ajax({
                 type: 'GET',
-                data: "consultar_incial=true",
-                url: "view/configuracao/users/table/consultar_inicial_user.php",
+                data: "consultar_user=inicial",
+                url: "view/configuracao/users/table/consultar_user.php",
                 success: function(result) {
                     return $(".tabela").html(result);
                 },

@@ -25,8 +25,8 @@ $(document).ready(function(e) {
     //consultar inicial
     $.ajax({
         type: 'GET',
-        data: "consultar_incial=true",
-        url: "view/configuracao/users/table/consultar_inicial_user.php",
+        data: "consultar_user=inicial",
+        url: "view/configuracao/users/table/consultar_user.php",
         success: function(result) {
             return $(".tabela").html(result);
         },
@@ -42,8 +42,8 @@ $("#pesquisar_user").click(function(e) {
 
     $.ajax({
         type: 'GET',
-        data: "consultar_detalhada_user=" + conteudo_pesquisa.value+"&situacao_user="+conteudo_situacao.value,
-        url: "view/configuracao/users/table/consultar_detalhado_user.php",
+        data: "consultar_user=detalhado&conteudo_pesquisa=" + conteudo_pesquisa.value+"&situacao_user="+conteudo_situacao.value,
+        url: "view/configuracao/users/table/consultar_user.php",
         success: function(result) {
             return $(".tabela").html(result);
         },

@@ -44,9 +44,28 @@ function verificar_user_usuario($conecta,$id_user){
     
 }
 
-function registrar_log($conecta,$id_usuario_logado,$data,$mensagem){
-    $inset = "INSERT INTO tb_log (cl_data_modificacao,cl_usuario,cl_descricao) VALUES ('$data','$id_usuario_logado','$mensagem')";
+function registrar_log($conecta,$nome_usuario_logado,$data,$mensagem){
+    $inset = "INSERT INTO tb_log (cl_data_modificacao,cl_usuario,cl_descricao) VALUES ('$data','$nome_usuario_logado','$mensagem')";
     $operacao_inserir = mysqli_query($conecta, $inset);
     return $operacao_inserir;
+}
+    
+//funcao para saber qual usuario foi selecionado para adicionar ou remover acesso
+function consultar_usuario_acesso($conecta,$usuario_id){
+   //consultar nome do usuario
+   $select = "SELECT * from tb_users where cl_id = '$usuario_id' ";
+   $consulta_usuario= mysqli_query($conecta,$select);
+   $linha = mysqli_fetch_assoc($consulta_usuario);
+   $usuario_b = $linha['cl_usuario'];
+   return $usuario_b;
+}
+//funcao para saber qual subcategoria foi selecionado para adicionar ou remover para o usúario
+function consultar_subcategoria_acesso($conecta,$id_subcategoria){
+   //consultar nome da subcategoria
+   $select = "SELECT * from tb_subcategorias where cl_id = '$id_subcategoria' ";
+   $consulta_subcategoria= mysqli_query($conecta,$select);
+   $linha = mysqli_fetch_assoc($consulta_subcategoria);
+   $subcategoria_b = $linha['cl_subcategoria'];
+   return $subcategoria_b;
 }
 ?>
