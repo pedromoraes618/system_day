@@ -53,7 +53,7 @@ include "parameters/parameters.php";
                     <div class="btn-gp">
                         <button type="submit" id="btn_resetar_senha" class="btn btn-success">Salvar</button>
                     </div>
-                    <div class="sub-titulo">
+                    <div class="sub-titulo-2">
                         <a href="../<?php echo $empresa; ?>/">Fazer login</a>
                     </div>
                     <p class="reservado">@todos os diretos reservados para effemax</p>

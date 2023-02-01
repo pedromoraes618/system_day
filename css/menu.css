@@ -694,6 +694,9 @@ margin:0px;
     font-size: 0.9em;
 
 }
-.bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-2 .tabela{
+.bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-2 .table{
+    overflow: auto;
+}
+.bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-2 .table table{
     overflow: auto;
 }

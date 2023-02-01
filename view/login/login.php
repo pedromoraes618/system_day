@@ -41,12 +41,24 @@
                         </div>
                     </div>
                     <div class="btn-gp">
-                        <button type="button" name="btn_login" id="btn_login" disabled class="btn btn-success">Login</button>
+                        <button type="button" name="btn_login" id="btn_login" disabled
+                            class="btn btn-success">Login</button>
                         <!-- <button type="submit" name="btn_cadastrar" id="btn_cadastar"
                             class="btn btn-success">cadastrar</button> -->
                     </div>
                     <div class="sub-titulo">
-                        <a href="?resetar_password">Esqueceu a sua senha</a>
+                        <div class="bloco-1">
+                            <label> 
+                                <input name="lembrar_senha"  id="lembrar_senha" type="checkbox" />
+                                Lembrar Senha
+                            </label>
+
+                        </div>
+                        <div class="bloco-2">
+                            <a href="?resetar_password">Esqueceu a sua senha</a>
+                        </div>
+
+
                     </div>
                     <p class="reservado">@todos os diretos reservados para effemax</p>
                 </form>
@@ -76,49 +88,7 @@
 <script src="js/jquery.js"></script>
 <script src="js/login.js"></script>
 
-<script>
-// Recupera os valores do formulário
-
-$("#btn_login").click(function(e) {
-
-    var usuario = document.getElementById("usuario").value;
-    var senha = document.getElementById("senha").value;
-
-
-    // Cria um objeto XMLHttpRequest
-    var xhr = new XMLHttpRequest();
-
-    // Configura a requisição
-    xhr.open("POST", "modal/login/login.php", true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-    // Envia a requisição
-    xhr.send("usuario=" + usuario + "&senha=" + senha);
-
-    // Verifica o status da requisição
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            // Recupera a resposta do servidor
-            var resposta = xhr.responseText;
-
-            // Verifica se a resposta é "ok"
-            if (resposta === "ok") {
-                // Redireciona para a página inicial
-                window.location.href = "?menu";
-            } else {
-                // Exibe uma mensagem de erro
-             
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: resposta,
-                    footer: ''
-                })
-            }
-        }
-    }
-})
-</script>
+<script src="js/login/login.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">

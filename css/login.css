@@ -122,10 +122,18 @@ margin-bottom: 20px;
 
 .bloco .group-bloco form .sub-titulo{
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content:space-between;
     
 }
+.bloco .group-bloco form .sub-titulo .bloco-1{
 
+}
+.bloco .group-bloco form .sub-titulo .bloco-1 label{
+    color: rgb(170, 170, 170);
+    font-size: 0.9em;
+}
 .bloco .group-bloco form .sub-titulo a{
     text-decoration: none;
     color: rgb(93, 178, 71);
@@ -135,6 +143,22 @@ margin-bottom: 20px;
 .bloco .group-bloco form .sub-titulo a:hover{ 
    letter-spacing: 0.01em;
 }
+.bloco .group-bloco form .sub-titulo-2{
+    text-align: center;
+    margin-bottom: 20px;
+    color: rgb(170, 170, 170);
+}
+
+.bloco .group-bloco form .sub-titulo-2 a{
+    text-decoration: none;
+    color: rgb(93, 178, 71);
+    transition: 0.2s ease-in-out;
+
+}
+.bloco .group-bloco form .sub-titulo-2 a:hover{ 
+   letter-spacing: 0.01em;
+}
+
 
 .waves{
 position: absolute;

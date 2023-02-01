@@ -1,22 +1,5 @@
-//resetar senha
-$("#resetar_senha").click(function(e) {
-    $('.bloco-pesquisa-menu .bloco-pesquisa-1').css("display", 'none')
-    $('.bloco-pesquisa-menu .bloco-pesquisa-1').fadeIn(200)
-    let id_user = $(this).attr("id_user")
-    $.ajax({
-        type: 'GET',
-        data: "resetar_senha=true&id_user=" + id_user,
-        url: "view/configuracao/users/resetar_senha.php",
-        success: function(result) {
-            return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result);
-        },
-    });
-
-})
-
-//voltar para tela de cadastro
 $("#voltar_cadastro").click(function(e) {
-    $('.bloco-pesquisa-menu .bloco-pesquisa-1').css("display", 'none')
+    $('.bloco-pesquisa-menu.bloco-pesquisa-1').css("display", 'none')
     $('.bloco-pesquisa-menu .bloco-pesquisa-1').fadeIn(200)
 
     $.ajax({
@@ -29,16 +12,17 @@ $("#voltar_cadastro").click(function(e) {
     });
 })
 
-//editar usuario
-$("#editar_usuario").submit(function(e) {
-    e.preventDefault()
-    var editar_user = $(this);
-    var retorno = editar_usuario(editar_user)
 
+//editar usuario
+$("#resetar_senha_usuario").submit(function(e) {
+
+    e.preventDefault()
+    var resetar_senha = $(this);
+    var retorno = resetar_senha_usuario(resetar_senha)
 
 })
 
-function editar_usuario(dados) {
+function resetar_senha_usuario(dados) {
     $.ajax({
         type: "POST",
         data: dados.serialize(),
@@ -53,14 +37,14 @@ function editar_usuario(dados) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Usúario alterado com sucesso',
+                title: 'Senha resetada com sucesso',
                 showConfirmButton: false,
                 timer: 1500
 
 
             })
-            //consultar inicial
-            $.ajax({
+           //consultar inicial
+           $.ajax({
                 type: 'GET',
                 data: "consultar_user=inicial",
                 url: "view/configuracao/users/table/consultar_user.php",
@@ -68,6 +52,8 @@ function editar_usuario(dados) {
                     return $(".tabela").html(result);
                 },
             });
+
+
 
         } else {
             Swal.fire({

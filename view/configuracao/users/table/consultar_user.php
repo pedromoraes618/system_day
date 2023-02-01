@@ -48,4 +48,4 @@ include "../../../../modal/configuracao/users/usuario.php";
         <?php }?>
     </tbody>
 </table>
-<script src="js/configuracao/users/editar_user.js"></script>
+<script src="js/configuracao/users/table/editar_user.js"></script>
