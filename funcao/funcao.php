@@ -2,7 +2,7 @@
 date_default_timezone_set('America/Fortaleza');
 $data = date('Y/m/d H:i:s');
 
-$data_incial_log =date('01/01/Y');
+$data_incial_log =date('01/m/Y');
 $data_final_log =date('d/m/Y');
 
 ///formatar data 

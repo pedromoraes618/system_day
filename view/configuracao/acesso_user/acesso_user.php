@@ -1,5 +1,12 @@
 <div class="bloco-pesquisa-menu">
     <div class="bloco-pesquisa-1">
+        <div class="title">
+            <label class="form-label">Acesso de usúario</label>
+            <div class="msg_title">
+                <p>Esse menu tem como função o gerênciamento de acessos. Adicionar e remover acessos de telas para usúario é feito aqui! </p>
+            </div>
+        </div>
+        <hr>
         <div class="col-sm-2  mb-1">
             <label for="select_user">Usuário</label>
             <select class="form-select" id="select_user">
@@ -59,7 +66,3 @@
 </div>
 
 <script src="js/configuracao/controle_de_acesso/script_selecao.js"></script>
-
-
-
-

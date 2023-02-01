@@ -29,5 +29,5 @@
 
 <script src="js/configuracao/users/user_logado.js"></script>
 <!-- cadastro da categoria -->
-<script src="js/suporte/cadastro_categoria.js"></script>
+<script src="js/suporte/tela/cadastro_categoria.js"></script>
 

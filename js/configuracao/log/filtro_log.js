@@ -10,7 +10,7 @@ $("#pesquisa_conteudo").click(function(e) {
         data: "consultar_log=detelhado&data_inicial="+data_inicial+"&data_final="+data_final+"&usuario="+usuario+"&conteudo="+conteudo,
         url: "view/configuracao/log/table/consultar_log.php",
         success: function(result) {
-            return $(".bloco-pesquisa-2 .table").html(result);
+            return $(".bloco-pesquisa-2 .tabela").html(result);
         },
     });
 })

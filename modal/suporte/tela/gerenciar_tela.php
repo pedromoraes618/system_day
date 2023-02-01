@@ -126,6 +126,125 @@ if(isset($_POST['formulario_cadastrar_subcategoria'])){
 }
 
 
+//Editar categoria
+if(isset($_POST['formulario_editar_categoria'])){
+    include "../../../conexao/conexao.php";
+    include "../../../funcao/funcao.php";
+        $retornar = array();
+        $nome_usuario_logado = $_POST["nome_usuario_logado"];
+        $id_usuario_logado = $_POST["id_usuario_logado"];
+        $id_categoria = $_POST["id_categoria"];
+        $categoria = utf8_decode($_POST["categoria"]);
+        $icone = $_POST["icone"];
+        $ordem = $_POST["ordem"];
+       
+        if($categoria == ""){
+            $retornar["mensagem"] =mensagem_alerta_cadastro("categoria");
+        }elseif($icone == "" ){
+            $retornar["mensagem"] =mensagem_alerta_cadastro("icone");
+        }elseif($ordem == "" ){
+            $retornar["mensagem"] =mensagem_alerta_cadastro("ordem");
+        }
+        else{
+      
+        $update = "UPDATE tb_categorias set cl_categoria = '$categoria', cl_icone = '$icone', cl_ordem = '$ordem' where cl_id = $id_categoria ";
+        $operacao_update = mysqli_query($conecta, $update);
+        if($operacao_update){
+        $retornar["sucesso"] = true;
+        //registrar no log
+        $mensagem =  (utf8_decode("Usúario") . "$nome_usuario_logado alterou dados da categoria $categoria");
+        registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
+            }  
+        }
+        echo json_encode($retornar);
+    }
+
+  
+
+
+//Editar subcategoria
+if(isset($_POST['formulario_editar_subcategoria'])){
+    include "../../../conexao/conexao.php";
+    include "../../../funcao/funcao.php";
+        $retornar = array();
+        $nome_usuario_logado = $_POST["nome_usuario_logado"];
+        $id_usuario_logado = $_POST["id_usuario_logado"];
+
+        $id_subcategoria = $_POST["id_subcategoria"];
+        $subcategoria = utf8_decode($_POST["subcategoria"]);
+        $ordem = $_POST["ordem"];
+        $diretorio_subc = $_POST["diretorio_subc"];
+        $url_sub = $_POST["url_sub"];
+        $diretorio_bd = $_POST["diretorio_bd"];
+        $categoria = $_POST["categoria"];
+
+        if($subcategoria == ""){
+            $retornar["mensagem"] =mensagem_alerta_cadastro("subcategoria");
+        }elseif($ordem =="" ){
+            $retornar["mensagem"] =mensagem_alerta_cadastro("ordem");
+        }elseif($diretorio_subc == "" ){
+            $retornar["mensagem"] =mensagem_alerta_cadastro("diretorio subcategoria");
+        }elseif($url_sub == "" ){
+            $retornar["mensagem"] =mensagem_alerta_cadastro("url subcategoria");
+        }elseif($diretorio_bd == "" ){
+            $retornar["mensagem"] =mensagem_alerta_cadastro("diretorio banco de dados");
+        }elseif($categoria == "0" ){
+            $retornar["mensagem"] ="Favor selecione a Categoria";
+        }else{
+      
+        $update = "UPDATE tb_subcategorias set cl_subcategoria = '$subcategoria',cl_ordem_menu = '$ordem' ,cl_diretorio = '$diretorio_subc', cl_url = '$url_sub', cl_categoria ='$categoria', cl_diretorio_bd = '$diretorio_bd' where cl_id = $id_subcategoria";
+        $operacao_update = mysqli_query($conecta, $update);
+        if($operacao_update){
+        $retornar["sucesso"] = true;
+        //registrar no log
+        $mensagem =  (utf8_decode("Usúario") . "$nome_usuario_logado alterou dados da subategoria $subcategoria");
+        registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
+            }  
+        }
+        echo json_encode($retornar);
+}
+
+  
+
+
+
+
+
+//trazer informaçãoes da categoria
+if(isset($_GET['editar_categoria'])==true){
+    include "../../../conexao/conexao.php";
+    include "../../../funcao/funcao.php";
+    $id_categoria_b = $_GET['id_categoria'];
+    $select = "SELECT * from tb_categorias where cl_id = $id_categoria_b ";
+    $consultar_categorias= mysqli_query($conecta, $select);
+    $linha  = mysqli_fetch_assoc($consultar_categorias);
+    $categoria_b = utf8_encode($linha['cl_categoria']);
+    $icone_b = $linha['cl_icone'];
+    $ordem_b = $linha['cl_ordem'];
+    
+}
+
+
+//trazer informaçãoes da subcategoria
+if(isset($_GET['editar_subcategoria'])==true){
+    include "../../../conexao/conexao.php";
+    include "../../../funcao/funcao.php";
+    $id_subcategoria_b = $_GET['id_subcategoria'];
+    $select = "SELECT * from tb_subcategorias where cl_id = $id_subcategoria_b ";
+    $consultar_subcategorias= mysqli_query($conecta, $select);
+    $linha  = mysqli_fetch_assoc($consultar_subcategorias);
+    $subcategoria_b = utf8_encode($linha['cl_subcategoria']);
+    $ordem_b = $linha['cl_ordem_menu'];
+    $diretorio_b = $linha['cl_diretorio'];
+    $url_b = $linha['cl_url'];
+    $categoria_subcategoria_b = $linha['cl_categoria'];
+    $diretorio_banco_b = $linha['cl_diretorio_bd'];
+
+    
+    
+}
+
+
 
 //consultar categoria
 $select = "SELECT * from tb_categorias";

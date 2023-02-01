@@ -2,8 +2,6 @@
 include "../../conexao/conexao.php";
 include "../../funcao/funcao.php";
 session_start();
-$usuario =  $_POST["usuario"];
-$senha =  $_POST["senha"];
 
 
 if (isset($_COOKIE['algn'])) {

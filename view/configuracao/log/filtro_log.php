@@ -6,17 +6,21 @@ include "../../../modal/configuracao/log/log.php";
 ?>
 <div class="title">
     <label class="form-label">Consultar log do sistema</label>
+    <div class="msg_title">
+        <p>Esse menu tem como função o gerênciamento de log.Aqui fica armazenado registros de eventos ocorridos no sistema, como
+            erros, alertas, atividades de usuários e outras informações relevantes. </p>
+    </div>
 </div>
 <hr>
 
 <div class="row">
     <div class="col-md-2  mb-1">
-        <input type="text" class="form-control"  maxlength="10" onkeyup="mascaraData(this);"  id="data_incial" name="data_incial" placeholder="Data inicial"
-            value="<?php echo $data_incial_log;?>">
+        <input type="text" class="form-control" maxlength="10" onkeyup="mascaraData(this);" id="data_incial"
+            name="data_incial" placeholder="Data inicial" value="<?php echo $data_incial_log;?>">
     </div>
     <div class="col-md-2  mb-1">
-        <input type="text" class="form-control" maxlength="10" onkeyup="mascaraData(this);"  id="data_final" name="data_final" placeholder="Data Final"
-            value="<?php echo $data_final_log;?>">
+        <input type="text" class="form-control" maxlength="10" onkeyup="mascaraData(this);" id="data_final"
+            name="data_final" placeholder="Data Final" value="<?php echo $data_final_log;?>">
     </div>
 
     <div class="col-md-2 mb-1">

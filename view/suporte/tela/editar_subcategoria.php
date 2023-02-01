@@ -1,34 +1,39 @@
 <?php  include "../../../conexao/conexao.php"; ?>
 <?php   include "../../../modal/suporte/tela/gerenciar_tela.php" ?>
-<form id="cadastrar_subcategoria">
+<form id="editar_subcategoria">
     <div class="row">
-        <input type="hidden" name="formulario_cadastrar_subcategoria">
+        <input type="hidden" name="formulario_editar_subcategoria">
 
         <?php include "../../input_include/usuario_logado.php"?>
-
+        <input type="hidden" value="<?php echo $id_subcategoria_b; ?>" name="id_subcategoria">
         <div class="col-sm  mb-1">
             <label for="subcategoria" class="form-label">Subcategoria</label>
-            <input type="text" class="form-control" id="subcategoria" name="subcategoria" placeholder="" value="">
+            <input type="text" class="form-control" id="subcategoria" name="subcategoria" placeholder=""
+                value="<?php echo $subcategoria_b ?>">
         </div>
         <div class="col-sm  mb-1">
             <label for="ordem" class="form-label">Ordem</label>
-            <input type="text" class="form-control" id="ordem" name="ordem" placeholder="" value="">
+            <input type="text" class="form-control" id="ordem" name="ordem" placeholder=""
+                value="<?php echo $ordem_b ?>">
         </div>
         <div class="col-sm mb-1">
             <label for="diretorio_subc" class="form-label">Diretorio subcategoria</label>
-            <input type="text" class="form-control" id="diretorio_subc" name="diretorio_subc" placeholder="" value="">
+            <input type="text" class="form-control" id="diretorio_subc" name="diretorio_subc" placeholder=""
+                value="<?php echo $diretorio_b ?>">
         </div>
     </div>
     <div class="row">
         <div class="col-sm  mb-1">
             <label for="url_sub" class="form-label">Url subcategoria</label>
-            <input type="text" class="form-control" id="url_sub" name="url_sub" placeholder="" value="">
+            <input type="text" class="form-control" id="url_sub" name="url_sub" placeholder=""
+                value="<?php echo $url_b ?>">
         </div>
         <div class="col-sm  mb-1">
             <label for="diretorio_bd" class="form-label">Diretorio Banco de dados</label>
-            <input type="text" class="form-control" id="diretorio_bd" name="diretorio_bd" placeholder="" value="">
+            <input type="text" class="form-control" id="diretorio_bd" name="diretorio_bd" placeholder=""
+                value="<?php echo $diretorio_banco_b ?>">
         </div>
-     
+
         <div class="col-sm  mb-1">
             <label for="categoria" class="form-label">Categoria</label>
             <select name="categoria" class="form-select" id="categoria">
@@ -36,16 +41,22 @@
                 <?php while($linha = mysqli_fetch_assoc($consultar_categorias_selecao)){ 
                 $id_categoria = $linha['cl_id'];
                 $categoria_b = utf8_encode($linha['cl_categoria']);
+                if($categoria_subcategoria_b == $id_categoria){
+                ?>
+                <option value="<?php echo $id_categoria; ?> " selected><?php echo $categoria_b  ?></option>
+                <?php
+            }else{
                 ?>
                 <option value="<?php echo $id_categoria; ?>"><?php echo $categoria_b  ?></option>
-
                 <?php
+            }
             } ?>
             </select>
         </div>
 
-        <div class="group-btn">
-            <button type="subbmit" class="btn btn-success">Cadastrar</button>
+        <div class="group-btn d-grid gap-2 d-sm-block">
+            <button type="subbmit" class="btn btn-outline-success">Alterar</button>
+            <button type="button" id="voltar_cadastro" class="btn btn-outline-dark">Voltar Para Cadastro</button>
         </div>
     </div>
 
@@ -55,4 +66,4 @@
 
 <script src="js/configuracao/users/user_logado.js"></script>
 <!-- cadastro da subcategoria -->
-<script src="js/suporte/tela/cadastro_subcategoria.js"></script>
+<script src="js/suporte/tela/editar_subcategoria.js"></script>

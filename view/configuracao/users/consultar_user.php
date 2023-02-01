@@ -16,7 +16,6 @@
 </div>
 <div class="tabela">
 
-
-
 </div>
+
 <script src="js/configuracao/users/consultar_user.js"></script>

@@ -2,6 +2,9 @@
     <div class="acao">
         <div class="title">
             <label class="form-label">Cadastrar Usúario</label>
+            <div class="msg_title">
+                <p>Esse menu tem como função o gerênciamento de usúarios. Cadastrar, editar, resetar senha e inativar usúario e feito aqui ! </p>
+            </div>
         </div>
         <hr>
         <div class="row">

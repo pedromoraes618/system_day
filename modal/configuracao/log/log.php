@@ -9,7 +9,7 @@ die("Falha no banco de dados"); // colocar o svg do erro
 if(isset($_GET['consultar_log'])){
     $consulta = $_GET['consultar_log'];
     if($consulta == "inical"){
-    $data_incial_log_m  = date('Y-01-01 01:01:01');
+    $data_incial_log_m  = date('Y-m-01 01:01:01');
     $data_final_log_m = date('Y-m-31 23:59:59');
     $select = "SELECT log.cl_data_modificacao , log.cl_usuario,log.cl_descricao from tb_log as log where log.cl_data_modificacao 
     between '$data_incial_log_m' and '$data_final_log_m'";

@@ -41,11 +41,11 @@ include "../../../../modal/suporte/tela/gerenciar_tela.php";
             <td><?php echo $categoria_b; ?></td>
             
             
-            <td><button type="button" id_subcategoria=<?php echo $id_subcategoria_b; ?> class="btn btn-info editar_user">Editar</button>
+            <td><button type="button" id_subcategoria=<?php echo $id_subcategoria_b; ?> class="btn btn-info editar_subcategoria">Editar</button>
             </td>
         </tr>
 
         <?php }?>
     </tbody>
 </table>
-<script src="js/configuracao/users/editar_user.js"></script>
+<script src="js/suporte/tela/table/editar_subcategoria.js"></script>

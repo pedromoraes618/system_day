@@ -41,7 +41,7 @@ function cadastrar_categoria(dados) {
                 data: "consultar_tela_categoria=inicial",
                 url: "view/suporte/tela/table/consultar_categoria.php",
                 success: function(result) {
-                    return $(".tabela").html(result);
+                    return $(".table").html(result);
                 },
             });
 

@@ -3,7 +3,7 @@ include "../../../../modal/configuracao/log/log.php";
 include "../../../../funcao/funcao.php";
 ?>
 
-<div class="table">
+<div class="tabela">
     <table class="table">
         <thead>
             <tr>

@@ -11,7 +11,7 @@ include "../../../../modal/suporte/tela/gerenciar_tela.php";
             <th scope="col">Categoria</th>
             <th scope="col">Icone</th>
             <th scope="col">Ordem</th>
-      
+
         </tr>
     </thead>
     <tbody>
@@ -25,14 +25,15 @@ include "../../../../modal/suporte/tela/gerenciar_tela.php";
         <tr>
             <th scope="row"><?php echo $id_categoria_b ?></th>
             <td><?php echo $categoria_b; ?></td>
-            <td ><?php echo $icone_b; ?></td>
+            <td><?php echo $icone_b; ?></td>
             <td><?php echo $ordem_b; ?></td>
-            
-            <td><button type="button" id_categoria=<?php echo $id_categoria_b; ?> class="btn btn-info editar_user">Editar</button>
+
+            <td><button type="button" id_categoria=<?php echo $id_categoria_b; ?>
+                    class="btn btn-info editar_categoria">Editar</button>
             </td>
         </tr>
 
         <?php }?>
     </tbody>
 </table>
-<script src="js/configuracao/users/editar_user.js"></script>
+<script src="js/suporte/tela/table/editar_categoria.js"></script>

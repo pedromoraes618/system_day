@@ -42,7 +42,7 @@ function cadastrar_subcategoria(dados) {
                 data: "consultar_tela_subcategoria=inicial",
                 url: "view/suporte/tela/table/consultar_subcategoria.php",
                 success: function(result) {
-                    return $(".tabela").html(result);
+                    return $(".table").html(result);
                 },
             });
             subcategoria.value = "";
