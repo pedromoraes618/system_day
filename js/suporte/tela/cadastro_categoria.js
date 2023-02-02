@@ -2,11 +2,10 @@ $("#cadastrar_categoria").submit(function(e) {
     e.preventDefault()
     var cadastrar = $(this);
     var retorno = cadastrar_categoria(cadastrar)
-
     var categoria = document.getElementById("categoria")
     var ordem = document.getElementById("ordem")
     var icone = document.getElementById("icone")
-
+  
 })
 
 function cadastrar_categoria(dados) {
@@ -49,7 +48,10 @@ function cadastrar_categoria(dados) {
         } else {
             Swal.fire({
                 icon: 'error',
-                title: $mensagem,
+                title: 'Verifique!',
+                text: $mensagem,
+                timer: 7500,
+            
 
             })
 

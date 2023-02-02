@@ -58,7 +58,10 @@ function resetar_senha_usuario(dados) {
         } else {
             Swal.fire({
                 icon: 'error',
-                title: $mensagem,
+                title: 'Verifique!',
+                text: $mensagem,
+                timer: 7500,
+            
 
             })
 

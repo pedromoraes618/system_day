@@ -35,6 +35,7 @@
                     <option value="0">Selecione...</option>
                     <option value="adm">Adminstrador</option>
                     <option value="usuario">Usúario</option>
+                 
                 </select>
             </div>
             <div class="col-sm  mb-1">

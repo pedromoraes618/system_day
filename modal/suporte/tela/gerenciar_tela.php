@@ -48,6 +48,7 @@ if(isset($_POST['formulario_cadastrar_categoria'])){
         $retornar = array();
         $nome_usuario_logado = $_POST["nome_usuario_logado"];
         $id_usuario_logado = $_POST["id_usuario_logado"];
+        $perfil_usuario_logado = $_POST['perfil_usuario_logado'];
 
         $categoria = utf8_decode($_POST["categoria"]);
         $icone = $_POST["icone"];
@@ -60,6 +61,8 @@ if(isset($_POST['formulario_cadastrar_categoria'])){
             $retornar["mensagem"] =mensagem_alerta_cadastro("icone");
         }elseif($ordem == "" ){
             $retornar["mensagem"] =mensagem_alerta_cadastro("ordem");
+        }elseif($perfil_usuario_logado !="suporte"){
+            $retornar["mensagem"] = mensagem_alerta_permissao();
         }else{
          
 
@@ -87,6 +90,7 @@ if(isset($_POST['formulario_cadastrar_subcategoria'])){
         $retornar = array();
         $nome_usuario_logado = $_POST["nome_usuario_logado"];
         $id_usuario_logado = $_POST["id_usuario_logado"];
+        $perfil_usuario_logado = $_POST['perfil_usuario_logado'];
 
         $subcategoria = utf8_decode($_POST["subcategoria"]);
         $orden = $_POST["ordem"];
@@ -108,7 +112,10 @@ if(isset($_POST['formulario_cadastrar_subcategoria'])){
             $retornar["mensagem"] =mensagem_alerta_cadastro("diretorio banco de dados");
         }elseif($categoria == "0" ){
             $retornar["mensagem"] ="Favor selecione a Categoria";
+        }elseif($perfil_usuario_logado !="suporte"){
+            $retornar["mensagem"] = mensagem_alerta_permissao();
         }else{
+         
          
             $inset = "INSERT INTO tb_subcategorias (cl_subcategoria,cl_ordem_menu,cl_diretorio,cl_url,cl_categoria,cl_diretorio_bd) VALUES ('$subcategoria','$orden','$diretorio_subc','$url_sub','$categoria','$diretorio_bd')";
             $operacao_inserir = mysqli_query($conecta, $inset);
@@ -133,6 +140,8 @@ if(isset($_POST['formulario_editar_categoria'])){
         $retornar = array();
         $nome_usuario_logado = $_POST["nome_usuario_logado"];
         $id_usuario_logado = $_POST["id_usuario_logado"];
+        $perfil_usuario_logado = $_POST['perfil_usuario_logado'];
+
         $id_categoria = $_POST["id_categoria"];
         $categoria = utf8_decode($_POST["categoria"]);
         $icone = $_POST["icone"];
@@ -144,8 +153,10 @@ if(isset($_POST['formulario_editar_categoria'])){
             $retornar["mensagem"] =mensagem_alerta_cadastro("icone");
         }elseif($ordem == "" ){
             $retornar["mensagem"] =mensagem_alerta_cadastro("ordem");
-        }
-        else{
+        }elseif($perfil_usuario_logado !="suporte"){
+            $retornar["mensagem"] = mensagem_alerta_permissao();
+        }else{
+         
       
         $update = "UPDATE tb_categorias set cl_categoria = '$categoria', cl_icone = '$icone', cl_ordem = '$ordem' where cl_id = $id_categoria ";
         $operacao_update = mysqli_query($conecta, $update);
@@ -169,6 +180,7 @@ if(isset($_POST['formulario_editar_subcategoria'])){
         $retornar = array();
         $nome_usuario_logado = $_POST["nome_usuario_logado"];
         $id_usuario_logado = $_POST["id_usuario_logado"];
+        $perfil_usuario_logado = $_POST['perfil_usuario_logado'];
 
         $id_subcategoria = $_POST["id_subcategoria"];
         $subcategoria = utf8_decode($_POST["subcategoria"]);
@@ -190,8 +202,10 @@ if(isset($_POST['formulario_editar_subcategoria'])){
             $retornar["mensagem"] =mensagem_alerta_cadastro("diretorio banco de dados");
         }elseif($categoria == "0" ){
             $retornar["mensagem"] ="Favor selecione a Categoria";
+        }elseif($perfil_usuario_logado !="suporte"){
+            $retornar["mensagem"] = mensagem_alerta_permissao();;
         }else{
-      
+
         $update = "UPDATE tb_subcategorias set cl_subcategoria = '$subcategoria',cl_ordem_menu = '$ordem' ,cl_diretorio = '$diretorio_subc', cl_url = '$url_sub', cl_categoria ='$categoria', cl_diretorio_bd = '$diretorio_bd' where cl_id = $id_subcategoria";
         $operacao_update = mysqli_query($conecta, $update);
         if($operacao_update){

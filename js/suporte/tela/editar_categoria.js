@@ -56,8 +56,10 @@ function edt_categoria(dados) {
         } else {
             Swal.fire({
                 icon: 'error',
-                title: $mensagem,
-
+                title: 'Verifique!',
+                text: $mensagem,
+                timer: 7500,
+            
             })
 
         }

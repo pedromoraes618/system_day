@@ -21,3 +21,4 @@ include "view/title/titulo.php";
 <!-- usuario logado -->
 <input type="hidden" id="user_logado" value="<?php echo $usuario ?>">
 <input type="hidden" id="id_user_logado" value="<?php echo $id_user ?>">
+<input type="hidden" id="perfil_user_logado" value="<?php echo $tipo ?>">
