@@ -1,3 +1,4 @@
+
 <form id="cadastrar_categoria">
     <div class="row">
         <input type="hidden" name="formulario_cadastrar_categoria">

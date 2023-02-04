@@ -14,7 +14,7 @@ if(isset($_GET['consultar_parametro'])){
         $configuracao = ($_GET['conteudo_configuracao']);
 
         $select = "SELECT * from tb_parametros where cl_descricao like '%{$pesquisa}%' ";
-        if($configuracao !="s"){
+        if($configuracao !="0"){
             $select .=" and cl_configuracao = '$configuracao'";
         }
         $consultar_parametros= mysqli_query($conecta, $select);
@@ -90,7 +90,7 @@ if(isset($_POST['formulario_editar_parametro'])){
         if($operacao_update){
         $retornar["sucesso"] = true;
         //registrar no log
-        $mensagem =  (utf8_decode("Usúario") . "$nome_usuario_logado alterou dados do parametro $configuracao");
+        $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado alterou dados do parametro $configuracao");
         registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
             }  
         }

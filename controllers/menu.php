@@ -1,7 +1,7 @@
 <?php
 
 if(isset($_GET['menu'])){
-   
+   include "funcao/funcao.php";
     if(isset($_GET['ctg'])){
         if(isset($_GET['id'])){
             $id_subctg = $_GET['id'];

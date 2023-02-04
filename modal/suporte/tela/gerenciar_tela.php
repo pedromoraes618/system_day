@@ -163,7 +163,7 @@ if(isset($_POST['formulario_editar_categoria'])){
         if($operacao_update){
         $retornar["sucesso"] = true;
         //registrar no log
-        $mensagem =  (utf8_decode("Usúario") . "$nome_usuario_logado alterou dados da categoria $categoria");
+        $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado alterou dados da categoria $categoria");
         registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
             }  
         }
@@ -211,7 +211,7 @@ if(isset($_POST['formulario_editar_subcategoria'])){
         if($operacao_update){
         $retornar["sucesso"] = true;
         //registrar no log
-        $mensagem =  (utf8_decode("Usúario") . "$nome_usuario_logado alterou dados da subategoria $subcategoria");
+        $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado alterou dados da subategoria $subcategoria");
         registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
             }  
         }

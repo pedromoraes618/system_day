@@ -2,14 +2,17 @@
 date_default_timezone_set('America/Fortaleza');
 $data = date('Y/m/d H:i:s');
 
+$data_lancamento = date('y-m-d');
+
 $data_incial_log =date('01/m/Y');
 $data_final_log =date('d/m/Y');
 
+$data_inicial=date('01/m/Y');
+$data_final=date('d/m/Y');
 ///formatar data 
 function formatarTimeStamp($value){
     $value = date("d/m/Y H:i:s",strtotime($value));
     return $value;
-  
  }
 //mensagem de alerta cadastro
 function mensagem_alerta_cadastro($campo){
@@ -18,9 +21,26 @@ function mensagem_alerta_cadastro($campo){
 
 //mensagem de alerta cadastro
 function mensagem_alerta_permissao(){
-    return "Ação bloqueada. Você não possui permissão para realizar esta ação no sistema. Por favor, verifique as suas permissões de acesso ou entre em contato com o administrador do sistema para obter mais informações.";
+    return "Ação bloqueada. Você não possui permissão para realizar esta ação no sistema. Por favor, verifique as suas permissões de acesso ou 
+     entre em contato com o administrador do sistema para obter mais informações.";
+}
+//formatar data do banco de dados
+function formatDateB($value)
+{
+    if (($value != "") and ($value != "0000-00-00")) {
+        $value = date("d/m/Y", strtotime($value));
+        return $value;
+    }
 }
 
+function datecheck($value){
+    $d = DateTime::createFromFormat('d/m/Y', $value);
+    if($d && $d->format('d/m/Y') == $value){
+    return true;
+    }else{
+    return false;
+    }
+}
 
 function verificar_user($conecta,$usuario,$acao){
     if($acao =="cadastrar"){

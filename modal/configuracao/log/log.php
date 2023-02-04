@@ -1,5 +1,6 @@
 <?php
 include "/../../../conexao/conexao.php";
+
 $select = "SELECT * from tb_users";
 $consultar_usuarios = mysqli_query($conecta, $select);
 if(!$consultar_usuarios){
@@ -7,6 +8,7 @@ die("Falha no banco de dados"); // colocar o svg do erro
 }
 
 if(isset($_GET['consultar_log'])){
+    include "/../../../funcao/funcao.php";
     $consulta = $_GET['consultar_log'];
     if($consulta == "inical"){
     $data_incial_log_m  = date('Y-m-01 01:01:01');
@@ -22,6 +24,7 @@ if(isset($_GET['consultar_log'])){
     $data_incial_log_d = $_GET['data_inicial'];
     $data_final_log_d =$_GET['data_final'];
   
+    if(datecheck($data_final_log_d) && datecheck($data_final_log_d)){
     if($data_incial_log_d !=""){
     $div1 = explode("/",$_GET['data_inicial']);
     $data_incial_log_d = $div1[2]."-".$div1[1]."-".$div1[0];  
@@ -51,5 +54,6 @@ if(isset($_GET['consultar_log'])){
     if(!$consultar_log){
     die("Falha no banco de dados"); // colocar o svg do erro
     }
+}
 }
 }

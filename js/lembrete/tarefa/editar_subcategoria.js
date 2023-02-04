@@ -5,54 +5,52 @@ $("#voltar_cadastro").click(function(e) {
 
     $.ajax({
         type: 'GET',
-        data: "cadastro_parametro=true",
-        url: "view/suporte/parametro/cadastro_parametro.php",
+        data: "cadastro_subcategoria=true",
+        url: "view/suporte/tela/cadastro_subcategoria.php",
         success: function(result) {
-            return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result);
+            return $(".bloco-cadastro-1").html(result);
         },
     });
 })
 
 //editar usuario
-$("#editar_parametro").submit(function(e) {
-  
+$("#editar_subcategoria").submit(function(e) {
     e.preventDefault()
-    var editar = $(this);
-    var retorno = edt_parametro(editar)
+    var editar_subcategoria = $(this);
+    var retorno = edt_subcategoria(editar_subcategoria)
 })
 
-function edt_parametro(dados) {
- 
+function edt_subcategoria(dados) {
+   
     $.ajax({
         type: "POST",
         data: dados.serialize(),
-        url: "modal/suporte/parametro/gerenciar_parametro.php",
+        url: "modal/suporte/tela/gerenciar_tela.php",
         async: false
     }).then(sucesso, falha);
 
     function sucesso(data) {
-
         $sucesso = $.parseJSON(data)["sucesso"];
         $mensagem = $.parseJSON(data)["mensagem"];
         if ($sucesso) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Parametro alterada com sucesso',
+                title: 'Subcategoria alterada com sucesso',
                 showConfirmButton: false,
                 timer: 1500
 
+
             })
-            //consultar parametros
+            //consultar categorias já cadastradas
             $.ajax({
             type: 'GET',
-            data: "consultar_parametro=inicial",
-            url: "view/suporte/parametro/table/consultar_parametro.php",
+            data: "consultar_tela_subcategoria=inicial",
+            url: "view/suporte/tela/table/consultar_subcategoria.php",
             success: function(result) {
-            return $(".bloco-pesquisa-2 .tabela").html(result);
+            return $(".tabela").html(result);
             },
             });
-
 
         } else {
             Swal.fire({
@@ -70,4 +68,4 @@ function edt_parametro(dados) {
         console.log("erro");
     }
 
-}d
+}

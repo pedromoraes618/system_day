@@ -4,7 +4,7 @@ include "../../funcao/funcao.php";
 session_start();
 
 
-if (isset($_COOKIE['algn'])) {
+if (isset($_COOKIE['algn'])) { // verificar se existe o cookie para login automatico se sim logar usuario se não realizar o logout
     $chave_aleatoria = $_COOKIE['algn'];
 
     $consulta  = "SELECT * FROM tb_users WHERE  cl_chave_aleatoria = '$chave_aleatoria'";
@@ -15,6 +15,7 @@ if (isset($_COOKIE['algn'])) {
         if (!empty($user_acess)){
      
              $_SESSION["user_session_portal"] = $user_acess["cl_id"];
+             $usuario = $user_acess["cl_usuario"];
              echo "ok";
         
             //registrar no log    

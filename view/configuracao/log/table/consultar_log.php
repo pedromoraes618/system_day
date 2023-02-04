@@ -1,6 +1,6 @@
 <?php 
 include "../../../../modal/configuracao/log/log.php";
-include "../../../../funcao/funcao.php";
+
 ?>
 
 <div class="tabela">
@@ -12,6 +12,7 @@ include "../../../../funcao/funcao.php";
                 <th scope="col">Mensagem</th>
             </tr>
         </thead>
+        <?php if(isset($consultar_log)){//verificar se existe a requisição ?>
         <tbody>
             <?php while($linha = mysqli_fetch_assoc($consultar_log)){ 
                 $data = $linha['cl_data_modificacao'];
@@ -25,7 +26,7 @@ include "../../../../funcao/funcao.php";
 
 
             </tr>
-            <?PHP }?>
+            <?PHP }}?>
         </tbody>
     </table>
 </div>
