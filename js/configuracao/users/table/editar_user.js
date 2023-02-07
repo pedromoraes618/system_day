@@ -1,6 +1,6 @@
 $(".editar_user").click(function(e) {
-    $('.bloco-pesquisa-menu .bloco-pesquisa-1').css("display", 'none')
-    $('.bloco-pesquisa-menu .bloco-pesquisa-1').fadeIn(500)
+    // $('.bloco-pesquisa-menu .bloco-pesquisa-1').css("display", 'none')
+    // $('.bloco-pesquisa-menu .bloco-pesquisa-1').fadeIn(500)
     let id_user = $(this).attr("id_user")
 
     $.ajax({

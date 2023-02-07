@@ -14,8 +14,8 @@ let conteudo_pesquisa = document.getElementById("pesquisa_conteudo")
 let conteudo_situacao = document.getElementById("situacao_user")
 //consultar usuario especifico
 $("#pesquisar_user").click(function(e) {
-    $('.tabela').css("display", 'none')
-    $('.tabela').fadeIn(500)
+    // $('.tabela').css("display", 'none')
+    // $('.tabela').fadeIn(500)
 
     $.ajax({
         type: 'GET',

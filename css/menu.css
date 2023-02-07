@@ -260,6 +260,7 @@ input{
 /* menu mobile */
 .topo .offcanvas-start{
     background-color: var(--cor_principal);
+    overflow: auto;
    
  }
  .topo .offcanvas-start h5{
@@ -275,10 +276,12 @@ input{
  }
  .topo .offcanvas-start nav{
     color: white;
+    overflow: auto;
  }
  
  .topo .offcanvas-start nav ul{
     padding: 0px;
+    overflow: auto;
  }
 
 
@@ -439,7 +442,6 @@ font-size: 1.3em;
 .bloco .bloco-right .topo .right ul ul li:hover{
     margin-left: 3px;
     color: #bbbbbb;
- 
 }
 
 /* .bloco .bloco-right .topo .right ul li:hover ul{
@@ -459,8 +461,8 @@ font-size: 1.3em;
     color: white;
     margin-left: 10px;
     cursor: pointer;
- 
 }
+
 .bloco .bloco-right .topo #dropdown_user{
  display: flex;
  flex-wrap: wrap;
@@ -472,30 +474,24 @@ font-size: 1.3em;
     padding: 0px;
 }
 
-
-
-
-
 .bloco .bloco-right .bloco-pesquisa{
     height: 80vh;
     position: relative;
 }
 
 .bloco .bloco-right .group-pesquisa{
-display: flex;
-justify-content:space-around;
-align-items:center;
-padding-top: 50px;
-position: relative;
-
+    display: flex;
+    justify-content:space-around;
+    align-items:center;
+    padding-top: 50px;
+    position: relative;
 }
 
 .bloco .bloco-right .bloco-pesquisa .bloco-pesquisa-1{
     width: 100%;
     width: fit-content;
-
-
 }
+
 .bloco .bloco-right .bloco-pesquisa .bloco-pesquisa-1 .row{
     --bs-gutter-x: 0;
     --bs-gutter-y: 0;
@@ -506,8 +502,8 @@ position: relative;
     width: fit-content;
     border-radius: 2px;
     padding: 3px;
-  
 }
+
 .bloco .bloco-right .bloco-pesquisa .bloco-pesquisa-1 .input-pesquisa input{
     width: 350px;
     padding: 3px;
@@ -534,9 +530,7 @@ position: relative;
     padding: 50px;
     height: 90%;
     margin: 0px;
-
     overflow: auto;
-
 }
 
 
@@ -544,13 +538,14 @@ position: relative;
     background-color: var(--cor_principal);
 }
 
-
 .bloco .bloco-right .bloco-pesquisa .tabela .thead-dark tr th{
     color: white;
 }
+
 .bloco-pesquisa{
  position: relative;
 }
+
 .bloco-pesquisa .bloco-btn .btn-add{
     padding:5px 10px 5px 10px;
     color: white;
@@ -560,15 +555,13 @@ position: relative;
 
 .bloco-pesquisa .bloco-btn a{
     text-decoration: none;
-    
 }
 
 .bloco-topo{
-   
     padding: 7px;
     background-color: #0f111a;
-
 }
+
  .bloco-topo p{
     color: #bbbbbb;
     font-size: 0.9em;
@@ -578,19 +571,27 @@ position: relative;
 }
 
 .bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-1{
-
-   padding: 30px;
-  
-
+    padding: 30px;
     position: relative;
-   align-items: center;
-   -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
-   -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
-   box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
-   margin: 20px;
-   background-color: #FFFFFF;
-   border-radius: 5px;
-   
+    align-items: center;
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+    margin: 20px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+}
+.bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-1 form{
+    max-height: 450px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-1 form .card-tarefa{
+    background: rgb(249,249,249);
+    background: -moz-linear-gradient(90deg, rgba(249,249,249,1) 3%, rgba(251,251,251,1) 60%);
+    background: -webkit-linear-gradient(90deg, rgba(249,249,249,1) 3%, rgba(251,251,251,1) 60%);
+    background: linear-gradient(90deg, rgba(249,249,249,1) 3%, rgba(251,251,251,1) 60%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f9f9f9",endColorstr="#fbfbfb",GradientType=1);
 }
 
 .bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-1 .btn_ativo{
@@ -598,20 +599,18 @@ position: relative;
     color: white;
 }
 .bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-1 .msg{
-
     position:absolute;
     right: 30px;
     z-index: 5;
     top: 20px;
     cursor: pointer;
-
-
- 
 }
+
 .bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-1 .msg i{
     color:var(--cor_sub_bloco);
     font-size: 1.2em;
 }
+
 .bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-1 .msg p{
     display: none;
     width: 170px;
@@ -620,12 +619,12 @@ position: relative;
     border-radius: 10px;
     padding: 10px;
     font-size: 1.0em;
-
 }
+
 .bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-1 .group-input{
     display: block;
- 
 }
+
 .bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-1 input, select{
     display: block;
 }
@@ -641,8 +640,6 @@ position: relative;
 }
 
 .bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-1 label{
-   
-    
     
 }
 

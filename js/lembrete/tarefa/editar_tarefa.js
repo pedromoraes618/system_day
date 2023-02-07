@@ -1,18 +1,24 @@
-$("#cadastrar_tarefa").submit(function(e) {
-    e.preventDefault()
-
-    var cadastrar = $(this);
-    var retorno = cadastrar_tarefa(cadastrar)
-    var descricao = document.getElementById("descricao")
-    var data_limite = document.getElementById("data_limite")
-    var usuario = document.getElementById("usuario")
-    var comentario = document.getElementById("comentario")
-    let status_lembrete = document.getElementById("status_lembrete")
-    let prioridade = document.getElementById("prioridade")
+//voltar para tela de cadastro
+$("#voltar_cadastro").click(function(e) {
+    $.ajax({
+        type: 'GET',
+        data: "cadastro_tarefa=true",
+        url: "view/lembrete/tarefa/cadastro_tarefa.php",
+        success: function(result) {
+            return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result);
+        },
+    });
 })
 
-function cadastrar_tarefa(dados) {
-   
+//editar formulario
+$("#editar_tarefa").submit(function(e) {
+    e.preventDefault()
+    var editar_formulario = $(this);
+    var retorno = edtarefa(editar_formulario)
+})
+
+
+function edtarefa(dados) {
     $.ajax({
         type: "POST",
         data: dados.serialize(),
@@ -21,29 +27,21 @@ function cadastrar_tarefa(dados) {
     }).then(sucesso, falha);
 
     function sucesso(data) {
-  
+    
         $sucesso = $.parseJSON(data)["sucesso"];
         $mensagem = $.parseJSON(data)["mensagem"];
+    
         if ($sucesso) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Taréfa cadastrada com sucesso',
+                title: 'Tarefa alterada com sucesso',
                 showConfirmButton: false,
                 timer: 1500
+
+
             })
-
-
-           
-            //resetar valores de input
-            descricao.value = "";
-            data_limite.value = "";
-            comentario.value = "";
-            usuario.value = "0";
-            status_lembrete.value = "0";
-            prioridade.checked = false;
-       
-            //realizar a consulta da tabela
+            //consultar informaçãoes
             $.ajax({
                 type: 'GET',
                 data: "consultar_tarefa=inicial",
@@ -60,7 +58,6 @@ function cadastrar_tarefa(dados) {
                 text: $mensagem,
                 timer: 7500,
             
-
             })
 
         }

@@ -5,8 +5,8 @@ $("#voltar_cadastro").click(function(e) {
 
     $.ajax({
         type: 'GET',
-        data: "cadastro_categoria=true",
-        url: "view/suporte/tela/cadastro_categoria.php",
+        data: "cadastro_subcategoria=true",
+        url: "view/suporte/tela/cadastro_subcategoria.php",
         success: function(result) {
             return $(".bloco-cadastro-1").html(result);
         },
@@ -14,15 +14,14 @@ $("#voltar_cadastro").click(function(e) {
 })
 
 //editar usuario
-$("#editar_categoria").submit(function(e) {
+$("#editar_subcategoria").submit(function(e) {
     e.preventDefault()
-    var editar_categoria = $(this);
-    var retorno = edt_categoria(editar_categoria)
-
-
+    var editar_subcategoria = $(this);
+    var retorno = edt_subcategoria(editar_subcategoria)
 })
 
-function edt_categoria(dados) {
+function edt_subcategoria(dados) {
+   
     $.ajax({
         type: "POST",
         data: dados.serialize(),
@@ -37,7 +36,7 @@ function edt_categoria(dados) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Categoria alterada com sucesso',
+                title: 'Subcategoria alterada com sucesso',
                 showConfirmButton: false,
                 timer: 1500
 
@@ -46,8 +45,8 @@ function edt_categoria(dados) {
             //consultar categorias já cadastradas
             $.ajax({
             type: 'GET',
-            data: "consultar_tela_categoria=inicial",
-            url: "view/suporte/tela/table/consultar_categoria.php",
+            data: "consultar_tela_subcategoria=inicial",
+            url: "view/suporte/tela/table/consultar_subcategoria.php",
             success: function(result) {
             return $(".tabela").html(result);
             },

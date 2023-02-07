@@ -4,11 +4,10 @@ if(isset($_GET['consultar_tarefa'])){
 include "../../../../conexao/conexao.php";
 include "../../../../funcao/funcao.php";
     $consulta = $_GET['consultar_tarefa'];
-   
     if($consulta== "inicial"){
-        $select = "SELECT trf.cl_id, userord.cl_usuario as usuarioordem, trf.cl_data_lancamento,trf.cl_descricao,trf.cl_comentario,user.cl_usuario 
-        as usuario_func,trf.cl_prioridade,trf.cl_data_limite,strf.cl_descricao as status from tb_tarefas as trf inner join tb_users as user on user.cl_id = trf.cl_usuario_func inner join tb_users as userord on userord.cl_id = trf.cl_usuario
-        inner join tb_status_tarefas as strf on strf.cl_id = trf.cl_status order by trf.cl_data_lancamento desc,trf.cl_status";
+        $select = "SELECT trf.cl_id, trf.cl_data_lancamento,trf.cl_descricao,trf.cl_comentario,user.cl_usuario 
+        as usuario,trf.cl_prioridade,trf.cl_data_limite,strf.cl_descricao as status from tb_tarefas as trf inner join tb_users as user on user.cl_id = trf.cl_usuario 
+        inner join tb_status_tarefas as strf on strf.cl_id = trf.cl_status order by trf.cl_data_lancamento desc ,trf.cl_status";
         $consultar_tarefas= mysqli_query($conecta, $select);
         if(!$consultar_tarefas){
         die("Falha no banco de dados"); // colocar o svg do erro
@@ -33,8 +32,8 @@ include "../../../../funcao/funcao.php";
         }
     
 
-    $select = "SELECT trf.cl_id,userord.cl_usuario as usuarioordem, trf.cl_data_lancamento,trf.cl_descricao,trf.cl_comentario,user.cl_usuario 
-    as usuario_func,trf.cl_prioridade,trf.cl_data_limite,strf.cl_descricao as status from tb_tarefas as trf inner join tb_users as user on user.cl_id = trf.cl_usuario_func inner join tb_users as userord on userord.cl_id = trf.cl_usuario 
+    $select = "SELECT trf.cl_id, trf.cl_data_lancamento,trf.cl_descricao,trf.cl_comentario,user.cl_usuario 
+    as usuario,trf.cl_prioridade,trf.cl_data_limite,strf.cl_descricao as status from tb_tarefas as trf inner join tb_users as user on user.cl_id = trf.cl_usuario 
     inner join tb_status_tarefas as strf on strf.cl_id = trf.cl_status where trf.cl_descricao like '%{$pesquisa}%' and trf.cl_data_lancamento between '$data_inicial' and '$data_final' ";
     if($status !="0"){
         $select .=" and trf.cl_status = '$status'";
@@ -91,8 +90,8 @@ if(isset($_POST['formulario_cadastrar_tarefa'])){
         
 
          
-        $inset = "INSERT INTO tb_tarefas (cl_data_lancamento,cl_descricao,cl_data_limite,cl_status,cl_usuario,cl_comentario,cl_prioridade,cl_usuario_func)
-         VALUES ('$data_lancamento','$descricao','$data_limite','$status','$id_usuario_logado','$comentario','$prioridade','$usuario')";
+        $inset = "INSERT INTO tb_tarefas (cl_data_lancamento,cl_descricao,cl_data_limite,cl_status,cl_usuario,cl_comentario,cl_prioridade)
+         VALUES ('$data_lancamento','$descricao','$data_limite','$status','$usuario','$comentario','$prioridade')";
         $operacao_inserir = mysqli_query($conecta, $inset);
         if($operacao_inserir){
         $retornar["sucesso"] = true;
@@ -148,12 +147,12 @@ if(isset($_POST['formulario_editar_tarefa'])){
        }   
 
 
-        $update = "UPDATE tb_tarefas set cl_descricao = '$descricao', cl_data_limite = '$data_limite', cl_status = '$status',cl_usuario='$id_usuario_logado',cl_comentario='$comentario',cl_prioridade = '$prioridade',cl_usuario_func='$usuario' where cl_id = $id_tarefa";
+        $update = "UPDATE tb_tarefas set cl_descricao = '$descricao', cl_data_limite = '$data_limite', cl_status = '$status',cl_usuario='$usuario',cl_comentario='$comentario',cl_prioridade = '$prioridade' where cl_id = $id_tarefa";
         $operacao_update = mysqli_query($conecta, $update);
         if($operacao_update){
         $retornar["sucesso"] = true;
         //registrar no log
-        $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado alterou tarefa de codigo $id_tarefa");
+        $mensagem =  (utf8_decode("Usúario") . "$nome_usuario_logado alterou tarefa de código $id_tarefa");
         registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
             }  
         }
@@ -162,22 +161,44 @@ if(isset($_POST['formulario_editar_tarefa'])){
 }
 
 
-//trazer informaçãoes
-if(isset($_GET['editar_tarefa'])==true){
+///Editar formulario
+if(isset($_POST['atualizar_minha_tarefa'])){
     include "../../../conexao/conexao.php";
     include "../../../funcao/funcao.php";
-    $id_tarefa = $_GET['id_tarefa'];
-    $select = "SELECT * from tb_tarefas where cl_id = $id_tarefa";
-    $consultar_tarefas= mysqli_query($conecta, $select);
-    $linha  = mysqli_fetch_assoc($consultar_tarefas);
-    $descricao_b = utf8_encode($linha['cl_descricao']);
-    $data_limite_b = formatDateB($linha['cl_data_limite']);
-    $status_b = ($linha['cl_status']);
-    $usuario_ordem_b = $linha['cl_usuario'];
-    $comentario_b = utf8_encode($linha['cl_comentario']);
-    $comentario_func_b = utf8_encode($linha['cl_comentario_func']);
-    $prioridade_b = ($linha['cl_prioridade']);
-    $usuario_func_b = ($linha['cl_usuario_func']);
+        $retornar = array();
+      
+        $id_tarefa = $_POST["id_tarefa"];
+        $nome_usuario_logado = $_POST['user_logado'];
+        $status = $_POST["status"];
+        $comentario = $_POST["comentario"];
+
+        if($status == "0"){
+            $retornar["mensagem"] =mensagem_alerta_cadastro("status");
+        }else{
+            $update = "UPDATE tb_tarefas set cl_status = '$status',cl_comentario_func= '$comentario'  where cl_id = $id_tarefa";
+            $operacao_update = mysqli_query($conecta, $update);
+            if($operacao_update){
+            $retornar["sucesso"] = true;
+            //registrar no log
+            $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado atualizou a tarefa de codigo $id_tarefa");
+            registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
+         }
+        }
+
+        echo json_encode($retornar);
+}
+
+//trazer informaçãoes
+if(isset($_GET['verificar_tarefa'])==true){
+    include "../../../conexao/conexao.php";
+    include "../../../funcao/funcao.php";
+    $usuario_logado = $_GET['usuario_logado'];
+    $select = "SELECT trf.cl_id as idtarefa, trf.cl_data_lancamento,trf.cl_descricao,trf.cl_comentario, user.cl_usuario as usuarioord , userfunc.cl_usuario as userfunc,trf.cl_status,
+    trf.cl_prioridade,trf.cl_data_limite,sttrf.cl_descricao as status from tb_tarefas as trf inner join tb_users as user on user.cl_id = trf.cl_usuario 
+    inner join tb_status_tarefas as sttrf on sttrf.cl_id = trf.cl_status inner join tb_users as userfunc on userfunc.cl_id = trf.cl_usuario_func where userfunc.cl_usuario = '$usuario_logado' and trf.cl_status !='3' order by trf.cl_data_lancamento desc, trf.cl_data_limite ";
+    $consultar_minhas_tarefas= mysqli_query($conecta, $select);
+
+
 }
 //consultar para filtro
 $select = "SELECT * from tb_status_tarefas";
@@ -191,5 +212,3 @@ $consultar_usuarios = mysqli_query($conecta, $select);
 if(!$consultar_usuarios){
 die("Falha no banco de dados"); // colocar o svg do erro
 }
-
-

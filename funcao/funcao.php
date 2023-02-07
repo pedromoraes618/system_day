@@ -24,6 +24,7 @@ function mensagem_alerta_permissao(){
     return "Ação bloqueada. Você não possui permissão para realizar esta ação no sistema. Por favor, verifique as suas permissões de acesso ou 
      entre em contato com o administrador do sistema para obter mais informações.";
 }
+
 //formatar data do banco de dados
 function formatDateB($value)
 {

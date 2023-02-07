@@ -1,4 +1,8 @@
 $(document).ready(function(e) {
+    $('.bloco-pesquisa-menu .bloco-pesquisa-1').css("display", "none")
+    $('.bloco-pesquisa-menu .bloco-pesquisa-1').fadeIn(500)
+    $('.bloco-pesquisa-menu .bloco-pesquisa-1').slideDown(100)
+   
     $.ajax({
         type: 'GET',
         data: "filtro_log=",

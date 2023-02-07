@@ -7,7 +7,7 @@
     </div>
     <div class="right" aria-expanded="false">
         <button type="img" class="btn position-relative btn_notificacao">
-            <a href="?menu&notficacao">
+            <a href="?menu&ctg=Lembrete&mtask&id=10">
                 <i class="bi bi-bell-fill"></i>
             </a>
             <?php if($qtd_lembrete > 0){

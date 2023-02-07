@@ -1,14 +1,7 @@
 <?php
-include "/../../../conexao/conexao.php";
-
-$select = "SELECT * from tb_users";
-$consultar_usuarios = mysqli_query($conecta, $select);
-if(!$consultar_usuarios){
-die("Falha no banco de dados"); // colocar o svg do erro
-}
-
 if(isset($_GET['consultar_log'])){
-    include "/../../../funcao/funcao.php";
+include "../../../../conexao/conexao.php";
+include "../../../../funcao/funcao.php";
     $consulta = $_GET['consultar_log'];
     if($consulta == "inical"){
     $data_incial_log_m  = date('Y-m-01 01:01:01');

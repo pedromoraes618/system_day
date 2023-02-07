@@ -10,7 +10,7 @@ if ($_SESSION["user_session_portal"]) {
 
 
     //verficar a quantidade de lembretes com o staus a fazer ou inciado para o usuario
-    $consulta  = "SELECT count(*) as qtd FROM tb_tarefas where cl_usuario = $user and cl_status !='3'";
+    $consulta  = "SELECT count(*) as qtd FROM tb_tarefas where cl_usuario_func = '$user' and cl_status !='3'";
     $consulta_qtd_lembrete = mysqli_query($conecta, $consulta);
     $row = mysqli_fetch_assoc($consulta_qtd_lembrete);
     $qtd_lembrete = $row['qtd'];

@@ -25,11 +25,10 @@ include "../../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
                 $data_lancamento_b = ($row['cl_data_lancamento']);
                 $descricao_b = utf8_encode($row['cl_descricao']);
                 $comentario_b = utf8_encode($row['cl_comentario']);
-             
+                $usuario_b = $row['usuario'];
                 $status_b = $row['status'];
                 $prioridade_b= $row['cl_prioridade'];
                 $data_limite_b = ($row['cl_data_limite']);
-                $usuario_func = $row['usuario_func'];
                 if($prioridade_b == "1"){
                     $prioridade_b ="sim";
                 }else{
@@ -42,7 +41,7 @@ include "../../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
             <th><?php echo formatDateB($data_lancamento_b);?></th>
             <td><?php echo $descricao_b; ?></td>
             <td><?php echo $comentario_b; ?></td>
-            <td><?php echo $usuario_func; ?></td>
+            <td><?php echo $usuario_b; ?></td>
             <td><span
                     class="badge text-bg-<?php if($status_b == "Concluido"){echo 'success' ;}else{echo 'primary';} ?>"><?php echo $status_b; ?></span>
             </td>

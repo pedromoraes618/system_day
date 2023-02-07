@@ -5,6 +5,10 @@ include "../../../modal/configuracao/users/usuario.php";
     <div class="acao">
         <div class="title">
             <label class="form-label">Editar Usúario</label>
+            <div class="msg_title">
+                <p>Esse menu tem como função o gerênciamento de usúarios. Cadastrar, editar, resetar senha e inativar
+                    usúario. </p>
+            </div>
         </div>
         <hr>
         <div class="row">
@@ -22,14 +26,14 @@ include "../../../modal/configuracao/users/usuario.php";
                 <input type="text" readonly class="form-control" id="usuario" name="usuario" placeholder=""
                     value="<?php echo $usuario_b; ?>">
             </div>
-         
+
             <div class="col-sm  mb-1">
                 <label for="perfil" class="form-label">Perfil</label>
                 <select name="perfil" id="perfil" class="form-select">
                     <option value="0">Selecione...</option>
                     <option <?php if($perfil_b == "adm"){echo "selected";} ?> value="adm">Adminstrador</option>
                     <option <?php if($perfil_b == "usuario"){echo "selected";} ?> value="usuario">Usúario</option>
-                
+
                 </select>
             </div>
             <div class="col-sm  mb-1">

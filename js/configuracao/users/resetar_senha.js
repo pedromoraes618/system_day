@@ -1,6 +1,6 @@
 $("#voltar_cadastro").click(function(e) {
-    $('.bloco-pesquisa-menu.bloco-pesquisa-1').css("display", 'none')
-    $('.bloco-pesquisa-menu .bloco-pesquisa-1').fadeIn(200)
+    // $('.bloco-pesquisa-menu.bloco-pesquisa-1').css("display", 'none')
+    // $('.bloco-pesquisa-menu .bloco-pesquisa-1').fadeIn(200)
 
     $.ajax({
         type: 'GET',

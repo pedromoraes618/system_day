@@ -1,7 +1,7 @@
 //resetar senha
 $("#resetar_senha").click(function(e) {
-    $('.bloco-pesquisa-menu .bloco-pesquisa-1').css("display", 'none')
-    $('.bloco-pesquisa-menu .bloco-pesquisa-1').fadeIn(200)
+    // $('.bloco-pesquisa-menu .bloco-pesquisa-1').css("display", 'none')
+    // $('.bloco-pesquisa-menu .bloco-pesquisa-1').fadeIn(200)
     let id_user = $(this).attr("id_user")
     $.ajax({
         type: 'GET',

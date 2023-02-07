@@ -1,6 +1,6 @@
 <?php 
 include "../../../funcao/funcao.php";
-include "../../../modal/configuracao/log/log.php";
+include "../../../modal/configuracao/log/consulta.php";
 
 //incluir data inial e final
 ?>

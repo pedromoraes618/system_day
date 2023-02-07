@@ -84,7 +84,6 @@ if(isset($_POST['formulario_editar_parametro'])){
         }elseif($perfil_usuario_logado !="suporte"){ // verificar se o usuario tem permissão para realizar alção nessa tela
             $retornar["mensagem"] = mensagem_alerta_permissao();;
         }else{
-            $retornar["mensagem"] = "Passou";
         $update = "UPDATE tb_parametros set cl_descricao = '$descricao', cl_valor = '$valor', cl_configuracao = '$configuracao' where cl_id = $id_parametro";
         $operacao_update = mysqli_query($conecta, $update);
         if($operacao_update){

@@ -1,0 +1,40 @@
+$(document).ready(function() {
+    $.ajax({
+        type: 'GET',
+        data: "verificar_tarefa=true&usuario_logado="+user_logado.value,
+        url: "view/lembrete/minha_tarefa/verificar_tarefa.php",
+        success: function(result) {
+            return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result);
+        },
+    });
+    //consultar parametros
+    $.ajax({
+        type: 'GET',
+        data: "consultar_tarefa=inicial",
+        url: "view/lembrete/tarefa/table/consultar_tarefa.php",
+        success: function(result) {
+            return $(".bloco-pesquisa-2 .tabela").html(result);
+        },
+    });
+})
+
+//valores do campo de pesquisa
+let conteudo_pesquisa = document.getElementById("pesquisa_conteudo")
+let conteudo_status = document.getElementById("status")
+let data_inicial = document.getElementById("data_inicial")
+let data_final = document.getElementById("data_final")
+//consultar //tabela detalhado
+$("#pesquisar_tarefa").click(function(e) {
+    // $('.tabela').css("display", 'none')
+    // $('.tabela').fadeIn(500)
+
+    $.ajax({
+        type: 'GET',
+        data: "consultar_tarefa=detalhado&conteudo_pesquisa=" + conteudo_pesquisa.value +
+            "&conteudo_status=" + conteudo_status.value+"&data_inicial="+data_inicial.value+"&data_final="+data_final.value,
+        url: "view/lembrete/tarefa/table/consultar_tarefa.php",
+        success: function(result) {
+            return $(".bloco-pesquisa-2 .tabela").html(result);
+        },
+    });
+})  

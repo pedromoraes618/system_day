@@ -4,6 +4,7 @@ if(isset($_GET['menu'])){
    include "funcao/funcao.php";
     if(isset($_GET['ctg'])){
         if(isset($_GET['id'])){
+            
             $id_subctg = $_GET['id'];
             if(consultar_diretorio_bd($id_subctg)!=""){//diretorio dos arquivos bd
                 include "modal/".consultar_diretorio_bd($id_subctg);

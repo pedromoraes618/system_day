@@ -44,6 +44,6 @@
 </div>
 
 
-<script src="js/lembrete/tarefa/gerenciar_tarefa.js">
+<script src="js/lembrete/minha_tarefa/gerenciar_minha_tarefa.js">
 
 </script>
