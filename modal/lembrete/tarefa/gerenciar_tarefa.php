@@ -4,11 +4,11 @@ if(isset($_GET['consultar_tarefa'])){
 include "../../../../conexao/conexao.php";
 include "../../../../funcao/funcao.php";
     $consulta = $_GET['consultar_tarefa'];
-   
+    $user_logado = $_GET['user_logado'];
     if($consulta== "inicial"){
         $select = "SELECT trf.cl_id, userord.cl_usuario as usuarioordem, trf.cl_data_lancamento,trf.cl_descricao,trf.cl_comentario,user.cl_usuario 
         as usuario_func,trf.cl_prioridade,trf.cl_data_limite,strf.cl_descricao as status from tb_tarefas as trf inner join tb_users as user on user.cl_id = trf.cl_usuario_func inner join tb_users as userord on userord.cl_id = trf.cl_usuario
-        inner join tb_status_tarefas as strf on strf.cl_id = trf.cl_status order by trf.cl_data_lancamento desc,trf.cl_status";
+        inner join tb_status_tarefas as strf on strf.cl_id = trf.cl_status where  userord.cl_usuario  = '$user_logado' order by trf.cl_data_lancamento desc,trf.cl_status";
         $consultar_tarefas= mysqli_query($conecta, $select);
         if(!$consultar_tarefas){
         die("Falha no banco de dados"); // colocar o svg do erro
@@ -35,7 +35,7 @@ include "../../../../funcao/funcao.php";
 
     $select = "SELECT trf.cl_id,userord.cl_usuario as usuarioordem, trf.cl_data_lancamento,trf.cl_descricao,trf.cl_comentario,user.cl_usuario 
     as usuario_func,trf.cl_prioridade,trf.cl_data_limite,strf.cl_descricao as status from tb_tarefas as trf inner join tb_users as user on user.cl_id = trf.cl_usuario_func inner join tb_users as userord on userord.cl_id = trf.cl_usuario 
-    inner join tb_status_tarefas as strf on strf.cl_id = trf.cl_status where trf.cl_descricao like '%{$pesquisa}%' and trf.cl_data_lancamento between '$data_inicial' and '$data_final' ";
+    inner join tb_status_tarefas as strf on strf.cl_id = trf.cl_status where userord.cl_usuario  = '$user_logado' and trf.cl_descricao like '%{$pesquisa}%' and trf.cl_data_lancamento between '$data_inicial' and '$data_final' ";
     if($status !="0"){
         $select .=" and trf.cl_status = '$status'";
     }

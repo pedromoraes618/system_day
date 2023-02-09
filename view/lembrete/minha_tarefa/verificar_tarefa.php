@@ -51,14 +51,14 @@
 
                         <?php } ?>
                     </div>
-                 
+
                     <div class="row mb-3">
                         <p class="card-text"><?php echo $descricao_b; ?></p>
                     </div>
                     <div class="row mb-3">
                         <p class="card-text">Obs: <?php echo $comentario_b; ?></p>
                     </div>
-                    <div class="row mb-3">
+                    <div class="row mb-1">
                         <div class="col  mb-2">
 
                             <input type="text" class="form-control" id="comentario<?php echo $id_tarefa ?>"
@@ -66,34 +66,29 @@
 
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-auto">
-                            <button class="btn btn-info col-auto atualizar_tarefa" user_logado=<?php echo $usuario_func; ?>
-                                status_tarefa=<?php echo $status_id_b; ?> id_tarefa=<?php echo $id_tarefa; ?>
-                                type="button">Atualizar</button>
-                        </div>
+                    <div class="row mb-3 mb-2">
                         <div class="col-sm-5  mb-1">
                             <select name="status" id="status<?php echo $id_tarefa; ?>" class="form-select">
                                 <option value="0">Status..</option>
+                                <?php
+                                verificar_status($conecta,$status_id_b)
+                                ?>
 
-                                <?php while($linha = mysqli_fetch_assoc($consultar_status_tarefas)){ 
-                                $id_status_tarefa = $linha['cl_id'];
-                                $descricao = $linha['cl_descricao'];
-                                if($id_status_tarefa == $status_id_b){
-                                    ?>
-                                <option selected value="<?php echo $id_status_tarefa; ?>"><?php echo $descricao  ?></option>
-                                <?php
-                                }else{
-                                     ?>
-                                <option value="<?php echo $id_status_tarefa; ?>"><?php echo $descricao  ?></option>
-                                <?php
-                                 }    } ?>
                             </select>
                         </div>
                         <div class="col-auto">
                             Ordenador: <?php echo $usuario_ordem_b; ?>
                         </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-auto">
+                            <button class="btn btn-info col-auto atualizar_tarefa"
+                                user_logado=<?php echo $usuario_func; ?> status_tarefa=<?php echo $status_id_b; ?>
+                                id_tarefa=<?php echo $id_tarefa; ?> type="button">Atualizar</button>
+                        </div>
+
                     </div>
                 </div>
             </div>

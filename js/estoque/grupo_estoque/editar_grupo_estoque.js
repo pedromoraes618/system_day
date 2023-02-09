@@ -1,55 +1,59 @@
 //voltar para tela de cadastro
 $("#voltar_cadastro").click(function(e) {
+    // $('.tabela').css("display", 'none')
+    // $('.tabela').fadeIn(500)
+
     $.ajax({
         type: 'GET',
-        data: "cadastro_tarefa=true",
-        url: "view/lembrete/tarefa/cadastro_tarefa.php",
+        data: "cadastro_grupo=true",
+        url: "view/estoque/grupo_estoque/cadastro_grupo_estoque.php",
         success: function(result) {
             return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result);
         },
     });
 })
 
-//editar formulario
-$("#editar_tarefa").submit(function(e) {
+//editar usuario
+$("#editar_grupo_estoque").submit(function(e) {
+  
     e.preventDefault()
-    var editar_formulario = $(this);
-    var retorno = edtarefa(editar_formulario)
+    var editar = $(this);
+    var retorno = editar_grupo(editar)
 })
 
-
-function edtarefa(dados) {
+function editar_grupo(dados) {
+ 
     $.ajax({
         type: "POST",
         data: dados.serialize(),
-        url: "modal/lembrete/tarefa/gerenciar_tarefa.php",
+        url: "modal/estoque/grupo_estoque/gerenciar_grupo_estoque.php",
         async: false
     }).then(sucesso, falha);
 
     function sucesso(data) {
-    
+
         $sucesso = $.parseJSON(data)["sucesso"];
         $mensagem = $.parseJSON(data)["mensagem"];
-    
         if ($sucesso) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Tarefa alterada com sucesso',
+                title: 'Grupo alterada com sucesso',
                 showConfirmButton: false,
                 timer: 1500
 
-
             })
-            //consultar informaçãoes
-            $.ajax({
-                type: 'GET',
-                data: "consultar_tarefa=inicial",
-                url: "view/lembrete/tarefa/table/consultar_tarefa.php",
-                success: function(result) {
-                    return $(".bloco-pesquisa-2 .tabela").html(result);
-                },
-            });
+      
+        //consultar informação tabela
+        $.ajax({
+            type: 'GET',
+            data: "consultar_grupo=inicial",
+            url: "view/estoque/grupo_estoque/table/consultar_grupo_estoque.php",
+            success: function(result) {
+                return $(".bloco-pesquisa-2 .tabela").html(result);
+            },
+        });
+
 
         } else {
             Swal.fire({
@@ -67,4 +71,4 @@ function edtarefa(dados) {
         console.log("erro");
     }
 
-}
+}d

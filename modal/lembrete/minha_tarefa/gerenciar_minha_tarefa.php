@@ -1,53 +1,54 @@
 <?php  
 //consultar informações para tabela
 if(isset($_GET['consultar_tarefa'])){
-include "../../../../conexao/conexao.php";
-include "../../../../funcao/funcao.php";
-    $consulta = $_GET['consultar_tarefa'];
-    if($consulta== "inicial"){
-        $select = "SELECT trf.cl_id, trf.cl_data_lancamento,trf.cl_descricao,trf.cl_comentario,user.cl_usuario 
-        as usuario,trf.cl_prioridade,trf.cl_data_limite,strf.cl_descricao as status from tb_tarefas as trf inner join tb_users as user on user.cl_id = trf.cl_usuario 
-        inner join tb_status_tarefas as strf on strf.cl_id = trf.cl_status order by trf.cl_data_lancamento desc ,trf.cl_status";
+    include "../../../../conexao/conexao.php";
+    include "../../../../funcao/funcao.php";
+        $consulta = $_GET['consultar_tarefa'];
+        $usuario_logado = $_GET['usuario_logado'];
+        $data_inicial = date('Y-m-01');
+        $data_final =date('Y-m-31');
+        
+        if($consulta== "inicial"){
+            $select = "SELECT trf.cl_id, userord.cl_usuario as usuarioordem, trf.cl_data_lancamento,trf.cl_descricao,trf.cl_comentario,user.cl_usuario 
+            as usuario_func,trf.cl_prioridade,trf.cl_data_limite,strf.cl_descricao as status from tb_tarefas as trf inner join tb_users as user on user.cl_id = trf.cl_usuario_func inner join tb_users as userord on userord.cl_id = trf.cl_usuario
+            inner join tb_status_tarefas as strf on strf.cl_id = trf.cl_status where  trf.cl_data_lancamento between  '$data_inicial' and '$data_final' and  trf.cl_status = '3' and user.cl_usuario = '$usuario_logado' order by trf.cl_data_lancamento desc,trf.cl_status";
+            $consultar_tarefas= mysqli_query($conecta, $select);
+            if(!$consultar_tarefas){
+            die("Falha no banco de dados"); // colocar o svg do erro
+            }
+        
+        }else{
+            $pesquisa = utf8_decode($_GET['conteudo_pesquisa']);
+            $data_inicial = $_GET['data_inicial'];
+            $data_final = $_GET['data_final'];
+    
+            
+        if(datecheck($data_inicial) && datecheck($data_final)){
+            //formatar data para o banco
+            if($data_inicial !=""){
+            $div1 = explode("/",$_GET['data_inicial']);
+            $data_inicial = $div1[2]."-".$div1[1]."-".$div1[0];  
+            }
+            if($data_final !=""){
+                $div2 = explode("/",$_GET['data_final']);
+                $data_final = $div2[2]."-".$div2[1]."-".$div2[0];  
+            }
+        
+    
+        $select = "SELECT trf.cl_id,userord.cl_usuario as usuarioordem, trf.cl_data_lancamento,trf.cl_descricao,trf.cl_comentario,user.cl_usuario 
+        as usuario_func,trf.cl_prioridade,trf.cl_data_limite,strf.cl_descricao as status from tb_tarefas as trf inner join tb_users as user on user.cl_id = trf.cl_usuario_func inner join tb_users as userord on userord.cl_id = trf.cl_usuario 
+        inner join tb_status_tarefas as strf on strf.cl_id = trf.cl_status where trf.cl_descricao like '%{$pesquisa}%' and trf.cl_data_lancamento between '$data_inicial' and '$data_final' and trf.cl_status = '3' and user.cl_usuario = '$usuario_logado'";
+    
+        $select .="order by trf.cl_data_lancamento desc ,trf.cl_status";
         $consultar_tarefas= mysqli_query($conecta, $select);
         if(!$consultar_tarefas){
         die("Falha no banco de dados"); // colocar o svg do erro
         }
-    
-    }else{
-        $pesquisa = utf8_decode($_GET['conteudo_pesquisa']);
-        $status = ($_GET['conteudo_status']);
-        $data_inicial = $_GET['data_inicial'];
-        $data_final = $_GET['data_final'];
-
-        
-    if(datecheck($data_inicial) && datecheck($data_final)){
-        //formatar data para o banco
-        if($data_inicial !=""){
-        $div1 = explode("/",$_GET['data_inicial']);
-        $data_inicial = $div1[2]."-".$div1[1]."-".$div1[0];  
-        }
-        if($data_final !=""){
-            $div2 = explode("/",$_GET['data_final']);
-            $data_final = $div2[2]."-".$div2[1]."-".$div2[0];  
-        }
-    
-
-    $select = "SELECT trf.cl_id, trf.cl_data_lancamento,trf.cl_descricao,trf.cl_comentario,user.cl_usuario 
-    as usuario,trf.cl_prioridade,trf.cl_data_limite,strf.cl_descricao as status from tb_tarefas as trf inner join tb_users as user on user.cl_id = trf.cl_usuario 
-    inner join tb_status_tarefas as strf on strf.cl_id = trf.cl_status where trf.cl_descricao like '%{$pesquisa}%' and trf.cl_data_lancamento between '$data_inicial' and '$data_final' ";
-    if($status !="0"){
-        $select .=" and trf.cl_status = '$status'";
     }
-    $select .="order by trf.cl_data_lancamento desc ,trf.cl_status";
-    $consultar_tarefas= mysqli_query($conecta, $select);
-    if(!$consultar_tarefas){
-    die("Falha no banco de dados"); // colocar o svg do erro
     }
-}
-}
-
-}
-
+    
+    }
+    
 
 //cadastrar formulario
 if(isset($_POST['formulario_cadastrar_tarefa'])){
@@ -200,12 +201,33 @@ if(isset($_GET['verificar_tarefa'])==true){
 
 
 }
+
+//verificar status da tarefa
+function verificar_status($conecta,$status_id_b){
 //consultar para filtro
 $select = "SELECT * from tb_status_tarefas";
 $consultar_status_tarefas = mysqli_query($conecta, $select);
-if(!$consultar_status_tarefas){
-die("Falha no banco de dados"); // colocar o svg do erro
+while($linha = mysqli_fetch_assoc($consultar_status_tarefas)){ 
+$id_status_tarefa = $linha['cl_id'];
+$descricao = $linha['cl_descricao'];
+if($id_status_tarefa == $status_id_b){
+?>
+<option selected value="<?php echo $id_status_tarefa; ?>"><?php echo $descricao  ?>
+</option>
+<?php
+}else{
+?>
+<option value="<?php echo $id_status_tarefa; ?>"><?php echo $descricao  ?></option>
+<?php
+}    }
 }
+
+
+
+// //consultar para filtro
+// $select = "SELECT * from tb_status_tarefas";
+// $consultar_status_tarefas = mysqli_query($conecta, $select);
+
 
 $select = "SELECT * from tb_users";
 $consultar_usuarios = mysqli_query($conecta, $select);

@@ -1,5 +1,5 @@
 <?php 
-include "../../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
+include "../../../../modal/lembrete/minha_tarefa/gerenciar_minha_tarefa.php";
 ?>
 
 <table class="table">
@@ -9,12 +9,12 @@ include "../../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
             <th scope="col">Lançamento</th>
             <th scope="col">Descrição</th>
             <th scope="col">Comentario</th>
-            <th scope="col">Usúario</th>
+            <th scope="col">Ordenador</th>
             <th scope="col">Status</th>
 
             <th scope="col">Prioridade</th>
             <th scope="col">Data Limite</th>
-            <th scope="col"></th>
+    
 
         </tr>
     </thead>
@@ -25,10 +25,12 @@ include "../../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
                 $data_lancamento_b = ($row['cl_data_lancamento']);
                 $descricao_b = utf8_encode($row['cl_descricao']);
                 $comentario_b = utf8_encode($row['cl_comentario']);
-                $usuario_b = $row['usuario'];
+             
                 $status_b = $row['status'];
                 $prioridade_b= $row['cl_prioridade'];
                 $data_limite_b = ($row['cl_data_limite']);
+                $usuario_func = $row['usuario_func'];
+                $usuario_ordem = $row['usuarioordem'];
                 if($prioridade_b == "1"){
                     $prioridade_b ="sim";
                 }else{
@@ -41,7 +43,7 @@ include "../../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
             <th><?php echo formatDateB($data_lancamento_b);?></th>
             <td><?php echo $descricao_b; ?></td>
             <td><?php echo $comentario_b; ?></td>
-            <td><?php echo $usuario_b; ?></td>
+            <td><?php echo $usuario_ordem; ?></td>
             <td><span
                     class="badge text-bg-<?php if($status_b == "Concluido"){echo 'success' ;}else{echo 'primary';} ?>"><?php echo $status_b; ?></span>
             </td>
@@ -51,13 +53,11 @@ include "../../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
             <td><?php echo formatDateB($data_limite_b); ?></td>
 
 
-            <td><button type="button" id_tarefa=<?php echo $id_tarefa_b; ?>
-                    class="btn btn-info editar_tarefa">Editar</button>
-            </td>
+           
         </tr>
 
         <?php } }?>
     </tbody>
 </table>
 
-<script src="js/lembrete/tarefa/table/editar_tarefa.js">
+<!-- <script src="js/lembrete/minha_tarefa/table/editar_tarefa.js"> -->

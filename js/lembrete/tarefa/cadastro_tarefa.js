@@ -46,7 +46,7 @@ function cadastrar_tarefa(dados) {
             //realizar a consulta da tabela
             $.ajax({
                 type: 'GET',
-                data: "consultar_tarefa=inicial",
+                data: "consultar_tarefa=inicial&user_logado="+user_logado,
                 url: "view/lembrete/tarefa/table/consultar_tarefa.php",
                 success: function(result) {
                     return $(".bloco-pesquisa-2 .tabela").html(result);

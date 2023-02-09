@@ -1,4 +1,5 @@
 $(document).ready(function() {
+ 
     $.ajax({
         type: 'GET',
         data: "cadastro_tarefa=true",
@@ -10,7 +11,7 @@ $(document).ready(function() {
     //consultar parametros
     $.ajax({
         type: 'GET',
-        data: "consultar_tarefa=inicial",
+        data: "consultar_tarefa=inicial&user_logado="+user_logado.value,
         url: "view/lembrete/tarefa/table/consultar_tarefa.php",
         success: function(result) {
             return $(".bloco-pesquisa-2 .tabela").html(result);
@@ -30,7 +31,7 @@ $("#pesquisar_tarefa").click(function(e) {
     $.ajax({
         type: 'GET',
         data: "consultar_tarefa=detalhado&conteudo_pesquisa=" + conteudo_pesquisa.value +
-            "&conteudo_status=" + conteudo_status.value+"&data_inicial="+data_inicial.value+"&data_final="+data_final.value,
+            "&conteudo_status=" + conteudo_status.value+"&data_inicial="+data_inicial.value+"&data_final="+data_final.value+"&user_logado="+user_logado,
         url: "view/lembrete/tarefa/table/consultar_tarefa.php",
         success: function(result) {
             return $(".bloco-pesquisa-2 .tabela").html(result);

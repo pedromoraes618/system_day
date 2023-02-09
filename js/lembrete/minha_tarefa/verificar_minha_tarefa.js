@@ -1,3 +1,5 @@
+
+
 $(".atualizar_tarefa").click(function(e) {
    var id_tarefa = $(this).attr("id_tarefa")
    var user_logado = $(this).attr("user_logado")
@@ -34,14 +36,15 @@ $(".atualizar_tarefa").click(function(e) {
         $(".card"+id_tarefa).fadeOut(500)
     }
      
-    // $.ajax({
-    //     type: 'GET',
-    //     data: "refresh&clienteID=" + usuario_id.value,
-    //     url: "view/configuracao/acesso_user/acessos_atuais.php",
-    //     success: function(result) {
-    //         return $(".sub_bloco_info-2").html(result);
-    //     },
-    // });
+      //consultar tabela
+      $.ajax({
+        type: 'GET',
+        data: "consultar_tarefa=inicial&usuario_logado="+user_logado,
+        url: "view/lembrete/minha_tarefa/table/consultar_minha_tarefa.php",
+        success: function(result) {
+            return $(".bloco-pesquisa-2 .tabela").html(result);
+        },
+    });
 
     }else{
         Swal.fire({

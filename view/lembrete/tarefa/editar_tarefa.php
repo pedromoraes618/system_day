@@ -78,7 +78,7 @@ include "../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
     </div>
     <div class="row">
         <div class="col-sm  mb-3">
-            <label for="comentario" class="form-label">Comentario funcionario</label>
+            <label for="comentario" class="form-label">Comentario funcionário</label>
             <input type="text" disabled  class="form-control"  placeholder=""
                 value="<?php echo $comentario_func_b; ?>">
         </div>
