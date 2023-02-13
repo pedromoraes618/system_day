@@ -162,6 +162,31 @@ if(isset($_POST['formulario_editar_tarefa'])){
 }
 
 
+//remover formulario
+
+if(isset($_POST['remover_tarefa'])){
+    include "../../../conexao/conexao.php";
+    include "../../../funcao/funcao.php";
+        $retornar = array();
+      
+         $nome_usuario_logado = $_POST["nome_usuario_logado"];
+        // $id_usuario_logado = $_POST["id_usuario_logado"];
+        // $perfil_usuario_logado = $_POST['perfil_usuario_logado'];
+
+        $id_tarefa = $_POST["id_tarefa"];
+        $update = "DELETE FROM tb_tarefas WHERE cl_id = $id_tarefa";
+        $operacao_delete = mysqli_query($conecta, $update);
+        if($operacao_delete){
+        $retornar["sucesso"] = true;
+        //registrar no log
+        $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado removeu tarefa de codigo $id_tarefa");
+        registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
+        }  
+        
+        echo json_encode($retornar);
+
+}
+
 //trazer informaçãoes
 if(isset($_GET['editar_tarefa'])==true){
     include "../../../conexao/conexao.php";

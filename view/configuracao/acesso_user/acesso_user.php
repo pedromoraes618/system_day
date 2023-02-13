@@ -22,8 +22,7 @@
         </div>
 
         <div id="duvida" class="msg">
-            <i class="fa-solid fa-comments"></i>
-
+        <i class="bi bi-chat-fill"></i>
             <p>Apenas usuários tipo usuário estão nessa seleção de acessos</p>
         </div>
     </div>

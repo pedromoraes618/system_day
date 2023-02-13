@@ -8,7 +8,7 @@
             <div class="col-md  mb-2">
                 <div class="input-group">
                     <input type="text" class="form-control" id="pesquisa_conteudo"
-                        placeholder="Tente pesquisar pela descrição ou valor" aria-label="Recipient's username"
+                        placeholder="Tente pesquisar pela descrição ou Código" aria-label="Recipient's username"
                         aria-describedby="button-addon2">
                     <button class="btn btn-outline-secondary" type="button" id="pesquisar_filtro_pesquisa">Pesquisar</button>
                 </div>

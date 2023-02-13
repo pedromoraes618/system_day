@@ -4,9 +4,9 @@
 
 
 <div class="title">
-    <label class="form-label">Cadastrar categoria estoque</label>
+    <label class="form-label">Cadastrar Grupo estoque</label>
     <div class="msg_title">
-        <p>Cadastrar categoria de estoque </p>
+        <p>Cadastrar grupo de estoque </p>
     </div>
 </div>
 <hr>

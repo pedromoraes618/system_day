@@ -12,21 +12,21 @@
 
             <?php include "../../input_include/usuario_logado.php"?>
 
-            <div class="col-sm  mb-1">
+            <div class="col-md-3 mb-1">
                 <label for="nome" class="form-label">Nome</label>
                 <input type="text" class="form-control" id="nome" name="nome" placeholder="" value="">
             </div>
-            <div class="col-sm  mb-1">
+            <div class="col-md-3  mb-1">
                 <label for="usuario" class="form-label">Usúario</label>
-                <input type="text" class="form-control" id="usuario" name="usuario" placeholder="" value="">
+                <input type="text" class="form-control inputUser" id="usuario" name="usuario" placeholder="Apenas letras e números" value="">
             </div>
-            <div class="col-sm mb-1">
+            <div class="col-md-3 mb-1">
                 <label for="senha" class="form-label">Senha</label>
-                <input type="text" class="form-control" id="senha" name="senha" placeholder="" value="">
+                <input type="text" class="form-control inputUser" id="senha" name="senha" placeholder="Apenas letras e números" value="">
             </div>
-            <div class="col-sm  mb-1">
+            <div class="col-md-3  mb-1">
                 <label for="nome" class="form-label">Confirma senha</label>
-                <input type="text" class="form-control" id="confirmar_senha" name="confirmar_senha" placeholder=""
+                <input type="text" class="form-control inputUser" id="confirmar_senha" name="confirmar_senha" placeholder="Apenas letras e números"
                     value="">
             </div>
             <div class="col-sm  mb-1">

@@ -15,7 +15,6 @@ $("#voltar_cadastro").click(function(e) {
 
 //editar usuario
 $("#editar_grupo_estoque").submit(function(e) {
-  
     e.preventDefault()
     var editar = $(this);
     var retorno = editar_grupo(editar)

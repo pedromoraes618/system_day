@@ -19,6 +19,7 @@ $(document).ready(function() {
     });
 })
 
+
 //valores do campo de pesquisa
 let conteudo_pesquisa = document.getElementById("pesquisa_conteudo")
 let conteudo_status = document.getElementById("status")

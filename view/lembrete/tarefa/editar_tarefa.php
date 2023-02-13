@@ -16,7 +16,7 @@ include "../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
 
         <?php include "../../input_include/usuario_logado.php"?>
 
-        <input type="hidden" value="<?php echo $id_tarefa; ?>" name="id_tarefa">
+        <input type="hidden" value="<?php echo $id_tarefa; ?>" id="id_tarefa" name="id_tarefa">
         <div class="col-sm-5  mb-2">
             <label for="descricao" class="form-label">Descrição</label>
             <textarea class="form-control" name="descricao" id="descricao"
@@ -94,6 +94,7 @@ include "../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
         </div>
         <div class="group-btn d-grid gap-2 d-sm-block">
                 <button type="subbmit" class="btn btn-outline-success">Alterar</button>
+                <button type="button" id="remover" class="btn btn-outline-danger">Remover</button>
                 <button type="button" id="voltar_cadastro" class="btn btn-outline-dark">Voltar Para Cadastro</button>
             </div>
 

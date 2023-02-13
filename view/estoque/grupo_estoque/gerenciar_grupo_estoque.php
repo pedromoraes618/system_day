@@ -5,7 +5,7 @@
     </div>
     <div class="bloco-pesquisa-2">
         <div class="title">
-            <label class="form-label">Consultar categoria estoque</label>
+            <label class="form-label">Consultar Grupos de estoque</label>
         </div>
         <hr>
         <div class="row">

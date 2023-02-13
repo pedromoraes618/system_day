@@ -1,12 +1,12 @@
 //voltar para tela de cadastro
 $("#voltar_cadastro").click(function(e) {
-    $('.tabela').css("display", 'none')
-    $('.tabela').fadeIn(500)
+    // $('.tabela').css("display", 'none')
+    // $('.tabela').fadeIn(500)
 
     $.ajax({
         type: 'GET',
-        data: "cadastro_parametro=true",
-        url: "view/suporte/parametro/cadastro_parametro.php",
+        data: "cadastro_subgrupo=true",
+        url: "view/estoque/subgrupo_estoque/cadastro_subgrupo_estoque.php",
         success: function(result) {
             return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result);
         },

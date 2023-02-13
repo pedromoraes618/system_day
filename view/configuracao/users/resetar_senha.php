@@ -14,17 +14,17 @@ include "../../../modal/configuracao/users/usuario.php";
         
             <div class="col-sm-3  mb-1">
                 <label for="usuario" class="form-label">Usúario</label>
-                <input type="text" readonly class="form-control" id="usuario" name="usuario" placeholder=""
+                <input type="text" readonly class="form-control inputUser" id="usuario" name="usuario" placeholder="Apenas letras e números"
                     value="<?php echo $usuario_b; ?>">
             </div>
             <div class="col-sm-3 mb-1">
                 <label for="senha" class="form-label">Nova Senha</label>
-                <input type="text"  class="form-control" id="senha" name="senha" placeholder=""
+                <input type="text"  class="form-control inputUser" id="senha" name="senha" placeholder=""
                     value="">
             </div>
             <div class="col-sm-3 mb-1">
                 <label for="senha" class="form-label">Confirmar senha</label>
-                <input type="text"  class="form-control" id="confirmar_senha" name="confirmar_senha" placeholder=""
+                <input type="text"  class="form-control inputUser" id="confirmar_senha" name="confirmar_senha" placeholder="Apenas letras e números"
                     value="">
             </div>
 
@@ -38,6 +38,6 @@ include "../../../modal/configuracao/users/usuario.php";
 
     </div>
 </form>
-
+<script src="js/funcao.js"></script>
 <script src="js/configuracao/users/user_logado.js"></script>
 <script src="js/configuracao/users/resetar_senha.js"></script>
