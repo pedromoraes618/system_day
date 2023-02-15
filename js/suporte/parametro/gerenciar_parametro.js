@@ -7,7 +7,7 @@ $(document).ready(function() {
             return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result);
         },
     });
-    //consultar parametros
+    //consultar tabela
     $.ajax({
         type: 'GET',
         data: "consultar_parametro=inicial",
@@ -21,7 +21,7 @@ $(document).ready(function() {
 //valores do campo de pesquisa
 let conteudo_pesquisa = document.getElementById("pesquisa_conteudo")
 let conteudo_configuracao = document.getElementById("configuracao")
-//consultar usuario especifico
+//consultar 
 $("#pesquisar_parametro").click(function(e) {
     $('.tabela').css("display", 'none')
     $('.tabela').fadeIn(500)

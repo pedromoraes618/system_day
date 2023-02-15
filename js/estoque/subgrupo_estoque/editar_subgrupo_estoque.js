@@ -13,20 +13,19 @@ $("#voltar_cadastro").click(function(e) {
     });
 })
 
-//editar usuario
-$("#editar_parametro").submit(function(e) {
-  
+//editar
+$("#editar_subgrupo_estoque").submit(function(e) {
     e.preventDefault()
-    var editar = $(this);
-    var retorno = edt_parametro(editar)
+    var formulario = $(this);
+    var retorno = editar_subgrupo(formulario)
 })
 
-function edt_parametro(dados) {
+function editar_subgrupo(dados) {
  
     $.ajax({
         type: "POST",
         data: dados.serialize(),
-        url: "modal/suporte/parametro/gerenciar_parametro.php",
+        url: "modal/estoque/subgrupo_estoque/gerenciar_subgrupo_estoque.php",
         async: false
     }).then(sucesso, falha);
 
@@ -38,21 +37,20 @@ function edt_parametro(dados) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Parametro alterada com sucesso',
+                title: 'Subgrupo alterado com sucesso',
                 showConfirmButton: false,
                 timer: 1500
 
             })
-            //consultar parametros
-            $.ajax({
+              //recarregar tabela
+        $.ajax({
             type: 'GET',
-            data: "consultar_parametro=inicial",
-            url: "view/suporte/parametro/table/consultar_parametro.php",
+            data: "consultar_subgrupo=inicial",
+            url: "view/estoque/subgrupo_estoque/table/consultar_subgrupo_estoque.php",
             success: function(result) {
-            return $(".bloco-pesquisa-2 .tabela").html(result);
+                return $(".bloco-pesquisa-2 .tabela").html(result);
             },
-            });
-
+        });
 
         } else {
             Swal.fire({

@@ -85,7 +85,7 @@ if(isset($_POST['formulario_editar_subgrupo_estoque'])){
         $id_usuario_logado = $_POST["id_usuario_logado"];
         $perfil_usuario_logado = $_POST['perfil_usuario_logado'];
 
-        $id_grupo = $_POST["id_grupo"];
+        $id_subgrupo = $_POST["id_subgrupo"];
         $descricao = utf8_decode($_POST["descricao"]);
     
 
@@ -112,12 +112,14 @@ if(isset($_POST['formulario_editar_subgrupo_estoque'])){
             $retornar["mensagem"] =mensagem_alerta_cadastro("cfop externo");
         }else{
             
-        $update = "UPDATE tb_grupo_estoque set cl_descricao = '$descricao' where cl_id = $id_grupo";
+        $update = "UPDATE tb_subgrupo_estoque set cl_descricao = '$descricao',cl_grupo_id='$grupo_estoque_id',cl_cfop_interno='$cfop_interno',cl_cfop_externo='$cfop_externo'
+        ,cl_estoque_inicial='$estoque_inicial',cl_estoque_minimo='$estoque_minimo',cl_estoque_maximo='$estoque_maximo
+        ',cl_local='$local_estoque',cl_und_id='$unidade_medida_id' where cl_id = $id_subgrupo";
         $operacao_update = mysqli_query($conecta, $update);
         if($operacao_update){
         $retornar["sucesso"] = true;
         //registrar no log
-        $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado alterou dados do grupo de codigo $id_grupo para $descricao");
+        $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado alterou dados do subgrupo de codigo $id_subgrupo");
         registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
         }  
         

@@ -15,7 +15,7 @@ include "../../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
             <th scope="col">Prioridade</th>
             <th scope="col">Data Limite</th>
             <th scope="col"></th>
-
+            <th scope="col"></th>
         </tr>
     </thead>
     <?php if(isset($consultar_tarefas)){//verificar se foi feito a requisição corretamente?>
@@ -54,6 +54,9 @@ include "../../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
 
             <td><button type="button" id_tarefa=<?php echo $id_tarefa_b; ?>
                     class="btn btn-info editar_tarefa">Editar</button>
+            </td>
+            <td><button type="button" id_tarefa=<?php echo $id_tarefa_b; ?>
+                    class="btn btn-danger remover_tarefa"><i class="bi bi-trash"></i></button>
             </td>
         </tr>
 

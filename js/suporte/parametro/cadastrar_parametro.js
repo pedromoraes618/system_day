@@ -7,6 +7,7 @@ $("#cadastrar_parametro").submit(function(e) {
     var configuracao = document.getElementById("configuracao")
 })
 
+
 function cadastrar_parametro(dados) {
     $.ajax({
         type: "POST",
@@ -23,7 +24,7 @@ function cadastrar_parametro(dados) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Parametro cadastrado com sucesso',
+                title: 'Parâmetro cadastrado com sucesso',
                 showConfirmButton: false,
                 timer: 1500
             })
@@ -33,7 +34,7 @@ function cadastrar_parametro(dados) {
             configuracao.value = "";
 
 
-        //consultar parametros
+        //consultar tablela
         $.ajax({
         type: 'GET',
         data: "consultar_parametro=inicial",

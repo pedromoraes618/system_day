@@ -1,32 +1,31 @@
 //voltar para tela de cadastro
 $("#voltar_cadastro").click(function(e) {
-    $('.tabela').css("display", 'none')
-    $('.tabela').fadeIn(500)
+    // $('.tabela').css("display", 'none')
+    // $('.tabela').fadeIn(500)
 
     $.ajax({
         type: 'GET',
-        data: "cadastro_parametro=true",
-        url: "view/suporte/parametro/cadastro_parametro.php",
+        data: "cadastro_grupo=true",
+        url: "view/estoque/grupo_estoque/cadastro_grupo_estoque.php",
         success: function(result) {
             return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result);
         },
     });
 })
 
-//editar formulario
-$("#editar_parametro").submit(function(e) {
-  
+//editar usuario
+$("#editar_grupo_estoque").submit(function(e) {
     e.preventDefault()
     var editar = $(this);
-    var retorno = edt_parametro(editar)
+    var retorno = editar_grupo(editar)
 })
 
-function edt_parametro(dados) {
+function editar_grupo(dados) {
  
     $.ajax({
         type: "POST",
         data: dados.serialize(),
-        url: "modal/suporte/parametro/gerenciar_parametro.php",
+        url: "modal/estoque/grupo_estoque/gerenciar_grupo_estoque.php",
         async: false
     }).then(sucesso, falha);
 
@@ -38,20 +37,21 @@ function edt_parametro(dados) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Parâmetro alterado com sucesso',
+                title: 'Grupo alterada com sucesso',
                 showConfirmButton: false,
                 timer: 1500
 
             })
-            //consultar tabela
-            $.ajax({
+      
+        //consultar informação tabela
+        $.ajax({
             type: 'GET',
-            data: "consultar_parametro=inicial",
-            url: "view/suporte/parametro/table/consultar_parametro.php",
+            data: "consultar_grupo=inicial",
+            url: "view/estoque/grupo_estoque/table/consultar_grupo_estoque.php",
             success: function(result) {
-            return $(".bloco-pesquisa-2 .tabela").html(result);
+                return $(".bloco-pesquisa-2 .tabela").html(result);
             },
-            });
+        });
 
 
         } else {

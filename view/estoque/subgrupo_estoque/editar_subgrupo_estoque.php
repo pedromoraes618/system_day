@@ -1,5 +1,6 @@
-<?php  include "../../../conexao/conexao.php"; ?>
-<?php include "../../../modal/estoque/subgrupo_estoque/gerenciar_subgrupo_estoque.php";  
+<?php  
+include "../../../conexao/conexao.php"; 
+include "../../../modal/estoque/subgrupo_estoque/gerenciar_subgrupo_estoque.php";  
 ?>
 
 
@@ -14,7 +15,7 @@
     <div class="row mb-3">
         <input type="hidden" name="formulario_editar_subgrupo_estoque">
         <?php include "../../input_include/usuario_logado.php"?>
-        <input type="hidden" value="<?php echo $id_subgrupo; ?>" name="id_grupo">
+        <input type="hidden" value="<?php echo $id_subgrupo; ?>" name="id_subgrupo">
         <div class="col-sm  mb-2">
             <label for="descricao" class="form-label">Subgrupo</label>
             <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Informe a descrição do subgrupo"
@@ -88,7 +89,7 @@
                 $codigo_cfop_b = $linha['cl_codigo_cfop'];
                 $descricao_cfop_b = utf8_encode($linha['cl_desc_cfop']);
                 if($cfop_interno_b == $codigo_cfop_b){
-                    echo "<option selected value='$id_cfop'> $codigo_cfop_b - $descricao_cfop_b</option>";
+                    echo "<option selected value='$codigo_cfop_b'> $codigo_cfop_b - $descricao_cfop_b</option>";
                  }else{
                     echo "<option  value='$codigo_cfop_b'> $codigo_cfop_b  - $descricao_cfop_b</option>";
                  }}?>
@@ -105,9 +106,9 @@
                 $codigo_cfop_externo_b = $linha['cl_codigo_cfop'];
                 $descricao_cfop_externo_b = utf8_encode($linha['cl_desc_cfop']);
                 if($cfop_externo_b == $codigo_cfop_externo_b){
-                    echo "<option selected value='$id_cfop'> $codigo_cfop_externo_b - $descricao_cfop_externo_b</option>";
+                    echo "<option selected value='$codigo_cfop_externo_b'> $codigo_cfop_externo_b - $descricao_cfop_externo_b</option>";
                  }else{
-                    echo "<option  value='$id_cfop'> $codigo_cfop_externo_b  - $descricao_cfop_externo_b</option>";
+                    echo "<option  value='$codigo_cfop_externo_b'> $codigo_cfop_externo_b  - $descricao_cfop_externo_b</option>";
                  }}?>
         
             </select>
