@@ -6,6 +6,12 @@
     <div class="bloco-pesquisa-2">
         <div class="title">
             <label class="form-label">Consultar Grupos de estoque</label>
+
+            <div class="msg_title">
+                <p>A tela "Consultar Grupo de Estoque" tem como função exibir uma lista dos Ggrupos de itens
+                    armazenados em seu estoque, permitindo a visualização e organização dos mesmos de forma mais fácil e
+                    eficiente.</p>
+            </div>
         </div>
         <hr>
         <div class="row">

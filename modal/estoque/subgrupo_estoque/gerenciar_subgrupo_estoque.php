@@ -6,6 +6,8 @@ include "../../../../funcao/funcao.php";
         $consulta = $_GET['consultar_subgrupo'];
 
         if($consulta== "inicial"){
+            $consultar_tabela_inicialmente =  verficar_paramentro($conecta,"tb_parametros","cl_id","1");//consultar parametro para carrregar inicialmente a tabela
+
             $select = "SELECT sbrgt.cl_id, sbrgt.cl_descricao,grpest.cl_descricao as grupo,und.cl_descricao as unidade, sbrgt.cl_cfop_interno,sbrgt.cl_cfop_externo,sbrgt.cl_estoque_inicial,sbrgt.cl_estoque_minimo,
             sbrgt.cl_estoque_maximo,sbrgt.cl_local from tb_subgrupo_estoque as sbrgt inner join tb_grupo_estoque as grpest on grpest.cl_id = sbrgt.cl_grupo_id inner join tb_unidade_medida as und on und.cl_id = sbrgt.cl_und_id order by sbrgt.cl_id ";
             $consultar_subgrupo_estoque= mysqli_query($conecta, $select);

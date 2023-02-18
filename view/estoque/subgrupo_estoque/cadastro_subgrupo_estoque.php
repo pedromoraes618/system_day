@@ -33,13 +33,15 @@
         </div>
     </div>
     <div class="row">
-        <span class="badge rounded-2 mb-3 d-area">Informações quantitatiivas</span>
+        <div class="col-sm">
+            <span class="badge rounded-2 mb-3 d-area dv">Informações quantitatiivas</span>
+        </div>
     </div>
     <div class="row mb-3">
         <div class="col-sm  mb-2">
             <label for="est_inicial" class="form-label">Estoque inicial</label>
-            <input type="text" class="form-control inputNumber" id="est_inicial"
-                name="est_inicial" placeholder="Ex.5" value="">
+            <input type="text" class="form-control inputNumber" id="est_inicial" name="est_inicial" placeholder="Ex.5"
+                value="">
         </div>
         <div class="col-sm  mb-2">
             <label for="est_minimo" class="form-label">Estoque mínimo</label>
@@ -72,11 +74,14 @@
         </div>
 
     </div>
-    <div class="row">
-        <span class="badge rounded mb-3 d-area">Informações Fiscais</span>
-    </div>
-    <div class="row mb-3">
 
+    <div class="row">
+        <div class="col-sm">
+            <span class="badge rounded mb-3 d-area dv">Informações Fiscais</span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
         <div class="col-md-4  mb-2">
             <label for="cfop_interno" class="form-label">Cfop Interno</label>
             <select name="cfop_interno" class="form-select" id="cfop_interno">

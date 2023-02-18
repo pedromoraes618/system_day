@@ -77,6 +77,15 @@ function registrar_log($conecta,$nome_usuario_logado,$data,$mensagem){
     return $operacao_inserir;
 }
     
+
+function verficar_paramentro($conecta,$tabela,$filtro,$valor){
+    $select = "SELECT * from $tabela where $filtro = $valor";
+    $consultar_parametros= mysqli_query($conecta, $select);
+    $linha = mysqli_fetch_assoc($consultar_parametros);
+    $valor_parametro = $linha['cl_valor'];
+    return $valor_parametro;
+}
+
 //funcao para saber qual usuario foi selecionado para adicionar ou remover acesso
 function consultar_usuario_acesso($conecta,$usuario_id){
    //consultar nome do usuario

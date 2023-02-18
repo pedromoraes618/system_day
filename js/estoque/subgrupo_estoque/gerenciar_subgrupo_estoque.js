@@ -11,7 +11,7 @@ $(document).ready(function() {
     $.ajax({
         type: 'GET',
         data: "consultar_subgrupo=inicial",
-        url: "view/estoque/subgrupo_estoque/table/consultar_subgrupo_estoque.php",
+        url: "view/estoque/subgrupo_estoque/table/consultar_subgrupo_estoque.php", //alerta
         success: function(result) {
             return $(".bloco-pesquisa-2 .tabela").html(result);
         },

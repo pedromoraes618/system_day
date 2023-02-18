@@ -4,6 +4,16 @@
 
     </div>
     <div class="bloco-pesquisa-2">
+    <div class="title">
+            <label class="form-label">Consultar Subgrupo de estoque</label>
+            
+            <div class="msg_title">
+                <p>A tela "Consultar Subgrupo de Estoque" tem como função exibir uma lista dos subgrupos de itens
+                    armazenados em seu estoque, permitindo a visualização e organização dos mesmos de forma mais fácil e
+                    eficiente.</p>
+            </div>
+        </div>
+        <hr>
         <div class="row">
             <div class="col-md  mb-2">
                 <div class="input-group">

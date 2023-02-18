@@ -18,8 +18,8 @@ include "../../../modal/estoque/subgrupo_estoque/gerenciar_subgrupo_estoque.php"
         <input type="hidden" value="<?php echo $id_subgrupo; ?>" name="id_subgrupo">
         <div class="col-sm  mb-2">
             <label for="descricao" class="form-label">Subgrupo</label>
-            <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Informe a descrição do subgrupo"
-                value="<?php echo $descricao_b; ?>">
+            <input type="text" class="form-control" id="descricao" name="descricao"
+                placeholder="Informe a descrição do subgrupo" value="<?php echo $descricao_b; ?>">
         </div>
         <div class="col-sm  mb-2">
             <label for="grupo_estoque" class="form-label">Grupo Pai</label>
@@ -37,20 +37,25 @@ include "../../../modal/estoque/subgrupo_estoque/gerenciar_subgrupo_estoque.php"
         </div>
     </div>
     <div class="row">
-        <span class="badge rounded-2 mb-3 d-area">Informações quantitatiivas</span>
+        <div class="col-sm">
+            <span class="badge rounded-2 mb-3 d-area">Informações quantitatiivas</span>
+        </div>
     </div>
     <div class="row mb-3">
         <div class="col-sm  mb-2">
             <label for="est_inicial" class="form-label">Estoque inicial</label>
-            <input type="text" class="form-control inputNumber" id="est_inicial" name="est_inicial" placeholder="Ex.5" value="<?php echo $estoque_inicial_b ?>">
+            <input type="text" class="form-control inputNumber" id="est_inicial" name="est_inicial" placeholder="Ex.5"
+                value="<?php echo $estoque_inicial_b ?>">
         </div>
         <div class="col-sm  mb-2">
             <label for="est_minimo" class="form-label">Estoque mínimo</label>
-            <input type="text" class="form-control inputNumber" id="est_minimo" name="est_minimo" placeholder="Ex.20" value="<?php echo $estoque_minimo_b ?>">
+            <input type="text" class="form-control inputNumber" id="est_minimo" name="est_minimo" placeholder="Ex.20"
+                value="<?php echo $estoque_minimo_b ?>">
         </div>
         <div class="col-sm  mb-2">
             <label for="est_maximo" class="form-label">Estoque máximo</label>
-            <input type="text" class="form-control inputNumber" id="est_maximo" name="est_maximo" placeholder="Ex.200" value="<?php echo $estoque_maximo_b ?>">
+            <input type="text" class="form-control inputNumber" id="est_maximo" name="est_maximo" placeholder="Ex.200"
+                value="<?php echo $estoque_maximo_b ?>">
         </div>
         <div class="col-sm  mb-2">
             <label for="local_estoque" class="form-label">Local de estoque</label>
@@ -76,7 +81,9 @@ include "../../../modal/estoque/subgrupo_estoque/gerenciar_subgrupo_estoque.php"
 
     </div>
     <div class="row">
-        <span class="badge rounded mb-3 d-area">Informações Fiscais</span>
+        <div class="col-sm">
+            <span class="badge rounded mb-3 d-area">Informações Fiscais</span>
+        </div>
     </div>
     <div class="row mb-3">
 
@@ -110,7 +117,7 @@ include "../../../modal/estoque/subgrupo_estoque/gerenciar_subgrupo_estoque.php"
                  }else{
                     echo "<option  value='$codigo_cfop_externo_b'> $codigo_cfop_externo_b  - $descricao_cfop_externo_b</option>";
                  }}?>
-        
+
             </select>
         </div>
     </div>

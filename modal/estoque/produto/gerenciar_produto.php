@@ -98,3 +98,30 @@ if(isset($_GET['editar_grupo_estoque'])==true){
 
  
 }
+
+
+//consultar grupo estoque
+$select = "SELECT subgrup.cl_id,subgrup.cl_descricao,grp.cl_descricao as grupo from tb_subgrupo_estoque as subgrup inner join tb_grupo_estoque as grp on grp.cl_id = subgrup.cl_grupo_id ";
+$consultar_subgrupo_estoque= mysqli_query($conecta, $select);
+
+//consultar cfop
+$select = "SELECT * from tb_cfop";
+$consultar_cfop_interno= mysqli_query($conecta, $select);
+
+//consultar cfop
+$select = "SELECT * from tb_cfop";
+$consultar_cfop_externo= mysqli_query($conecta, $select);
+
+
+//consultar tipo produto
+$select = "SELECT * from tb_tipo_produto";
+$consultar_tipo_produto= mysqli_query($conecta, $select);
+
+
+//consultar tipo produto
+$select = "SELECT * from tb_fabricantes";
+$consultar_fabricantes= mysqli_query($conecta, $select);
+
+//consultar unidade medida
+$select = "SELECT * from tb_unidade_medida";
+$consultar_und_medida= mysqli_query($conecta, $select);

@@ -4,6 +4,9 @@ include "../../../../modal/estoque/subgrupo_estoque/gerenciar_subgrupo_estoque.p
 
 ?>
 
+<?php 
+if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == "S")){ //consultar parametro para carrregar inicialmente a tabela
+    ?>
 <table class="table">
     <thead>
         <tr>
@@ -55,5 +58,10 @@ include "../../../../modal/estoque/subgrupo_estoque/gerenciar_subgrupo_estoque.p
         <?php }?>
     </tbody>
 </table>
+<?php
 
+}else{
+    include "../../../../view/alerta/alerta_pesquisa.php"; // mesnsagem para usuario pesquisar
+}
+?>
 <script src="js/estoque/subgrupo_estoque/table/editar_subgrupo_estoque.js">

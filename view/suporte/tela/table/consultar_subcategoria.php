@@ -3,7 +3,9 @@ include "../../../../conexao/conexao.php";
 include "../../../../modal/suporte/tela/gerenciar_tela.php";
 
 ?>
-
+<?php 
+if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == "S")){ //consultar parametro para carrregar inicialmente a tabela
+?>
 <table class="table">
     <thead>
         <tr>
@@ -48,4 +50,10 @@ include "../../../../modal/suporte/tela/gerenciar_tela.php";
         <?php }?>
     </tbody>
 </table>
+<?php
+
+}else{
+    include "../../../../view/alerta/alerta_pesquisa.php"; // mesnsagem para usuario pesquisar
+}
+?>
 <script src="js/suporte/tela/table/editar_subcategoria.js"></script>

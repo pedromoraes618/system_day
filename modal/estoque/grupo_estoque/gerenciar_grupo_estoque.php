@@ -6,12 +6,14 @@ include "../../../../funcao/funcao.php";
         $consulta = $_GET['consultar_grupo'];
 
         if($consulta== "inicial"){
-            $select = "SELECT * from tb_grupo_estoque order by cl_id";
-            $consultar_grupo_estoque= mysqli_query($conecta, $select);
-            if(!$consultar_grupo_estoque){
-            die("Falha no banco de dados");
-            }
-        
+        $consultar_tabela_inicialmente =  verficar_paramentro($conecta,"tb_parametros","cl_id","1");//VERIFICAR PARAMETRO ID - 1
+
+        $select = "SELECT * from tb_grupo_estoque order by cl_id";
+        $consultar_grupo_estoque= mysqli_query($conecta, $select);
+        if(!$consultar_grupo_estoque){
+        die("Falha no banco de dados");
+        }
+    
         }else{
         $pesquisa = utf8_decode($_GET['conteudo_pesquisa']);//filtro
         $select = "SELECT * from tb_grupo_estoque where cl_descricao like '%{$pesquisa}%'  order by cl_id";

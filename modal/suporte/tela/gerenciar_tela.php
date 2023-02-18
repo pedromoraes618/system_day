@@ -1,9 +1,12 @@
 <?php  
 //consultar categoria
 if(isset($_GET['consultar_tela_categoria'])){
+    include "../../../../funcao/funcao.php";
+
     $consulta = $_GET['consultar_tela_categoria'];
     if($consulta == "inicial"){
-   
+        $consultar_tabela_inicialmente =  verficar_paramentro($conecta,"tb_parametros","cl_id","1");//consultar parametro para carrregar inicialmente a tabela
+
         $select = "SELECT * from tb_categorias";
         $consultar_categorias= mysqli_query($conecta, $select);
         if(!$consultar_categorias){
@@ -21,8 +24,12 @@ if(isset($_GET['consultar_tela_categoria'])){
 }
 //consultar subcategoria
 if(isset($_GET['consultar_tela_subcategoria'])){
+    include "../../../../funcao/funcao.php";
     $consulta = $_GET['consultar_tela_subcategoria'];
     if($consulta =="inicial"){
+
+        $consultar_tabela_inicialmente =  verficar_paramentro($conecta,"tb_parametros","cl_id","1");//consultar parametro para carrregar inicialmente a tabela
+        
         $select = "SELECT subc.cl_id,subc.cl_subcategoria,subc.cl_ordem_menu,subc.cl_diretorio,subc.cl_url,ctg.cl_categoria as categoria, 
         subc.cl_diretorio_bd from tb_subcategorias as subc inner join tb_categorias as ctg on ctg.cl_id = subc.cl_categoria";
         $consultar_subcategorias= mysqli_query($conecta, $select);
