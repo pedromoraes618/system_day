@@ -52,10 +52,9 @@ if(isset($_POST['formulario_cadastrar_parametro'])){
             if($operacao_inserir){
             $retornar["sucesso"] = true;
             //registrar no log
-            $mensagem =  ( utf8_decode("Usúario") . " $nome_usuario_logado cadastrou o parametro  $configuracao ");
+            $mensagem =  ( utf8_decode("Usúario") . " $nome_usuario_logado cadastrou o parametro  $descricao ");
             registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
             }
-            
             
         }
         
@@ -76,7 +75,6 @@ if(isset($_POST['formulario_editar_parametro'])){
         $valor = $_POST["valor"];
         $configuracao = $_POST["configuracao"];
     
-
         if($descricao == ""){
             $retornar["mensagem"] =mensagem_alerta_cadastro("descricao");
         }elseif($configuracao == "0" ){
@@ -89,7 +87,7 @@ if(isset($_POST['formulario_editar_parametro'])){
         if($operacao_update){
         $retornar["sucesso"] = true;
         //registrar no log
-        $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado alterou dados do parametro $configuracao");
+        $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado alterou dados do parametro de codigo $id_parametro");
         registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
             }  
         }

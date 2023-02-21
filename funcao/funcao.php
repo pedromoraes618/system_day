@@ -95,6 +95,7 @@ function consultar_usuario_acesso($conecta,$usuario_id){
    $usuario_b = $linha['cl_usuario'];
    return $usuario_b;
 }
+
 //funcao para saber qual subcategoria foi selecionado para adicionar ou remover para o usúario
 function consultar_subcategoria_acesso($conecta,$id_subcategoria){
    //consultar nome da subcategoria
@@ -143,6 +144,14 @@ function validarCPF($cpf) {
 
     // CPF válido
     return true;
+}
+
+
+//substituir uma virgula por um ponto
+function formatDecimal($valor){
+    $string_com_virgula = $valor;
+    $string_com_ponto = str_replace(",", ".", $string_com_virgula);
+    return $string_com_ponto;
 }
 
 

@@ -1,7 +1,7 @@
 //voltar para tela de cadastro
 $("#voltar_cadastro").click(function(e) {
-    $('.tabela').css("display", 'none')
-    $('.tabela').fadeIn(500)
+    // $('.tabela').css("display", 'none')
+    // $('.tabela').fadeIn(500)
 
     $.ajax({
         type: 'GET',

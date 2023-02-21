@@ -40,7 +40,15 @@ input[type=number] {
     --bs-gutter-y: 0;
 }
 
+@keyframes opacity {
+    0% {
+        opacity: 0;
+    }
 
+    100% {
+        opacity: 1;
+    }
+}
   
 
 /*computador*/
@@ -596,6 +604,8 @@ font-size: 1.3em;
     max-height: 450px;
     overflow-y: auto;
     overflow-x: hidden;
+    animation: opacity 0.5s forwards;
+ 
 }
 
 
@@ -814,6 +824,8 @@ margin:0px;
 
 .bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-2  table{
     overflow: auto;
+    animation: opacity 0.5s forwards;
+ 
 }
 
 .bloco-pesquisa-2 .tabela::-webkit-scrollbar {

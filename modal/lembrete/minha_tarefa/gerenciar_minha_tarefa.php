@@ -171,7 +171,7 @@ if(isset($_POST['atualizar_minha_tarefa'])){
         $id_tarefa = $_POST["id_tarefa"];
         $nome_usuario_logado = $_POST['user_logado'];
         $status = $_POST["status"];
-        $comentario = $_POST["comentario"];
+        $comentario = utf8_decode($_POST["comentario"]);
 
         if($status == "0"){
             $retornar["mensagem"] =mensagem_alerta_cadastro("status");
@@ -194,7 +194,7 @@ if(isset($_GET['verificar_tarefa'])==true){
     include "../../../conexao/conexao.php";
     include "../../../funcao/funcao.php";
     $usuario_logado = $_GET['usuario_logado'];
-    $select = "SELECT trf.cl_id as idtarefa, trf.cl_data_lancamento,trf.cl_descricao,trf.cl_comentario, user.cl_usuario as usuarioord , userfunc.cl_usuario as userfunc,trf.cl_status,
+    $select = "SELECT trf.cl_id as idtarefa,trf.cl_comentario_func, trf.cl_data_lancamento,trf.cl_descricao,trf.cl_comentario, user.cl_usuario as usuarioord , userfunc.cl_usuario as userfunc,trf.cl_status,
     trf.cl_prioridade,trf.cl_data_limite,sttrf.cl_descricao as status from tb_tarefas as trf inner join tb_users as user on user.cl_id = trf.cl_usuario 
     inner join tb_status_tarefas as sttrf on sttrf.cl_id = trf.cl_status inner join tb_users as userfunc on userfunc.cl_id = trf.cl_usuario_func where userfunc.cl_usuario = '$usuario_logado' and trf.cl_status !='3' order by trf.cl_data_lancamento desc, trf.cl_data_limite ";
     $consultar_minhas_tarefas= mysqli_query($conecta, $select);

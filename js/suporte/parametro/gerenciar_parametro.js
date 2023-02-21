@@ -23,8 +23,8 @@ let conteudo_pesquisa = document.getElementById("pesquisa_conteudo")
 let conteudo_configuracao = document.getElementById("configuracao")
 //consultar 
 $("#pesquisar_parametro").click(function(e) {
-    $('.tabela').css("display", 'none')
-    $('.tabela').fadeIn(500)
+    // $('.tabela').css("display", 'none')
+    // $('.tabela').fadeIn(500)
 
     $.ajax({
         type: 'GET',

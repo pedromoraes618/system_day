@@ -20,6 +20,7 @@
                 $status_id_b = ($linha['cl_status']);
                 $usuario_ordem_b = $linha['usuarioord'];
                 $comentario_b = utf8_encode($linha['cl_comentario']);
+                $comentario_func_b = utf8_encode($linha['cl_comentario_func']);
                 $prioridade_b = ($linha['cl_prioridade']);
                 $id_tarefa = ($linha['idtarefa']);
                 $usuario_func = $linha['userfunc'];
@@ -62,7 +63,7 @@
                         <div class="col  mb-2">
 
                             <input type="text" class="form-control" id="comentario<?php echo $id_tarefa ?>"
-                                name="comentario" placeholder="Adicione o seu comentario" value="">
+                                name="comentario" placeholder="Adicione o seu comentario" value="<?php echo $comentario_func_b; ?>">
 
                         </div>
                     </div>

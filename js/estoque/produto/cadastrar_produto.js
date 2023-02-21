@@ -12,6 +12,9 @@ $(".bloco-pesquisa-menu .bloco-pesquisa-2").css("display","none") // aparecer te
 
 })
 
+
+
+
 // $("#cadastrar_grupo_estoque").submit(function(e) {
 //     e.preventDefault()
 //     var cadastrar = $(this);

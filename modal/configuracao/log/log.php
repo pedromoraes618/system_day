@@ -7,7 +7,7 @@ include "../../../../funcao/funcao.php";
     $data_incial_log_m  = date('Y-m-01 01:01:01');
     $data_final_log_m = date('Y-m-31 23:59:59');
     $select = "SELECT log.cl_data_modificacao , log.cl_usuario,log.cl_descricao from tb_log as log where log.cl_data_modificacao 
-    between '$data_incial_log_m' and '$data_final_log_m'";
+    between '$data_incial_log_m' and '$data_final_log_m' ORDER BY log.cl_data_modificacao desc";
     $consultar_log = mysqli_query($conecta, $select);
     if(!$consultar_log){
     die("Falha no banco de dados"); // colocar o svg do erro
@@ -41,7 +41,9 @@ include "../../../../funcao/funcao.php";
     $select = "SELECT log.cl_data_modificacao , log.cl_usuario,log.cl_descricao from tb_log as log where log.cl_data_modificacao 
     between '$data_incial_log_d' and '$data_final_log_d' and log.cl_descricao LIKE '%{$conteudo}%' ";
     if($usuario !="s"){
-    $select .=" and log.cl_usuario = '$usuario'";
+    $select .=" and log.cl_usuario = '$usuario'  ORDER BY log.cl_data_modificacao desc ";
+    }else{
+    $select .=" ORDER BY log.cl_data_modificacao desc ";
     }
     $consultar_log = mysqli_query($conecta, $select);
     if(!$consultar_log){

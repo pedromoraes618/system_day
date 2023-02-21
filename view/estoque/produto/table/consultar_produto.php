@@ -3,7 +3,9 @@ include "../../../../conexao/conexao.php";
 include "../../../../modal/estoque/produto/gerenciar_produto.php";
 
 ?>
-
+<?php 
+if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == "S")){ //consultar parametro para carrregar inicialmente a tabela
+    ?>
 <table class="table">
     <thead>
         <tr>
@@ -21,7 +23,7 @@ include "../../../../modal/estoque/produto/gerenciar_produto.php";
         <tr>
             <th scope="row"><?php echo $id_grupo_b ?></th>
             <td><?php echo $descricao_b; ?></td>
-     
+
             <td><button type="button" id_grupo=<?php echo $id_grupo_b; ?>
                     class="btn btn-info editar_grupo_estoque">Editar</button>
             </td>
@@ -30,5 +32,10 @@ include "../../../../modal/estoque/produto/gerenciar_produto.php";
         <?php }?>
     </tbody>
 </table>
-
+<?php
+}else{
+    include "../../../../view/alerta/alerta_pesquisa.php"; // mesnsagem para usuario pesquisar
+    
+}
+?>
 <script src="js/estoque/grupo_estoque/table/editar_grupo_estoque.js">

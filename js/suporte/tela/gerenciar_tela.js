@@ -19,8 +19,8 @@ $(document).ready(function() {
 })
 
 $(".btn_categoria").click(function() {
-    $('.tabela').css("display", 'none')
-    $('.tabela').fadeIn(500)
+    // $('.tabela').css("display", 'none')
+    // $('.tabela').fadeIn(500)
     //verificar se o atributo já possue a clase btn ativo
     if (!($(this).is(".btn_ativo"))) {
         $(this).addClass("btn_ativo");
@@ -50,8 +50,8 @@ $(".btn_categoria").click(function() {
 
 
 $(".btn_subcategoria").click(function() {
-    $('.tabela').css("display", 'none')
-    $('.tabela').fadeIn(500)
+    // $('.tabela').css("display", 'none')
+    // $('.tabela').fadeIn(500)
     //verificar se o atributo já possue a clase btn ativo
     if (!($(this).is(".btn_ativo"))) {
         $(this).addClass("btn_ativo");
@@ -80,8 +80,8 @@ $(".btn_subcategoria").click(function() {
 })
 
 $("#pesquisa_conteudo").click(function() {
-    $('.tabela').css("display", 'none')
-    $('.tabela').fadeIn(500)
+    // $('.tabela').css("display", 'none')
+    // $('.tabela').fadeIn(500)
     let pesquisa = document.getElementById("conteudo").value;
     //verificar se o atributo já possue a clase btn ativo
     if (($('.btn_categoria').is(".btn_ativo"))) {

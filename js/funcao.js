@@ -2,7 +2,7 @@
 //funcão para input receber apenas numero
 const onlyNumbers = (input) => {
   input.addEventListener("input", function () {
-    this.value = this.value.replace(/[^0-9]/g, "");
+    this.value = this.value.replace(/[^0-9.,]/g, "");
   });
 };
 
@@ -19,6 +19,9 @@ const onlyUsers = (input) => {
 
 const inputuser = document.querySelectorAll(".inputUser");
 inputuser.forEach(input => onlyUsers(input));
+
+
+
 
 
 // //bloquear caracteres espaço e virgula

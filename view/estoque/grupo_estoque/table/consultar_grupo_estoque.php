@@ -34,7 +34,6 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
     </tbody>
 </table>
 <?php
-
 }else{
     include "../../../../view/alerta/alerta_pesquisa.php"; // mesnsagem para usuario pesquisar
     

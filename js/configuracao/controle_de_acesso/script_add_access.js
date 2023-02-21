@@ -6,7 +6,10 @@
 $("#card-body-1 .card_acess").click(function(e) {
     if (usuario_id.value != 0) {
         let id_subcategoria = $(this).attr("id");
-        $(this).fadeOut();
+        $(this).css("opacity", '1')
+        $(this).css("opacity", '0.5')
+        $(this).css("display", 'none')
+   
         $.ajax({
             type: "POST",
             data: "addicionaracesso=&clienteID=" + usuario_id.value + "&idsubcategoria=" +

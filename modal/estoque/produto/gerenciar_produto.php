@@ -6,6 +6,7 @@ include "../../../../funcao/funcao.php";
         $consulta = $_GET['consultar_produto'];
 
         if($consulta== "inicial"){
+            $consultar_tabela_inicialmente =  verficar_paramentro($conecta,"tb_parametros","cl_id","1");//VERIFICAR PARAMETRO ID - 1
             $select = "SELECT * from tb_produtos order by cl_id";
             $consultar_produtos= mysqli_query($conecta, $select);
             if(!$consultar_produtos){
@@ -14,10 +15,10 @@ include "../../../../funcao/funcao.php";
         
         }else{
         $pesquisa = utf8_decode($_GET['conteudo_pesquisa']);//filtro
-        $select = "SELECT * from tb_grupo_estoque where cl_descricao like '%{$pesquisa}%'  order by cl_id";
-        $consultar_grupo_estoque= mysqli_query($conecta, $select);
-        if(!$consultar_grupo_estoque){
-        die("Falha no banco de dados"); 
+        $select = "SELECT * from tb_produtos WHERE cl_descricao like '%{$pesquisa}%' order by cl_id";
+        $consultar_produtos= mysqli_query($conecta, $select);
+        if(!$consultar_produtos){
+        die("Falha no banco de dados");
         }
     }
 }
@@ -125,3 +126,21 @@ $consultar_fabricantes= mysqli_query($conecta, $select);
 //consultar unidade medida
 $select = "SELECT * from tb_unidade_medida";
 $consultar_und_medida= mysqli_query($conecta, $select);
+
+//consultar cest
+$select = "SELECT * from tb_cest";
+$consultar_cest= mysqli_query($conecta, $select);
+
+
+
+
+//consultar informações para tabela
+if(isset($_GET['consultar_cest'])){
+    include "../../../../conexao/conexao.php";
+    include "../../../../funcao/funcao.php";
+    $pesquisa = $_GET['conteudo_pesquisa'];
+    //consultar cest
+    $select = "SELECT * from tb_cest where cl_cest like '%{$pesquisa}%' or cl_ncm like '%{$pesquisa}%' or cl_descricao like '%{$pesquisa}%'  order by cl_id";
+    $buscar_cep= mysqli_query($conecta, $select);
+            
+}

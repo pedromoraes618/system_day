@@ -32,8 +32,9 @@ $(".atualizar_tarefa").click(function(e) {
 
     //remover o card
     if(status_lembrete.value == "3"){
+        $(".card"+id_tarefa).css("opacity", '1')
+        $(".card"+id_tarefa).css("opacity", '0.5')
         $(".card"+id_tarefa).css("display", 'none')
-        $(".card"+id_tarefa).fadeOut(500)
     }
      
       //consultar tabela

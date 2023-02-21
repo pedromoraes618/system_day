@@ -2,7 +2,9 @@
 //remover acesso
 $("#card-body-2 ul li ul li a").click(function(e) {
     let id_subcategoria = $(this).attr("id");
-    $(this).fadeOut();
+    $(this).css("opacity", '1')
+    $(this).css("opacity", '0.5')
+    $(this).css("display", 'none')
     $.ajax({
         type: "POST",
         data: "removeracessos=&clienteID=" + usuario_id.value + "&idsubcategoria=" + id_subcategoria,
