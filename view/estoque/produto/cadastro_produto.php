@@ -7,53 +7,55 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
 <div class="title">
     <label class="form-label">Cadastrar Produtos</label>
     <div class="msg_title">
-        <p>Cadastrar grupo de estoque </p>
+        <p>Cadastro de Produto: Adicione Novos Itens ao seu Estoque</p>
     </div>
 </div>
 <hr>
-<form id="cadastrar_grupo_estoque">
+<form id="cadastrar_produto">
     <div class="row mb-2">
-        <input type="hidden" name="formulario_cadastrar_grupo_estoque">
+        <input type="hidden" name="formulario_cadastrar_produto">
         <?php include "../../input_include/usuario_logado.php"?>
         <div class="col-sm col-md-5  mb-2">
             <label for="descricao" class="form-label">Descrição</label>
-            <input type="text" class="form-control" id="descricao" name="descricao" placeholder="" value="">
+            <input type="text" class="form-control " id="descricao" name="descricao" value="">
         </div>
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="referencia" class="form-label">Referência</label>
-            <input type="text" class="form-control" id="referencia" name="referencia" placeholder="" value="">
+            <input type="text" class="form-control" id="referencia" name="referencia" value="">
         </div>
         <div class="col-sm-6 col-md-2 mb-2">
             <label for="equivalencia" class="form-label">Equivalencia</label>
-            <input type="text" class="form-control" id="equivalencia" name="equivalencia" placeholder="" value="">
+            <input type="text" class="form-control" id="equivalencia" name="equivalencia" value="">
         </div>
         <div class="col-sm-6 col-md-3  mb-2">
             <label for="codigo_barras" class="form-label">Código de barras</label>
-            <input type="text" class="form-control" id="codigo_barras" name="codigo_barras" placeholder="" value="">
+            <input type="text" class="form-control" id="codigo_barras" name="codigo_barras" value="">
         </div>
     </div>
     <div class="row mb-2">
         <div class="col-md-4  mb-2">
             <label for="grupo_estoque" class="form-label">Grupo</label>
-            <select name="grupo_estoque" class="form-select" id="grupo_estoque">
+            <select name="grupo_estoque"
+                title="ao selecionar o grupo, os campos serão preenchidos automaticamente, para desativar essa funcionalidade verifique com o suporte"
+                class="form-select" id="grupo_estoque">
                 <option value="0">Selecione..</option>
                 <?php while($linha  = mysqli_fetch_assoc($consultar_subgrupo_estoque)){ 
-                $id_grupo = $linha['id'];
+                $id_grupo = $linha['cl_id'];
                 $descricao_b = utf8_encode($linha['cl_descricao']);
                 $grupo = utf8_encode($linha['grupo']);
-                echo "<option value='$id_grupo'>$grupo - $descricao_b </option>'";
+                echo "<option value='$id_grupo'> $grupo - $descricao_b </option>'";
              }?>
             </select>
         </div>
         <div class="col-md-3 mb-2">
             <label for="fabricante" class="form-label">Fabricante</label>
-            <select name="fabricante" class="form-select" id="fabricante">
+            <select name="fabricante" class="form-select" id="fabricante" >
                 <option value="0">Selecione..</option>
                 <?php while($linha  = mysqli_fetch_assoc($consultar_fabricantes)){ 
-                $id_und = $linha['cl_id'];
+                $id_fabricante = $linha['cl_id'];
                 $descricao= utf8_encode($linha['cl_descricao']);
             
-                echo "<option  value='$id_und'>$descricao</option>";
+                echo "<option value='$id_fabricante' >$descricao</option>";
              }?>
             </select>
         </div>
@@ -63,18 +65,18 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
             <select name="tipo" class="form-select" id="tipo">
                 <option value="0">Selecione..</option>
                 <?php while($linha  = mysqli_fetch_assoc($consultar_tipo_produto)){ 
-                $id_und = $linha['cl_id'];
+                $id_tipo = $linha['cl_id'];
                 $descricao= utf8_encode($linha['cl_descricao']);
             
-                echo "<option  value='$id_und'>$descricao</option>";
+                echo "<option  value='$id_tipo'>$descricao</option>";
              }?>
             </select>
         </div>
         <div class="col-md-2 mb-2">
-            <label for="fabricante" class="form-label">Status</label>
-            <select name="fabricante" class="form-select" id="fabricante">
+            <label for="status" class="form-label">Status</label>
+            <select name="status" class="form-select" id="status">
                 <option value="0">Selecione..</option>
-                <option value="SIM">Ativo</option>
+                <option selected value="SIM">Ativo</option>
                 <option value="NAO">Inativo</option>
 
             </select>
@@ -91,30 +93,25 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
     <div class="row mb-2">
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="estoque" class="form-label">Estoque</label>
-            <input type="text" class="form-control inputNumber" id="estoque" name="estoque" placeholder="EX. 10"
-                value="">
+            <input type="text" class="form-control inputNumber" id="estoque" name="estoque" value="">
         </div>
 
         <div class="col-sm-6 col-md-2  mb-2">
             <label for="est_minimo" class="form-label">Estoque Mínimo</label>
-            <input type="text" class="form-control inputNumber" id="est_minimo" name="est_minimo" placeholder="Ex. 5"
-                value="">
+            <input type="text" class="form-control inputNumber" id="est_minimo" name="est_minimo" value="">
         </div>
 
         <div class="col-sm-6 col-md-2  mb-2">
             <label for="est_maximo" class="form-label">Estoque Máximo</label>
-            <input type="text" class="form-control inputNumber" id="est_maximo" name="est_maximo" placeholder="Ex. 20"
-                value="">
+            <input type="text" class="form-control inputNumber" id="est_maximo" name="est_maximo" value="">
         </div>
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="local_produto" class="form-label">Local de Produto</label>
-            <input type="text" class="form-control" id="local_produto" name="local_produto"
-                placeholder="Ex. prateleira a2" value="">
+            <input type="text" class="form-control" id="local_produto" name="local_produto" value="">
         </div>
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="tamanho" class="form-label">Tamanho</label>
-            <input type="text" class="form-control" id="tamanho" name="tamanho" placeholder="Ex. prateleira a2"
-                value="">
+            <input type="text" class="form-control" id="tamanho" name="tamanho" value="">
         </div>
         <div class="col-sm-6 col-md-2  mb-2">
             <label for="unidade_md" class="form-label">Unidade de medida</label>
@@ -141,36 +138,28 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
     <div class="row mb-2">
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="prc_venda" class="form-label">Preço de venda</label>
-            <input type="text" class="form-control inputNumber" onchange="maregm_lucro()" id="prc_venda" name="prc_venda"
-                placeholder="EX. 1500.50" value="">
+            <input type="text" class="form-control inputNumber" onchange="maregm_lucro()" id="prc_venda"
+                name="prc_venda" value="">
         </div>
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="prc_custo" class="form-label">Preço de Custo</label>
-            <input type="text" class="form-control inputNumber" onchange="maregm_lucro()"  id="prc_custo" name="prc_custo"
-                placeholder="EX. 1100.20" value="">
+            <input type="text" class="form-control inputNumber" onchange="maregm_lucro()" id="prc_custo"
+                name="prc_custo" value="">
         </div>
 
 
         <div class="col-sm-6 col-md-2  mb-2">
             <label for="margem_lucro" class="form-label">Magem de lucro %</label>
-            <input type="text" class="form-control inputNumber" id="margem_lucro" name="margem_lucro"
-                placeholder="Ex. 5" value="">
+            <input type="text" readonly class="form-control inputNumber" id="margem_lucro" name="margem_lucro" value="">
         </div>
 
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="prc_promocao" class="form-label">Preço Promoção</label>
-            <input type="text" class="form-control inputNumber" id="prc_promocao" name="prc_promocao"
-                placeholder="Ex. 35.29" value="">
+            <input type="text" class="form-control inputNumber" id="prc_promocao" name="prc_promocao" value="">
         </div>
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="desconto_maximo" class="form-label">Desconto Máximo</label>
-            <input type="text" class="form-control inputNumber" id="desconto_maximo" name="desconto_maximo"
-                placeholder="Ex. 15" value="">
-        </div>
-        <div class="col-sm-6 col-md-2  mb-2">
-            <label for="ult_prc_compra" class="form-label">Ultimo Preço de compra</label>
-            <input type="text" class="form-control inputNumber" id="ult_prc_compra" name="ult_prc_compra"
-                placeholder="Ex. prateleira a2" value="">
+            <input type="text" class="form-control inputNumber" id="desconto_maximo" name="desconto_maximo" value="">
         </div>
 
     </div>
@@ -181,56 +170,125 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
         </div>
     </div>
 
-    <div class="row mb-2">
-        <div class="col-sm-6 col-md-3   mb-2">
+    <div class="row mb-3">
+        <div class="col-sm-6 col-md-2   mb-2">
             <label for="cest" class="form-label">Cest</label>
             <div class="input-group c mb-3">
-                <input type="text" class="form-control" id="cest" name="cest" placeholder="Ex. 38151210"
+                <input type="text" class="form-control inputNumber" id="cest" name="cest"
                     aria-label="Recipient's username" aria-describedby="button-addon2">
 
                 <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modal_cunsultar_cest"
-                    data-bs-whatever="@mdo" type="button">Pesquisar</button>
+                    data-bs-whatever="@mdo" title="pesquise pelo cest" type="button"><i
+                        class="bi bi-search"></i></button>
             </div>
         </div>
-        <!-- <label for="prc_venda" class="form-label">Cest</label>
-            <input class="form-control" list="datalistOptions" id="cest" name="cest" placeholder="Type to search..."> -->
+        <div class="col-sm-6 col-md-2   mb-2">
+            <label for="ncm" class="form-label">Ncm</label>
+            <div class="input-group c mb-3">
+                <input type="text" class="form-control inputNumber" id="ncm" name="ncm"
+                    aria-label="Recipient's username" aria-describedby="button-addon2">
 
+                <button class="btn btn-outline-secondary" title="pesquise pelo ncm" data-bs-toggle="modal"
+                    data-bs-target="#modal_cunsultar_ncm" data-bs-whatever="@mdo" type="button"><i
+                        class="bi bi-search"></i></button>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-2   mb-2">
+            <label for="cst_icms" class="form-label">Cst icms</label>
+            <input class="form-control inputNumber" list="datalistOptionsIcms" id="cst_icms" name="cst_icms">
+            <datalist id="datalistOptionsIcms">
+                <?php while($linha  = mysqli_fetch_assoc($consultar_icms)){ 
+
+                $icms_b= ($linha['cl_icms']);
+                $descricao_b = utf8_encode($linha['cl_descricao']);
+
+                echo "<option  value='$icms_b'> $descricao_b</option>";
+             }?>
+            </datalist>
+        </div>
+
+
+
+        <div class="col-sm-6 col-md-1   mb-2">
+            <label for="cst_pis_s" class="form-label">Cst Pis S</label>
+            <input type="text" list="datalistOptionsPisS" class="form-control inputNumber" id="cst_pis_s"
+                name="cst_pis_s" value="">
+            <datalist id="datalistOptionsPisS">
+                <?php while($linha  = mysqli_fetch_assoc($consultar_pis_s)){ 
+
+                $icms_b= ($linha['cl_pis']);
+                $descricao_b = utf8_encode($linha['cl_descricao']);
+
+                echo "<option  value='$icms_b'> $descricao_b</option>";
+             }?>
+            </datalist>
+        </div>
+
+        <div class="col-sm-6 col-md-1   mb-2">
+            <label for="cst_pis_s" class="form-label">Cst Pis E</label>
+            <input type="text" list="datalistOptionsPisE" class="form-control inputNumber" id="cst_pis_e"
+                name="cst_pis_e" value="">
+            <datalist id="datalistOptionsPisE">
+                <?php while($linha  = mysqli_fetch_assoc($consultar_pis_e)){ 
+
+                $icms_b= ($linha['cl_pis']);
+                $descricao_b = utf8_encode($linha['cl_descricao']);
+
+                echo "<option  value='$icms_b'> $descricao_b</option>";
+             }?>
+            </datalist>
+        </div>
 
 
         <div class="col-sm-6 col-md-2   mb-2">
-            <label for="prc_custo" class="form-label">Preço de Custo</label>
-            <input type="text" class="form-control inputNumber" id="prc_custo" name="prc_custo"
-                placeholder="EX. 1100.20" value="">
-        </div>
+            <label for="cst_cofins_s" class="form-label">Cst Cofins S</label>
+            <input type="text" list="datalistOptionsCofinsS" class="form-control inputNumber" id="cst_cofins_s"
+                name="cst_cofins_s" value="">
+            <datalist id="datalistOptionsCofinsS">
+                <?php while($linha  = mysqli_fetch_assoc($consultar_cofins_s)){ 
 
+                $icms_b= ($linha['cl_cofins']);
+                $descricao_b = utf8_encode($linha['cl_descricao']);
 
-        <div class="col-sm-6 col-md-2  mb-2">
-            <label for="margem_lucro" class="form-label">Magem de lucro %</label>
-            <input type="text" class="form-control inputNumber" id="margem_lucro" name="margem_lucro"
-                placeholder="Ex. 5" value="">
+                echo "<option  value='$icms_b'> $descricao_b</option>";
+             }?>
+            </datalist>
         </div>
 
         <div class="col-sm-6 col-md-2   mb-2">
-            <label for="prc_promocao" class="form-label">Preço Promoção</label>
-            <input type="text" class="form-control inputNumber" id="prc_promocao" name="prc_promocao"
-                placeholder="Ex. 35.29" value="">
+            <label for="cst_cofins_e" class="form-label">Cst Cofins E</label>
+            <input type="text" list="datalistOptionsCofinsE" class="form-control inputNumber" id="cst_cofins_e"
+                name="cst_cofins_e" value="">
+            <datalist id="datalistOptionsCofinsE">
+                <?php while($linha  = mysqli_fetch_assoc($consultar_cofins_e)){ 
+                $icms_b= ($linha['cl_cofins']);
+                $descricao_b = utf8_encode($linha['cl_descricao']);
+
+                echo "<option  value='$icms_b'> $descricao_b</option>";
+             }?>
+            </datalist>
         </div>
-        <div class="col-sm-6 col-md-2   mb-2">
-            <label for="desconto_maximo" class="form-label">Desconto Máximo</label>
-            <input type="text" class="form-control inputNumber" id="desconto_maximo" name="desconto_maximo"
-                placeholder="Ex. 15" value="">
+
+        <div class="row mb-2">
+            <div class="col-sm-6 col-md-8   mb-2">
+                <label for="prc_venda" class="form-label">Observação</label>
+                <textarea class="form-control" name="observacao" id="observacao" aria-label="With textarea"></textarea>
+
+            </div>
         </div>
-        <div class="col-sm-6 col-md-2  mb-2">
-            <label for="ult_prc_compra" class="form-label">Ultimo Preço de compra</label>
-            <input type="text" class="form-control inputNumber" id="ult_prc_compra" name="ult_prc_compra"
-                placeholder="Ex. prateleira a2" value="">
+
+        <div class="">
+            <input type="hidden" class="form-control inputNumber" id="cfop_interno" name="cfop_interno" value="">
+            <input type="hidden" class="form-control inputNumber" id="cfop_externo" name="cfop_externo" value="">
         </div>
+
 
     </div>
 
     <?php
     //incluir modal do cest
      include "../../../view/estoque/produto/include/cest.php"; 
+     include "../../../view/estoque/produto/include/ncm.php"; 
       ?>
 
     <div class="row">

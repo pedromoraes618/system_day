@@ -146,6 +146,23 @@ function validarCPF($cpf) {
     return true;
 }
 
+//formatar para moeda real
+function real_format($valor) {
+    $valor  = number_format($valor,2,",",".");
+    return "R$ " . $valor;
+}
+
+
+//verificar se tem virgula na string
+function verificaVirgula($valor){
+    if (strpos($valor, ',') !== false) {
+        // echo "A string contém uma vírgula.";
+        return true;
+    } else {
+        // echo "A string não contém uma vírgula.";
+        return false;
+    }
+}
 
 //substituir uma virgula por um ponto
 function formatDecimal($valor){

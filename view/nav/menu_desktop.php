@@ -1,7 +1,8 @@
 <div class="categoria">
     <div class="topo">
-        <i class="fa-solid fa-circle-half-stroke"></i>
+    <i class="bi bi-circle-half"></i>
         <p> System Day</p>
+
 
     </div>
     <nav>

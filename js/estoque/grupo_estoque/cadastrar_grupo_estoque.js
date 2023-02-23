@@ -1,11 +1,27 @@
 $("#cadastrar_grupo_estoque").submit(function(e) {
     e.preventDefault()
     var cadastrar = $(this);
-    var retorno = cadastrar_grupo(cadastrar)
-    var descricao = document.getElementById("descricao")
+
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Deseja cadastrar esse Grupo?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Não',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var retorno = cadastrar_grupo(cadastrar)
+        } 
+    })
+
+
 
 })
 
+const cadastro_formulario = document.getElementById("cadastrar_grupo_estoque");
 function cadastrar_grupo(dados) {
     $.ajax({
         type: "POST",
@@ -27,7 +43,7 @@ function cadastrar_grupo(dados) {
                 timer: 1500
             })
             //resetar valores de input
-            descricao.value = "";
+            cadastro_formulario.reset()
 
         //consultar informação tabela
         $.ajax({

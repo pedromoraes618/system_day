@@ -1,13 +1,24 @@
 $("#cadastrar_parametro").submit(function(e) {
     e.preventDefault()
     var cadastrar = $(this);
-    var retorno = cadastrar_parametro(cadastrar)
-    var descricao = document.getElementById("descricao")
-    var valor = document.getElementById("valor")
-    var configuracao = document.getElementById("configuracao")
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Deseja cadastrar esse Parâmetro?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Não',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var retorno = cadastrar_parametro(cadastrar)
+        } 
+    })
+
 })
 
-
+const cadastro_formulario = document.getElementById("cadastrar_parametro");
 function cadastrar_parametro(dados) {
     $.ajax({
         type: "POST",
@@ -29,10 +40,7 @@ function cadastrar_parametro(dados) {
                 timer: 1500
             })
             //resetar valores de input
-            descricao.value = "";
-            valor.value = "";
-            configuracao.value = "";
-
+            cadastro_formulario.reset()
 
         //consultar tablela
         $.ajax({

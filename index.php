@@ -1,7 +1,5 @@
 <?php 
-
 include("conexao/conexao.php");
-
 session_start();
 if(!$_GET){ 
     if(isset($_SESSION["user_session_portal"])){
@@ -19,10 +17,8 @@ if(!$_GET){
       
         include "view/login/login.php";
     }
-
-    
 }
-
 mysqli_close($conecta);
 
 ?>
+<script src="js/index/index.js"></script>

@@ -19,12 +19,12 @@ include "../../../modal/configuracao/users/usuario.php";
             </div>
             <div class="col-sm-3 mb-1">
                 <label for="senha" class="form-label">Nova Senha</label>
-                <input type="text"  class="form-control inputUser" id="senha" name="senha" placeholder=""
+                <input type="text"  class="form-control inputUser" id="senha" autocomplete="off" name="senha" placeholder="Apenas letras, números e símbolos"
                     value="">
             </div>
             <div class="col-sm-3 mb-1">
                 <label for="senha" class="form-label">Confirmar senha</label>
-                <input type="text"  class="form-control inputUser" id="confirmar_senha" name="confirmar_senha" placeholder="Apenas letras e números"
+                <input type="text"  class="form-control inputUser"  autocomplete="off" id="confirmar_senha" name="confirmar_senha" placeholder="Apenas letras, números e símblos"
                     value="">
             </div>
 

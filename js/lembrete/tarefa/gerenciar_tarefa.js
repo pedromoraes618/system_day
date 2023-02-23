@@ -8,7 +8,8 @@ $(document).ready(function() {
             return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result);
         },
     });
-    //consultar parametros
+
+    
     $.ajax({
         type: 'GET',
         data: "consultar_tarefa=inicial&user_logado="+user_logado.value,

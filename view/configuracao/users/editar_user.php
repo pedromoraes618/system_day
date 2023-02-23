@@ -23,7 +23,7 @@ include "../../../modal/configuracao/users/usuario.php";
             </div>
             <div class="col-sm  mb-1">
                 <label for="usuario" class="form-label">Usúario</label>
-                <input type="text" readonly class="form-control inputUser" id="usuario" name="usuario" placeholder="Apenas letras e números"
+                <input type="text" readonly class="form-control inputUser"  id="usuario" name="usuario" placeholder="Apenas letras e números"
                     value="<?php echo $usuario_b; ?>">
             </div>
 

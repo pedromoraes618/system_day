@@ -9,6 +9,8 @@ include "../../../../modal/estoque/produto/gerenciar_produto.php";
             <tr>
                 <th scope="col">Cest</th>
                 <th scope="col">Ncm</th>
+                <th scope="col">Descrição</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>

@@ -18,15 +18,15 @@
             </div>
             <div class="col-md-3  mb-1">
                 <label for="usuario" class="form-label">Usúario</label>
-                <input type="text" class="form-control inputUser" id="usuario" name="usuario" placeholder="Apenas letras e números" value="">
+                <input type="text" class="form-control inputUser" id="usuario" name="usuario" autocomplete="off" placeholder="Apenas letras, números e símbolos" value="">
             </div>
             <div class="col-md-3 mb-1">
                 <label for="senha" class="form-label">Senha</label>
-                <input type="text" class="form-control inputUser" id="senha" name="senha" placeholder="Apenas letras e números" value="">
+                <input type="text" class="form-control inputUser" id="senha" name="senha" autocomplete="off" placeholder="Apenas letras, números e símbolos" value="">
             </div>
             <div class="col-md-3  mb-1">
                 <label for="nome" class="form-label">Confirma senha</label>
-                <input type="text" class="form-control inputUser" id="confirmar_senha" name="confirmar_senha" placeholder="Apenas letras e números"
+                <input type="text" class="form-control inputUser" id="confirmar_senha" autocomplete="off" name="confirmar_senha" placeholder="Apenas letras, números e símbolos"
                     value="">
             </div>
             <div class="col-sm  mb-1">

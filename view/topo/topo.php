@@ -27,6 +27,9 @@
                         <li>
                             <a href="?menu&user">Meu usuário</a>
                         </li>
+                        <li>
+                            <a href="?menu&ctg=Configuração&sobre&id=14">Sobre</a>
+                        </li>
 
                         <li>
                             <a href="?logout">Sair</a>

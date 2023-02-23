@@ -2,16 +2,28 @@ $("#cadastrar_usuario").submit(function(e) {
 
     e.preventDefault()
     var cadastrar_user = $(this);
-    var retorno = cadastrar_usuario(cadastrar_user)
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Deseja cadastrar esse Usúario?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Não',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var retorno = cadastrar_usuario(cadastrar_user)
+        } 
+    })
 
-    var nome = document.getElementById("nome")
-    var usuario = document.getElementById("usuario")
-    var senha = document.getElementById("senha")
-    var confirmar_senha = document.getElementById("confirmar_senha")
-    var perfil = document.getElementById("perfil")
-    var situacao = document.getElementById("situacao")
+
+
+
 })
 
+
+const cadastro_formulario = document.getElementById("cadastrar_usuario");
 function cadastrar_usuario(dados) {
     $.ajax({
         type: "POST",
@@ -31,14 +43,9 @@ function cadastrar_usuario(dados) {
                 showConfirmButton: false,
                 timer: 1500
             })
-            //resetavar valores de input
-            nome.value = "";
-            usuario.value = "";
-            senha.value = "";
-            confirmar_senha.value = "";
-            perfil.value = "0";
-            situacao.value = "s";
 
+              //resetar valores de input
+              cadastro_formulario.reset()
 
             //consultar inicial
             $.ajax({

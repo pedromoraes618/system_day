@@ -1,20 +1,26 @@
 $("#cadastrar_subgrupo_estoque").submit(function(e) {
     e.preventDefault()
     var formulario = $(this);
-    var retorno = cadastrar_subgrupo(formulario)
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Deseja cadastrar esse SubGrupo?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Não',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var retorno = cadastrar_subgrupo(formulario)
+        } 
+    })
 
-    var descricao = document.getElementById("descricao")
-    var grupo_estoque = document.getElementById("grupo_estoque")
-    var est_inicial = document.getElementById("est_inicial")
-    var est_minimo = document.getElementById("est_minimo")
-    var est_maximo = document.getElementById("est_maximo")
-    var local_estoque = document.getElementById("local_estoque")
-    var unidade_md = document.getElementById("unidade_md")
-    var cfop_interno = document.getElementById("cfop_interno")
-    var cfop_externo = document.getElementById("cfop_externo")
 
 })
 
+const cadastro_formulario = document.getElementById("cadastrar_subgrupo_estoque");
+//formulario para cadstro
 function cadastrar_subgrupo(dados) {
     $.ajax({
         type: "POST",
@@ -35,17 +41,8 @@ function cadastrar_subgrupo(dados) {
                 showConfirmButton: false,
                 timer: 1500
             })
-            //resetar valores de input
-            descricao.value = "";
-            grupo_estoque.value = "0";
-            est_inicial.value = "";
-            est_minimo.value = "";
-            est_maximo.value = "";
-            local_estoque.value = "";
-            unidade_md.value = "0";
-            cfop_interno.value = "0";
-            cfop_externo.value = "0";
-
+        //resetar valores de input
+        cadastro_formulario.reset()
 
         //recarregar tabela
         $.ajax({

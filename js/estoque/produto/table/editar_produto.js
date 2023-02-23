@@ -1,0 +1,15 @@
+//ao clicar no botão cadastrar produto
+$(".editar_produto").click(function(e) {
+    $(".bloco-pesquisa-menu .bloco-pesquisa-1").css("display","none")
+    $(".bloco-pesquisa-menu .bloco-pesquisa-2").css("display","block")
+  //  $(".bloco-pesquisa-menu .bloco-pesquisa-2").css("display","none") // aparecer tela de cadastro
+ var id_produto = $(this).attr("id_produto")
+  $.ajax({
+        type: 'GET',
+        data: "editar_produto=true&id_produto="+id_produto,
+        url: "view/estoque/produto/editar_produto.php",
+        success: function(result) {
+            return $(".bloco-pesquisa-menu .bloco-pesquisa-2").html(result);
+        },
+    });
+})

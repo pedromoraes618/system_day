@@ -1,18 +1,26 @@
 $("#cadastrar_subcategoria").submit(function(e) {
     e.preventDefault()
     var cadastrar = $(this);
-    var retorno = cadastrar_subcategoria(cadastrar)
-
-    var subcategoria = document.getElementById("subcategoria")
-    var ordem = document.getElementById("ordem")
-    var diretorio_subc = document.getElementById("diretorio_subc")
-    var url_sub = document.getElementById("url_sub")
-    var diretorio_bd = document.getElementById("diretorio_bd")
-    var categoria = document.getElementById("categoria")
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Deseja cadastrar essa subcategoria?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Não',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var retorno = cadastrar_subcategoria(cadastrar)
+        } 
+    })
 
 
 })
 
+
+const cadastro_formulario = document.getElementById("cadastrar_subcategoria");
 function cadastrar_subcategoria(dados) {
     $.ajax({
         type: "POST",
@@ -34,8 +42,6 @@ function cadastrar_subcategoria(dados) {
                 timer: 1500
             })
 
-
-
             //consultar subcaategorias já cadastradas
             $.ajax({
                 type: 'GET',
@@ -45,12 +51,9 @@ function cadastrar_subcategoria(dados) {
                     return $(".table").html(result);
                 },
             });
-            subcategoria.value = "";
-            ordem.value = "";
-            diretorio_subc.value = "";
-            url_sub.value = "";
-            diretorio_bd.value = "";
-            categoria.value = "0";
+           //RESETAR VALROES DOS INPUTs
+           cadastro_formulario.reset()
+
 
 
         } else {

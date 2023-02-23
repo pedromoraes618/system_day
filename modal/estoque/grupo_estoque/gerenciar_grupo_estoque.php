@@ -4,7 +4,6 @@ if(isset($_GET['consultar_grupo'])){
 include "../../../../conexao/conexao.php";
 include "../../../../funcao/funcao.php";
         $consulta = $_GET['consultar_grupo'];
-
         if($consulta== "inicial"){
         $consultar_tabela_inicialmente =  verficar_paramentro($conecta,"tb_parametros","cl_id","1");//VERIFICAR PARAMETRO ID - 1
 

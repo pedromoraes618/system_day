@@ -1,16 +1,26 @@
 $("#cadastrar_tarefa").submit(function(e) {
     e.preventDefault()
-
     var cadastrar = $(this);
-    var retorno = cadastrar_tarefa(cadastrar)
-    var descricao = document.getElementById("descricao")
-    var data_limite = document.getElementById("data_limite")
-    var usuario = document.getElementById("usuario")
-    var comentario = document.getElementById("comentario")
-    let status_lembrete = document.getElementById("status_lembrete")
-    let prioridade = document.getElementById("prioridade")
+
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Deseja adicionar esse lembrete?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Não',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var retorno = cadastrar_tarefa(cadastrar)
+        } 
+    })
+
 })
 
+
+const cadastro_formulario = document.getElementById("cadastrar_tarefa");
 function cadastrar_tarefa(dados) {
    
     $.ajax({
@@ -28,21 +38,14 @@ function cadastrar_tarefa(dados) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Taréfa cadastrada com sucesso',
+                title: 'Taréfa Adicionada com sucesso',
                 showConfirmButton: false,
                 timer: 1500
             })
 
-
+        //resetar valores de input
+        cadastro_formulario.reset()
            
-            //resetar valores de input
-            descricao.value = "";
-            data_limite.value = "";
-            comentario.value = "";
-            usuario.value = "0";
-            status_lembrete.value = "0";
-            prioridade.checked = false;
-       
             //realizar a consulta da tabela
             $.ajax({
                 type: 'GET',

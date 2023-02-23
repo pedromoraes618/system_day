@@ -1,13 +1,28 @@
 $("#cadastrar_categoria").submit(function(e) {
     e.preventDefault()
     var cadastrar = $(this);
-    var retorno = cadastrar_categoria(cadastrar)
-    var categoria = document.getElementById("categoria")
-    var ordem = document.getElementById("ordem")
-    var icone = document.getElementById("icone")
+
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Deseja cadastrar esse categoria?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Não',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var retorno = cadastrar_categoria(cadastrar)
+        } 
+    })
+
   
 })
 
+
+
+const cadastro_formulario = document.getElementById("cadastrar_categoria");
 function cadastrar_categoria(dados) {
     $.ajax({
         type: "POST",
@@ -29,10 +44,7 @@ function cadastrar_categoria(dados) {
                 timer: 1500
             })
             //resetar valores de input
-            categoria.value = "";
-            ordem.value = "";
-            icone.value = "";
-
+            cadastro_formulario.reset()
 
             //consultar categorias já cadastradas
             $.ajax({
