@@ -31,7 +31,7 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
             <td><?php echo $icone_b; ?></td>
             <td><?php echo $ordem_b; ?></td>
 
-            <td><button type="button" id_categoria=<?php echo $id_categoria_b; ?>
+            <td class="td-btn"><button type="button" id_categoria=<?php echo $id_categoria_b; ?>
                     class="btn btn-info editar_categoria">Editar</button>
             </td>
         </tr>

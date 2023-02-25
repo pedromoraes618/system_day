@@ -915,3 +915,7 @@ border: 3px solid var(--borda_princiapl);  /* creates padding around scroll thum
 .sobre img{
     width: 50%;
 }
+
+.td-btn{
+    width: 20px;
+}

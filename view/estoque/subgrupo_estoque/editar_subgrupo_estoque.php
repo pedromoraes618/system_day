@@ -38,7 +38,7 @@ include "../../../modal/estoque/subgrupo_estoque/gerenciar_subgrupo_estoque.php"
     </div>
     <div class="row">
         <div class="col-sm">
-            <span class="badge rounded-2 mb-3 d-area">Informações quantitatiivas</span>
+            <span class="badge rounded-2 mb-3 d-area dv">Informações quantitatiivas</span>
         </div>
     </div>
     <div class="row mb-3">
@@ -80,11 +80,13 @@ include "../../../modal/estoque/subgrupo_estoque/gerenciar_subgrupo_estoque.php"
         </div>
 
     </div>
+  
     <div class="row">
         <div class="col-sm">
-            <span class="badge rounded mb-3 d-area">Informações Fiscais</span>
+            <span class="badge rounded mb-3 d-area dv">Informações Fiscais</span>
         </div>
     </div>
+
     <div class="row mb-3">
 
         <div class="col-md-4  mb-2">

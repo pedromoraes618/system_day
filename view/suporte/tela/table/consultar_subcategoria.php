@@ -43,7 +43,7 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
             <td><?php echo $categoria_b; ?></td>
             
             
-            <td><button type="button" id_subcategoria=<?php echo $id_subcategoria_b; ?> class="btn btn-info editar_subcategoria">Editar</button>
+            <td class="td-btn"> <button type="button" id_subcategoria=<?php echo $id_subcategoria_b; ?> class="btn btn-info editar_subcategoria">Editar</button>
             </td>
         </tr>
 

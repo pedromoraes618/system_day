@@ -19,12 +19,14 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
             <th scope="col">Preço venda</th>
             <th scope="col">Status</th>
             <th scope="col"></th>
+            <th scope="col"></th>
 
         </tr>
     </thead>
     <tbody>
         <?php while($linha = mysqli_fetch_assoc($consultar_produtos)){
                 $produto_id = $linha['produtoid'];
+                $codigo_produto_b = $linha['cl_codigo'];
                 $descricao_b = utf8_encode($linha['descricao']);
                 $referencia_b = utf8_encode($linha['cl_referencia']);
                 $subgrupo_b = utf8_encode($linha['subgrupo']);
@@ -55,8 +57,11 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
             </td>
             
 
-            <td><button type="button"  id_produto=<?php echo $produto_id; ?>
-                    class="btn btn-info editar_produto">Editar</button>
+            <td class="td-btn"><button type="button"  id_produto=<?php echo $produto_id; ?>
+                    class="btn btn-info editar_produto ">Editar</button>
+            </td>
+            <td class="td-btn"><button type="button"  id_produto=<?php echo $produto_id; ?>
+                    class="btn btn-warning editar_produto ">Karkex</button>
             </td>
         </tr>
 

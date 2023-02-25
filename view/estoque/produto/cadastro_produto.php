@@ -150,7 +150,7 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
 
         <div class="col-sm-6 col-md-2  mb-2">
             <label for="margem_lucro" class="form-label">Magem de lucro %</label>
-            <input type="text" readonly class="form-control inputNumber" id="margem_lucro" name="margem_lucro" value="">
+            <input type="text"  class="form-control inputNumber" onchange="preco_venda()" id="margem_lucro" name="margem_lucro" value="">
         </div>
 
         <div class="col-sm-6 col-md-2   mb-2">

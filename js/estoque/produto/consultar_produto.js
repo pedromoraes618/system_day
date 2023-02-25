@@ -12,6 +12,24 @@ $("#adicionar_produto").click(function(e) {
         },
     });
 })
+
+//valores do campo de pesquisa //pesquisa via filtro
+var conteudo_pesquisa = document.getElementById("pesquisa_conteudo")
+
+//condição se existe valor de pesquisa no localstorage recarregar a pesquisa automaticamente
+//valor da pesquisa é guardado no localStorage, ao clicar em editar ou adicionar a pagina realizara a pesquisa novamente
+if (localStorage.getItem("pesquisar_produto")) {
+    var memoria_pesquisa = localStorage.getItem("pesquisar_produto");
+    conteudo_pesquisa.value = memoria_pesquisa
+    $.ajax({
+        type: 'GET',
+        data: "consultar_produto=detalhado&conteudo_pesquisa=" + conteudo_pesquisa.value,
+        url: "view/estoque/produto/table/consultar_produto.php",
+        success: function(result) {
+            return $(".bloco-pesquisa-menu .bloco-pesquisa-1 .tabela").html(result);
+        },
+    });
+}else{
 //consultar tabela
 $.ajax({
     type: 'GET',
@@ -21,14 +39,12 @@ $.ajax({
         return $(".bloco-pesquisa-menu .bloco-pesquisa-1 .tabela").html(result);
     },
 });
+}
 
-//valores do campo de pesquisa //pesquisa via filtro
-let conteudo_pesquisa = document.getElementById("pesquisa_conteudo")
 
 
 $("#pesquisar_filtro_pesquisa").click(function(e) {
     localStorage.setItem("pesquisar_produto", conteudo_pesquisa.value);
-
     if(conteudo_pesquisa.value==""){
         $(".alerta").html("<span class='alert alert-primary position-absolute' style role='alert'>Favor informe a palavra chave</span>")
        setTimeout(function() {
@@ -47,17 +63,3 @@ $("#pesquisar_filtro_pesquisa").click(function(e) {
 })
 
 
-//valor da pesquisa é guardado no localStorage, ao clicar em editar ou adicionar a pagina realizara a pesquisa novamente
-if (localStorage.getItem("pesquisar_produto")) {
-   
-    let memoria_pesquisa = localStorage.getItem("pesquisar_produto");
-    conteudo_pesquisa.value = memoria_pesquisa
-    $.ajax({
-        type: 'GET',
-        data: "consultar_produto=detalhado&conteudo_pesquisa=" + conteudo_pesquisa.value,
-        url: "view/estoque/produto/table/consultar_produto.php",
-        success: function(result) {
-            return $(".bloco-pesquisa-menu .bloco-pesquisa-1 .tabela").html(result);
-        },
-    });
-  }

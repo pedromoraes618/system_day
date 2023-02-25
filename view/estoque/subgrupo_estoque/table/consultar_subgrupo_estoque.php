@@ -50,7 +50,7 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
             <td><?php echo $local_estoque_b; ?></td>
             <td><?php echo $unidade_b; ?></td>
 
-            <td><button type="button" id_subgrupo=<?php echo $id_subgrupo_b; ?>
+            <td class="td-btn"><button type="button" id_subgrupo=<?php echo $id_subgrupo_b; ?>
                     class="btn btn-info editar_subgrupo">Editar</button>
             </td>
         </tr>

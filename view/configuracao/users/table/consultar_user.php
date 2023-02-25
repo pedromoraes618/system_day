@@ -41,7 +41,7 @@ include "../../../../modal/configuracao/users/usuario.php";
                 }?>
 
             </td>
-            <td><button type="button" id_user=<?php echo $id_user_b; ?> class="btn btn-info editar_user">Editar</button>
+            <td class="td-btn"><button type="button" id_user=<?php echo $id_user_b; ?> class="btn btn-info editar_user">Editar</button>
             </td>
         </tr>
 

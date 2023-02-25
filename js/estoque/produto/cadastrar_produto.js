@@ -54,29 +54,12 @@ function cadastrar_produto(dados) {
                 timer: 3500
             })
             fomulario_produto.reset(); // redefine os valores do formulário
-        
-
-            //resetar valores de input
-            //descricao.value = "";
-
-        //consultar informação tabela
-        // $.ajax({
-        //     type: 'GET',
-        //     data: "consultar_grupo=inicial",
-        //     url: "view/estoque/grupo_estoque/table/consultar_grupo_estoque.php",
-        //     success: function(result) {
-        //         return $(".bloco-pesquisa-2 .tabela").html(result);
-        //     },
-        // });
-
-
         } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Verifique!',
                 text: $dados.title,
                 timer: 7500,
-            
 
             })
 
@@ -89,17 +72,17 @@ function cadastrar_produto(dados) {
 
 }
 
-//valor da pesquisa é guardado no localStorage, ao clicar em editar ou adicionar a pagina realizara a pesquisa novamente
-if (localStorage.getItem("pesquisar_produto")) {
+// //valor da pesquisa é guardado no localStorage, ao clicar em editar ou adicionar a pagina realizara a pesquisa novamente
+// if (localStorage.getItem("pesquisar_produto")) {
 
-    let memoria_pesquisa = localStorage.getItem("pesquisar_produto");
-    conteudo_pesquisa.value = memoria_pesquisa
-    $.ajax({
-        type: 'GET',
-        data: "consultar_produto=detalhado&conteudo_pesquisa=" + conteudo_pesquisa.value,
-        url: "view/estoque/produto/table/consultar_produto.php",
-        success: function(result) {
-            return $(".bloco-pesquisa-menu .bloco-pesquisa-1 .tabela").html(result);
-        },
-    });
-  }
+//     let memoria_pesquisa = localStorage.getItem("pesquisar_produto");
+//     conteudo_pesquisa.value = memoria_pesquisa
+//     $.ajax({
+//         type: 'GET',
+//         data: "consultar_produto=detalhado&conteudo_pesquisa=" + conteudo_pesquisa.value,
+//         url: "view/estoque/produto/table/consultar_produto.php",
+//         success: function(result) {
+//             return $(".bloco-pesquisa-menu .bloco-pesquisa-1 .tabela").html(result);
+//         },
+//     });
+//   }

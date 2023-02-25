@@ -19,10 +19,16 @@ function mensagem_alerta_cadastro($campo){
     return "Campo $campo não foi informado, favor verifique!";
 }
 
-//mensagem de alerta cadastro
+//mensagem de alerta de permissao
 function mensagem_alerta_permissao(){
     return "Ação bloqueada. Você não possui permissão para realizar esta ação no sistema. Por favor, verifique as suas permissões de acesso ou 
      entre em contato com o administrador do sistema para obter mais informações.";
+}
+
+
+//mensagem de alerta de serie cadastrada
+function mensagem_serie_cadastrada(){
+    return "A serie não está cadastrada, não é possivel realizar a ação, favor verifique com o suporte";
 }
 
 //formatar data do banco de dados
@@ -105,6 +111,42 @@ function consultar_subcategoria_acesso($conecta,$id_subcategoria){
    $subcategoria_b = $linha['cl_subcategoria'];
    return $subcategoria_b;
 }
+
+
+//funcao para saber qual é o valor da serie
+function consultar_serie($conecta,$serie){
+    //consultar nome da subcategoria
+    $select = "SELECT * from tb_serie where cl_descricao = '$serie' ";
+    $consulta_serie= mysqli_query($conecta,$select);
+    $linha = mysqli_fetch_assoc($consulta_serie);
+    $valor = $linha['cl_valor'];
+    return $valor;
+ }
+
+
+//funcao para realizar ajuste de estoque
+function ajuste_estoque($conecta,$data,$doc,$tipo,$produto_id,$quantidade,$empresa_id,$usuario_id,$forma_pagamento_id,$valor_venda,$valor_compra,$ajuste_inical){
+
+    $inset = "INSERT INTO `tb_ajuste_estoque` (`cl_data_lancamento`, `cl_documento`, `cl_produto_id`, `cl_tipo`, `cl_quantidade`, 
+    `cl_empresa_id`, `cl_usuario_id`, `cl_forma_pagamento_id`, `cl_valor_venda`, `cl_valor_compra`,`cl_ajuste_inicial`) VALUES 
+    ('$data', '$doc', '$produto_id', '$tipo', '$quantidade', '$empresa_id', '$usuario_id', '$forma_pagamento_id', '$valor_venda', '$valor_compra','$ajuste_inical')";
+    $operacao_inserir = mysqli_query($conecta, $inset);
+    return $operacao_inserir;
+ }
+
+
+ //funcao para atualizar valor em serie
+function adicionar_valor_serie($conecta,$serie,$valor){
+    //consultar nome da subcategoria
+    $update = "UPDATE `tb_serie` SET `cl_valor`= '$valor' where cl_descricao = '$serie'";
+    $update_serie= mysqli_query($conecta,$update);
+    if($update_serie){
+        return true;
+    }else{
+        return false;
+    }
+ 
+ }
 
 
 function validarCPF($cpf) {

@@ -6,7 +6,7 @@ include "../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
 <div class="title">
     <label class="form-label">Editar Tarefa</label>
     <div class="msg_title">
-        <p>Edite tarefas dos usúarios  </p>
+        <p>Edite tarefas dos usúarios </p>
     </div>
 </div>
 <hr>
@@ -79,25 +79,27 @@ include "../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
     <div class="row">
         <div class="col-sm  mb-3">
             <label for="comentario" class="form-label">Comentario funcionário</label>
-            <input type="text" disabled  class="form-control"  placeholder=""
-                value="<?php echo $comentario_func_b; ?>">
+            <input type="text" disabled class="form-control" placeholder="" value="<?php echo $comentario_func_b; ?>">
         </div>
     </div>
     <div class="row">
         <div class="col-sm  mb-2">
             <div class="form-check">
-                <input class="form-check-input" <?php if($prioridade_b=="1"){ echo 'checked';} ?>  name="prioridade" type="checkbox" id="prioridade">
+                <input class="form-check-input" <?php if($prioridade_b=="1"){ echo 'checked';} ?> name="prioridade"
+                    type="checkbox" id="prioridade">
                 <label class="form-check-label" for="flexCheckDefault">
                     Prioridade
                 </label>
             </div>
         </div>
-        <div class="group-btn d-grid gap-2 d-sm-block">
-                <button type="subbmit" class="btn btn-outline-success">Alterar</button>
-                <button type="button" id="remover" class="btn btn-outline-danger">Remover</button>
-                <button type="button" id="voltar_cadastro" class="btn btn-outline-dark">Voltar Para Cadastro</button>
-            </div>
 
+    </div>
+    <div class="row">
+        <div class="group-btn d-grid gap-2 d-sm-block">
+            <button type="subbmit" class="btn btn-outline-success">Alterar</button>
+            <button type="button" id="remover" class="btn btn-outline-danger">Remover</button>
+            <button type="button" id="voltar_cadastro" class="btn btn-outline-dark">Voltar Para Cadastro</button>
+        </div>
     </div>
 
 

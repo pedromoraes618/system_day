@@ -11,15 +11,16 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
     </div>
 </div>
 <hr>
-<form id="cadastrar_produto">
+<form id="editar_produto">
     <Div class="row mb-2">
-        <div class="col-sm-6 col-md-1   mb-2">
+        <div class="col-sm-6 col-md-2   mb-2">
             <label for="referencia" class="form-label">Codigo</label>
-            <input type="text" class="form-control" id="codigo" name="codigo" value="<?php echo $id_produto ?>">
+            <input type="hidden" name="id_produto" value="<?php echo $id_produto ?>">
+            <input type="text" readonly class="form-control" id="codigo_produto" name="codigo_produto" value="<?php echo $codigo_produto_b ?>">
         </div>
     </Div>
     <div class="row mb-2">
-        <input type="hidden" name="formulario_cadastrar_produto">
+        <input type="hidden" name="formulario_editar_produto">
         <?php include "../../input_include/usuario_logado.php"?>
 
         <div class="col-sm col-md-5  mb-2">
@@ -114,21 +115,25 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
     <div class="row mb-2">
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="estoque" class="form-label">Estoque</label>
-            <input type="text" class="form-control inputNumber" id="estoque" name="estoque" value="<?php echo $estoque_b; ?>">
+            <input type="text" disabled class="form-control inputNumber" id="estoque" name="estoque"
+                value="<?php echo $estoque_b; ?>">
         </div>
 
         <div class="col-sm-6 col-md-2  mb-2">
             <label for="est_minimo" class="form-label">Estoque Mínimo</label>
-            <input type="text" class="form-control inputNumber" id="est_minimo" name="est_minimo" value="<?php echo $est_minimo_b; ?>">
+            <input type="text" class="form-control inputNumber" id="est_minimo" name="est_minimo"
+                value="<?php echo $est_minimo_b; ?>">
         </div>
 
         <div class="col-sm-6 col-md-2  mb-2">
             <label for="est_maximo" class="form-label">Estoque Máximo</label>
-            <input type="text" class="form-control inputNumber" id="est_maximo" name="est_maximo" value="<?php echo $est_max_b; ?>">
+            <input type="text" class="form-control inputNumber" id="est_maximo" name="est_maximo"
+                value="<?php echo $est_max_b; ?>">
         </div>
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="local_produto" class="form-label">Local de Produto</label>
-            <input type="text" class="form-control" id="local_produto" name="local_produto" value="<?php echo $local_b; ?>">
+            <input type="text" class="form-control" id="local_produto" name="local_produto"
+                value="<?php echo $local_b; ?>">
         </div>
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="tamanho" class="form-label">Tamanho</label>
@@ -176,20 +181,25 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
 
         <div class="col-sm-6 col-md-2  mb-2">
             <label for="margem_lucro" class="form-label">Magem de lucro %</label>
-            <input type="text"  class="form-control inputNumber" title="informe a margem do produto para definir o preço de venda" id="margem_lucro" onchange="preco_venda()" name="margem_lucro" value="<?php echo $margem_b; ?>">
+            <input type="text" class="form-control inputNumber"
+                title="informe a margem do produto para definir o preço de venda" id="margem_lucro"
+                onchange="preco_venda()" name="margem_lucro" value="<?php echo $margem_b; ?>">
         </div>
 
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="prc_promocao" class="form-label">Preço Promoção</label>
-            <input type="text" class="form-control inputNumber" id="prc_promocao" name="prc_promocao" value="<?php echo $preco_promocao_b; ?>">
+            <input type="text" class="form-control inputNumber" id="prc_promocao" name="prc_promocao"
+                value="<?php echo $preco_promocao_b; ?>">
         </div>
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="desconto_maximo" class="form-label">Desconto Máximo</label>
-            <input type="text" class="form-control inputNumber" id="desconto_maximo" name="desconto_maximo" value="<?php echo $desconto_maximo_b ?>">
+            <input type="text" class="form-control inputNumber" id="desconto_maximo" name="desconto_maximo"
+                value="<?php echo $desconto_maximo_b ?>">
         </div>
         <div class="col-sm-6 col-md-2  mb-2">
             <label for="ultimo_preco_compra" class="form-label">Ult preço compra</label>
-            <input type="text" class="form-control inputNumber" disabled id="ultimo_preco_compra" name="ultimo_preco_compra" value="<?php echo $ult_preco_compra_b; ?>">
+            <input type="text" class="form-control inputNumber" disabled id="ultimo_preco_compra"
+                name="ultimo_preco_compra" value="<?php echo $ult_preco_compra_b; ?>">
         </div>
 
     </div>
@@ -215,7 +225,7 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="ncm" class="form-label">Ncm</label>
             <div class="input-group c mb-3">
-                <input type="text" class="form-control inputNumber" id="ncm" name="ncm"  value="<?php echo $ncm_b ?>"
+                <input type="text" class="form-control inputNumber" id="ncm" name="ncm" value="<?php echo $ncm_b ?>"
                     aria-label="Recipient's username" aria-describedby="button-addon2">
 
                 <button class="btn btn-outline-secondary" title="pesquise pelo ncm" data-bs-toggle="modal"
@@ -225,7 +235,8 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
         </div>
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="cst_icms" class="form-label">Cst icms</label>
-            <input class="form-control inputNumber" list="datalistOptionsIcms" id="cst_icms" name="cst_icms" value="<?php echo $cst_icms_b; ?>">
+            <input class="form-control inputNumber" list="datalistOptionsIcms" id="cst_icms" name="cst_icms"
+                value="<?php echo $cst_icms_b; ?>">
             <datalist id="datalistOptionsIcms">
                 <?php while($linha  = mysqli_fetch_assoc($consultar_icms)){ 
                 $icms_b= ($linha['cl_icms']);
@@ -239,7 +250,7 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
 
         <div class="col-sm-6 col-md-1   mb-2">
             <label for="cst_pis_s" class="form-label">Cst Pis S</label>
-            <input type="text" list="datalistOptionsPisS" class="form-control inputNumber" id="cst_pis_s" 
+            <input type="text" list="datalistOptionsPisS" class="form-control inputNumber" id="cst_pis_s"
                 name="cst_pis_s" value="<?php echo $pis_s_b ?>">
             <datalist id="datalistOptionsPisS">
                 <?php while($linha  = mysqli_fetch_assoc($consultar_pis_s)){ 
@@ -300,7 +311,8 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
         <div class="row mb-2">
             <div class="col-sm-6 col-md-8   mb-2">
                 <label for="prc_venda" class="form-label">Observação</label>
-                <textarea class="form-control" name="observacao" id="observacao" aria-label="With textarea"><?php echo $observacao_b; ?></textarea>
+                <textarea class="form-control" name="observacao" id="observacao"
+                    aria-label="With textarea"><?php echo $observacao_b; ?></textarea>
 
             </div>
         </div>
@@ -320,8 +332,10 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
       ?>
 
     <div class="row">
-        <div class="group-btn">
-            <button type="subbmit" class="btn btn-success">Cadastrar</button>
+    
+        <div class="group-btn d-grid gap-2 d-sm-block">
+            <button type="subbmit" class="btn btn-outline-success">Alterar</button>
+            <button type="button" id="remover" class="btn btn-outline-danger">Remover</button>
             <button type="button" id="voltar_consulta" class="btn btn-outline-dark">Voltar Para consulta de
                 produtos</button>
         </div>

@@ -14,61 +14,61 @@ $("#voltar_consulta").click(function(e) {
     
 
 
-// //editar usuario
-// $("#editar_grupo_estoque").submit(function(e) {
-//     e.preventDefault()
-//     var editar = $(this);
-//     var retorno = editar_grupo(editar)
-// })
 
-// function editar_grupo(dados) {
- 
-//     $.ajax({
-//         type: "POST",
-//         data: dados.serialize(),
-//         url: "modal/estoque/grupo_estoque/gerenciar_grupo_estoque.php",
-//         async: false
-//     }).then(sucesso, falha);
+//formulario para editar
+$("#editar_produto").submit(function(e) {
+    e.preventDefault()
+    var formulario = $(this);
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Deseja alterar esse produto?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Não',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var retorno = editar_produto(formulario)
+        } 
+    })
 
-//     function sucesso(data) {
+})
 
-//         $sucesso = $.parseJSON(data)["sucesso"];
-//         $mensagem = $.parseJSON(data)["mensagem"];
-//         if ($sucesso) {
-//             Swal.fire({
-//                 position: 'center',
-//                 icon: 'success',
-//                 title: 'Grupo alterada com sucesso',
-//                 showConfirmButton: false,
-//                 timer: 1500
+function editar_produto(dados) {
+    $.ajax({
+        type: "POST",
+        data: dados.serialize(),
+        url: "modal/estoque/produto/gerenciar_produto.php",
+        async: false
+    }).then(sucesso, falha);
 
-//             })
-      
-//         //consultar informação tabela
-//         $.ajax({
-//             type: 'GET',
-//             data: "consultar_grupo=inicial",
-//             url: "view/estoque/grupo_estoque/table/consultar_grupo_estoque.php",
-//             success: function(result) {
-//                 return $(".bloco-pesquisa-2 .tabela").html(result);
-//             },
-//         });
-
-
-//         } else {
-//             Swal.fire({
-//                 icon: 'error',
-//                 title: 'Verifique!',
-//                 text: $mensagem,
-//                 timer: 7500,
+    function sucesso(data) {
+        $dados = $.parseJSON(data)["dados"];
+        if ($dados.sucesso == true) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: $dados.title,
+                showConfirmButton: false,
+                timer: 3500
+            })
             
-//             })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Verifique!',
+                text: $dados.title,
+                timer: 7500,
 
-//         }
-//     }
+            })
 
-//     function falha() {
-//         console.log("erro");
-//     }
+        }
+    }
 
-// }d
+    function falha() {
+        console.log("erro");
+    }
+
+}

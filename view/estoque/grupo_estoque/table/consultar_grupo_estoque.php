@@ -25,7 +25,7 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
             <th scope="row"><?php echo $id_grupo_b ?></th>
             <td><?php echo $descricao_b; ?></td>
 
-            <td><button type="button" id_grupo=<?php echo $id_grupo_b; ?>
+            <td class="td-btn"><button type="button" id_grupo=<?php echo $id_grupo_b; ?>
                     class="btn btn-info editar_grupo_estoque">Editar</button>
             </td>
         </tr>

@@ -52,10 +52,10 @@ include "../../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
             <td><?php echo formatDateB($data_limite_b); ?></td>
 
 
-            <td><button type="button" id_tarefa=<?php echo $id_tarefa_b; ?>
+            <td class="td-btn"><button type="button" id_tarefa=<?php echo $id_tarefa_b; ?>
                     class="btn btn-info editar_tarefa">Editar</button>
             </td>
-            <td><button type="button" id_tarefa=<?php echo $id_tarefa_b; ?>
+            <td class="td-btn"><button type="button" id_tarefa=<?php echo $id_tarefa_b; ?>
                     class="btn btn-danger remover_tarefa"><i class="bi bi-trash"></i></button>
             </td>
         </tr>
