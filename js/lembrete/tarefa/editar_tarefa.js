@@ -36,7 +36,21 @@ $("#remover").click(function(e){
 $("#editar_tarefa").submit(function(e) {
     e.preventDefault()
     var editar_formulario = $(this);
-    var retorno = edtarefa(editar_formulario)
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Deseja alterar essa tarefa?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Não',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var retorno = edtarefa(editar_formulario)
+        } 
+    })
+
 })
 
 
@@ -63,15 +77,16 @@ function edtarefa(dados) {
 
 
             })
-            //consultar informaçãoes
-            $.ajax({
-                type: 'GET',
-                data: "consultar_tarefa=inicial&user_logado="+user_logado,
-                url: "view/lembrete/tarefa/table/consultar_tarefa.php",
-                success: function(result) {
-                    return $(".bloco-pesquisa-2 .tabela").html(result);
-                },
-            });
+            // //consultar informaçãoes
+            // $.ajax({
+            //     type: 'GET',
+            //     data: "consultar_tarefa=inicial&user_logado="+user_logado,
+            //     url: "view/lembrete/tarefa/table/consultar_tarefa.php",
+            //     success: function(result) {
+            //         return $(".bloco-pesquisa-2 .tabela").html(result);
+            //     },
+            // });
+            $('#pesquisar_tarefa').trigger('click'); // clicar automaticamente para realizar a consulta
 
         } else {
             Swal.fire({
@@ -116,14 +131,17 @@ function remove_tarefa(id_tarefa,user_logado) {
 
             })
             //consultar informaçãoes para tabela
-            $.ajax({
-                type: 'GET',
-                data: "consultar_tarefa=inicial&user_logado="+user_logado,
-                url: "view/lembrete/tarefa/table/consultar_tarefa.php",
-                success: function(result) {
-                    return $(".bloco-pesquisa-2 .tabela").html(result);
-                },
-            });
+            // $.ajax({
+            //     type: 'GET',
+            //     data: "consultar_tarefa=inicial&user_logado="+user_logado,
+            //     url: "view/lembrete/tarefa/table/consultar_tarefa.php",
+            //     success: function(result) {
+            //         return $(".bloco-pesquisa-2 .tabela").html(result);
+            //     },
+            // });
+
+            $('#pesquisar_tarefa').trigger('click'); // clicar automaticamente para realizar a consulta
+            
             //voltar para tela de cadastrs
             $.ajax({
                 type: 'GET',

@@ -2,24 +2,23 @@
 $("#voltar_cadastro").click(function(e) {
     // $('.tabela').css("display", 'none')
     // $('.tabela').fadeIn(500)
-
     $.ajax({
         type: 'GET',
-        data: "cadastro_parametro=true",
-        url: "view/suporte/parametro/cadastro_parametro.php",
+        data: "cadastro_serie=true",
+        url: "view/suporte/serie/cadastro_serie.php",
         success: function(result) {
             return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result);
         },
     });
 })
 
-//editar formulario
-$("#editar_parametro").submit(function(e) {
+//editar usuario
+$("#editar_serie").submit(function(e) {
     e.preventDefault()
     var editar = $(this);
     Swal.fire({
         title: 'Tem certeza?',
-        text: "Deseja alterar esse Parâmetro?",
+        text: "Deseja alterar essa serie",
         icon: 'warning',
         showCancelButton: true,
         cancelButtonText: 'Não',
@@ -28,54 +27,53 @@ $("#editar_parametro").submit(function(e) {
         confirmButtonText: 'Sim'
     }).then((result) => {
         if (result.isConfirmed) {
-            var retorno = edt_parametro(editar)
+            var retorno = editar_serie(editar)
         } 
     })
 
 
-    
+  
 })
 
-function edt_parametro(dados) {
+function editar_serie(dados) {
  
     $.ajax({
         type: "POST",
         data: dados.serialize(),
-        url: "modal/suporte/parametro/gerenciar_parametro.php",
+        url: "modal/suporte/serie/gerenciar_serie.php",
         async: false
     }).then(sucesso, falha);
 
     function sucesso(data) {
 
-        $sucesso = $.parseJSON(data)["sucesso"];
-        $mensagem = $.parseJSON(data)["mensagem"];
-        if ($sucesso) {
+        $dados = $.parseJSON(data)["dados"];
+    
+        if ($dados.sucesso==true) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Parâmetro alterado com sucesso',
+                title: $dados.title,
                 showConfirmButton: false,
                 timer: 1500
 
             })
-            //consultar tabela
-            // $.ajax({
-            // type: 'GET',
-            // data: "consultar_parametro=inicial",
-            // url: "view/suporte/parametro/table/consultar_parametro.php",
-            // success: function(result) {
-            // return $(".bloco-pesquisa-2 .tabela").html(result);
-            // },
-            // });
-            $('#pesquisar_parametro').trigger('click'); // clicar automaticamente para realizar a consulta
-
-
+      
+        //consultar informação tabela
+        // $.ajax({
+        //     type: 'GET',
+        //     data: "consultar_grupo=inicial",
+        //     url: "view/estoque/grupo_estoque/table/consultar_grupo_estoque.php",
+        //     success: function(result) {
+        //         return $(".bloco-pesquisa-2 .tabela").html(result);
+        //     },
+        // });
+        $('#pesquisar_filtro_pesquisa').trigger('click'); // clicar automaticamente para realizar a consulta
 
         } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Verifique!',
-                text: $mensagem,
+                text: $dados.title,
                 timer: 7500,
             
             })

@@ -46,17 +46,17 @@ function cadastrar_categoria(dados) {
             //resetar valores de input
             cadastro_formulario.reset()
 
-            //consultar categorias já cadastradas
-            $.ajax({
-                type: 'GET',
-                data: "consultar_tela_categoria=inicial",
-                url: "view/suporte/tela/table/consultar_categoria.php",
-                success: function(result) {
-                    return $(".table").html(result);
-                },
-            });
+            // //consultar categorias já cadastradas
+            // $.ajax({
+            //     type: 'GET',
+            //     data: "consultar_tela_categoria=inicial",
+            //     url: "view/suporte/tela/table/consultar_categoria.php",
+            //     success: function(result) {
+            //         return $(".table").html(result);
+            //     },
+            // });
 
-
+            $('#pesquisa_conteudo').trigger('click'); // clicar automaticamente para realizar a consulta
         } else {
             Swal.fire({
                 icon: 'error',

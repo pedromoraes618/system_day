@@ -1,9 +1,10 @@
-$("#cadastrar_parametro").submit(function(e) {
+$("#cadastrar_serie").submit(function(e) {
     e.preventDefault()
     var cadastrar = $(this);
+
     Swal.fire({
         title: 'Tem certeza?',
-        text: "Deseja cadastrar esse Parâmetro?",
+        text: "Deseja cadastrar essa serie?",
         icon: 'warning',
         showCancelButton: true,
         cancelButtonText: 'Não',
@@ -12,52 +13,53 @@ $("#cadastrar_parametro").submit(function(e) {
         confirmButtonText: 'Sim'
     }).then((result) => {
         if (result.isConfirmed) {
-            var retorno = cadastrar_parametro(cadastrar)
+            var retorno = cadastrar_serie(cadastrar)
         } 
     })
 
+
+
 })
 
-const cadastro_formulario = document.getElementById("cadastrar_parametro");
-function cadastrar_parametro(dados) {
+const cadastro_formulario = document.getElementById("cadastrar_serie");
+function cadastrar_serie(dados) {
     $.ajax({
         type: "POST",
         data: dados.serialize(),
-        url: "modal/suporte/parametro/gerenciar_parametro.php",
+        url: "modal/suporte/serie/gerenciar_serie.php",
         async: false
     }).then(sucesso, falha);
 
     function sucesso(data) {
 
-        $sucesso = $.parseJSON(data)["sucesso"];
-        $mensagem = $.parseJSON(data)["mensagem"];
-        if ($sucesso) {
+        $dados = $.parseJSON(data)["dados"];
+    
+        if ($dados.sucesso == true) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Parâmetro cadastrado com sucesso',
+                title: $dados.title,
                 showConfirmButton: false,
                 timer: 1500
             })
             //resetar valores de input
             cadastro_formulario.reset()
 
-        //consultar tablela
+        //consultar informação tabela
         // $.ajax({
-        // type: 'GET',
-        // data: "consultar_parametro=inicial",
-        // url: "view/suporte/parametro/table/consultar_parametro.php",
-        // success: function(result) {
-        // return $(".bloco-pesquisa-2 .tabela").html(result);
-        // },
+        //     type: 'GET',
+        //     data: "consultar_grupo=inicial",
+        //     url: "view/estoque/grupo_estoque/table/consultar_grupo_estoque.php",
+        //     success: function(result) {
+        //         return $(".bloco-pesquisa-2 .tabela").html(result);
+        //     },
         // });
-        $('#pesquisar_parametro').trigger('click'); // clicar automaticamente para realizar a consulta
-
+        $('#pesquisar_filtro_pesquisa').trigger('click'); // clicar automaticamente para realizar a consulta
         } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Verifique!',
-                text: $mensagem,
+                text: $dados.title,
                 timer: 7500,
             
 

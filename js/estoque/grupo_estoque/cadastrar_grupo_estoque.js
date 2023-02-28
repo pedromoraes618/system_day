@@ -46,16 +46,15 @@ function cadastrar_grupo(dados) {
             cadastro_formulario.reset()
 
         //consultar informação tabela
-        $.ajax({
-            type: 'GET',
-            data: "consultar_grupo=inicial",
-            url: "view/estoque/grupo_estoque/table/consultar_grupo_estoque.php",
-            success: function(result) {
-                return $(".bloco-pesquisa-2 .tabela").html(result);
-            },
-        });
-
-
+        // $.ajax({
+        //     type: 'GET',
+        //     data: "consultar_grupo=inicial",
+        //     url: "view/estoque/grupo_estoque/table/consultar_grupo_estoque.php",
+        //     success: function(result) {
+        //         return $(".bloco-pesquisa-2 .tabela").html(result);
+        //     },
+        // });
+        $('#pesquisar_filtro_pesquisa').trigger('click'); // clicar automaticamente para realizar a consulta
         } else {
             Swal.fire({
                 icon: 'error',

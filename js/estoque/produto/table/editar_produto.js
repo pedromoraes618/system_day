@@ -13,3 +13,18 @@ $(".editar_produto").click(function(e) {
         },
     });
 })
+
+
+$(".consultar_kardex").click(function(e) {
+    var id_produto = $(this).attr("id_produto")
+    $(".bloco-pesquisa-menu .bloco-pesquisa-1").css("display","none")
+    $(".bloco-pesquisa-menu .bloco-pesquisa-2").css("display","block")
+$.ajax({
+    type: 'GET',
+    data: "kardex_produto=true&id_produto="+id_produto,
+    url: "view/estoque/produto/karkex/consultar_kardex.php",
+    success: function(result) {
+        return $(".bloco-pesquisa-menu .bloco-pesquisa-2").html(result);
+    },
+});
+})

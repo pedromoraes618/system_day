@@ -61,7 +61,7 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
                     class="btn btn-info editar_produto ">Editar</button>
             </td>
             <td class="td-btn"><button type="button"  id_produto=<?php echo $produto_id; ?>
-                    class="btn btn-warning editar_produto ">Karkex</button>
+                    class="btn btn-warning consultar_kardex ">Karkex</button>
             </td>
         </tr>
 

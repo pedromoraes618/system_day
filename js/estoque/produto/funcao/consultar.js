@@ -28,7 +28,7 @@ $(document).ready(function(){
     var cest = $(this).attr("valor")
     var input_cest = document.getElementById("cest")
     input_cest.value=cest
-    $('.btn-close').trigger('click');
+    $('.btn-close').trigger('click'); // clicar automaticamente
 })
 
 //pesquisar ncm e informar no campo

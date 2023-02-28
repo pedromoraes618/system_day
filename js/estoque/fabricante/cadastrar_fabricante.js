@@ -1,25 +1,10 @@
-//voltar para tela de cadastro
-$("#voltar_cadastro").click(function(e) {
-    // $('.tabela').css("display", 'none')
-    // $('.tabela').fadeIn(500)
-
-    $.ajax({
-        type: 'GET',
-        data: "cadastro_grupo=true",
-        url: "view/estoque/grupo_estoque/cadastro_grupo_estoque.php",
-        success: function(result) {
-            return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result);
-        },
-    });
-})
-
-//editar usuario
-$("#editar_grupo_estoque").submit(function(e) {
+$("#cadastrar_fabricante").submit(function(e) {
     e.preventDefault()
-    var editar = $(this);
+    var cadastrar = $(this);
+
     Swal.fire({
         title: 'Tem certeza?',
-        text: "Deseja alterar esse Grupo?",
+        text: "Deseja cadastrar esse fabricante?",
         icon: 'warning',
         showCancelButton: true,
         cancelButtonText: 'Não',
@@ -28,55 +13,58 @@ $("#editar_grupo_estoque").submit(function(e) {
         confirmButtonText: 'Sim'
     }).then((result) => {
         if (result.isConfirmed) {
-            var retorno = editar_grupo(editar)
+            var retorno = cadastrar_grupo(cadastrar)
         } 
     })
 
 
-  
+
 })
 
-function editar_grupo(dados) {
- 
+const cadastro_formulario = document.getElementById("cadastrar_fabricante");
+function cadastrar_grupo(dados) {
     $.ajax({
         type: "POST",
         data: dados.serialize(),
-        url: "modal/estoque/grupo_estoque/gerenciar_grupo_estoque.php",
+        url: "modal/estoque/fabricante/gerenciar_fabricante.php",
         async: false
     }).then(sucesso, falha);
 
     function sucesso(data) {
 
-        $sucesso = $.parseJSON(data)["sucesso"];
-        $mensagem = $.parseJSON(data)["mensagem"];
-        if ($sucesso) {
+        $dados = $.parseJSON(data)["dados"];
+        if ($dados.sucesso == true) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Grupo alterada com sucesso',
+                title: $dados.title,
                 showConfirmButton: false,
-                timer: 1500
-
+                timer: 3500
             })
-      
+
+        //resetar valores de input
+        cadastro_formulario.reset()
+
         //consultar informação tabela
         // $.ajax({
         //     type: 'GET',
-        //     data: "consultar_grupo=inicial",
-        //     url: "view/estoque/grupo_estoque/table/consultar_grupo_estoque.php",
+        //     data: "consultar_fabricante=inicial",
+        //     url: "view/estoque/fabricante/table/consultar_fabricante.php",
         //     success: function(result) {
         //         return $(".bloco-pesquisa-2 .tabela").html(result);
         //     },
         // });
         $('#pesquisar_filtro_pesquisa').trigger('click'); // clicar automaticamente para realizar a consulta
 
+
         } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Verifique!',
-                text: $mensagem,
+                text: $dados.title,
                 timer: 7500,
             
+
             })
 
         }
@@ -86,4 +74,4 @@ function editar_grupo(dados) {
         console.log("erro");
     }
 
-}d
+}

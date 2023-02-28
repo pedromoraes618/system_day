@@ -77,6 +77,20 @@ function verificar_user_usuario($conecta,$id_user){
     
 }
 
+
+//verificar se a opção remover podera ser feita
+function verificar_dados_existentes($conecta,$tabela,$filtro,$resultado_filtro){
+    //verificar usuario pelo id
+    $select = "SELECT count(*) as qtd from $tabela where $filtro ='$resultado_filtro'";
+    $consultar_dados_existentes = mysqli_query($conecta,$select);
+    $linha = mysqli_fetch_assoc($consultar_dados_existentes);
+    $resultado = $linha['qtd'];
+    return $resultado;
+    
+}
+
+
+//registrar log da acão
 function registrar_log($conecta,$nome_usuario_logado,$data,$mensagem){
     $inset = "INSERT INTO tb_log (cl_data_modificacao,cl_usuario,cl_descricao) VALUES ('$data','$nome_usuario_logado','$mensagem')";
     $operacao_inserir = mysqli_query($conecta, $inset);
@@ -147,6 +161,18 @@ function adicionar_valor_serie($conecta,$serie,$valor){
     }
  
  }
+
+
+//  Em PHP, você pode usar a função ctype_alpha para verificar se um caractere é uma 
+//letra e a função strtoupper para transformar uma letra em maiúscula.
+//   Aqui está uma função que verifica se um caractere é uma letra e, se for, converte-o em maiúscu
+ function uppercaseLetter($char) {
+    if (ctype_alpha($char)) {
+      return strtoupper($char);
+    } else {
+      return $char;
+    }
+  }
 
 
 function validarCPF($cpf) {

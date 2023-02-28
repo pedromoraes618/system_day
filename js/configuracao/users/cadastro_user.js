@@ -47,16 +47,16 @@ function cadastrar_usuario(dados) {
               //resetar valores de input
               cadastro_formulario.reset()
 
-            //consultar inicial
-            $.ajax({
-                type: 'GET',
-                data: "consultar_user=inicial",
-                url: "view/configuracao/users/table/consultar_user.php",
-                success: function(result) {
-                    return $(".tabela").html(result);
-                },
-            });
-
+            // //consultar inicial
+            // $.ajax({
+            //     type: 'GET',
+            //     data: "consultar_user=inicial",
+            //     url: "view/configuracao/users/table/consultar_user.php",
+            //     success: function(result) {
+            //         return $(".tabela").html(result);
+            //     },
+            // });
+            $('#pesquisar_user').trigger('click'); // clicar automaticamente para realizar a consulta
 
         } else {
             Swal.fire({

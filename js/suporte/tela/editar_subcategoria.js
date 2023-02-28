@@ -17,7 +17,20 @@ $("#voltar_cadastro").click(function(e) {
 $("#editar_subcategoria").submit(function(e) {
     e.preventDefault()
     var editar_subcategoria = $(this);
-    var retorno = edt_subcategoria(editar_subcategoria)
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Deseja alterar essa subcategoria?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Não',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim'
+    }).then((result) => {
+        if (result.isConfirmed) {
+             var retorno = edt_subcategoria(editar_subcategoria)
+        } 
+    })
 })
 
 function edt_subcategoria(dados) {
@@ -43,14 +56,15 @@ function edt_subcategoria(dados) {
 
             })
             //consultar categorias já cadastradas
-            $.ajax({
-            type: 'GET',
-            data: "consultar_tela_subcategoria=inicial",
-            url: "view/suporte/tela/table/consultar_subcategoria.php",
-            success: function(result) {
-            return $(".tabela").html(result);
-            },
-            });
+            // $.ajax({
+            // type: 'GET',
+            // data: "consultar_tela_subcategoria=inicial",
+            // url: "view/suporte/tela/table/consultar_subcategoria.php",
+            // success: function(result) {
+            // return $(".tabela").html(result);
+            // },
+            // });
+            $('#pesquisa_conteudo').trigger('click'); // clicar automaticamente para realizar a consulta
 
         } else {
             Swal.fire({

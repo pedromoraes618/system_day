@@ -17,7 +17,21 @@ $("#voltar_cadastro").click(function(e) {
 $("#editar_subgrupo_estoque").submit(function(e) {
     e.preventDefault()
     var formulario = $(this);
-    var retorno = editar_subgrupo(formulario)
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Deseja alterar esse SubGrupo?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Não',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var retorno = editar_subgrupo(formulario)
+        } 
+    })
+
 })
 
 function editar_subgrupo(dados) {
@@ -43,15 +57,15 @@ function editar_subgrupo(dados) {
 
             })
               //recarregar tabela
-        $.ajax({
-            type: 'GET',
-            data: "consultar_subgrupo=inicial",
-            url: "view/estoque/subgrupo_estoque/table/consultar_subgrupo_estoque.php",
-            success: function(result) {
-                return $(".bloco-pesquisa-2 .tabela").html(result);
-            },
-        });
-
+        // $.ajax({
+        //     type: 'GET',
+        //     data: "consultar_subgrupo=inicial",
+        //     url: "view/estoque/subgrupo_estoque/table/consultar_subgrupo_estoque.php",
+        //     success: function(result) {
+        //         return $(".bloco-pesquisa-2 .tabela").html(result);
+        //     },
+        // });
+        $('#pesquisar_filtro_pesquisa').trigger('click'); // clicar automaticamente para realizar a consulta
         } else {
             Swal.fire({
                 icon: 'error',

@@ -33,7 +33,22 @@ $("#voltar_cadastro").click(function(e) {
 $("#editar_usuario").submit(function(e) {
     e.preventDefault()
     var editar_user = $(this);
-    var retorno = editar_usuario(editar_user)
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Deseja alterar esse Usúario?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Não',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var retorno = editar_usuario(editar_user)
+
+        } 
+    })
+
 
 
 })
@@ -60,15 +75,15 @@ function editar_usuario(dados) {
 
             })
             //consultar inicial
-            $.ajax({
-                type: 'GET',
-                data: "consultar_user=inicial",
-                url: "view/configuracao/users/table/consultar_user.php",
-                success: function(result) {
-                    return $(".tabela").html(result);
-                },
-            });
-
+            // $.ajax({
+            //     type: 'GET',
+            //     data: "consultar_user=inicial",
+            //     url: "view/configuracao/users/table/consultar_user.php",
+            //     success: function(result) {
+            //         return $(".tabela").html(result);
+            //     },
+            // });
+            $('#pesquisar_user').trigger('click'); // clicar automaticamente para realizar a consulta
         } else {
             Swal.fire({
                 icon: 'error',

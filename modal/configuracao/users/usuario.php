@@ -1,8 +1,12 @@
 <?php  
 //consultar usuario sem filtro
 if(isset($_GET['consultar_user'])){
+    include "../../../../conexao/conexao.php";
+    include "../../../../funcao/funcao.php";
+    
     $consulta_user = $_GET['consultar_user'];
     if($consulta_user == "inicial"){
+        $consultar_tabela_inicialmente =  verficar_paramentro($conecta,"tb_parametros","cl_id","1");//VERIFICAR PARAMETRO ID - 1
         $select = "SELECT * from tb_users ";
         $consultar_usuarios = mysqli_query($conecta, $select);
         if(!$consultar_usuarios){

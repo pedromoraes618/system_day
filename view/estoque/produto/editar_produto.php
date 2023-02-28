@@ -74,7 +74,7 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
                 if($fabricante_b == $id_fabricante){
                 echo "<option selected value='$id_fabricante' >$descricao</option>";
              }else{
-                echo "<option selected value='$id_fabricante' >$descricao</option>";
+                echo "<option  value='$id_fabricante' >$descricao</option>";
              }}?>
             </select>
         </div>

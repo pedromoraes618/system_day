@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-md-2 mb-1">
                 <select name="situacao" class="form-select" id="configuracao">
-                    <option value="0">Configuração....</option>
+                    <option value="0">Selecione a Configuração....</option>
                     <option value="seguranca">Segurança</option>
                     <option value="performance">Performance</option>
                     <option value="usuario">Usuário</option>

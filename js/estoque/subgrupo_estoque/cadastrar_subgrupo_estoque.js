@@ -44,16 +44,16 @@ function cadastrar_subgrupo(dados) {
         //resetar valores de input
         cadastro_formulario.reset()
 
-        //recarregar tabela
-        $.ajax({
-            type: 'GET',
-            data: "consultar_subgrupo=inicial",
-            url: "view/estoque/subgrupo_estoque/table/consultar_subgrupo_estoque.php",
-            success: function(result) {
-                return $(".bloco-pesquisa-2 .tabela").html(result);
-            },
-        });
-
+        // //recarregar tabela
+        // $.ajax({
+        //     type: 'GET',
+        //     data: "consultar_subgrupo=inicial",
+        //     url: "view/estoque/subgrupo_estoque/table/consultar_subgrupo_estoque.php",
+        //     success: function(result) {
+        //         return $(".bloco-pesquisa-2 .tabela").html(result);
+        //     },
+        // });
+        $('#pesquisar_filtro_pesquisa').trigger('click'); // clicar automaticamente para realizar a consulta
         } else {
             Swal.fire({
                 icon: 'error',
