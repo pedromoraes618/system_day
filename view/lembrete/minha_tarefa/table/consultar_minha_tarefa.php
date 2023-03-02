@@ -18,19 +18,19 @@ include "../../../../modal/lembrete/minha_tarefa/gerenciar_minha_tarefa.php";
 
         </tr>
     </thead>
-    <?php if(isset($consultar_tarefas)){//verificar se foi feito a requisição corretamente?>
+
     <tbody>
-        <?php while($row = mysqli_fetch_assoc($consultar_tarefas)){
-                $id_tarefa_b= $row['cl_id'];
-                $data_lancamento_b = ($row['cl_data_lancamento']);
-                $descricao_b = utf8_encode($row['cl_descricao']);
-                $comentario_b = utf8_encode($row['cl_comentario']);
+        <?php while($linha = mysqli_fetch_assoc($consultar_tarefas)){
+                $id_tarefa_b= $linha['cl_id'];
+                $data_lancamento_b = ($linha['cl_data_lancamento']);
+                $descricao_b = utf8_encode($linha['cl_descricao']);
+                $comentario_b = utf8_encode($linha['cl_comentario']);
              
-                $status_b = $row['status'];
-                $prioridade_b= $row['cl_prioridade'];
-                $data_limite_b = ($row['cl_data_limite']);
-                $usuario_func = $row['usuario_func'];
-                $usuario_ordem = $row['usuarioordem'];
+                $status_b = $linha['status'];
+                $prioridade_b= $linha['cl_prioridade'];
+                $data_limite_b = ($linha['cl_data_limite']);
+                $usuario_func = $linha['usuario_func'];
+                $usuario_ordem = $linha['usuarioordem'];
                 if($prioridade_b == "1"){
                     $prioridade_b ="sim";
                 }else{
@@ -56,7 +56,7 @@ include "../../../../modal/lembrete/minha_tarefa/gerenciar_minha_tarefa.php";
            
         </tr>
 
-        <?php } }?>
+        <?php } ?>
     </tbody>
 </table>
 

@@ -919,3 +919,22 @@ border: 3px solid var(--borda_princiapl);  /* creates padding around scroll thum
 .td-btn{
     width: 20px;
 }
+
+.label_box{
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    background: rgb(50,58,83);
+    background: -moz-linear-gradient(90deg, rgba(50,58,83,1) 3%, rgba(27,44,97,1) 60%);
+    background: -webkit-linear-gradient(90deg, rgba(50,58,83,1) 3%, rgba(27,44,97,1) 60%);
+    background: linear-gradient(90deg, rgba(50,58,83,1) 3%, rgba(27,44,97,1) 60%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#323a53",endColorstr="#1b2c61",GradientType=1);
+    color: white;
+    font-size: 0.9em;
+}
+
+.info_cancelado{
+    color: red;
+    font-size: 1.2em;
+}

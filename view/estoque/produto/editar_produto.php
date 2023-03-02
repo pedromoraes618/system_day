@@ -98,8 +98,11 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
             <label for="status" class="form-label">Status</label>
             <select name="status" class="form-select" id="status">
                 <option value="0">Selecione..</option>
-                <option selected value="SIM">Ativo</option>
-                <option value="NAO">Inativo</option>
+
+                
+        
+                <option <?php  if($status_ativo_b =="SIM"){ echo "selected" ;} ?>  value="SIM">Ativo</option>
+                <option  <?php  if($status_ativo_b =="NAO"){ echo "selected";} ?> value="NAO">Inativo</option>
 
             </select>
         </div>

@@ -1,7 +1,7 @@
 <?php 
-include "../../../../../conexao/conexao.php";  
-include "../../../../../modal/estoque/produto/gerenciar_produto.php";  
-
+include "../../../../conexao/conexao.php";  
+include "../../../../modal/estoque/kardex/gerenciar_kardex.php";  
+include "../../../../funcao/funcao.php";  
 
 ?>
 <table class="table">
@@ -10,7 +10,7 @@ include "../../../../../modal/estoque/produto/gerenciar_produto.php";
             <th scope="col">Data</th>
             <th scope="col">Doc</th>
             <th scope="col">Empresa</th>
-         
+
             <th scope="col">Usúario</th>
             <th scope="col">Tipo</th>
             <th scope="col">Entrada</th>
@@ -27,14 +27,27 @@ include "../../../../../modal/estoque/produto/gerenciar_produto.php";
                 $true_ajuste_inicial = $linha['cl_ajuste_inicial'];
                 $quantidade_b = $linha['cl_quantidade'];
                 $tipo_b =$linha['cl_tipo'];
+                $doc_b =$linha['cl_documento'];
+                $status_b =$linha['cl_status'];
+                $data_b =$linha['cl_data_lancamento'];
+                
                 //corrir depois 
                 if($tipo_b =="ENTRADA"){
-                    $saldo = $quantidade_b + $saldo;
+                    if($status_b =="cancelado"){//verificar se o ajuste foi cancelado
+                        $saldo = 0 + $saldo;
+                    }else{
+                        $saldo = $quantidade_b + $saldo;
+                    }
                     $quantidade_entrada = $quantidade_b;
                     $quantidade_saida = 0; // informar zero
                 }else{
-                    //foi um ajuste de saida
-                    $saldo = $saldo - $quantidade_b ;
+                     //foi um ajuste de saida
+                    if($status_b =="cancelado"){//verificar se o ajuste foi cancelado
+                        $saldo = 0 + $saldo;
+                    }else{
+                        $saldo = $saldo - $quantidade_b ;
+                    }
+    
                     $quantidade_saida = $quantidade_b;
                     $quantidade_entrada = 0; // informar zero
                 }
@@ -56,20 +69,34 @@ include "../../../../../modal/estoque/produto/gerenciar_produto.php";
         </tr>
         <?php }else{?>
         <tr>
-            <td>20/01/2023</td>
-            <td>ajst-205</td>
+            <td><?php echo formatDateB($data_b); ?></td>
+            <td><?php echo $doc_b; ?></td>
             <td>system_day</td>
             <td>Pedro</td>
             <td><span
                     class="badge text-bg-<?php if($tipo_b == "saida"){echo 'success' ;}else{echo 'primary';} ?>"><?php echo $tipo_b; ?></span>
             </td>
-          
+
             <td><?php echo $quantidade_entrada ?></td>
             <td><?php echo $quantidade_saida ?></td>
+            <td><?php  echo $saldo; ?></td> 
+            <td style="width: 20px;"><?php if($status_b=="cancelado"){echo "<span class='badge text-bg-danger'>Ajs cancelado</span>";} ?></td>
+        </tr>
+
+        <?php }}?>
+        <tr>
+            <td>Total</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+            </td>
+
+            <td></td>
+            <td></td>
             <td><?php  echo $saldo; ?></td>
             <td></td>
         </tr>
-        <?php }}?>
 
     </tbody>
 </table>

@@ -142,8 +142,8 @@ function consultar_serie($conecta,$serie){
 function ajuste_estoque($conecta,$data,$doc,$tipo,$produto_id,$quantidade,$empresa_id,$usuario_id,$forma_pagamento_id,$valor_venda,$valor_compra,$ajuste_inical){
 
     $inset = "INSERT INTO `tb_ajuste_estoque` (`cl_data_lancamento`, `cl_documento`, `cl_produto_id`, `cl_tipo`, `cl_quantidade`, 
-    `cl_empresa_id`, `cl_usuario_id`, `cl_forma_pagamento_id`, `cl_valor_venda`, `cl_valor_compra`,`cl_ajuste_inicial`) VALUES 
-    ('$data', '$doc', '$produto_id', '$tipo', '$quantidade', '$empresa_id', '$usuario_id', '$forma_pagamento_id', '$valor_venda', '$valor_compra','$ajuste_inical')";
+    `cl_empresa_id`, `cl_usuario_id`, `cl_forma_pagamento_id`, `cl_valor_venda`, `cl_valor_compra`,`cl_ajuste_inicial`,`cl_status`) VALUES 
+    ('$data', '$doc', '$produto_id', '$tipo', '$quantidade', '$empresa_id', '$usuario_id', '$forma_pagamento_id', '$valor_venda', '$valor_compra','$ajuste_inical','ok')";
     $operacao_inserir = mysqli_query($conecta, $inset);
     return $operacao_inserir;
  }
@@ -162,7 +162,14 @@ function adicionar_valor_serie($conecta,$serie,$valor){
  
  }
 
-
+//consultar qualuer tabela do bd
+ function consulta_tabela($conecta,$tabela,$coluna_filtro,$valor,$coluna_valor){
+    $select = "SELECT * from $tabela where $coluna_filtro = '$valor' ";
+    $consulta_tabela= mysqli_query($conecta,$select);
+    $linha = mysqli_fetch_assoc($consulta_tabela);
+    $valor = $linha["$coluna_valor"];
+    return $valor;
+ }
 //  Em PHP, você pode usar a função ctype_alpha para verificar se um caractere é uma 
 //letra e a função strtoupper para transformar uma letra em maiúscula.
 //   Aqui está uma função que verifica se um caractere é uma letra e, se for, converte-o em maiúscu

@@ -424,6 +424,7 @@ if(isset($_GET['editar_produto'])==true){
     $local_b = utf8_encode($linha['cl_localizacao']);
     $tamanho_b = utf8_encode($linha['cl_tamanho']);
     $und_b = ($linha['cl_und_id']);
+    $status_ativo_b = ($linha['cl_status_ativo']);
     $preco_venda_b = ($linha['cl_preco_venda']);
     $preco_custo_b = ($linha['cl_preco_custo']);
     $margem_b = ($linha['cl_margem_lucro']);
@@ -441,20 +442,6 @@ if(isset($_GET['editar_produto'])==true){
 }
 
 
-
-if(isset($_GET['kardex_produto'])==true){
-   
-   $id_produto = $_GET['id_produto'];
-   $select ="SELECT * from tb_produtos where cl_id = $id_produto";
-   $consultar_produto= mysqli_query($conecta, $select);
-   $linha = mysqli_fetch_assoc($consultar_produto);
-   $descricao_b = $linha['cl_descricao'];
-
-   $select ="SELECT * from tb_ajuste_estoque where cl_produto_id = $id_produto order by cl_id";
-   $consultar_historico_produto= mysqli_query($conecta, $select);
-
-  
-}
 
 
 //consultar grupo estoque

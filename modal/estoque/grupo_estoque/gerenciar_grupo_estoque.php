@@ -99,3 +99,36 @@ if(isset($_GET['editar_grupo_estoque'])==true){
 
  
 }
+
+
+//remover formulario
+if(isset($_POST['remover_grupo_estoque'])){
+    include "../../../conexao/conexao.php";
+    include "../../../funcao/funcao.php";
+        $retornar = array();
+      
+        $nome_usuario_logado = $_POST["nome_usuario_logado"];
+        // $id_usuario_logado = $_POST["id_usuario_logado"];
+        // $perfil_usuario_logado = $_POST['perfil_usuario_logado'];
+
+        $id_grupo = $_POST["id_grupo"];
+
+        if(verificar_dados_existentes($conecta,"tb_subgrupo_estoque","cl_grupo_id",$id_grupo) > 0){ // verificar se o fabricante está vinculado com algum produto cadastrado no sistema
+            $retornar["dados"] = array("sucesso"=>false,"title"=>"Não é possivel remover esse grupo, pois esse grupo está vinculado a um ou mais Subgrupos em nosso sistema.");
+        }else{
+            $grupo_estoque = consulta_tabela($conecta,"tb_grupo_estoque","cl_id",$id_grupo,"cl_descricao");//consultar a descricao do grupo
+
+            $update = "DELETE FROM tb_grupo_estoque WHERE cl_id = $id_grupo";
+            $operacao_delete = mysqli_query($conecta, $update);
+            if($operacao_delete){
+            $retornar["dados"] = array("sucesso"=>true,"title"=>"Grupo removido com sucesso");
+            //registrar no log
+         
+            $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado removeu o grupo de estoque $grupo_estoque");
+            registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
+            }  
+        }
+     
+        echo json_encode($retornar);
+
+}

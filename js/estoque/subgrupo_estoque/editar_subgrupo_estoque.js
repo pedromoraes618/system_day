@@ -82,4 +82,72 @@ function editar_subgrupo(dados) {
         console.log("erro");
     }
 
-}d
+}
+
+//remover dados do fomulario
+$("#remover").click(function(e){
+    e.preventDefault()
+    var id_subgrupo = document.getElementById("id_subgrupo").value
+ //  var user_id = id_user_logado.value
+    
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Deseja remover esse subgrupo ?",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Não',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var retorno = remover_subgrupo(id_subgrupo,user_logado)
+        } 
+    })
+
+})
+
+
+//remover tarefa
+function remover_subgrupo(id_subgrupo,user_logado) {
+    $.ajax({
+        type: "POST",
+        data: "remover_subgrupo_estoque=true&id_subgrupo=" + id_subgrupo+"&nome_usuario_logado="+user_logado,
+        url: "modal/estoque/subgrupo_estoque/gerenciar_subgrupo_estoque.php",
+        async: false
+    }).then(sucesso, falha);
+
+    function sucesso(data) {
+
+        $dados = $.parseJSON(data)["dados"];
+  
+        if ($dados.sucesso == true) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: $dados.title,
+                showConfirmButton: false,
+                timer: 1500
+            })
+     
+            $('#pesquisar_filtro_pesquisa').trigger('click'); // clicar automaticamente para realizar a consulta
+            
+        
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Verifique!',
+                text: $dados.title,
+                timer: 7500,
+            
+            })
+
+        }
+    }
+
+    function falha() {
+        console.log("erro");
+    }
+
+}
+

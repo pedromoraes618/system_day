@@ -30,12 +30,12 @@
                 <form id="form-login">
                     <div class="group-input">
                         <div class="gp-input">
-                            <input type="text" class="form-control" name="usuario" id="usuario" value=""
+                            <input type="text" onchange="verificarPreenchimento()"  class="form-control" name="usuario" id="usuario" value=""
                                 placeholder="Usuário">
                         </div>
 
                         <div class="gp-input">
-                            <input type="password" class="form-control" name="senha" id="senha" value=""
+                            <input type="password" onchange="verificarPreenchimento()" class="form-control" name="senha" id="senha" value=""
                                 placeholder="Senha">
                             <i id="mostrar_senha" class="fa-solid fa-eye"></i>
                         </div>

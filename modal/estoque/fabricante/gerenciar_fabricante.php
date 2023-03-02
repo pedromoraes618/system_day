@@ -99,14 +99,17 @@ if(isset($_POST['remover_fabricante'])){
         $id_fabricante = $_POST["id_fabricante"];
 
         if(verificar_dados_existentes($conecta,"tb_produtos","cl_fabricante_id",$id_fabricante) > 0){ // verificar se o fabricante está vinculado com algum produto cadastrado no sistema
-            $retornar["dados"] = array("sucesso"=>false,"title"=>"Não é possivel remover esse produto pois esse fabricante está vinculado a um ou mais produtos em nosso sistema.");
+            $retornar["dados"] = array("sucesso"=>false,"title"=>"Não é possivel remover esse Fabricante, pois esse fabricante está vinculado a um ou mais produtos em nosso sistema.");
         }else{
+
+            $fabricante = consulta_tabela($conecta,"tb_fabricantes","cl_id",$id_fabricante,"cl_descricao");//consultar a descricao do fabricante
+
             $update = "DELETE FROM tb_fabricantes WHERE cl_id = $id_fabricante";
             $operacao_delete = mysqli_query($conecta, $update);
             if($operacao_delete){
             $retornar["dados"] = array("sucesso"=>true,"title"=>"Fabricante removido com sucesso");
             //registrar no log
-            $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado removeu o fabricante de codigo $id_fabricante");
+            $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado removeu o fabricante  $fabricante");
             registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
             }  
         }

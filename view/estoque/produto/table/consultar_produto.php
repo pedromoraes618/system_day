@@ -13,7 +13,7 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
             <th scope="col">Descrição</th>
             <th scope="col">Referencia</th>
             <th scope="col">Grupo</th>
-            <th scope="col">Unidade Md</th>
+            <th scope="col">Und</th>
             <th scope="col">Fabricante</th>
             <th scope="col">Estoque</th>
             <th scope="col">Preço venda</th>

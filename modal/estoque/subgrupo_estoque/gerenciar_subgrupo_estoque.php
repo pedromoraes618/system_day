@@ -149,6 +149,41 @@ if(isset($_GET['editar_subgrupo_estoque'])==true){
 
 }
 
+//remover formulario
+if(isset($_POST['remover_subgrupo_estoque'])){
+    include "../../../conexao/conexao.php";
+    include "../../../funcao/funcao.php";
+        $retornar = array();
+      
+        $nome_usuario_logado = $_POST["nome_usuario_logado"];
+        // $id_usuario_logado = $_POST["id_usuario_logado"];
+        // $perfil_usuario_logado = $_POST['perfil_usuario_logado'];
+
+        $id_subgrupo = $_POST["id_subgrupo"];
+
+        if(verificar_dados_existentes($conecta,"tb_produtos","cl_grupo_id",$id_subgrupo) > 0){ // verificar se o fabricante está vinculado com algum produto cadastrado no sistema
+            $retornar["dados"] = array("sucesso"=>false,"title"=>"Não é possivel remover esse subgrupo, pois esse subgrupo está vinculado a um ou mais produtos em nosso sistema.");
+        }else{
+
+            $subgrupo_estoque = consulta_tabela($conecta,"tb_subgrupo_estoque","cl_id",$id_subgrupo,"cl_descricao");//consultar a descricao do subgrupo
+
+            $update = "DELETE FROM tb_subgrupo_estoque WHERE cl_id = $id_subgrupo";
+            $operacao_delete = mysqli_query($conecta, $update);
+            if($operacao_delete){
+            $retornar["dados"] = array("sucesso"=>true,"title"=>"Subgrupo removido com sucesso");
+            //registrar no log
+            $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado removeu o subgrupo  $subgrupo_estoque");
+            registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
+            }  
+        }
+     
+        echo json_encode($retornar);
+
+}
+
+
+
+
 //consultar grupo estoque
 $select = "SELECT * from tb_grupo_estoque";
 $consultar_grupo_estoque= mysqli_query($conecta, $select);
@@ -165,3 +200,5 @@ $consultar_cfop_externo= mysqli_query($conecta, $select);
 //consultar unidade medida
 $select = "SELECT * from tb_unidade_medida";
 $consultar_und_medida= mysqli_query($conecta, $select);
+
+

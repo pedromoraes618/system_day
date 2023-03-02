@@ -15,7 +15,7 @@ include "../../../modal/estoque/subgrupo_estoque/gerenciar_subgrupo_estoque.php"
     <div class="row mb-3">
         <input type="hidden" name="formulario_editar_subgrupo_estoque">
         <?php include "../../input_include/usuario_logado.php"?>
-        <input type="hidden" value="<?php echo $id_subgrupo; ?>" name="id_subgrupo">
+        <input type="hidden" value="<?php echo $id_subgrupo; ?>" id="id_subgrupo" name="id_subgrupo">
         <div class="col-sm  mb-2">
             <label for="descricao" class="form-label">Subgrupo</label>
             <input type="text" class="form-control" id="descricao" name="descricao"
@@ -126,6 +126,7 @@ include "../../../modal/estoque/subgrupo_estoque/gerenciar_subgrupo_estoque.php"
     <div class="row">
         <div class="group-btn d-grid gap-2 d-sm-block">
             <button type="subbmit" class="btn btn-outline-success">Alterar</button>
+            <button type="button" id="remover" class="btn btn-outline-danger">Remover</button>
             <button type="button" id="voltar_cadastro" class="btn btn-outline-dark">Voltar Para Cadastro</button>
         </div>
     </div>

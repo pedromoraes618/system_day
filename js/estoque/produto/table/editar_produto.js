@@ -22,7 +22,7 @@ $(".consultar_kardex").click(function(e) {
 $.ajax({
     type: 'GET',
     data: "kardex_produto=true&id_produto="+id_produto,
-    url: "view/estoque/produto/karkex/consultar_kardex.php",
+    url: "view/estoque/karkex/consultar_kardex.php",
     success: function(result) {
         return $(".bloco-pesquisa-menu .bloco-pesquisa-2").html(result);
     },

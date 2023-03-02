@@ -9,6 +9,18 @@ $(document).keydown(function(event) {
         btn_login.setAttribute("disabled", "disabled");
     }
 })
+//funcao onchange
+function verificarPreenchimento(){
+    var senha = document.getElementById("senha")
+    var usuario = document.getElementById("usuario")
+    var btn_login = document.getElementById("btn_login")
+    if (senha.value != "" && usuario.value !="") {
+        btn_login.removeAttribute("disabled", "disabled");
+    } else {
+        btn_login.setAttribute("disabled", "disabled");
+    }
+}
+
 
 
 
