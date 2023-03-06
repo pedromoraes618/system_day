@@ -3,7 +3,7 @@ $(".bloco-pesquisa-menu .bloco-pesquisa-1").css("display","block") // remover te
 $(".bloco-pesquisa-menu .bloco-pesquisa-2").css("display","none") // aparecer tela de consulta
     $.ajax({
     type: 'GET',
-    data: "consultar_grupo=inicial",
+    data: "consultar_produto=inicial",
     url: "view/estoque/produto/consultar_produto.php",
     success: function(result) {
     return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result);
@@ -11,7 +11,6 @@ $(".bloco-pesquisa-menu .bloco-pesquisa-2").css("display","none") // aparecer te
 });
 
 })
-
 
 const fomulario_produto = document.getElementById("cadastrar_produto");
 //formulario para cadstro
@@ -71,7 +70,6 @@ function cadastrar_produto(dados) {
     }
 
 }
-
 // //valor da pesquisa é guardado no localStorage, ao clicar em editar ou adicionar a pagina realizara a pesquisa novamente
 // if (localStorage.getItem("pesquisar_produto")) {
 

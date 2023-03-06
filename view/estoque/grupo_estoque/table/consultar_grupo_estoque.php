@@ -12,6 +12,7 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
         <tr>
             <th scope="col">Código</th>
             <th scope="col">Descrição</th>
+            <th scope="col">Pertence</th>
             <th scope="col"></th>
 
         </tr>
@@ -20,10 +21,24 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
         <?php while($linha = mysqli_fetch_assoc($consultar_grupo_estoque)){
                 $id_grupo_b = $linha['cl_id'];
                 $descricao_b = $linha['cl_descricao'];
+                $grupo_venda_b = utf8_encode($linha['cl_grupo_venda']);
+                $grupo_servico_b = utf8_encode($linha['cl_grupo_servico']);
             ?>
         <tr>
             <th scope="row"><?php echo $id_grupo_b ?></th>
             <td><?php echo $descricao_b; ?></td>
+
+            <td>
+                <?php
+                if($grupo_venda_b == 1){
+                echo "<span class='badge text-bg-primary'>Grupo para venda </span>";
+                }
+                if($grupo_servico_b == 1){
+                 echo "<span class='badge text-bg-warning'>Grupo para serviço</span>";
+                }
+                ?>
+               
+            </td>
 
             <td class="td-btn"><button type="button" id_grupo=<?php echo $id_grupo_b; ?>
                     class="btn btn-info editar_grupo_estoque">Editar</button>

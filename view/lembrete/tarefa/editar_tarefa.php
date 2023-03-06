@@ -84,10 +84,10 @@ include "../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
     </div>
     <div class="row">
         <div class="col-sm  mb-2">
-            <div class="form-check">
+            <div class="form-check form-check-inline">
                 <input class="form-check-input" <?php if($prioridade_b=="1"){ echo 'checked';} ?> name="prioridade"
                     type="checkbox" id="prioridade">
-                <label class="form-check-label" for="flexCheckDefault">
+                <label class="form-check-label" for="prioridade">
                     Prioridade
                 </label>
             </div>

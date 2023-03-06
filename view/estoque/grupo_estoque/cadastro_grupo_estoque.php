@@ -11,19 +11,33 @@
 </div>
 <hr>
 <form id="cadastrar_grupo_estoque">
-    <div class="row">
+    <div class="row mb-2">
         <input type="hidden" name="formulario_cadastrar_grupo_estoque">
         <?php include "../../input_include/usuario_logado.php"?>
         <div class="col-sm  mb-2">
             <label for="descricao" class="form-label">Descrição</label>
             <input type="text" class="form-control" id="descricao" name="descricao" placeholder="" value="">
         </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <div title="os produtos que estão incluidos nesse grupo pertencem ao modulo de vendas"   class="form-check form-check-inline">
+                <input class="form-check-input" checked type="checkbox" id="grupo_venda" name="grupo_venda">
+                <label class="form-check-label" for="grupo_venda">Grupo para venda</label>
+            </div>
+            <div title="os produtos que estão incluidos nesse grupo pertencem ao modulo de serviços"  class="form-check form-check-inline">
+                <input class="form-check-input"  type="checkbox" id="grupo_servico" name="grupo_servico">
+                <label class="form-check-label" for="grupo_servico">Grupo para serviço</label>
+            </div>
 
+        </div>
+    </div>
+    <div class="row">
         <div class="group-btn">
             <button type="subbmit" class="btn btn-success">Cadastrar</button>
         </div>
-    </div>
 
+    </div>
 
 </form>
 

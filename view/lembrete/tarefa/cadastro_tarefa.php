@@ -6,7 +6,7 @@
 <div class="title">
     <label class="form-label">Cadastrar Tarefa</label>
     <div class="msg_title">
-        <p>Adicione tarefas aos usúarios  </p>
+        <p>Adicione tarefas aos usúarios </p>
     </div>
 </div>
 <hr>
@@ -66,11 +66,10 @@
     </div>
     <div class="row">
         <div class="col-sm  mb-2">
-            <div class="form-check">
-                <input class="form-check-input" name="prioridade" type="checkbox"  id="prioridade">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Prioridade
-                </label>
+        
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="prioridade" type="checkbox" id="prioridade">
+                <label class="form-check-label" for="prioridade">Prioridade</label>
             </div>
         </div>
 

@@ -19,7 +19,7 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
             <th scope="col">Preço venda</th>
             <th scope="col">Status</th>
             <th scope="col"></th>
-            <th scope="col"></th>
+          
 
         </tr>
     </thead>
@@ -29,8 +29,6 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
                 $codigo_produto_b = $linha['cl_codigo'];
                 $descricao_b = utf8_encode($linha['descricao']);
                 $referencia_b = utf8_encode($linha['cl_referencia']);
-                $estoque_minimo_b = utf8_encode($linha['cl_estoque_minimo']);
-                $estoque_maximo_b = utf8_encode($linha['cl_estoque_maximo']);
                 $subgrupo_b = utf8_encode($linha['subgrupo']);
                 $und_b = utf8_encode($linha['und']);
                 $fabricante_b = utf8_encode($linha['fabricante']);
@@ -53,20 +51,16 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
             <td><?php echo $fabricante_b; ?></td>
             <td><?php echo $estoque_b; ?></td>
             <td><?php echo $preco_venda_b; ?></td>
-
+        
             <td><span
                     class="badge text-bg-<?php if($ativo == "Ativo"){echo 'success' ;}else{echo 'danger';} ?>"><?php echo $ativo; ?></span>
-                <?php if($estoque_b < $estoque_minimo_b){ echo "<i title='produto abaixo do estoque minimo' class='bi bi-emoji-expressionless-fill'></i>";} ?>
-                <?php if($estoque_b > $estoque_maximo_b){ echo "<i title='produto acima do estoque maximo' class='bi bi-emoji-dizzy-fill'></i>";} ?>
             </td>
+            
 
-
-            <td class="td-btn"><button type="button" id_produto=<?php echo $produto_id; ?>
-                    class="btn btn-info editar_produto ">Editar</button>
+            <td class="td-btn"><button type="button"  id_produto=<?php echo $produto_id; ?>
+                    class="btn btn-info realizar_ajuste ">Ajuste</button>
             </td>
-            <td class="td-btn"><button type="button" id_produto=<?php echo $produto_id; ?>
-                    class="btn btn-warning consultar_kardex ">Karkex</button>
-            </td>
+          
         </tr>
 
         <?php }?>
@@ -81,4 +75,4 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
     include "../../../../view/alerta/alerta_pesquisa.php"; // mesnsagem para usuario pesquisar
 }
 ?>
-<script src="js/estoque/produto/table/editar_produto.js">
+<script src="js/estoque/ajuste_estoque/cadastro_ajuste_estoque.js">

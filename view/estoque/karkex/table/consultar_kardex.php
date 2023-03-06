@@ -30,6 +30,7 @@ include "../../../../funcao/funcao.php";
                 $doc_b =$linha['cl_documento'];
                 $status_b =$linha['cl_status'];
                 $data_b =$linha['cl_data_lancamento'];
+                $usuario_b =$linha['usuario'];
                 
                 //corrir depois 
                 if($tipo_b =="ENTRADA"){
@@ -52,7 +53,7 @@ include "../../../../funcao/funcao.php";
                     $quantidade_entrada = 0; // informar zero
                 }
                 
-                $tipo_b = strtolower($tipo_b);
+                $tipo_b = strtolower($tipo_b); // deixar em caixa baixa
                 if($true_ajuste_inicial == "1"){
             ?>
 
@@ -72,15 +73,17 @@ include "../../../../funcao/funcao.php";
             <td><?php echo formatDateB($data_b); ?></td>
             <td><?php echo $doc_b; ?></td>
             <td>system_day</td>
-            <td>Pedro</td>
+            <td><?php  echo $usuario_b;?></td>
             <td><span
                     class="badge text-bg-<?php if($tipo_b == "saida"){echo 'success' ;}else{echo 'primary';} ?>"><?php echo $tipo_b; ?></span>
             </td>
 
             <td><?php echo $quantidade_entrada ?></td>
             <td><?php echo $quantidade_saida ?></td>
-            <td><?php  echo $saldo; ?></td> 
-            <td style="width: 20px;"><?php if($status_b=="cancelado"){echo "<span class='badge text-bg-danger'>Ajs cancelado</span>";} ?></td>
+            <td><?php  echo $saldo; ?></td>
+            <td style="width: 20px;">
+                <?php if($status_b=="cancelado"){echo "<span class='badge text-bg-danger'>Ajs cancelado</span>";} ?>
+            </td>
         </tr>
 
         <?php }}?>

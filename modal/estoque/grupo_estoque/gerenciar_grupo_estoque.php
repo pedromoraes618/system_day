@@ -38,9 +38,22 @@ if(isset($_POST['formulario_cadastrar_grupo_estoque'])){
             $retornar["mensagem"] =mensagem_alerta_cadastro("descricão");
 
         }else{
+
+        if(isset($_POST['grupo_venda'])){ // checkbox
+            $grupo_venda = '1';
+        }else{
+            $grupo_venda = "0";
+        }
+
+        if(isset($_POST['grupo_servico'])){// checkbox
+            $grupo_servico = '1';
+        }else{
+            $grupo_servico = "0";
+        }
          
-        $inset = "INSERT INTO tb_grupo_estoque (cl_descricao)
-         VALUES ('$descricao')";
+         
+        $inset = "INSERT INTO tb_grupo_estoque (cl_descricao,cl_grupo_venda,cl_grupo_servico)
+         VALUES ('$descricao','$grupo_venda','$grupo_servico')";
         $operacao_inserir = mysqli_query($conecta, $inset);
         if($operacao_inserir){
         $retornar["sucesso"] = true;
@@ -74,7 +87,19 @@ if(isset($_POST['formulario_editar_grupo_estoque'])){
             $retornar["mensagem"] =mensagem_alerta_cadastro("descricão");
         }else{
 
-        $update = "UPDATE tb_grupo_estoque set cl_descricao = '$descricao' where cl_id = $id_grupo";
+        if(isset($_POST['grupo_venda'])){ // checkbox
+            $grupo_venda = '1';
+        }else{
+            $grupo_venda = "0";
+        }
+
+        if(isset($_POST['grupo_servico'])){// checkbox
+            $grupo_servico = '1';
+        }else{
+            $grupo_servico = "0";
+        }
+        
+        $update = "UPDATE tb_grupo_estoque set cl_descricao = '$descricao',cl_grupo_venda='$grupo_venda',cl_grupo_servico='$grupo_servico' where cl_id = $id_grupo";
         $operacao_update = mysqli_query($conecta, $update);
         if($operacao_update){
         $retornar["sucesso"] = true;
@@ -96,7 +121,8 @@ if(isset($_GET['editar_grupo_estoque'])==true){
     $consultar_grupo= mysqli_query($conecta, $select);
     $linha  = mysqli_fetch_assoc($consultar_grupo);
     $descricao_b = utf8_encode($linha['cl_descricao']);
-
+    $grupo_venda_b = utf8_encode($linha['cl_grupo_venda']);
+    $grupo_servico_b = utf8_encode($linha['cl_grupo_servico']);
  
 }
 

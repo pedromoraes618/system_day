@@ -12,7 +12,7 @@
 
         <?php include "../../input_include/usuario_logado.php"?>
 
-        <div class="col-sm  mb-2">
+        <div class="col-sm col-md-7 mb-2">
             <label for="descricao" class="form-label">Descrição</label>
             <input type="text" class="form-control" id="descricao" name="descricao" placeholder="" value="">
         </div>
@@ -30,7 +30,7 @@
                 <option value="interface">Interface</option>
             </select>
         </div>
-        <div class="group-btn">
+        <div class="group-btn d-grid gap-2 d-sm-block">
             <button type="subbmit" class="btn btn-success">Cadastrar</button>
         </div>
     </div>

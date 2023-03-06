@@ -2,7 +2,9 @@
 date_default_timezone_set('America/Fortaleza');
 $data = date('Y/m/d H:i:s');
 
+
 $data_lancamento = date('y-m-d');
+
 
 $data_incial_log =date('01/m/Y');
 $data_final_log =date('d/m/Y');
@@ -139,13 +141,21 @@ function consultar_serie($conecta,$serie){
 
 
 //funcao para realizar ajuste de estoque
-function ajuste_estoque($conecta,$data,$doc,$tipo,$produto_id,$quantidade,$empresa_id,$usuario_id,$forma_pagamento_id,$valor_venda,$valor_compra,$ajuste_inical){
+function ajuste_estoque($conecta,$data,$doc,$tipo,$produto_id,$quantidade,$empresa_id,$usuario_id,$forma_pagamento_id,$valor_venda,$valor_compra,$ajuste_inical,$motivo){
 
     $inset = "INSERT INTO `tb_ajuste_estoque` (`cl_data_lancamento`, `cl_documento`, `cl_produto_id`, `cl_tipo`, `cl_quantidade`, 
-    `cl_empresa_id`, `cl_usuario_id`, `cl_forma_pagamento_id`, `cl_valor_venda`, `cl_valor_compra`,`cl_ajuste_inicial`,`cl_status`) VALUES 
-    ('$data', '$doc', '$produto_id', '$tipo', '$quantidade', '$empresa_id', '$usuario_id', '$forma_pagamento_id', '$valor_venda', '$valor_compra','$ajuste_inical','ok')";
+    `cl_empresa_id`, `cl_usuario_id`, `cl_forma_pagamento_id`, `cl_valor_venda`, `cl_valor_compra`,`cl_ajuste_inicial`,`cl_status`,`cl_motivo`) VALUES 
+    ('$data', '$doc', '$produto_id', '$tipo', '$quantidade', '$empresa_id', '$usuario_id', '$forma_pagamento_id', '$valor_venda', '$valor_compra','$ajuste_inical','ok','$motivo')";
     $operacao_inserir = mysqli_query($conecta, $inset);
     return $operacao_inserir;
+ }
+
+ //funcao para realizar ajuste na quantidade do produto
+function ajuste_qtd_produto($conecta,$produto_id,$quantidade){
+
+    $update = "UPDATE `tb_produtos` SET `cl_estoque`= $quantidade where cl_id = $produto_id";
+    $operacao_update = mysqli_query($conecta, $update);
+    return $operacao_update;
  }
 
 

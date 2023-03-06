@@ -7,7 +7,7 @@ include "../../../../funcao/funcao.php";
         $consulta = $_GET['consultar_produto'];
         if($consulta== "inicial"){
             $consultar_tabela_inicialmente =  verficar_paramentro($conecta,"tb_parametros","cl_id","1");//VERIFICAR PARAMETRO ID - 1
-            $select = "SELECT prd.cl_id as produtoid,prd.cl_codigo, prd.cl_descricao as descricao,prd.cl_status_ativo as ativo,prd.cl_referencia, subgrp.cl_descricao as subgrupo,und.cl_sigla as und,frb.cl_descricao as fabricante,prd.cl_estoque,prd.cl_preco_venda from tb_produtos as prd inner join tb_subgrupo_estoque as subgrp on subgrp.cl_id = prd.cl_grupo_id inner join
+            $select = "SELECT prd.cl_id as produtoid,prd.cl_codigo,prd.cl_estoque_minimo,prd.cl_estoque_maximo, prd.cl_descricao as descricao,prd.cl_status_ativo as ativo,prd.cl_referencia, subgrp.cl_descricao as subgrupo,und.cl_sigla as und,frb.cl_descricao as fabricante,prd.cl_estoque,prd.cl_preco_venda from tb_produtos as prd inner join tb_subgrupo_estoque as subgrp on subgrp.cl_id = prd.cl_grupo_id inner join
             tb_unidade_medida as und on und.cl_id = prd.cl_und_id inner join tb_fabricantes as frb on frb.cl_id = prd.cl_fabricante_id ORDER BY prd.cl_id";
             $consultar_produtos= mysqli_query($conecta, $select);
             if(!$consultar_produtos){
@@ -18,7 +18,7 @@ include "../../../../funcao/funcao.php";
         
         }else{
             $pesquisa = utf8_decode($_GET['conteudo_pesquisa']);//filtro
-            $select = "SELECT prd.cl_id as produtoid,prd.cl_descricao as descricao,prd.cl_codigo, prd.cl_referencia,prd.cl_status_ativo as ativo, subgrp.cl_descricao as subgrupo,und.cl_sigla as und,frb.cl_descricao as fabricante,prd.cl_estoque,prd.cl_preco_venda 
+            $select = "SELECT prd.cl_id as produtoid,prd.cl_descricao as descricao,prd.cl_codigo,prd.cl_estoque_minimo,prd.cl_estoque_maximo,prd.cl_referencia,prd.cl_status_ativo as ativo, subgrp.cl_descricao as subgrupo,und.cl_sigla as und,frb.cl_descricao as fabricante,prd.cl_estoque,prd.cl_preco_venda 
             from tb_produtos as prd inner join tb_subgrupo_estoque as subgrp on subgrp.cl_id = prd.cl_grupo_id inner join
             tb_unidade_medida as und on und.cl_id = prd.cl_und_id inner join tb_fabricantes as frb on frb.cl_id = prd.cl_fabricante_id where prd.cl_descricao like '%{$pesquisa}%' or
             prd.cl_id  like '%{$pesquisa}%' or frb.cl_descricao like '%{$pesquisa}%' or prd.cl_referencia LIKE '%{$pesquisa}%'  ORDER BY prd.cl_id";
@@ -201,7 +201,7 @@ if(isset($_POST['formulario_cadastrar_produto'])){
          $ajuste_estoque = $ajuste_estoque + 1; //incremento para adicionar na serie ajuste de estoque
 
          //adicionar ao ajuste de estoque
-         ajuste_estoque($conecta,$data,"AJST-$ajuste_estoque","ENTRADA",$id_produto_b,$estoque,$empresa_ajuste,$id_usuario_logado,$forma_pagamento_ajuste,$prc_venda,"0",'1');
+         ajuste_estoque($conecta,$data,"AJST-$ajuste_estoque","ENTRADA",$id_produto_b,$estoque,$empresa_ajuste,$id_usuario_logado,$forma_pagamento_ajuste,$prc_venda,"0",'1','');
 
          //atualizar valor em serie PRD
          adicionar_valor_serie($conecta,"PRD",$codigo_produto);
@@ -250,8 +250,7 @@ if(isset($_POST['formulario_editar_produto'])){
        $local_produto = utf8_decode($_POST["local_produto"]);
        $tamanho = utf8_decode($_POST["tamanho"]);
        $unidade_md = ($_POST["unidade_md"]);
-       $prc_venda = ($_POST["prc_venda"]);
-       $prc_custo = ($_POST["prc_custo"]);
+      
        $margem_lucro = ($_POST["margem_lucro"]);
        $prc_promocao = ($_POST["prc_promocao"]);
        $desconto_maximo = ($_POST["desconto_maximo"]);
@@ -279,16 +278,7 @@ if(isset($_POST['formulario_editar_produto'])){
            $retornar["dados"] =  array("sucesso"=>"false","title"=>mensagem_alerta_cadastro("unidade de medida"));
        }else{
 
-       if($prc_custo!=""){
-          if(verificaVirgula($prc_custo)){//verificar se tem virgula
-            $prc_custo = formatDecimal($prc_custo); // formatar virgula para ponto
-          }
-       }
-       if($prc_venda!=""){
-           if(verificaVirgula($prc_venda)){//verificar se tem virgula
-             $prc_venda = formatDecimal($prc_venda); // formatar virgula para ponto
-           }
-        }
+       
         if($margem_lucro!=""){
            if(verificaVirgula($margem_lucro)){//verificar se tem virgula
              $margem_lucro = formatDecimal($margem_lucro); // formatar virgula para ponto
@@ -353,7 +343,7 @@ if(isset($_POST['formulario_editar_produto'])){
 
 
       $update = "UPDATE `tb_produtos` SET `cl_descricao`= '$descricao', `cl_tamanho` = '$tamanho', `cl_localizacao` = '$local_produto', `cl_referencia` = '$referencia',
-      `cl_equivalencia` = '$equivalencia', `cl_observacao` = '$observacao', `cl_codigo_barra` = '$codigo_barras', `cl_preco_custo` = '$prc_custo', `cl_preco_venda` = '$prc_venda', `cl_preco_promocao` =
+      `cl_equivalencia` = '$equivalencia', `cl_observacao` = '$observacao', `cl_codigo_barra` = '$codigo_barras', `cl_preco_promocao` =
       '$prc_promocao', `cl_desconto_maximo` = '$desconto_maximo', `cl_margem_lucro` = '$margem_lucro', `cl_cest` = '$cest', `cl_ncm` = '$ncm', `cl_cst_icms` = '$cst_icms',
       `cl_cst_pis_s` = '$cst_pis_s', `cl_cst_pis_e` = '$cst_pis_e', `cl_cst_cofins_s` = '$cst_cofins_s', `cl_cst_cofins_e` = '$cst_cofins_e',
        `cl_estoque_minimo` = '$est_minimo', `cl_estoque_maximo`= '$est_maximo', `cl_cfop_interno` = '$cfop_interno', `cl_cfop_externo` = '$cfop_externo', 

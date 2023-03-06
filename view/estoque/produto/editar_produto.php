@@ -12,13 +12,13 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
 </div>
 <hr>
 <form id="editar_produto">
-    <Div class="row mb-2">
+    <div class="row mb-2">
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="referencia" class="form-label">Codigo</label>
             <input type="hidden" name="id_produto" value="<?php echo $id_produto ?>">
             <input type="text" readonly class="form-control" id="codigo_produto" name="codigo_produto" value="<?php echo $codigo_produto_b ?>">
         </div>
-    </Div>
+    </div>
     <div class="row mb-2">
         <input type="hidden" name="formulario_editar_produto">
         <?php include "../../input_include/usuario_logado.php"?>
@@ -118,7 +118,7 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
     <div class="row mb-2">
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="estoque" class="form-label">Estoque</label>
-            <input type="text" disabled class="form-control inputNumber" id="estoque" name="estoque"
+            <input type="text" title="Não é possivel editar essa informação" disabled class="form-control inputNumber" id="estoque" name="estoque"
                 value="<?php echo $estoque_b; ?>">
         </div>
 
@@ -172,12 +172,12 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
     <div class="row mb-2">
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="prc_venda" class="form-label">Preço de venda</label>
-            <input type="text" class="form-control inputNumber" onchange="maregm_lucro()" id="prc_venda"
+            <input type="text" title="Não é possivel editar essa informação" disabled class="form-control inputNumber" onchange="maregm_lucro()" id="prc_venda"
                 name="prc_venda" value="<?php echo $preco_venda_b; ?>">
         </div>
         <div class="col-sm-6 col-md-2   mb-2">
             <label for="prc_custo" class="form-label">Preço de Custo</label>
-            <input type="text" class="form-control inputNumber" onchange="maregm_lucro()" id="prc_custo"
+            <input type="text" title="Não é possivel editar essa informação" disabled class="form-control inputNumber" onchange="maregm_lucro()" id="prc_custo"
                 name="prc_custo" value="<?php echo $preco_custo_b ?>">
         </div>
 

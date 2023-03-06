@@ -26,9 +26,9 @@ include "../../../funcao/funcao.php"
     </div> -->
 
 
-    <div class="col-md-4  d-grid gap-2 d-sm-block mb-1 ">
+    <div class="col-md-4  d-grid gap-2 d-sm-block mb-1  ">
         <!-- <button type="subbmit" class="btn btn-outline-secondary">Pesquisar</button> -->
-        <button type="button" id="voltar_consulta" class="btn btn-outline-secondary col-md-8">Voltar</button>
+        <button type="button" id="voltar_consulta" class="btn btn-outline-secondary col-md-8 ">Voltar</button>
     </div>
 </div>
 
