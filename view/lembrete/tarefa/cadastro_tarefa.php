@@ -73,11 +73,12 @@
             </div>
         </div>
 
-        <div class="group-btn">
-            <button type="subbmit" class="btn btn-success">Adicionar</button>
-        </div>
-
     </div>
+    <Div class="row">
+        <div class="group-btn d-grid gap-2 d-sm-block">
+        <button type="subbmit" class="btn btn-success">Adicionar</button>
+        </div>
+    </Div>
 
 
 

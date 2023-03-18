@@ -62,10 +62,10 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
 
 
             <td class="td-btn"><button type="button" id_produto=<?php echo $produto_id; ?>
-                    class="btn btn-info   btn-sm editar_produto ">Editar</button>
+                    class="btn btn-info btn-sm detalhes ">Detalhes</button>
             </td>
             <td class="td-btn"><button type="button" id_produto=<?php echo $produto_id; ?>
-                    class="btn btn-warning   btn-sm consultar_kardex ">Karkex</button>
+                    class="btn btn-warning btn-sm  consultar_kardex ">Karkex</button>
             </td>
         </tr>
 
@@ -81,4 +81,4 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
     include "../../../../view/alerta/alerta_pesquisa.php"; // mesnsagem para usuario pesquisar
 }
 ?>
-<script src="js/estoque/produto/table/editar_produto.js">
+<script src="js/estoque/consultar_produto/table/consultar_produto.js">

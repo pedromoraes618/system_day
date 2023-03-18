@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="col-md-auto  d-grid gap-2 d-sm-block mb-1">
-        <button class="btn btn-outline-secondary" type="button" id="adicionar_produto">Adicionar produto</button>
+        <button class="btn btn-dark" type="button" id="adicionar_produto">Adicionar produto</button>
     </div>
 </div>
 <div class="alerta">

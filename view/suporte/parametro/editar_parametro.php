@@ -11,7 +11,7 @@ include "../../../modal/suporte/parametro/gerenciar_parametro.php"; // trazer as
 </div>
 <hr>
 <form id="editar_parametro">
-    <div class="row">
+    <div class="row mb-3">
         <input type="hidden" name="formulario_editar_parametro">
 
         <?php include "../../input_include/usuario_logado.php"?>
@@ -41,11 +41,14 @@ include "../../../modal/suporte/parametro/gerenciar_parametro.php"; // trazer as
             </select>
         </div>
 
-        <div class="group-btn d-grid gap-2 d-sm-block">
+      
+    </div>
+    <Div class="row">
+    <div class="group-btn d-grid gap-2 d-sm-block">
             <button type="subbmit" class="btn btn-outline-success">Alterar</button>
             <button type="button" id="voltar_cadastro" class="btn btn-outline-dark">Voltar Para Cadastro</button>
         </div>
-    </div>
+    </Div>
 
 
 </form>

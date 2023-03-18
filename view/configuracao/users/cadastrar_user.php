@@ -7,7 +7,7 @@
             </div>
         </div>
         <hr>
-        <div class="row">
+        <div class="row mb-3">
             <input type="hidden" name="formulario_cadastrar_usuario">
 
             <?php include "../../input_include/usuario_logado.php"?>
@@ -46,10 +46,12 @@
                     <option value="0">Inativo</option>
                 </select>
             </div>
-            <div class="group-btn">
-                <button type="subbmit" class="btn btn-success">Cadastrar</button>
-            </div>
+    
         </div>
+<div class="row">  
+    <div class="col-md-4  d-grid gap-2 d-sm-block mb-1  ">
+<button type="subbmit" class="btn btn-success">Cadastrar</button>
+</div></div>
 
     </div>
 </form>

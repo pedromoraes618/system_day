@@ -108,7 +108,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="group-btn">
+    <div class="col-md-4  d-grid gap-2 d-sm-block mb-1  ">
             <button type="subbmit" class="btn btn-success">Cadastrar</button>
         </div>
     </div>

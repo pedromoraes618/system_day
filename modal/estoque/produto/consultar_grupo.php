@@ -18,9 +18,9 @@ if(isset($_POST['subgrupo_selecionado'])){//trazer informações do subgrupo de 
     $unidade_b = $linha['cl_und_id'];
     $cfop_interno_b = $linha['cl_cfop_interno'];
     $cfop_externo_b = $linha['cl_cfop_externo'];
-    $retornar["dados"] = array("sucesso"=>"true","estoque_minimo"=>$estoque_minimo_b,"estoque_inicial"=>$estoque_inicial_b,"estoque_maximo"=>$estoque_maximo_b,"local"=>$local_b,"unidade"=>$unidade_b,"cfop_interno"=>$cfop_interno_b,"cfop_extero"=>$cfop_externo_b);
+    $retornar["dados"] = array("sucesso"=>true,"estoque_minimo"=>$estoque_minimo_b,"estoque_inicial"=>$estoque_inicial_b,"estoque_maximo"=>$estoque_maximo_b,"local"=>$local_b,"unidade"=>$unidade_b,"cfop_interno"=>$cfop_interno_b,"cfop_extero"=>$cfop_externo_b);
     }else{
-        $retornar["dados"] = array("sucesso"=>"false");
+        $retornar["dados"] = array("sucesso"=>false);
     }
    
     

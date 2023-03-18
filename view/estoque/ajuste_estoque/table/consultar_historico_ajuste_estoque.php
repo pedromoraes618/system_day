@@ -15,12 +15,12 @@ include "../../../../funcao/funcao.php";
     <thead>
         <tr>
             <th scope="col">Código</th>
-            <th scope="col">Data</th>
+            <th scope="col">Data ajuste</th>
             <th scope="col">Doc</th>
             <th scope="col">Usúario</th>
             <th scope="col">Tipo</th>
             <th scope="col">Quantidade</th>
-            <th scope="col">Status</th>
+            <th scope="col"></th>
             <!-- <th scope="col"></th> -->
 
 

@@ -11,18 +11,20 @@
 </div>
 <hr>
 <form id="cadastrar_fabricante">
-    <div class="row">
+    <div class="row mb-2">
         <input type="hidden" name="formulario_cadastrar_fabricante">
         <?php include "../../input_include/usuario_logado.php"?>
         <div class="col-sm  mb-2">
             <label for="descricao" class="form-label">Descrição</label>
             <input type="text" class="form-control" id="descricao" name="descricao" placeholder="" value="">
         </div>
-
-        <div class="group-btn">
-            <button type="subbmit" class="btn btn-success">Cadastrar</button>
-        </div>
     </div>
+        <div class="row">     
+            <div class="col-md-4  d-grid gap-2 d-sm-block mb-1">
+            <button type="subbmit" class="btn btn-success">Cadastrar</button>
+            </div>
+        </div>
+    </div>            
 
 
 </form>

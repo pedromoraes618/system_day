@@ -292,10 +292,9 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
       ?>
 
     <div class="row">
-        <div class="group-btn">
+    <div class="col-md-4  d-grid gap-2 d-sm-block mb-1  ">
             <button type="subbmit" class="btn btn-success">Cadastrar</button>
-            <button type="button" id="voltar_consulta" class="btn btn-outline-dark">Voltar Para consulta de
-                produtos</button>
+            <button type="button" id="voltar_consulta" class="btn btn-outline-dark">Voltar</button>
         </div>
     </div>
 

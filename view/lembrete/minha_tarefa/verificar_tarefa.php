@@ -26,13 +26,20 @@
                 $usuario_func = $linha['userfunc'];
         ?>
 
-        <div class="col-sm-6 mb-3 mb-sm-0">
+        <div  class="col-sm-6 mb-3 mb-sm-0">
             <div class="card mb-2 card-tarefa card<?php echo $id_tarefa ?>">
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-auto">
                             <span class="badge text-bg-primary"><?php echo $status_b; ?></span>
                         </div>
+                    <?php if($prioridade_b == "1"){?>
+
+                    <div class="col-auto">
+                    <span class="badge text-bg-danger">Prioridade</span>
+                    </div>
+
+                    <?php } ?>
                         <div class="col-auto">
                             Dt lançamento: <?php echo $data_lancamento_b ?>
                         </div>
@@ -44,13 +51,7 @@
                         </div>
                         <?php }?>
 
-                        <?php if($prioridade_b == "1"){?>
-
-                        <div class="col-auto">
-                            <span class="badge text-bg-danger">Prioridade</span>
-                        </div>
-
-                        <?php } ?>
+                       
                     </div>
 
                     <div class="row mb-3">
@@ -67,8 +68,8 @@
 
                         </div>
                     </div>
-                    <div class="row mb-3 mb-2">
-                        <div class="col-sm-5  mb-1">
+                    <div class="row  mb-2">
+                        <div class="col-sm-auto col-md-4  mb-2">
                             <select name="status" id="status<?php echo $id_tarefa; ?>" class="form-select">
                                 <option value="0">Status..</option>
                                 <?php
@@ -84,15 +85,17 @@
 
 
                     <div class="row">
-                        <div class="col-auto">
+                        <div class="col-md-4  d-grid gap-2 d-sm-block mb-1  ">
                             <button class="btn btn-info col-auto atualizar_tarefa"
                                 user_logado=<?php echo $usuario_func; ?> status_tarefa=<?php echo $status_id_b; ?>
                                 id_tarefa=<?php echo $id_tarefa; ?> type="button">Atualizar</button>
+                            
                         </div>
 
                     </div>
                 </div>
             </div>
+
         </div>
         <?php }?>
 

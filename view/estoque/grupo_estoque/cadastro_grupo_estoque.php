@@ -11,7 +11,7 @@
 </div>
 <hr>
 <form id="cadastrar_grupo_estoque">
-    <div class="row mb-2">
+    <div class="row">
         <input type="hidden" name="formulario_cadastrar_grupo_estoque">
         <?php include "../../input_include/usuario_logado.php"?>
         <div class="col-sm  mb-2">
@@ -19,7 +19,7 @@
             <input type="text" class="form-control" id="descricao" name="descricao" placeholder="" value="">
         </div>
     </div>
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-sm">
             <div title="os produtos que estão incluidos nesse grupo pertencem ao modulo de vendas"   class="form-check form-check-inline">
                 <input class="form-check-input" checked type="checkbox" id="grupo_venda" name="grupo_venda">
@@ -33,7 +33,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="group-btn">
+    <div class="col-md-4  d-grid gap-2 d-sm-block mb-1  ">
             <button type="subbmit" class="btn btn-success">Cadastrar</button>
         </div>
 

@@ -23,10 +23,13 @@ include "../../../modal/estoque/fabricante/gerenciar_fabricante.php"; // trazer 
         </div>
    
 
+        
+    </div>
+    <div class="row">
         <div class="group-btn d-grid gap-2 d-sm-block">
-            <button type="subbmit" class="btn btn-outline-success">Alterar</button>
-            <button type="button" id="remover" class="btn btn-outline-danger">Remover</button>
-            <button type="button" id="voltar_cadastro" class="btn btn-outline-dark">Voltar Para Cadastro</button>
+        <button type="subbmit" class="btn btn-outline-success">Alterar</button>
+        <button type="button" id="remover" class="btn btn-outline-danger">Remover</button>
+        <button type="button" id="voltar_cadastro" class="btn btn-outline-dark">Voltar Para Cadastro</button>
         </div>
     </div>
 

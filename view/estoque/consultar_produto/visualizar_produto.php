@@ -5,9 +5,9 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
 
 
 <div class="title">
-    <label class="form-label">Editar Produto</label>
+    <label class="form-label">Visualizar Produto</label>
     <div class="msg_title">
-        <p>Edição de Produto: Edite Itens do seu Estoque</p>
+        <p>Visualize as informações do produto, Lembrando não é possivel qualquer edição de informação</p>
     </div>
 </div>
 <hr>
@@ -337,9 +337,7 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
     <div class="row">
     
         <div class="group-btn d-grid gap-2 d-sm-block">
-            <button type="subbmit" class="btn btn-outline-success">Alterar</button>
-            <!-- <button type="button" id="remover" class="btn btn-outline-danger">Remover</button> -->
-            <button type="button" id="voltar_consulta" class="btn btn-outline-dark">Voltar </button>
+            <button type="button" id="voltar_consulta" class="btn btn-outline-dark col-md-3">Voltar </button>
         </div>
     </div>
 
@@ -349,4 +347,4 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
 <script src="js/funcao.js"></script>
 <script src="js/estoque/produto/funcao/consultar.js"></script>
 <script src="js/configuracao/users/user_logado.js"></script>
-<script src="js/estoque/produto/editar_produto.js"></script>
+<script src="js/estoque/consultar_produto/visualizar_produto.js"></script>
