@@ -6,11 +6,11 @@ include "../../../../modal/estoque/produto/gerenciar_produto.php";
 <?php 
 if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == "S")){ //consultar parametro para carrregar inicialmente a tabela
     ?>
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th scope="col">Código</th>
-            <th scope="col">Descrição</th>
+            <th  scope="col">Descrição</th>
             <th scope="col">Referencia</th>
             <th scope="col">Grupo</th>
             <th scope="col">Und</th>
@@ -46,7 +46,7 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
             ?>
         <tr>
             <th scope="row"><?php echo $produto_id ?></th>
-            <td><?php echo $descricao_b; ?></td>
+            <td  class="max_width_descricao"><?php echo $descricao_b; ?></td>
             <td><?php echo $referencia_b; ?></td>
             <td><?php echo $subgrupo_b; ?></td>
             <td><?php echo $und_b; ?></td>

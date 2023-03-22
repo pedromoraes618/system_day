@@ -4,15 +4,9 @@
 }
 
 p{
-   
     margin-top: 0px;
     margin-bottom: 0px;
     font-family: var(--font_principal);
-}
-
-input{
-    outline: 0;
-
 }
 
 input[type=number]::-webkit-inner-spin-button { 
@@ -162,6 +156,10 @@ input[type=number] {
      }
    
 
+
+}
+
+form .form-control{
 
 }
 
@@ -820,22 +818,22 @@ font-size: 1.3em;
 }
 .bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-2 .card .card-body .card_acess p{
     margin: 0px;
-font-size: 0.9em;
+    font-size: 0.9em;
 }
 .bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-2 .card .card-body ul li ul li{
     display: flex;
     align-items: center;
-
 }
-.bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-2 .card .card-body ul li ul li p{
 
+.bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-2 .card .card-body ul li ul li p{
 margin:0px;
 }
+
 .bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-2 .card .card-body ul li ul li a{
     float: right;
     font-size: 0.9em;
-
 }
+
 .bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-2 .table{
     overflow: auto;
 }
@@ -851,6 +849,9 @@ margin:0px;
  
 }
 
+.max_width_descricao{
+    max-width: 350px;
+}
 .bloco-pesquisa-2 .tabela::-webkit-scrollbar {
 width: 10px;               /* width of the entire scrollbar */
 }
@@ -933,4 +934,11 @@ border: 3px solid var(--borda_princiapl);  /* creates padding around scroll thum
 .info_cancelado{
     color: red;
     font-size: 1.2em;
+}
+
+#carregando{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    display: none;
 }

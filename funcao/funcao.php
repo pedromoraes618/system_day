@@ -192,44 +192,88 @@ function adicionar_valor_serie($conecta,$serie,$valor){
   }
 
 
-function validarCPF($cpf) {
-    // Remove caracteres que não sejam números
+  function validaCPF($cpf) {
+    // Elimina possivel mascara
     $cpf = preg_replace('/[^0-9]/', '', $cpf);
-
-    // Verifica se o CPF possui 11 dígitos
+    // Verifica se o numero de digitos informados é igual a 11
     if (strlen($cpf) != 11) {
         return false;
     }
+    // Verifica se nenhuma das sequências invalidas abaixo
+    // foi digitada. Caso afirmativo, retorna falso
+    else if ($cpf == '00000000000' ||
+        $cpf == '11111111111' ||
+        $cpf == '22222222222' ||
+        $cpf == '33333333333' ||
+        $cpf == '44444444444' ||
+        $cpf == '55555555555' ||
+        $cpf == '66666666666' ||
+        $cpf == '77777777777' ||
+        $cpf == '88888888888' ||
+        $cpf == '99999999999') {
+        return false;
+     // Calcula os digitos verificadores para verificar se o CPF é válido
+    } else {   
+        for ($i = 9; $i < 11; $i++) {
+            $j = 0;
+            $soma = 0;
+            for ($j = 0; $j < $i; $j++) {
+                $soma += $cpf{$j} * (($i + 1) - $j);
+            }
+            $resto = $soma % 11;
+            if ($resto < 2) {
+                $dg = 0;
+            } else {
+                $dg = 11 - $resto;
+            }
+            if ($cpf{$i} != $dg) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
 
-    // Verifica se todos os dígitos são iguais (ex: 111.111.111-11)
-    if (preg_match('/^(\d)\1*$/', $cpf)) {
+//validar cnpj
+function validarCNPJ($cnpj) {
+    // Remove caracteres especiais
+    $cnpj = preg_replace('/[^0-9]/', '', $cnpj);
+
+    // Verifica se o CNPJ possui 14 dígitos
+    if (strlen($cnpj) != 14) {
         return false;
     }
 
-    // Calcula o primeiro dígito verificador
-    $soma = 0;
-    for ($i = 0; $i < 9; $i++) {
-        $soma += (int) $cpf[$i] * (10 - $i);
-    }
-    $resto = $soma % 11;
-    $dv1 = ($resto < 2) ? 0 : 11 - $resto;
-
-    // Calcula o segundo dígito verificador
-    $soma = 0;
-    for ($i = 0; $i < 10; $i++) {
-        $soma += (int) $cpf[$i] * (11 - $i);
-    }
-    $resto = $soma % 11;
-    $dv2 = ($resto < 2) ? 0 : 11 - $resto;
-
-    // Verifica se os dígitos verificadores calculados são iguais aos do CPF
-    if ($cpf[9] != $dv1 || $cpf[10] != $dv2) {
+    // Verifica se todos os dígitos são iguais
+    if (preg_match('/(\d)\1{13}/', $cnpj)) {
         return false;
     }
 
-    // CPF válido
+    // Verifica o primeiro dígito verificador
+    $soma = 0;
+    for ($i = 0; $i < 12; $i++) {
+        $soma += intval($cnpj[$i]) * (($i < 4) ? 5 - $i : 13 - $i);
+    }
+    $digito1 = (($soma % 11) < 2) ? 0 : 11 - ($soma % 11);
+    if ($cnpj[12] != $digito1) {
+        return false;
+    }
+
+    // Verifica o segundo dígito verificador
+    $soma = 0;
+    for ($i = 0; $i < 13; $i++) {
+        $soma += intval($cnpj[$i]) * (($i < 5) ? 6 - $i : 14 - $i);
+    }
+    $digito2 = (($soma % 11) < 2) ? 0 : 11 - ($soma % 11);
+    if ($cnpj[13] != $digito2) {
+        return false;
+    }
+
+    // Se chegou até aqui, o CNPJ é válido
     return true;
 }
+
+
 
 //formatar para moeda real
 function real_format($valor) {

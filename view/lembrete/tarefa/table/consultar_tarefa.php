@@ -2,7 +2,7 @@
 include "../../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
 ?>
 
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th scope="col">Código</th>
@@ -53,10 +53,10 @@ include "../../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
 
 
             <td class="td-btn"><button type="button" id_tarefa=<?php echo $id_tarefa_b; ?>
-                    class="btn btn-info editar_tarefa">Editar</button>
+                    class="btn btn-sm btn-info editar_tarefa">Editar</button>
             </td>
-            <td class="td-btn"><button type="button" id_tarefa=<?php echo $id_tarefa_b; ?>
-                    class="btn btn-danger remover_tarefa"><i class="bi bi-trash"></i></button>
+            <td class="td-btn"><button title="remover tarefa" type="button" id_tarefa=<?php echo $id_tarefa_b; ?>
+                    class="btn btn-sm btn-danger remover_tarefa"><i class="bi bi-trash"></i></button>
             </td>
         </tr>
 

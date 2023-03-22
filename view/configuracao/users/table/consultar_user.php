@@ -6,7 +6,7 @@ include "../../../../modal/configuracao/users/usuario.php";
 <?php 
 if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == "S")){ //consultar parametro para carrregar inicialmente a tabela
     ?>
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th scope="col">Código</th>
@@ -43,7 +43,7 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
                 }?>
 
             </td>
-            <td class="td-btn"><button type="button" id_user=<?php echo $id_user_b; ?> class="btn btn-info editar_user">Editar</button>
+            <td class="td-btn"><button type="button" id_user=<?php echo $id_user_b; ?> class="btn btn-sm btn-info editar_user">Editar</button>
             </td>
         </tr>
 

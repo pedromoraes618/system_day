@@ -1,0 +1,154 @@
+<?php
+include "../../../conexao/conexao.php";
+include "../../../modal/empresa/cliente/gerenciar_cliente.php";
+?>
+
+
+<div class="title">
+    <label class="form-label">Cadastrar Cliente</label>
+    <div class="msg_title">
+        <p>Cadastro de Clientes: Adicione Novos Clientes ao sistemA</p>
+    </div>
+</div>
+<hr>
+<form id="cadastrar_cliente">
+    <div class="row mb-2">
+        <input type="hidden" name="formulario_cadastrar_cliente">
+        <?php include "../../input_include/usuario_logado.php" ?>
+        <div class="col-sm col-md-6  mb-2">
+            <label for="rzaosocial" class="form-label">Razão social</label>
+            <input type="text" class="form-control " id="rzaosocial" name="rzaosocial" value="">
+        </div>
+        <div class="col-sm col-md-6  mb-2">
+            <label for="descricao" class="form-label">Nome fantasia</label>
+            <input type="text" class="form-control " id="nfantasia" name="nfantasia" value="">
+        </div>
+
+    </div>
+    <div class="row mb-2">
+        <div class="col-sm-6 col-md-4   mb-2">
+            <label for="cest" class="form-label">Cnpj \ Cpf</label>
+            <div class="input-group">
+                <input type="text" class="form-control inputNumber" id="cnpjcpf" name="cnpjcpf" placeholder="Apenas números">
+                <button class="btn btn-secondary" id="consutar_cnpj" type="button">Consultar Cnpj</button>
+            </div>
+        </div>
+
+
+        <div class="col-sm-6 col-md-3   mb-2">
+            <label for="ie" class="form-label">Inscrição Estadual</label>
+            <input type="text" class="form-control inputNumber" id="ie" name="ie" placeholder="Apenas números" value="">
+        </div>
+        <div class="col-md-3  mb-2">
+            <label for="grupo_estoque" class="form-label">Status</label>
+            <select name="grupo_estoque" class="form-select" id="grupo_estoque">
+                <option value="0">Selecione..</option>
+                <option selected value="S">Ativo</option>
+                <option value="N">Inativo</option>
+            </select>
+        </div>
+
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            <span class="badge rounded-2 mb-3 d-area dv">Informações de endereço</span>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-6 col-md-3   mb-2">
+            <label for="cep" class="form-label">Cep</label>
+            <div class="input-group">
+                <input type="text" class="form-control inputNumber" id="cep" name="cep" placeholder="Apenas números">
+                <button class="btn btn-secondary" id="buscar_cep" type="button">Consultar Cep</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row  mb-2">
+        <div class="col-sm-6 col-md-4   mb-2">
+            <label for="endereco" class="form-label">Endereço</label>
+            <input type="text" class="form-control" id="endereco" name="endereco" value="">
+        </div>
+
+        <div class="col-sm-6 col-md-2  mb-2">
+            <label for="bairro" class="form-label">Bairro</label>
+            <input type="text" class="form-control" id="bairro" name="bairro" value="">
+        </div>
+
+        <div class="col-md-3  mb-2">
+            <label for="estado" class="form-label">Estado</label>
+            <select name="estado" class="form-select" id="estado">
+                <option value="0">Selecione..</option>
+                <?php while ($linha  = mysqli_fetch_assoc($consultar_estados)) {
+                    $id_estado_b = $linha['cl_id'];
+                    $uf_b = ($linha['cl_uf']);
+                    $nome_estado_b = utf8_encode($linha['cl_nome']);
+                    $codigo_estado_b = ($linha['cl_ibge']);
+                    echo "<option uf_estado='$uf_b' cdestado='$codigo_estado_b' id_estado='$id_estado_b' value='$id_estado_b'>$nome_estado_b - $uf_b</option>";
+                } ?>
+            </select>
+        </div>
+
+        <div class="col-md-3  mb-2">
+            <label for="cidade" class="form-label">Cidade</label>
+            <select  disabled   class="form-select" name="cidade" id="cidade">
+                <option  value="0">Defina o estado..</option>
+
+            </select>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            <span class="badge rounded-2 mb-3 d-area dv">Informações de Contato</span>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-sm-6 col-md-3   mb-2">
+            <label for="telefone" class="form-label">Telefone</label>
+            <input type="text" class="form-control inputNumber" id="telefone" name="telefone" value="">
+        </div>
+
+        <div class="col-sm-6 col-md-3   mb-2">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" class="form-control inputNumber" id="email" name="email" value="">
+        </div>
+
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-sm-6 col-md-8   mb-2">
+            <label for="observacao" class="form-label">Observação</label>
+            <textarea class="form-control" name="observacao" id="observacao" aria-label="With textarea"></textarea>
+
+        </div>
+    </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-4  d-grid gap-2 d-sm-block mb-1  ">
+            <button type="subbmit" class="btn btn-success">Cadastrar</button>
+            <button type="button" id="voltar_consulta" class="btn btn-outline-dark">Voltar</button>
+        </div>
+    </div>
+
+    <!-- loading -->
+    <?php include "../../loading/spinner.php"; ?>
+
+ 
+
+</form>
+<script src="js/funcao.js"></script>
+<script src="js/configuracao/users/user_logado.js"></script>
+<script src="js/empresa/cliente/cadastrar_cliente.js"></script>
+<script src="js/empresa/funcao/api_cliente.js"></script>

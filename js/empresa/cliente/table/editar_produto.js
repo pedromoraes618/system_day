@@ -1,5 +1,5 @@
 //ao clicar no botão cadastrar produto
-$(".detalhes").click(function(e) {
+$(".editar_produto").click(function(e) {
     $(".bloco-pesquisa-menu .bloco-pesquisa-1").css("display","none")
     $(".bloco-pesquisa-menu .bloco-pesquisa-2").css("display","block")
   //  $(".bloco-pesquisa-menu .bloco-pesquisa-2").css("display","none") // aparecer tela de cadastro
@@ -7,7 +7,7 @@ $(".detalhes").click(function(e) {
   $.ajax({
         type: 'GET',
         data: "editar_produto=true&id_produto="+id_produto,
-        url: "view/estoque/consultar_produto/visualizar_produto.php",
+        url: "view/estoque/produto/editar_produto.php",
         success: function(result) {
             return $(".bloco-pesquisa-menu .bloco-pesquisa-2").html(result);
         },
@@ -21,7 +21,7 @@ $(".consultar_kardex").click(function(e) {
     $(".bloco-pesquisa-menu .bloco-pesquisa-2").css("display","block")
 $.ajax({
     type: 'GET',
-    data: "kardex_produto=true&consulta_produto=true&id_produto="+id_produto,
+    data: "kardex_produto=true&id_produto="+id_produto,
     url: "view/estoque/karkex/consultar_kardex.php",
     success: function(result) {
         return $(".bloco-pesquisa-menu .bloco-pesquisa-2").html(result);
