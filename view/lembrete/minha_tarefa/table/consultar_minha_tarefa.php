@@ -9,7 +9,7 @@ include "../../../../modal/lembrete/minha_tarefa/gerenciar_minha_tarefa.php";
             <th scope="col">Lançamento</th>
             <th scope="col">Descrição</th>
             <th scope="col">Comentario</th>
-            <th scope="col">Ordenador</th>
+            <th scope="col">Solicitante</th>
             <th scope="col">Status</th>
 
             <th scope="col">Prioridade</th>

@@ -14,7 +14,7 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
 <form id="editar_produto">
     <div class="row mb-2">
         <div class="col-sm-6 col-md-2   mb-2">
-            <label for="referencia" class="form-label">Codigo</label>
+            <label for="referencia" class="form-label">Código</label>
             <input type="hidden" name="id_produto" value="<?php echo $id_produto ?>">
             <input type="text" readonly class="form-control" id="codigo_produto" name="codigo_produto" value="<?php echo $codigo_produto_b ?>">
         </div>

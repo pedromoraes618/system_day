@@ -1,6 +1,5 @@
-// Verifica se o valor existe no localStorage
-if (localStorage.getItem("pesquisar_produto")) {
+// Verifica se o valor de pesquisa existe no localStorage
+if (localStorage.getItem("storage_pesquisa")) {
     // Remove o valor do localStorage
-    localStorage.removeItem("pesquisar_produto");
+    localStorage.removeItem("storage_pesquisa");
   }
-

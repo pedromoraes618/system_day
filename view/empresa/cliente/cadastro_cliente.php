@@ -1,3 +1,4 @@
+
 <?php
 include "../../../conexao/conexao.php";
 include "../../../modal/empresa/cliente/gerenciar_cliente.php";
@@ -5,9 +6,9 @@ include "../../../modal/empresa/cliente/gerenciar_cliente.php";
 
 
 <div class="title">
-    <label class="form-label">Cadastrar Cliente</label>
+    <label class="form-label">Cadastrar Parceiro</label>
     <div class="msg_title">
-        <p>Cadastro de Clientes: Adicione Novos Clientes ao sistemA</p>
+        <p>Cadastro de Parceiro: Adicione novos clientes, fornecedores e transportadoras</p>
     </div>
 </div>
 <hr>
@@ -114,12 +115,12 @@ include "../../../modal/empresa/cliente/gerenciar_cliente.php";
     <div class="row mb-2">
         <div class="col-sm-6 col-md-3   mb-2">
             <label for="telefone" class="form-label">Telefone</label>
-            <input type="text" class="form-control inputNumber" id="telefone" name="telefone" value="">
+            <input type="text" class="form-control " id="telefone" name="telefone" value="">
         </div>
 
         <div class="col-sm-6 col-md-3   mb-2">
             <label for="email" class="form-label">Email</label>
-            <input type="text" class="form-control inputNumber" id="email" name="email" value="">
+            <input type="text" class="form-control " id="email" name="email" value="">
         </div>
 
     </div>

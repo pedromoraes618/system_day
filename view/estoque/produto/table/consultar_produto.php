@@ -20,7 +20,6 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                 <th scope="col">Status</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
-
             </tr>
         </thead>
         <tbody>
@@ -37,11 +36,6 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                 $estoque_b = $linha['cl_estoque'];
                 $preco_venda_b = real_format($linha['cl_preco_venda']);
                 $ativo = ($linha['ativo']);
-                if ($ativo == "SIM") {
-                    $ativo = "Ativo";
-                } else {
-                    $ativo = "Inativo";
-                }
             ?>
                 <tr>
 
@@ -53,12 +47,8 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                     <td><?php echo $fabricante_b; ?></td>
                     <td><?php echo $estoque_b; ?></td>
                     <td><?php echo $preco_venda_b; ?></td>
-
-                    <td><span class="badge text-bg-<?php if ($ativo == "Ativo") {
-                                                        echo 'success';
-                                                    } else {
-                                                        echo 'danger';
-                                                    } ?>"><?php echo $ativo; ?></span>
+                    <td><span class='badge text-bg-<?php echo ($ativo == "SIM") ? 'success' : 'danger' ?>'><?php echo ($ativo == "SIM") ? 'Ativo' : 'Inativo' ?></td>
+                    <td>
                         <?php if ($estoque_b < $estoque_minimo_b) {
                             echo "<i title='produto abaixo do estoque minimo' class='bi bi-emoji-expressionless-fill'></i>";
                         } ?>

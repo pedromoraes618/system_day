@@ -1,21 +1,24 @@
 <div class="title">
-    <label class="form-label">Consultar Clientes</label>
+    <label class="form-label">Consultar Parceiros</label>
+    <div class="msg_title">
+        <p> A tela de consulta de parceiros permite buscar
+            e visualizar informações sobre os parceiros cadastrados no sistema.</p>
+    </div>
 </div>
 <hr>
 <div class="row">
     <div class="col-md  mb-2">
         <div class="input-group">
-            <input type="text" class="form-control" id="pesquisa_conteudo" placeholder="Tente pesquisar pela Razação social, cnpj ou cpf ou pelo nome fantasia"
-                aria-label="Recipient's username" aria-describedby="button-addon2">
+            <input type="text" class="form-control" id="pesquisa_conteudo" placeholder="Tente pesquisar pela Razação social, cnpj ou cpf ou pelo nome fantasia" aria-label="Recipient's username" aria-describedby="button-addon2">
             <button class="btn btn-outline-secondary" type="button" id="pesquisar_filtro_pesquisa">Pesquisar</button>
         </div>
     </div>
     <div class="col-md-auto  d-grid gap-2 d-sm-block mb-1">
-        <button class="btn btn-dark" type="button" id="adicionar_cliente">Adicionar Cliente</button>
+        <button class="btn btn-dark" type="button" id="adicionar_cliente">Adicionar Parceiro</button>
     </div>
 </div>
 <div class="alerta">
-    
+
 </div>
 <div class="tabela">
 

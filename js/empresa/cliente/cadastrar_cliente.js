@@ -45,7 +45,7 @@ $("#cadastrar_cliente").submit(function (e) {
     var formulario = $(this);
     Swal.fire({
         title: 'Tem certeza?',
-        text: "Deseja cadastrar esse cliente?",
+        text: "Deseja cadastrar esse parceiro?",
         icon: 'warning',
         showCancelButton: true,
         cancelButtonText: 'Não',

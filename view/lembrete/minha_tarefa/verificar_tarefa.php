@@ -79,7 +79,7 @@
                             </select>
                         </div>
                         <div class="col-auto">
-                            Ordenador: <?php echo $usuario_ordem_b; ?>
+                            Solicitante: <?php echo $usuario_ordem_b; ?>
                         </div>
                     </div>
 
