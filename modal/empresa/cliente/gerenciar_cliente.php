@@ -154,7 +154,7 @@ if (isset($_POST['formulario_editar_cliente'])) {
     }
 
 
-    echo json_encode($retornar);
+    
 }
 
 // // //Editar formulario

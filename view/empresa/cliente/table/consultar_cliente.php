@@ -9,9 +9,9 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
     <table class="table table-hover">
         <thead>
 
-            <tr >
+            <tr>
                 <th scope="col">Código</th>
-                <th  scope="col">Razão social</th>
+                <th scope="col">Razão social</th>
                 <th scope="col">Cnpj/Cpf</th>
                 <th scope="col">Cidade</th>
                 <th scope="col">Bairro</th>

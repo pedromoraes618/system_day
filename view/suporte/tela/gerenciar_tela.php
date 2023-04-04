@@ -8,10 +8,11 @@
             </div>
         </div>
         <hr>
-        <div class="row-auto mb-sm-3">
-            <button type="button" class="btn btn-outline-primary col-sm-2 btn_categoria btn_ativo">Categoria</button>
-            <button type="button" class="btn btn-outline-secondary col-sm-2  btn_subcategoria">Subcategoria</button>
+        <div class="row-auto mb-3 col-md-4 btn-group">
+            <button type="button" class="btn btn-outline-primary col-md-5 btn_categoria btn_ativo">Categoria</button>
+            <button type="button" class="btn btn-outline-secondary col-md-5  btn_subcategoria">Subcategoria</button>
         </div>
+
         <div class="row-auto bloco-cadastro-1">
 
         </div>

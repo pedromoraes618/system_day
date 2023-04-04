@@ -29,6 +29,6 @@ include "../../../modal/caixa/abertura_fechamento/gerenciar_caixa.php";
         } else {
             echo "<img class='img-fluid img_status' src='view/caixa/abertura_fechamento/img_status/caixa_nao_aberto.svg' >";
         } ?>
-
+'
     </div>
-</div>
+</div>'
