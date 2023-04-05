@@ -37,7 +37,7 @@ if(isset($_POST['formulario_cadastrar_usuario'])){
         $retornar = array();
         $nome_usuario_logado = $_POST["nome_usuario_logado"];
         $id_usuario_logado = $_POST["id_usuario_logado"];
-        $nome = $_POST["nome"];
+        $nome = utf8_decode($_POST["nome"]);
         $usuario = $_POST["usuario"];
         $senha = $_POST["senha"];
         $confirmar_Senha = $_POST["confirmar_senha"];
@@ -95,7 +95,7 @@ if(isset($_GET['editar_user'])==true or isset($_GET['resetar_senha'])==true){
     $consultar_usuarios = mysqli_query($conecta, $select);
     $linha  = mysqli_fetch_assoc($consultar_usuarios);
     $usuario_b = $linha['cl_usuario'];
-    $nome_b = $linha['cl_nome'];
+    $nome_b = utf8_encode($linha['cl_nome']);
     $senha_b = base64_decode($linha['cl_senha']);
     $perfil_b = $linha['cl_tipo'];
     $situacao_b = $linha['cl_ativo'];
@@ -110,7 +110,7 @@ if(isset($_POST['formulario_editar_usuario'])){
         $nome_usuario_logado = $_POST["nome_usuario_logado"];
         $id_usuario_logado = $_POST["id_usuario_logado"];
         $id_user = $_POST["id_user"];
-        $nome = $_POST["nome"];
+        $nome = utf8_decode($_POST["nome"]);
         $usuario = $_POST["usuario"];
         $perfil = $_POST["perfil"];
         $situacao =  $_POST["situacao"];
