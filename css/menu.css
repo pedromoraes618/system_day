@@ -615,6 +615,11 @@ font-size: 1.3em;
  
 }
 
+.bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-1 .modal form{
+    max-height:100%;
+
+ 
+}
 
 .bloco-pesquisa-1 form::-webkit-scrollbar {
     width: 10px;               /* width of the entire scrollbar */

@@ -18,8 +18,8 @@ var conteudo_pesquisa = document.getElementById("pesquisa_conteudo")
 
 //condição se existe valor de pesquisa no localstorage recarregar a pesquisa automaticamente
 //valor da pesquisa é guardado no localStorage, ao clicar em editar ou adicionar a pagina realizara a pesquisa novamente
-if (localStorage.getItem("pesquisar_produto")) {
-    var memoria_pesquisa = localStorage.getItem("pesquisar_produto");
+if (localStorage.getItem("storage_pesquisa")) {
+    var memoria_pesquisa = localStorage.getItem("storage_pesquisa");
     conteudo_pesquisa.value = memoria_pesquisa
     $.ajax({
         type: 'GET',
@@ -44,7 +44,7 @@ $.ajax({
 
 
 $("#pesquisar_filtro_pesquisa").click(function(e) {
-    localStorage.setItem("pesquisar_produto", conteudo_pesquisa.value);
+    localStorage.setItem("storage_pesquisa", conteudo_pesquisa.value);
     if(conteudo_pesquisa.value==""){
         $(".alerta").html("<span class='alert alert-primary position-absolute' style role='alert'>Favor informe a palavra chave</span>")
        setTimeout(function() {

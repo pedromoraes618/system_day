@@ -136,7 +136,7 @@ if (isset($_POST['formulario_editar_cliente'])) {
         $retornar["dados"] = array("sucesso" => false, "title" => "Favor verificque o campo Cnpj \ cpf, O cnpj está Incorreto");
     } elseif ((!validaCPF($cnpjcpf)) and (strlen($cnpjcpf) > 0 and strlen($cnpjcpf) <= 11)) { // validar cpf
         $retornar["dados"] = array("sucesso" => false, "title" => "Favor verificque o campo Cnpj \ cpf, O cpf está Incorreto");
-    } elseif (consultar_cnpj_cadastrado($conecta, $cnpjcpf, $id_cliente) > 0) { //verificar se já existe algum cliente cadastrado com o mesmo cnpj que não seja ele mesmo
+    } elseif (consultar_cnpj_cadastrado($conecta, $cnpjcpf, $id_cliente) > 0 ) { //verificar se já existe algum cliente cadastrado com o mesmo cnpj que não seja ele mesmo
         $retornar["dados"] = array("sucesso" => false, "title" => "Já existe um cadastrado com esses dados, favor verifique o campo Cnpj/Cpf");
     } elseif (($email != "") and (!filter_var($email, FILTER_VALIDATE_EMAIL))) { //validar email
         $retornar["dados"] = array("sucesso" => false, "title" => "Esse email não é valido,Favor verifique");
@@ -154,7 +154,7 @@ if (isset($_POST['formulario_editar_cliente'])) {
     }
 
 
-    
+    echo json_encode($retornar);
 }
 
 // // //Editar formulario

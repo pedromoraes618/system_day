@@ -1,11 +1,10 @@
-
-$("#adicionar_fpg").click(function (e) {
+$("#adicionar_conta_financeira").click(function (e) {
     $.ajax({
         type: 'GET',
-        data: "cadastrar_fpg=true",
-        url: "view/configuracao/forma_pagamento/forma_pagamento_tela.php",
+        data: "cadastrar_conta_fin=true",
+        url: "view/configuracao/conta_financeira/conta_financeira_tela.php",
         success: function (result) {
-            return $(".bloco-pesquisa-menu .bloco-pesquisa-1 .modal_show").html(result) + $("#modal_forma_pagamento").modal('show');
+            return $(".bloco-pesquisa-menu .bloco-pesquisa-1 .modal_show").html(result) + $("#modal_conta_financeira").modal('show');
             
         },
     });
@@ -20,8 +19,8 @@ if (localStorage.getItem("storage_pesquisa")) {
     conteudo_pesquisa.value = memoria_pesquisa
     $.ajax({
         type: 'GET',
-        data: "consultar_fpg=detalhado&conteudo_pesquisa=" + conteudo_pesquisa.value,
-        url: "view/configuracao/forma_pagamento/table/consultar_forma_pagamento.php",
+        data: "consultar_conta_financeira=detalhado&conteudo_pesquisa=" + conteudo_pesquisa.value,
+        url: "view/configuracao/conta_financeira/table/consultar_conta_financeira.php",
         success: function (result) {
             return $(".bloco-pesquisa-menu .bloco-pesquisa-1 .tabela").html(result);
         },
@@ -30,8 +29,8 @@ if (localStorage.getItem("storage_pesquisa")) {
     //consultar tabela
     $.ajax({
         type: 'GET',
-        data: "consultar_fpg=inicial",
-        url: "view/configuracao/forma_pagamento/table/consultar_forma_pagamento.php",
+        data: "consultar_conta_financeira=inicial",
+        url: "view/configuracao/conta_financeira/table/consultar_conta_financeira.php",
         success: function (result) {
             return $(".bloco-pesquisa-menu .bloco-pesquisa-1 .tabela").html(result);
         },
@@ -39,12 +38,13 @@ if (localStorage.getItem("storage_pesquisa")) {
 }
 
 
-$("#pesquisar_filtro_pesquisa").click(function (e) {
+$("#pesquisar_filtro_pesquisa").click(function () {
+
     localStorage.setItem("storage_pesquisa", conteudo_pesquisa.value);
     $.ajax({
         type: 'GET',
-        data: "consultar_fpg=detalhado&conteudo_pesquisa=" + conteudo_pesquisa.value,
-        url: "view/configuracao/forma_pagamento/table/consultar_forma_pagamento.php",
+        data: "consultar_conta_financeira=detalhado&conteudo_pesquisa=" + conteudo_pesquisa.value,
+        url: "view/configuracao/conta_financeira/table/consultar_conta_financeira.php",
         success: function (result) {
             return $(".bloco-pesquisa-menu .bloco-pesquisa-1 .tabela").html(result);
         },

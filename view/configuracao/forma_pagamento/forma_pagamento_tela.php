@@ -2,7 +2,7 @@
 include "../../../conexao/conexao.php";
 include "../../../modal/configuracao/forma_pagamento/gerenciar_forma_pagamento.php";
 ?>
-<div class="modal fade " id="modal_forma_pagamento" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="modal_forma_pagamento" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,9 +12,12 @@ include "../../../modal/configuracao/forma_pagamento/gerenciar_forma_pagamento.p
             <form action="" id="forma_pagamento">
                 <?php include "../../input_include/usuario_logado.php" ?>
                 <input type="hidden" id="id" name="id" value="<?php if (isset($_GET['forma_id'])) {
-                                                        echo $_GET['forma_id'];
-                                                    } ?>">
+                                                                    echo $_GET['forma_id'];
+                                                                } ?>">
                 <div class="modal-body">
+                    <div class="title mb-2">
+                        <label class="form-label"></label>
+                    </div>
                     <div class="col  mb-2">
                         <label for="descricao" class="form-label">Descrição</label>
                         <input type="text" class="form-control " id="descricao" name="descricao" value="">
@@ -69,29 +72,29 @@ include "../../../modal/configuracao/forma_pagamento/gerenciar_forma_pagamento.p
                         </div>
                     </div>
 
-                    <div class="row ">
+                    <div class="row">
                         <div class="col-md-3 mb-2">
                             <label for="numero_parcela" class="form-label">Número parcela</label>
-                            <input type="text" class="form-control " id="numero_parcela" name="numero_parcela" placeholder="Ex. 5" value="">
+                            <input type="text" class="form-control inputNumber" id="numero_parcela" name="numero_parcela" placeholder="Ex. 5" value="">
                         </div>
                         <div class="col-md-3  mb-2">
                             <label for="prazo_fatura" class="form-label">Prazo fatura</label>
-                            <input type="text" class="form-control " id="prazo_fatura" name="prazo_fatura" placeholder="Ex. 8" value="">
+                            <input type="text" class="form-control inputNumber" id="prazo_fatura" name="prazo_fatura" placeholder="Ex. 8" value="">
                         </div>
                         <div class="col-md-3 mb-2">
                             <label for="intervalo_parcela" class="form-label">Intervalo parcela</label>
-                            <input type="text" class="form-control " id="intervalo_parcela" placeholder="Ex. 30" name="intervalo_parcela" value="">
+                            <input type="text" class="form-control inputNumber" id="intervalo_parcela" placeholder="Ex. 30" name="intervalo_parcela" value="">
                         </div>
                         <div class="col-md-3 mb-2">
                             <label for="desconto_maximo" class="form-label">Desconto Max(%)</label>
-                            <input type="text" class="form-control" id="desconto_maximo" name="desconto_maximo" placeholder="Ex. 5" value="">
+                            <input type="text" class="form-control inputNumber" id="desconto_maximo" name="desconto_maximo" placeholder="Ex. 5" value="">
                         </div>
                     </div>
                     <div class="row ">
 
                         <div class="col-md-4 mb-2">
                             <label for="taxa" class="form-label">Taxa R$</label>
-                            <input type="text" class="form-control" placeholder="Ex. 0.5" id="taxa" name="taxa" value="">
+                            <input type="text" class="form-control inputNumber" placeholder="Ex. 0.5" id="taxa" name="taxa" value="">
                         </div>
                         <div class="col-md">
 
@@ -107,9 +110,9 @@ include "../../../modal/configuracao/forma_pagamento/gerenciar_forma_pagamento.p
                                     Default
                                 </label>
                             </div>
-                    
+
                             <div class="form-check">
-                                <input class="form-check-input" checked type="checkbox" value="" name="ativo" id="ativo">
+                                <input class="form-check-input" type="checkbox" value="" name="ativo" id="ativo">
                                 <label class="form-check-label" for="ativo">
                                     Ativo
                                 </label>
@@ -117,7 +120,6 @@ include "../../../modal/configuracao/forma_pagamento/gerenciar_forma_pagamento.p
                         </div>
 
                     </div>
-
 
                     <div class="modal-footer">
 

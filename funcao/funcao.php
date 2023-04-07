@@ -187,13 +187,18 @@ function adicionar_valor_serie($conecta, $serie, $valor)
 
 //consultar se já existe um parceiro cadastrado no sistema com o mesmo cnpj que não seja ele propio
 function consultar_cnpj_cadastrado($conecta, $cnpjcpf, $id_cliente)
-{
+{   
+    //verifiar se o campo está vazio
+    if($cnpjcpf !=""){
+        $select = "SELECT count(*) as qtd from tb_parceiros where cl_cnpj_cpf = '$cnpjcpf' and cl_id != $id_cliente ";
+        $consulta_tabela = mysqli_query($conecta, $select);
+        $linha = mysqli_fetch_assoc($consulta_tabela);
+        $qtd_encontrados = $linha["qtd"];
+        return $qtd_encontrados;
+    }else{
+        return 0;
+    }
 
-    $select = "SELECT count(*) as qtd from tb_parceiros where cl_cnpj_cpf = '$cnpjcpf' and cl_id != $id_cliente ";
-    $consulta_tabela = mysqli_query($conecta, $select);
-    $linha = mysqli_fetch_assoc($consulta_tabela);
-    $qtd_encontrados = $linha["qtd"];
-    return $qtd_encontrados;
 }
 //formatar cnpj
 function formatCNPJCPF($cnpjcpf)

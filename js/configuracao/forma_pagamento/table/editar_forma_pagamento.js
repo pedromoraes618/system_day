@@ -1,7 +1,8 @@
 //abrir a pagina de edição do formulario, pegando o id 
-$(".editar_forma_pagamento").click(function (e) {
+$(".editar_forma_pagamento").click(function () {
 
     var forma_de_pagamento_id = $(this).attr("forma_de_pagamento_id")
+
     $.ajax({
         type: 'GET',
         data: "forma_pagamento=true&acao=editar&forma_id=" + forma_de_pagamento_id,

@@ -20,7 +20,7 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
     <tbody>
         <?php while($row = mysqli_fetch_assoc($consultar_usuarios)){
                 $id_user_b = $row['cl_id'];
-                $nome_b = $row['cl_nome'];
+                $nome_b = utf8_encode($row['cl_nome']);
                 $usuario_b = $row['cl_usuario'];
                 $tipo_b = $row['cl_tipo'];
                 $situacao_b = $row['cl_ativo'];

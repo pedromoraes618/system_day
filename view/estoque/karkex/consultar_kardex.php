@@ -16,7 +16,7 @@ include "../../../funcao/funcao.php"
         <label class="label_box mb-2">Histórico: <?php echo $descricao_b; ?></label>
     </div>
     <div class="col d-grid gap-1 mb-1  ">
-        <button type="button" <?php if(isset($_GET['consulta_produto'])){ echo "id='voltar_visualizar_consulta'"; }else{echo "id='voltar_consulta'"; } ?>  class="btn btn-outline-secondary ">Voltar</button>
+        <button type="button" <?php if(isset($_GET['consulta_produto'])){ echo "id='voltar_visualizar_consulta'"; }else{echo "id='voltar_consulta'"; } ?>  class="btn btn-sm btn-outline-secondary">Voltar</button>
     </div>
 </div>
 <div class="row">

@@ -3,31 +3,31 @@ $("#voltar").click(function (e) {
   
 })
 
-const formulario_post = document.getElementById("forma_pagamento");
-let id_forma_pagamento = document.getElementById("id")
+const formulario_post = document.getElementById("conta_financeira");
+let id_conta_financeira = document.getElementById("id")
 let titulo = document.getElementById('title_modal')
 let btn_form = document.getElementById('button_form')
 
 
 //retorna os dados para o formulario
-if (id_forma_pagamento.value == "") {
+if (id_conta_financeira.value == "") {
     $('#button_form').html('Cadastrar');
     $('#ativo').attr('checked', true);
-    $(".title .form-label").html("Cadastrar forma pagamento")
+    $(".title .sub-title").html("Cadastrar conta financeira")
 } else {
     $('#button_form').html('Alterar');
-    $(".title .form-label").html("Editar forma pagamento")
-    show(id_forma_pagamento.value) // funcao para retornar os dados para o formulario
+    $(".title .sub-title").html("Editar conta financeira")
+    show(id_conta_financeira.value) // funcao para retornar os dados para o formulario
 }
 
 //formulario para cadastro
-$("#forma_pagamento").submit(function (e) {
-    if (id_forma_pagamento.value == "") {//cadastrar
+$("#conta_financeira").submit(function (e) {
+    if (id_conta_financeira.value == "") {//cadastrar
         e.preventDefault()
         var formulario = $(this);
         Swal.fire({
             title: 'Tem certeza?',
-            text: "Deseja cadastrar essa forma de pagamento",
+            text: "Deseja cadastrar essa conta financeira",
             icon: 'warning',
             showCancelButton: true,
             cancelButtonText: 'Não',
@@ -44,7 +44,7 @@ $("#forma_pagamento").submit(function (e) {
         var formulario = $(this);
         Swal.fire({
             title: 'Tem certeza?',
-            text: "Deseja alterar essa forma de pagamento",
+            text: "Deseja alterar essa conta financeira",
             icon: 'warning',
             showCancelButton: true,
             cancelButtonText: 'Não',
@@ -64,8 +64,8 @@ $("#forma_pagamento").submit(function (e) {
 function create(dados) {
     $.ajax({
         type: "POST",
-        data: "formulario_forma_pagamento=true&acao=create&" + dados.serialize(),
-        url: "modal/configuracao/forma_pagamento/gerenciar_forma_pagamento.php",
+        data: "formulario_conta_financeira=true&acao=create&" + dados.serialize(),
+        url: "modal/configuracao/conta_financeira/gerenciar_conta_financeira.php",
         async: false
     }).then(sucesso, falha);
 
@@ -106,8 +106,8 @@ function create(dados) {
 function update(dados) {
     $.ajax({
         type: "POST",
-        data: "formulario_forma_pagamento=true&acao=update&" + dados.serialize(),
-        url: "modal/configuracao/forma_pagamento/gerenciar_forma_pagamento.php",
+        data: "formulario_conta_financeira=true&acao=update&" + dados.serialize(),
+        url: "modal/configuracao/conta_financeira/gerenciar_conta_financeira.php",
         async: false
     }).then(sucesso, falha);
 
@@ -130,7 +130,6 @@ function update(dados) {
                 timer: 7500,
 
             })
-
         }
     }
 
@@ -146,8 +145,8 @@ function update(dados) {
 function show(id) {
     $.ajax({
         type: "POST",
-        data: "formulario_forma_pagamento=true&acao=show&forma_pagamento_id=" + id,
-        url: "modal/configuracao/forma_pagamento/gerenciar_forma_pagamento.php",
+        data: "formulario_conta_financeira=true&acao=show&conta_financeira_id=" + id,
+        url: "modal/configuracao/conta_financeira/gerenciar_conta_financeira.php",
         async: false
     }).then(sucesso, falha);
 
@@ -155,26 +154,10 @@ function show(id) {
         $dados = $.parseJSON(data)["dados"];
         if ($dados.sucesso == true) {
             $("#descricao").val($dados.valores['descricao'])
-            $("#conta_financeira").val($dados.valores['conta_financeira'])
-            $("#status").val($dados.valores['status_recebimento'])
-            $("#classificacao").val($dados.valores['classficacao'])
-            $("#tipo_pagamento").val($dados.valores['tipo_pagamento'])
-            $("#numero_parcela").val($dados.valores['numero_parcela'])
-            $("#prazo_fatura").val($dados.valores['prazo_fatura'])
-            $("#intervalo_parcela").val($dados.valores['intervalo_parcela'])
-            $("#desconto_maximo").val($dados.valores['desconto_maximo'])
-            $("#taxa").val($dados.valores['taxa'])
-
-            if (($dados.valores['ativo']) == "S") {//veiifcar se a forma de pagamento está ativa//se sim marcar o check como true
-                $('#ativo').attr('checked', true);
-            }
-            if (($dados.valores['avista']) == "S") {
-                $('#avista').attr('checked', true);
-            }
-            if (($dados.valores['default']) == "S") {
-                $('#default').attr('checked', true);
-            }
-
+            $("#conta").val($dados.valores['conta'])
+            $("#digito_conta").val($dados.valores['digito_conta'])
+            $("#agencia").val($dados.valores['agencia'])
+            $("#numero_banco").val($dados.valores['numero_banco'])
 
         }
     }
