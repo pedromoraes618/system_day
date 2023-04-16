@@ -68,6 +68,8 @@ if (isset($_POST['formulario_conta_financeira'])) {
 
       if ($descricao == "") {
          $retornar["dados"] = array("sucesso" => false, "title" => mensagem_alerta_cadastro("descricão"));
+      }elseif($conta ==""){
+         $retornar["dados"] = array("sucesso" => false, "title" => mensagem_alerta_cadastro("conta"));
       } else {
          $insert = "INSERT INTO `system_day`.`tb_conta_financeira` ( `cl_banco`, `cl_conta`, `cl_digito_conta`, `cl_agencia`, `cl_numero_banco`) 
          VALUES ( '$descricao', '$conta', '$digito_conta', '$agencia', '$numero_banco')";
@@ -99,10 +101,11 @@ if (isset($_POST['formulario_conta_financeira'])) {
 
 
       // $ativo = $_POST['ativo'];
-
       if ($descricao == "") {
          $retornar["dados"] = array("sucesso" => false, "title" => mensagem_alerta_cadastro("descricão"));
-      } else {
+      }elseif($conta ==""){
+         $retornar["dados"] = array("sucesso" => false, "title" => mensagem_alerta_cadastro("conta"));
+      }  else {
 
          $update = "UPDATE `system_day`.`tb_conta_financeira` SET `cl_banco` = '$descricao', `cl_conta` = '$conta', `cl_digito_conta` = '$digito_conta', `cl_agencia` = '$agencia',
           `cl_numero_banco` = '$numero_banco' WHERE `tb_conta_financeira`.`cl_id` = $id ";

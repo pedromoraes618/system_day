@@ -7,7 +7,7 @@ $(document).ready(function(){
     var xhr = new XMLHttpRequest();
 
     // Configura a requisição
-    xhr.open("POST", "modal/login/lembra.php", true); // lembrar senha
+    xhr.open("POST", "modal/login/auto_login.php", true); // lembrar senha
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
     // Envia a requisição

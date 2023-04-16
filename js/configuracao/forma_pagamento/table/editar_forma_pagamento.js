@@ -12,6 +12,7 @@ $(".editar_forma_pagamento").click(function () {
 
         },
     });
+    
 })
 
 

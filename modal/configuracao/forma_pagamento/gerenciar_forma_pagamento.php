@@ -7,7 +7,8 @@ if (isset($_GET['consultar_fpg'])) {
    $consulta = $_GET['consultar_fpg'];
    if ($consulta == "inicial") {
       $consultar_tabela_inicialmente =  verficar_paramentro($conecta, "tb_parametros", "cl_id", "1"); //VERIFICAR PARAMETRO ID - 1
-      $select = "SELECT fpg.cl_id as formaPagamentoID, fpg.cl_ativo,fpg.cl_descricao as formaPagamentoDescricao,fpg.cl_default,ctf.cl_banco,tpg.cl_descricao as tipoPagamento,strc.cl_descricao as statusRecebimento from tb_forma_pagamento as fpg inner join tb_conta_financeira as ctf on ctf.cl_id = fpg.cl_conta_financeira_id
+      $select = "SELECT fpg.cl_id as formaPagamentoID, fpg.cl_ativo,fpg.cl_descricao as formaPagamentoDescricao,fpg.cl_default,ctf.cl_banco,tpg.cl_descricao as tipoPagamento,strc.cl_descricao as statusRecebimento from 
+      tb_forma_pagamento as fpg inner join tb_conta_financeira as ctf on ctf.cl_conta = fpg.cl_conta_financeira
       inner join tb_status_recebimento as strc on strc.cl_id = fpg.cl_status_id inner join tb_tipo_pagamento as tpg on tpg.cl_id = fpg.cl_tipo_pagamento_id order by fpg.cl_id ";
       $consultar_forma_pagamento = mysqli_query($conecta, $select);
       if (!$consultar_forma_pagamento) {
@@ -17,7 +18,8 @@ if (isset($_GET['consultar_fpg'])) {
       }
    } else {
       $pesquisa = utf8_decode($_GET['conteudo_pesquisa']); //filtro
-      $select = "SELECT fpg.cl_id as formaPagamentoID, fpg.cl_ativo,fpg.cl_descricao as formaPagamentoDescricao,fpg.cl_default,ctf.cl_banco,tpg.cl_descricao as tipoPagamento,strc.cl_descricao as statusRecebimento from tb_forma_pagamento as fpg inner join tb_conta_financeira as ctf on ctf.cl_id = fpg.cl_conta_financeira_id
+      $select = "SELECT fpg.cl_id as formaPagamentoID, fpg.cl_ativo,fpg.cl_descricao as formaPagamentoDescricao,fpg.cl_default,ctf.cl_banco,tpg.cl_descricao as tipoPagamento,strc.cl_descricao as statusRecebimento from 
+      tb_forma_pagamento as fpg inner join tb_conta_financeira as ctf on ctf.cl_conta = fpg.cl_conta_financeira
       inner join tb_status_recebimento as strc on strc.cl_id = fpg.cl_status_id inner join tb_tipo_pagamento as tpg on tpg.cl_id = fpg.cl_tipo_pagamento_id 
       WHERE fpg.cl_descricao like '%{$pesquisa}%' or fpg.cl_id like '%{$pesquisa}%' order by fpg.cl_id";
       $consultar_forma_pagamento = mysqli_query($conecta, $select);
@@ -41,7 +43,7 @@ if (isset($_POST['formulario_forma_pagamento'])) {
       $consultar_forma_pagamento = mysqli_query($conecta, $select);
       $linha = mysqli_fetch_assoc($consultar_forma_pagamento);
       $descricao =utf8_encode($linha['cl_descricao']);
-      $conta_financeira = $linha['cl_conta_financeira_id'];
+      $conta_financeira = $linha['cl_conta_financeira'];
       $status_recebimento = $linha['cl_status_id'];
       $classificao = $linha['cl_classificao_id'];
       $tipo_pagamento = $linha['cl_tipo_pagamento_id'];
@@ -121,7 +123,7 @@ if (isset($_POST['formulario_forma_pagamento'])) {
          $retornar["dados"] = array("sucesso" => false, "title" => mensagem_alerta_cadastro("tipo pagamento"));
       } else {
 
-         $insert = "INSERT INTO `system_day`.`tb_forma_pagamento` (`cl_descricao`, `cl_conta_financeira_id`, `cl_status_id`, `cl_classificao_id`, `cl_tipo_pagamento_id`, `cl_avista`, `cl_default`, 
+         $insert = "INSERT INTO `system_day`.`tb_forma_pagamento` (`cl_descricao`, `cl_conta_financeira`, `cl_status_id`, `cl_classificao_id`, `cl_tipo_pagamento_id`, `cl_avista`, `cl_default`, 
          `cl_prazo_fatura`, `cl_numero_parcela`, `cl_intervalo_parcela`, `cl_desconto_maximo`, `cl_taxa`, `cl_ativo`) VALUES ( '$descricao', '$conta_financeira', '$status', '$classificacao', '$tipo_pagamento', '$avista', '$default',
           '$prazo_fatura', '$numero_parcela', '$intervalo_parcela', '$desconto_maximo', '$taxa', '$ativo' )";
          $operacao_insert = mysqli_query($conecta, $insert);
@@ -186,7 +188,7 @@ if (isset($_POST['formulario_forma_pagamento'])) {
          $retornar["dados"] = array("sucesso" => false, "title" => mensagem_alerta_cadastro("tipo pagamento"));
       } else {
 
-         $update = " UPDATE `system_day`.`tb_forma_pagamento` SET `cl_descricao` = '$descricao', `cl_conta_financeira_id` = '$conta_financeira', `cl_status_id` = '$status', `cl_classificao_id` = '$classificacao', `cl_tipo_pagamento_id` = '$tipo_pagamento',
+         $update = " UPDATE `system_day`.`tb_forma_pagamento` SET `cl_descricao` = '$descricao', `cl_conta_financeira` = '$conta_financeira', `cl_status_id` = '$status', `cl_classificao_id` = '$classificacao', `cl_tipo_pagamento_id` = '$tipo_pagamento',
           `cl_avista` = '$avista', `cl_default` = '$default', `cl_prazo_fatura` = '$prazo_fatura', `cl_numero_parcela` = '$numero_parcela', `cl_intervalo_parcela` = '$intervalo_parcela',
            `cl_desconto_maximo` = '$desconto_maximo', `cl_taxa` = '$taxa', `cl_ativo` = '$ativo' WHERE `tb_forma_pagamento`.`cl_id` = $id ";
          $operacao_update = mysqli_query($conecta, $update);

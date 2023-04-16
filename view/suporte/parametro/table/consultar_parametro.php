@@ -30,7 +30,7 @@ include "../../../../modal/suporte/parametro/gerenciar_parametro.php";
             <td><span class="badge text-bg-danger"><?php echo $configuracao_b; ?></span></td>
 
             <td class="td-btn"><button type="button" id_parametro=<?php echo $id_parametro_b; ?>
-                    class="btn btn-sms btn-info editar_parametro">Editar</button>
+                    class="btn btn-sm btn-info editar_parametro">Editar</button>
             </td>
         </tr>
 

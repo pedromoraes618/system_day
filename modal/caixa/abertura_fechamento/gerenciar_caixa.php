@@ -19,38 +19,39 @@ if (isset($_POST['abertura_caixa'])) {
 
     $data_abertura = date('Y-m-d');
 
-    $caixa = verifica_status_caixa($conecta, $consultar_tipo_contabiizacao, $dia, $mes, $ano);
 
+    $select = "SELECT * FROM tb_conta_financeira";
+    $consulta_conta_financeira = mysqli_query($conecta, $select);
+    while ($linha = mysqli_fetch_array($consulta_conta_financeira)) { //verificar todas as contas financeiras
+        $conta_financeira = $linha['cl_conta'];
 
-    $resultado_consulta = $caixa['resultado'];
+        $caixa = verifica_status_caixa($conecta, $consultar_tipo_contabiizacao, $dia, $mes, $ano, $conta_financeira);
+        $resultado_consulta = $caixa['resultado'];
+        $saldo_final_periodo_anterior =  verifica_saldo_final($conecta, $consultar_tipo_contabiizacao, $dia, $mes, $ano, $conta_financeira);
 
-
-    $saldo_final_periodo_anterior =  verifica_saldo_final($conecta, $consultar_tipo_contabiizacao, $dia, $mes, $ano);
-
-    if ($resultado_consulta > 0) { // se o caixa já estiver aberto apenas reabir o periodo
-
-        $update = "UPDATE tb_caixa SET cl_valor_abertura = '$saldo_final_periodo_anterior', cl_status='reaberto', cl_usuario_abertura='$user_id'
-             WHERE  cl_mes = '$mes' and cl_ano = '$ano' ";
-        if ($consultar_tipo_contabiizacao == "DIA") { //verificar se o parametro estiver setado com dia, realizar o update naquela data especifica
-            $update .= " and cl_dia = '$dia'";
-        }
-        $operacao_update = mysqli_query($conecta, $update);
-        if ($operacao_update) {
-            $retornar["dados"] = array("sucesso" => true, "title" => "Caixa reaberto com sucesso");
-            $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado reabriu o caixa do periodo $dia/$mes/$ano");
-            registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
-        }
-    } else { // se o caixa ainda não tiver aberto adicionar o caixa 
-        $inset = "INSERT INTO tb_caixa (cl_data_abertura,cl_valor_abertura, cl_status, cl_usuario_abertura,cl_dia,cl_mes,cl_ano)
-        VALUES ('$data_abertura','$saldo_final_periodo_anterior','aberto','$user_id','$dia','$mes','$ano')";
-        $operacao_inserir = mysqli_query($conecta, $inset);
-        if ($operacao_inserir) {
-            $retornar["dados"] = array("sucesso" => true, "title" => "Caixa aberto com sucesso");
-            $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado Abriu o caixa do periodo $dia/$mes/$ano");
-            registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+        if ($resultado_consulta > 0) { // se o caixa já estiver aberto apenas reabir o periodo
+            $update = "UPDATE tb_caixa SET cl_valor_abertura = '$saldo_final_periodo_anterior', cl_status='reaberto',cl_conta ='$conta_financeira', cl_usuario_abertura='$user_id'
+             WHERE  cl_mes = '$mes' and cl_ano = '$ano' and cl_conta ='$conta_financeira' ";
+            if ($consultar_tipo_contabiizacao == "DIA") { //verificar se o parametro estiver setado com dia, realizar o update naquela data especifica
+                $update .= " and cl_dia = '$dia'";
+            }
+            $operacao_update = mysqli_query($conecta, $update);
+            if ($operacao_update) {
+                $retornar["dados"] = array("sucesso" => true, "title" => "Caixa reaberto com sucesso");
+                $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado reabriu o caixa do periodo $dia/$mes/$ano");
+                registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+            }
+        } else { // se o caixa ainda não tiver aberto adicionar o caixa 
+            $inset = "INSERT INTO tb_caixa (cl_data_abertura,cl_valor_abertura, cl_status,cl_conta,cl_usuario_abertura,cl_dia,cl_mes,cl_ano)
+        VALUES ('$data_abertura','$saldo_final_periodo_anterior','aberto','$conta_financeira','$user_id','$dia','$mes','$ano')";
+            $operacao_inserir = mysqli_query($conecta, $inset);
+            if ($operacao_inserir) {
+                $retornar["dados"] = array("sucesso" => true, "title" => "Caixa aberto com sucesso");
+                $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado Abriu o caixa do periodo $dia/$mes/$ano");
+                registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+            }
         }
     }
-
     echo json_encode($retornar);
 }
 
@@ -76,29 +77,34 @@ if (isset($_POST['fechar_caixa'])) {
 
     $data_fechamento = date('Y-m-d');
 
-    $caixa = verifica_status_caixa($conecta, $consultar_tipo_contabiizacao, $dia, $mes, $ano);
-    $resultado_consulta = $caixa['resultado'];
 
-    //$saldo_final_periodo_anterior =  verifica_saldo_final($conecta, $consultar_tipo_contabiizacao, $dia, $mes, $ano);
+    $select = "SELECT * FROM tb_conta_financeira";
+    $consulta_conta_financeira = mysqli_query($conecta, $select);
+    while ($linha = mysqli_fetch_array($consulta_conta_financeira)) { //verificar todas as contas financeiras
+        $conta_financeira = $linha['cl_conta'];
 
-    if ($resultado_consulta > 0) { // se o caixa já estiver aberto apenas reabir o periodo
-        $valor_abertura = $caixa['valor_aberto'];
-        $valor_fechado = $valor_abertura + 5;
-        $update = "UPDATE tb_caixa SET cl_valor_fechamento='$valor_fechado',cl_status='fechado',cl_usuario_fechamento='$user_id', cl_data_fechamento='$data_fechamento', cl_usuario_abertura='$user_id' 
-        WHERE cl_mes = '$mes' and cl_ano = '$ano'";
-        if ($consultar_tipo_contabiizacao == "DIA") { //verificar se o parametro estiver setado com dia, realizar o update naquela data especifica
-            $update .= " and cl_dia = '$dia'";
+        $caixa = verifica_status_caixa($conecta, $consultar_tipo_contabiizacao, $dia, $mes, $ano, $conta_financeira);
+        $resultado_consulta = $caixa['resultado'];
+        //$saldo_final_periodo_anterior =  verifica_saldo_final($conecta, $consultar_tipo_contabiizacao, $dia, $mes, $ano);
+        if ($resultado_consulta > 0) { // se o caixa já estiver aberto apenas reabir o periodo
+            $valor_abertura = $caixa['valor_aberto'];
+            $valor_fechado = $valor_abertura + 5; //valor de abertura vai somar com o valor do financeiro, isso resultara no saldo final do periodo
+
+            $update = "UPDATE tb_caixa SET cl_valor_fechamento='$valor_fechado',cl_conta='$conta_financeira',cl_status='fechado',cl_usuario_fechamento='$user_id', cl_data_fechamento='$data_fechamento', cl_usuario_abertura='$user_id' 
+        WHERE cl_mes = '$mes' and cl_ano = '$ano' and cl_conta = '$conta_financeira'";
+            if ($consultar_tipo_contabiizacao == "DIA") { //verificar se o parametro estiver setado com dia, realizar o update naquela data especifica
+                $update .= " and cl_dia = '$dia'";
+            }
+            $operacao_update = mysqli_query($conecta, $update);
+            if ($operacao_update) {
+                $retornar["dados"] = array("sucesso" => true, "title" => "Caixa fechado com sucesso");
+                $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado fechou o caixa do periodo $dia/$mes/$ano");
+                registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+            }
+        } else { // infomar que o periodo que o uúario quer fehar ainda não foi aberto
+            $retornar["dados"] = array("sucesso" => false, "title" => "O caixa desse periodo ainda não foi aberto");
         }
-        $operacao_update = mysqli_query($conecta, $update);
-        if ($operacao_update) {
-            $retornar["dados"] = array("sucesso" => true, "title" => "Caixa fechado com sucesso");
-            $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado fechou o caixa do periodo $dia/$mes/$ano");
-            registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
-        }
-    } else { // infomar que o periodo que o uúario quer fehar ainda não foi aberto
-        $retornar["dados"] = array("sucesso" => false, "title" => "O caixa desse periodo ainda não foi aberto");
     }
-
     echo json_encode($retornar);
 }
 

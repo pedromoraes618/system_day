@@ -26,7 +26,7 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
             <td><?php echo $descricao_b; ?></td>
 
             <td class="td-btn"><button type="button" id_fabricante=<?php echo $id_fabricante_b; ?>
-                    class="btn btn-info editar_fabricante">Editar</button>
+                    class="btn btn-sm btn-info editar_fabricante">Editar</button>
             </td>
         </tr>
 

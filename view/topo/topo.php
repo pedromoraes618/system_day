@@ -29,7 +29,7 @@
                 <li><i class="bi bi-person  text-light "></i>
                     <ul class="menu_user">
                         <li>
-                            <a href="?menu&user">Meu usuário</a>
+                            <a href="?menu&ctg=Configuração&myuser&id=22">Meu usuário</a>
                         </li>
                         <li>
                             <a href="?menu&ctg=Configuração&sobre&id=14">Sobre</a>

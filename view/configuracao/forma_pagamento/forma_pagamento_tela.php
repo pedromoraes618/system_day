@@ -16,7 +16,7 @@ include "../../../modal/configuracao/forma_pagamento/gerenciar_forma_pagamento.p
                                                                 } ?>">
                 <div class="modal-body">
                     <div class="title mb-2">
-                        <label class="form-label"></label>
+                        <label class="form-label sub-title"></label>
                     </div>
                     <div class="col  mb-2">
                         <label for="descricao" class="form-label">Descrição</label>
@@ -29,8 +29,9 @@ include "../../../modal/configuracao/forma_pagamento/gerenciar_forma_pagamento.p
                                 <option value="0">Selecione..</option>
                                 <?php while ($linha  = mysqli_fetch_assoc($consultar_conta_financeira)) {
                                     $id_b = $linha['cl_id'];
+                                    $conta_b = $linha['cl_conta'];
                                     $banco_b = utf8_encode($linha['cl_banco']);
-                                    echo "<option  value='$id_b'> $banco_b </option>";
+                                    echo "<option  value='$conta_b'> $banco_b </option>";
                                 } ?>
                             </select>
                         </div>

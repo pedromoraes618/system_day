@@ -12,5 +12,5 @@ $(".editar_subgrupo").click(function(e) {
         },
     });
 
-
+    $('.bloco-right').scrollTop(0); // quando clicado em editar o scroll vai para a caixa de edição;
 })

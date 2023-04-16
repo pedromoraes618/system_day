@@ -8,7 +8,7 @@
     <nav>
         <ul>
             <li>
-                <p><i class="bi bi-house"></i><a style="text-decoration: none;color:white" href="?menu">Inicial</a>
+                <p><i class="bi bi-house"></i><a href="?menu">Inicial</a></p>
             </li>
             <?php
       
@@ -21,7 +21,7 @@
             ?>  
             <li>
                 <p><?php echo $icone?> <?php echo $categoria; ?></p>
-                <ul>
+                <ul id="sub-list">
                     <?php 
                         $select = "SELECT * from tb_subcategorias where cl_categoria = $id_categoria order by cl_ordem_menu";
                         $consultar_subcategoria= mysqli_query($conecta,$select);

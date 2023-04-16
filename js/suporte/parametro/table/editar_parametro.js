@@ -8,7 +8,9 @@ $(".editar_parametro").click(function(e) {
         data: "editar_parametro=true&id_parametro=" + id_parametro,
         url: "view/suporte/parametro/editar_parametro.php",
         success: function(result) {
-            return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result);
+            return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result)
         },
+       
     });
+    $('.bloco-right').scrollTop(0); // quando clicado em editar o scroll vai para a caixa de edição
 })

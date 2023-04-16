@@ -58,10 +58,13 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                     </td>
 
 
-                    <td class="td-btn"><button type="button" id_produto=<?php echo $produto_id; ?> class="btn btn-info   btn-sm editar_produto ">Editar</button>
+                    <td class="td-btn">
+                        <div class="btn-group">
+                            <button type="button" id_produto=<?php echo $produto_id; ?> class="btn btn-info   btn-sm editar_produto ">Editar</button>
+                            <button type="button" id_produto=<?php echo $produto_id; ?> class="btn btn-warning   btn-sm consultar_kardex ">Karkex</button>
+                        </div>
                     </td>
-                    <td class="td-btn"><button type="button" id_produto=<?php echo $produto_id; ?> class="btn btn-warning   btn-sm consultar_kardex ">Karkex</button>
-                    </td>
+
                 </tr>
 
             <?php } ?>

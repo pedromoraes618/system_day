@@ -11,4 +11,6 @@ $(".editar_serie").click(function(e) {
             return $(".bloco-pesquisa-menu .bloco-pesquisa-1").html(result);
         },
     });
+    $('.bloco-right').scrollTop(0); // quando clicado em editar o scroll vai para a caixa de edição;
+
 })

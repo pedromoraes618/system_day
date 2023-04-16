@@ -8,7 +8,6 @@ include "../../../modal/configuracao/conta_financeira/gerenciar_conta_financeira
             <div class="modal-header">
                 <h1 class="modal-title fs-5">Conta Financeira</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
             </div>
 
             <form action="" id="conta_financeira">

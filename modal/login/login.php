@@ -15,7 +15,7 @@ if (empty($user_acess)){
 echo "login sem Sucesso";
 
  //registrar no log
- $mensagem =  utf8_decode("Tentativa de acesso do Usúario $usuario, sem sucesso ");
+ $mensagem =  utf8_decode("Tentativa de acesso do Usuário $usuario, sem sucesso ");
  registrar_log($conecta,$usuario,$data,$mensagem);
 
 }else{
@@ -32,13 +32,13 @@ echo "login sem Sucesso";
         echo "ok";
 
         //registrar no log    
-        $mensagem =  utf8_decode("Usúario $usuario acessou ao sistema");
+        $mensagem =  utf8_decode("Usuário $usuario acessou ao sistema");
         registrar_log($conecta,$usuario,$data,$mensagem);
 
         }else{
         echo "senha incorreta";
          //registrar no log
-         $mensagem =  utf8_decode("Tentativa de acesso do Usúario $usuario, sem sucesso ");
+         $mensagem =  utf8_decode("Tentativa de acesso do Usuário $usuario, sem sucesso ");
          registrar_log($conecta,$usuario,$data,$mensagem);
         }
    }

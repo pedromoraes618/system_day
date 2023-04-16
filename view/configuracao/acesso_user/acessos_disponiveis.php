@@ -2,8 +2,8 @@
 include "../../../conexao/conexao.php";
 include "../../../modal/configuracao/controle_de_acesso/acesso.php";
 
-if(isset($_GET['clienteID'])){
-    $usuario_id = $_GET['clienteID'];
+if(isset($_GET['user_id'])){
+    $usuario_id = $_GET['user_id'];
 }
 if(isset($_GET['idsubcategoria'])){
     $id_subcategoria = $_GET['idsubcategoria'];

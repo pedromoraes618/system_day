@@ -134,7 +134,7 @@ function consultar_subcategoria_acesso($conecta, $id_subcategoria)
     $select = "SELECT * from tb_subcategorias where cl_id = '$id_subcategoria' ";
     $consulta_subcategoria = mysqli_query($conecta, $select);
     $linha = mysqli_fetch_assoc($consulta_subcategoria);
-    $subcategoria_b = $linha['cl_subcategoria'];
+    $subcategoria_b =  utf8_encode($linha['cl_subcategoria']);
     return $subcategoria_b;
 }
 
@@ -370,9 +370,9 @@ function formatDecimal($valor)
 }
 
 
-function verifica_status_caixa($conecta, $consultar_tipo_contabilizacao, $dia, $mes, $ano)
+function verifica_status_caixa($conecta, $consultar_tipo_contabilizacao, $dia, $mes, $ano,$conta_financeira)
 {
-    $select = "SELECT * FROM tb_caixa where cl_ano !='' ";
+    $select = "SELECT * FROM tb_caixa where cl_ano !='' and cl_conta ='$conta_financeira'";
     if ($consultar_tipo_contabilizacao == "DIA") {
         $select .= " and cl_dia = '$dia' and cl_mes ='$mes' and cl_ano='$ano' "; // se for por periodo de contabilização em dia a dia vai verifiar o dia, o mes e o ano
     } elseif ($consultar_tipo_contabilizacao == "MES") {
@@ -390,7 +390,7 @@ function verifica_status_caixa($conecta, $consultar_tipo_contabilizacao, $dia, $
     return $dados;
 }
 
-function verifica_saldo_final($conecta, $consultar_tipo_contabilizacao, $dia, $mes, $ano)
+function verifica_saldo_final($conecta, $consultar_tipo_contabilizacao, $dia, $mes, $ano,$conta_financeira)
 {
 
 
@@ -401,7 +401,7 @@ function verifica_saldo_final($conecta, $consultar_tipo_contabilizacao, $dia, $m
     $dia_anerior = date('d', strtotime('-1 day', strtotime($data)));//pegar o dia anterior
 
 
-    $select = "SELECT * FROM tb_caixa where cl_ano !='' ";
+    $select = "SELECT * FROM tb_caixa where cl_ano !='' and cl_conta = '$conta_financeira' ";
     if ($consultar_tipo_contabilizacao == "DIA") {
         if ($mes == "01" and $dia == "01") {//se for primeiro dia do ano vai verificar o ultimo dia do mes anterior
             $dia = 31;
@@ -428,3 +428,5 @@ function verifica_saldo_final($conecta, $consultar_tipo_contabilizacao, $dia, $m
     $saldo_fechado = $linha['cl_valor_fechamento'];
     return $saldo_fechado;
 }
+
+

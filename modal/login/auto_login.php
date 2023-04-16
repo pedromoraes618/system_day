@@ -19,7 +19,7 @@ if (isset($_COOKIE['algn'])) { // verificar se existe o cookie para login automa
              echo "ok";
         
             //registrar no log    
-            $mensagem =  utf8_decode("Usúario $usuario acessou ao sistema");
+            $mensagem =  utf8_decode("Usuário $usuario acessou ao sistema");
             registrar_log($conecta,$usuario,$data,$mensagem);
     
             }

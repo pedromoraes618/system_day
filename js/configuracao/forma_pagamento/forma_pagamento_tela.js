@@ -13,10 +13,10 @@ let btn_form = document.getElementById('button_form')
 if (id_forma_pagamento.value == "") {
     $('#button_form').html('Cadastrar');
     $('#ativo').attr('checked', true);
-    $(".title .form-label").html("Cadastrar forma pagamento")
+    $(".title .sub-title").html("Cadastrar forma pagamento")
 } else {
     $('#button_form').html('Alterar');
-    $(".title .form-label").html("Editar forma pagamento")
+    $(".title .sub-title").html("Editar forma pagamento")
     show(id_forma_pagamento.value) // funcao para retornar os dados para o formulario
 }
 

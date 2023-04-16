@@ -4,7 +4,7 @@ $("#select_user").change(function() {
 
         $.ajax({
             type: 'GET',
-            data: "clienteID=" + usuario_id.value,
+            data: "user_id=" + usuario_id.value,
             url: "view/configuracao/acesso_user/acessos_disponiveis.php",
             success: function(result) {
                 return $("#card-body-1").html(result);
@@ -12,7 +12,7 @@ $("#select_user").change(function() {
         });
         $.ajax({
             type: 'GET',
-            data: "clienteID=" + usuario_id.value,
+            data: "user_id=" + usuario_id.value,
             url: "view/configuracao/acesso_user/acessos_atuais.php",
             success: function(result) {
                 return $(".sub_bloco_info-2").html(result);
