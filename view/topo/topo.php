@@ -26,7 +26,7 @@
         </button>
         <nav id="dropdown_user">
             <ul class="btn btn-outline-secondary border-0 text-light">
-                <li><i class="bi bi-person  text-light "></i>
+                <li><?php echo ($img !='') ? "<img class='img_user_topo' src='img/usuario/$img' >" : "<i class='bi bi-person  text-light '></i>" ?>
                     <ul class="menu_user">
                         <li>
                             <a href="?menu&ctg=Configuração&myuser&id=22">Meu usuário</a>

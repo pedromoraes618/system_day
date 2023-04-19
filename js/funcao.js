@@ -22,6 +22,7 @@ inputuser.forEach(input => onlyUsers(input));
 
 
 
+
 //gerar pdf 
 function criapdf() {
     var minhaTabela = document.getElementById('tabela').innerHTML;

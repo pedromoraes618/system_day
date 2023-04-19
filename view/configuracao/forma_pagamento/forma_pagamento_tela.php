@@ -11,8 +11,8 @@ include "../../../modal/configuracao/forma_pagamento/gerenciar_forma_pagamento.p
             </div>
             <form action="" id="forma_pagamento">
                 <?php include "../../input_include/usuario_logado.php" ?>
-                <input type="hidden" id="id" name="id" value="<?php if (isset($_GET['forma_id'])) {
-                                                                    echo $_GET['forma_id'];
+                <input type="hidden" id="id" name="id" value="<?php if (isset($_GET['form_id'])) {
+                                                                    echo $_GET['form_id'];
                                                                 } ?>">
                 <div class="modal-body">
                     <div class="title mb-2">

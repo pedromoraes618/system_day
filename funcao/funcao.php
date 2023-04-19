@@ -45,6 +45,14 @@ function formatDateB($value)
         return $value;
     }
 }
+function formatarDataParaBancoDeDados($data)
+{
+    // Cria um objeto DateTime a partir da string da data no formato 'dd/mm/aaaa'
+    $dataObj = DateTime::createFromFormat('d/m/Y', $data);
+
+    // Retorna a data formatada no formato 'aaaa-mm-dd'
+    return $dataObj->format('Y-m-d');
+}
 
 function datecheck($value)
 {
@@ -187,18 +195,17 @@ function adicionar_valor_serie($conecta, $serie, $valor)
 
 //consultar se já existe um parceiro cadastrado no sistema com o mesmo cnpj que não seja ele propio
 function consultar_cnpj_cadastrado($conecta, $cnpjcpf, $id_cliente)
-{   
+{
     //verifiar se o campo está vazio
-    if($cnpjcpf !=""){
+    if ($cnpjcpf != "") {
         $select = "SELECT count(*) as qtd from tb_parceiros where cl_cnpj_cpf = '$cnpjcpf' and cl_id != $id_cliente ";
         $consulta_tabela = mysqli_query($conecta, $select);
         $linha = mysqli_fetch_assoc($consulta_tabela);
         $qtd_encontrados = $linha["qtd"];
         return $qtd_encontrados;
-    }else{
+    } else {
         return 0;
     }
-
 }
 //formatar cnpj
 function formatCNPJCPF($cnpjcpf)
@@ -370,7 +377,7 @@ function formatDecimal($valor)
 }
 
 
-function verifica_status_caixa($conecta, $consultar_tipo_contabilizacao, $dia, $mes, $ano,$conta_financeira)
+function verifica_status_caixa($conecta, $consultar_tipo_contabilizacao, $dia, $mes, $ano, $conta_financeira)
 {
     $select = "SELECT * FROM tb_caixa where cl_ano !='' and cl_conta ='$conta_financeira'";
     if ($consultar_tipo_contabilizacao == "DIA") {
@@ -386,11 +393,11 @@ function verifica_status_caixa($conecta, $consultar_tipo_contabilizacao, $dia, $
 
     $status_caixa = $linha['cl_status'];
     $valor_aberto = $linha['cl_valor_abertura'];
-    $dados = array("resultado"=>$resultado_consulta,"status"=>$status_caixa,"valor_aberto"=>$valor_aberto);
+    $dados = array("resultado" => $resultado_consulta, "status" => $status_caixa, "valor_aberto" => $valor_aberto);
     return $dados;
 }
 
-function verifica_saldo_final($conecta, $consultar_tipo_contabilizacao, $dia, $mes, $ano,$conta_financeira)
+function verifica_saldo_final($conecta, $consultar_tipo_contabilizacao, $dia, $mes, $ano, $conta_financeira)
 {
 
 
@@ -398,22 +405,22 @@ function verifica_saldo_final($conecta, $consultar_tipo_contabilizacao, $dia, $m
     $data = ("$dia-$mes-$ano");
     $ultimo_dia_mes_anterior = date('t', strtotime('-1 month', strtotime($data))); // pegar o ultimo dia do mes anterior
     $mes_anterior = date('m', strtotime('-1 month', strtotime($data))); //pegar o mes anterior
-    $dia_anerior = date('d', strtotime('-1 day', strtotime($data)));//pegar o dia anterior
+    $dia_anerior = date('d', strtotime('-1 day', strtotime($data))); //pegar o dia anterior
 
 
     $select = "SELECT * FROM tb_caixa where cl_ano !='' and cl_conta = '$conta_financeira' ";
     if ($consultar_tipo_contabilizacao == "DIA") {
-        if ($mes == "01" and $dia == "01") {//se for primeiro dia do ano vai verificar o ultimo dia do mes anterior
+        if ($mes == "01" and $dia == "01") { //se for primeiro dia do ano vai verificar o ultimo dia do mes anterior
             $dia = 31;
             $ano = $ano - 1;
             $mes = 12;
         } elseif ($dia == "01") { //se for primerio dia de cada mes, vai verificar o saldo do ultimo dia do mes anterior
             $dia = "$ultimo_dia_mes_anterior";
             $mes = "$mes_anterior";
-        } else {//se for um dia qualquer verificar o dia anterior
+        } else { //se for um dia qualquer verificar o dia anterior
             $dia = $dia_anerior;
         }
-    $select .= " and cl_dia = '$dia' and cl_mes = '$mes' and cl_ano='$ano' "; // se for por periodo de contabilização em dia a dia vai verifiar o dia, o mes e o ano
+        $select .= " and cl_dia = '$dia' and cl_mes = '$mes' and cl_ano='$ano' "; // se for por periodo de contabilização em dia a dia vai verifiar o dia, o mes e o ano
     } elseif ($consultar_tipo_contabilizacao == "MES") {
         if ($mes == "01") {
             $ano = $ano - 1;
@@ -428,5 +435,3 @@ function verifica_saldo_final($conecta, $consultar_tipo_contabilizacao, $dia, $m
     $saldo_fechado = $linha['cl_valor_fechamento'];
     return $saldo_fechado;
 }
-
-

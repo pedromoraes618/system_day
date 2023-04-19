@@ -59,17 +59,15 @@
             </div>
         </div>
         <hr>
-        <div class="col-md-8  mb-2">
-            <input type="text" class="form-control" placeholder="Digite a sua senha atual" id="descricao" name="descricao" value="">
-        </div>
+    
         <div class="col-md-8 mb-2 ">
-            <input type="text" class="form-control" placeholder="Digite a nova senha" id="descricao" name="descricao" value="">
+            <input type="text" class="form-control" placeholder="Digite a nova senha" id="senha_nova" name="senha_nova" value="">
         </div>
         <div class="col-md-8 mb-3">
-            <input type="text" class="form-control" placeholder="Digite a sua nova senha" id="descricao" name="descricao" value="">
+            <input type="text" class="form-control" placeholder="Digite a sua nova senha" id="confirmar_senha" name="confirmar_senha" value="">
         </div>
         <div class="col-auto  d-grid gap-2 d-sm-block mb-1  ">
-            <button type="submit" class="btn btn-dark col-auto">Alterar</button>
+            <button type="submit" class="btn btn-dark col-auto" id="alterar_senha">Alterar</button>
         </div>
     </div>
 

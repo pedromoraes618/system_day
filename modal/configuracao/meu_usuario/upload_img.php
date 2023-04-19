@@ -1,9 +1,10 @@
 <?php
+if(isset($_FILES)){
+if(!empty($_FILES)){
 include "../../../conexao/conexao.php";
 include "../../../funcao/funcao.php";
 /* formatos de imagem permitidos */
 $permitidos = array(".jpg", ".jpeg", ".png");
-
 $retornar = array();
 $nome_imagem    = $_FILES['file-input']['name'];
 $tamanho_imagem = $_FILES['file-input']['size'];
@@ -34,10 +35,11 @@ if (in_array($ext, $permitidos)) {
     }
 } else {
     $retornar["dados"] = array("sucesso" => false, "valores" => "Somente são aceitos arquivos do tipo Imagemm, favor tente novamente");
+}}else{
+    $retornar["dados"] = array("sucesso" => false, "valores" => "Favor selecione uma imagem");
 }
 
-
 echo json_encode($retornar);
-
+}
 
 //

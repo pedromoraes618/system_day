@@ -12,7 +12,7 @@ if ($_SESSION["user_session_portal"]) {
     $usuario = $row['cl_usuario'];
     $tipo = $row['cl_tipo'];
     $id_user = $row['cl_id'];
-    
+    $img = $row['cl_img'];
 }
 
 //funcao para verificar se a subcategoria está liberado via acesso

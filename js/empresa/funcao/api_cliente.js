@@ -69,7 +69,7 @@ $("#consutar_cnpj").click(function () {
                         if ($dados.sucesso) {
                             $tamanho = $dados.informacao.length
 
-                            cidade.options.length = 1;
+                            cidade.options.length = 1; // resetar os options de cidade
 
                             for ($i = 0; $i < $tamanho; $i++) {
                                 const newOption = document.createElement('option');

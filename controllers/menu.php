@@ -1,21 +1,22 @@
 <?php
 
-if(isset($_GET['menu'])){
-   include "funcao/funcao.php";
-    if(isset($_GET['ctg'])){
-        if(isset($_GET['id'])){
-            
+if (isset($_GET['menu'])) {
+    include "funcao/funcao.php";
+    if (isset($_GET['ctg'])) {
+        if (isset($_GET['id'])) {
+
             $id_subctg = $_GET['id'];
-            if(consultar_diretorio_bd($id_subctg)!=""){//diretorio dos arquivos bd
-                include "modal/".consultar_diretorio_bd($id_subctg);
+            if (consultar_diretorio_bd($id_subctg) != "") { //diretorio dos arquivos bd
+                include "modal/" . consultar_diretorio_bd($id_subctg);
             }
             //funcao para verificar o id da subcategoria e buscar o diretorio
-            
-            include "view/".consultar_subcategoria($id_subctg);
-    
-        }
-    }
 
+            include "view/" . consultar_subcategoria($id_subctg);
+        }
+    } else {
+        //dashboard inicial 
+        include "view/dashboard/inicial/gerenciar_dashboard.php";
+    }
 }
 include "view/title/titulo.php";
 ?>

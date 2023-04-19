@@ -1062,34 +1062,92 @@ select {
 
 /*tela do meu usuario*/
 .bg-img-user {
-    background-size: cover;
-    background-position: center;
     width: 200px;
     height: 200px;
     border-radius: 50%;
-
     background-size: cover;
     background-position: center;
-    outline:4px inset #323232;
+    outline: 4px inset #323232;
     position: relative;
 }
 
-.bg-img-user button{
+.bg-img-user button {
     position: absolute;
     bottom: 0;
     right: 0;
 }
-#nav_info_user ul{
+
+#nav_info_user ul {
     list-style: none;
 }
-#nav_info_user ul li .info_user{
+
+#nav_info_user ul li .info_user {
     display: flex;
-    
+
 }
-#nav_info_user ul li .info_user .titulo{
+
+#nav_info_user ul li .info_user .titulo {
     font-weight: 700;
     margin-right: 5px;
 }
-#nav_info_user ul li{
-    margin-bottom:5px;
+
+#nav_info_user ul li {
+    margin-bottom: 5px;
+}
+
+.img_user_topo {
+    background-size: cover;
+    background-position: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+
+
+}
+
+/*dashboard*/
+#bloco-pesquisa-dashboard {
+    padding: 30px;
+    position: relative;
+    align-items: center;
+    margin: 20px;
+    border-radius: 5px;
+
+}
+
+#bloco-pesquisa-dashboard #card-top-1-1 {
+    background: rgb(50, 58, 83);
+    background: -moz-linear-gradient(90deg, rgba(50, 58, 83, 1) 3%, rgba(27, 44, 97, 1) 60%);
+    background: -webkit-linear-gradient(90deg, rgba(50, 58, 83, 1) 3%, rgba(27, 44, 97, 1) 60%);
+    background: linear-gradient(90deg, rgba(50, 58, 83, 1) 3%, rgba(27, 44, 97, 1) 60%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#323a53", endColorstr="#1b2c61", GradientType=1);
+    color: white;
+}
+
+#bloco-pesquisa-dashboard #card-top-1-2 {
+
+    background: rgb(50, 58, 83);
+    background: -moz-linear-gradient(90deg, rgba(50, 58, 83, 1) 3%, rgba(27, 44, 97, 1) 60%);
+    background: -webkit-linear-gradient(90deg, rgba(50, 58, 83, 1) 3%, rgba(27, 44, 97, 1) 60%);
+    background: linear-gradient(90deg, rgba(50, 58, 83, 1) 3%, rgba(27, 44, 97, 1) 60%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#323a53", endColorstr="#1b2c61", GradientType=1);
+    color: white;
+}
+
+#bloco-pesquisa-dashboard #card-top-1-3 {
+    background: rgb(50, 58, 83);
+    background: -moz-linear-gradient(90deg, rgba(50, 58, 83, 1) 3%, rgba(27, 44, 97, 1) 60%);
+    background: -webkit-linear-gradient(90deg, rgba(50, 58, 83, 1) 3%, rgba(27, 44, 97, 1) 60%);
+    background: linear-gradient(90deg, rgba(50, 58, 83, 1) 3%, rgba(27, 44, 97, 1) 60%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#323a53", endColorstr="#1b2c61", GradientType=1);
+    color: white;
+}
+
+#bloco-pesquisa-dashboard #card-top-1-4 {
+    background: rgb(50, 58, 83);
+    background: -moz-linear-gradient(90deg, rgba(50, 58, 83, 1) 3%, rgba(27, 44, 97, 1) 60%);
+    background: -webkit-linear-gradient(90deg, rgba(50, 58, 83, 1) 3%, rgba(27, 44, 97, 1) 60%);
+    background: linear-gradient(90deg, rgba(50, 58, 83, 1) 3%, rgba(27, 44, 97, 1) 60%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#323a53", endColorstr="#1b2c61", GradientType=1);
+    color: white;
 }

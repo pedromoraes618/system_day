@@ -19,7 +19,7 @@ if ($_SESSION["user_session_portal"]) {
     if(isset($_GET['ctg'])){
         $categoria_top = $_GET['ctg'];
     }else{
-        $categoria_top ="Inicial";
+        $categoria_top ="Dashboard";
     }
     
     //pegar qual a subcategoria o usuario está

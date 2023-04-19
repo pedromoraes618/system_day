@@ -1,8 +1,8 @@
 <?php
 include "../../../conexao/conexao.php";
-include "../../../modal/configuracao/conta_financeira/gerenciar_conta_financeira.php";
+include "../../../modal/financeiro/lancamento_financeiro/gerenciar_financeiro.php";
 ?>
-<div class="modal fade" id="modal_conta_financeira" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="modal_lancamento_financeiro" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,14 +10,14 @@ include "../../../modal/configuracao/conta_financeira/gerenciar_conta_financeira
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form action="" id="conta_financeira">
+            <form action="" id="lancamento_financeiro">
                 <?php include "../../input_include/usuario_logado.php" ?>
                 <input type="hidden" id="id" name="id" value="<?php if (isset($_GET['form_id'])) {
                                                                     echo $_GET['form_id'];
                                                                 } ?>">
 
                 <div class="modal-body">
-                    <div class="title mb-2">
+                    <!-- <div class="title mb-2">
                         <label class="form-label sub-title"></label>
                     </div>
                     <div class="col  mb-2">
@@ -42,7 +42,7 @@ include "../../../modal/configuracao/conta_financeira/gerenciar_conta_financeira
                             <label for="numero_banco" class="form-label">Número banco</label>
                             <input type="text" class="form-control inputNumber" id="numero_banco" name="numero_banco" value="">
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="modal-footer">
@@ -55,6 +55,6 @@ include "../../../modal/configuracao/conta_financeira/gerenciar_conta_financeira
     </div>
 </div>
 
-<script src="js/funcao.js"></script>
+<!-- <script src="js/funcao.js"></script>
 <script src="js/configuracao/users/user_logado.js"></script>
-<script src="js/configuracao/conta_financeira/conta_financeira_tela.js"></script>
+<script src="js/financeiro/lancamento_financeiro/lancamento_financeira_tela.js"></script> -->

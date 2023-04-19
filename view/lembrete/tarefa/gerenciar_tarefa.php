@@ -4,14 +4,17 @@
     </div>
     <div class="bloco-pesquisa-2">
         <div class="row">
-            <div class="col-sm-4 col-md-2  mb-1">
-                <input type="text" class="form-control" maxlength="10" onkeyup="mascaraData(this);" id="data_inicial" name="data_incial" placeholder="Data inicial" value="<?php echo $data_inicial ?>">
-            </div>
-            <div class="col-sm-4  mb-1">
-                <input type="text" class="form-control" maxlength="10" onkeyup="mascaraData(this);" id="data_final" name="data_final" placeholder="Data Final" value="<?php echo $data_final; ?>">
+
+            <div class="col-sm-4 col-auto  mb-2">
+                <div class="input-group">
+                    <span class="input-group-text">Dt. lançamento</span>
+                    <input type="text" class="form-control" maxlength="10" onkeyup="mascaraData(this);" id="data_inicial" name="data_incial" placeholder="Data inicial" value="<?php echo $data_inicial ?>">
+                    <input type="text" class="form-control" maxlength="10" onkeyup="mascaraData(this);" id="data_final" name="data_final" placeholder="Data Final" value="<?php echo $data_final; ?>">
+
+                </div>
             </div>
 
-            <div class="col-md-2 mb-1">
+            <div class="col-md-2 mb-2">
                 <select name="status" class="form-select" id="status">
                     <option value="0">Status..</option>
                     <?php while ($linha = mysqli_fetch_assoc($consultar_status_tarefas)) {
