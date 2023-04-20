@@ -94,7 +94,7 @@ if (isset($_POST['formulario_conta_financeira'])) {
 
       $id = $_POST['id'];
       $descricao = utf8_decode($_POST['descricao']);
-      $conta = ($_POST['conta']);
+      // $conta = ($_POST['conta']);
       $digito_conta = ($_POST['digito_conta']);
       $agencia = ($_POST['agencia']);
       $numero_banco = ($_POST['numero_banco']);
@@ -103,11 +103,9 @@ if (isset($_POST['formulario_conta_financeira'])) {
       // $ativo = $_POST['ativo'];
       if ($descricao == "") {
          $retornar["dados"] = array("sucesso" => false, "title" => mensagem_alerta_cadastro("descricão"));
-      }elseif($conta ==""){
-         $retornar["dados"] = array("sucesso" => false, "title" => mensagem_alerta_cadastro("conta"));
       }  else {
 
-         $update = "UPDATE `system_day`.`tb_conta_financeira` SET `cl_banco` = '$descricao', `cl_conta` = '$conta', `cl_digito_conta` = '$digito_conta', `cl_agencia` = '$agencia',
+         $update = "UPDATE `system_day`.`tb_conta_financeira` SET `cl_banco` = '$descricao', `cl_digito_conta` = '$digito_conta', `cl_agencia` = '$agencia',
           `cl_numero_banco` = '$numero_banco' WHERE `tb_conta_financeira`.`cl_id` = $id ";
          $operacao_update = mysqli_query($conecta, $update);
          if ($operacao_update) {

@@ -57,7 +57,7 @@ input[type=number] {
 /*computador*/
 @media screen and (min-width:1000px) {
     .bloco .bloco-left {
-        width: 220px;
+        width: 180px;
     }
 
     .bloco .bloco-left .categoria .topo i {
@@ -242,6 +242,7 @@ table td {
     padding: 0px;
     margin: 0px;
     transition: background-color 0.6s ease;
+    position: relative;
 }
 
 /* .bloco .bloco-left .categoria nav ul li:hover{ // foi parametrizado
@@ -269,16 +270,39 @@ table td {
 }
 
 .bloco .bloco-left .categoria nav ul ul {
-    display: none;
+    /* display: none;
     left: 0;
     right: 0px;
     opacity: 0;
     transition: opacity 0.5s ease;
-    padding: 0px;
+    padding: 0px; */
 
-
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    padding: 0;
+    margin: 0;
+    border-top: none;
+    z-index: 1;
+    width: 200px;
+    /* background-color: var(--cor_principal); */
+    color: white;
+    border-radius: 5px;
 }
 
+.bloco .bloco-left .categoria nav ul ul::before {
+    content: "";
+    position: absolute;
+    top: 20;
+    left: -10px; /* posição à esquerda */
+    transform: translateY(-50%);
+    /* border: 10px solid transparent;
+    border-right-color: var(--cor_principal);
+    border-left: none; removemos a borda à esquerda */
+    z-index: -1;
+
+  }
 .bloco .bloco-left .categoria nav ul ul li {
     padding: 2px;
 
@@ -1150,4 +1174,57 @@ select {
     background: linear-gradient(90deg, rgba(50, 58, 83, 1) 3%, rgba(27, 44, 97, 1) 60%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#323a53", endColorstr="#1b2c61", GradientType=1);
     color: white;
+}
+
+.card-right{
+    max-height:250px;
+    overflow: auto;
+   
+}
+.header-card-dashboard {
+    background: rgb(50, 58, 83);
+    background: -moz-linear-gradient(90deg, rgba(50, 58, 83, 1) 3%, rgba(27, 44, 97, 1) 60%);
+    background: -webkit-linear-gradient(90deg, rgba(50, 58, 83, 1) 3%, rgba(27, 44, 97, 1) 60%);
+    background: linear-gradient(90deg, rgba(50, 58, 83, 1) 3%, rgba(27, 44, 97, 1) 60%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#323a53", endColorstr="#1b2c61", GradientType=1);
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+}
+.header-card-dashboard h6{
+    color:white;
+    margin:0px;
+}
+
+.texto-reduzido{
+    position: relative;
+    cursor: pointer;
+}
+
+.texto-reduzido .texto-caixa{
+    display: none;
+}
+
+.texto-reduzido:hover .texto-caixa{
+    display: block;
+    position: absolute;
+    top: -50;
+    
+    background-color: var(--cor_principal);
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 2;
+    color: white;
+}
+
+.texto-reduzido:hover .texto-caixa::before{
+  content: "";
+    position: absolute;
+    bottom: -10;
+    left: 50%; /* posição à esquerda */
+    transform: translateX(0) rotate(-90deg); /* rotação da ponta */
+    border: 10px solid transparent;
+    border-right-color: var(--cor_principal);
+    border-left: none;
+    z-index: -1;
 }

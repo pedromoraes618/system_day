@@ -13,9 +13,9 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
             <th scope="col">Subcategoria</th>
             <th scope="col">Ordem</th>
             <th scope="col">Diretorio Subcategoria</th>
-            <th scope="col">Url subcategoria</th>
-            <th scope="col">Diretorio Banco</th>
+    
             <th scope="col">Categoria</th>
+            <th scope="col">Status</th>
 
             <th scope="col"></th>
         
@@ -30,6 +30,7 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
                 $url_b = $row['cl_url'];
                 $diretorio_banco_b = $row['cl_diretorio_bd'];
                 $categoria_b = utf8_encode($row['categoria']);
+                $status = utf8_encode($row['cl_status_ativo']);
             
             
             ?>
@@ -38,10 +39,9 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
             <td><?php echo $subcategoria_b; ?></td>
             <td><?php echo $ordem_menu_b; ?></td>
             <td><?php echo $diretorio_b; ?></td>
-            <td><?php echo $url_b; ?></td>
-            <td><?php echo $diretorio_banco_b; ?></td>
             <td><?php echo $categoria_b; ?></td>
-            
+            <td><span class='badge text-bg-<?php echo ($status == "SIM") ? 'success' : 'danger' ?>'><?php echo ($status == "SIM") ? 'Ativo' : 'Inativo' ?></td>
+
             
             <td class="td-btn"> <button type="button" onclick="backToTop();" id_subcategoria=<?php echo $id_subcategoria_b; ?> class="btn btn-sm btn-info editar_subcategoria">Editar</button>
             </td>

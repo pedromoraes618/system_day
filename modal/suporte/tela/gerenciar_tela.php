@@ -30,7 +30,7 @@ if(isset($_GET['consultar_tela_subcategoria'])){
 
         $consultar_tabela_inicialmente =  verficar_paramentro($conecta,"tb_parametros","cl_id","1");//consultar parametro para carrregar inicialmente a tabela
         
-        $select = "SELECT subc.cl_id,subc.cl_subcategoria,subc.cl_ordem_menu,subc.cl_diretorio,subc.cl_url,ctg.cl_categoria as categoria, 
+        $select = "SELECT subc.cl_id,subc.cl_subcategoria,subc.cl_status_ativo,subc.cl_ordem_menu,subc.cl_diretorio,subc.cl_url,ctg.cl_categoria as categoria, 
         subc.cl_diretorio_bd from tb_subcategorias as subc inner join tb_categorias as ctg on ctg.cl_id = subc.cl_categoria";
         $consultar_subcategorias= mysqli_query($conecta, $select);
         if(!$consultar_subcategorias){
@@ -38,7 +38,7 @@ if(isset($_GET['consultar_tela_subcategoria'])){
         }
     }else{
         $pesquisa = utf8_decode($_GET['pesquisa']);
-        $select = "SELECT subc.cl_id,subc.cl_subcategoria,subc.cl_ordem_menu,subc.cl_diretorio,subc.cl_url,ctg.cl_categoria as categoria, 
+        $select = "SELECT subc.cl_id,subc.cl_subcategoria,subc.cl_status_ativo,subc.cl_ordem_menu,subc.cl_diretorio,subc.cl_url,ctg.cl_categoria as categoria, 
         subc.cl_diretorio_bd from tb_subcategorias as subc inner join tb_categorias as ctg on ctg.cl_id = subc.cl_categoria WHERE subc.cl_subcategoria like '%{$pesquisa}%' or ctg.cl_categoria  like '%{$pesquisa}%'";
         $consultar_subcategorias= mysqli_query($conecta, $select);
         if(!$consultar_subcategorias){
@@ -105,6 +105,7 @@ if(isset($_POST['formulario_cadastrar_subcategoria'])){
         $url_sub = $_POST["url_sub"];
         $diretorio_bd = $_POST["diretorio_bd"];
         $categoria = $_POST["categoria"];
+        $status_ativo = $_POST["status_ativo"];
     
     
         if($subcategoria == ""){
@@ -121,15 +122,17 @@ if(isset($_POST['formulario_cadastrar_subcategoria'])){
             $retornar["mensagem"] ="Favor selecione a Categoria";
         }elseif($perfil_usuario_logado !="suporte"){
             $retornar["mensagem"] = mensagem_alerta_permissao();
+        }elseif($status_ativo=="0"){
+            $retornar["mensagem"] =mensagem_alerta_cadastro("status");
         }else{
          
-         
-            $inset = "INSERT INTO tb_subcategorias (cl_subcategoria,cl_ordem_menu,cl_diretorio,cl_url,cl_categoria,cl_diretorio_bd) VALUES ('$subcategoria','$orden','$diretorio_subc','$url_sub','$categoria','$diretorio_bd')";
+            $inset = "INSERT INTO tb_subcategorias (cl_subcategoria,cl_ordem_menu,cl_diretorio,cl_url,cl_categoria,cl_diretorio_bd,cl_status_ativo) 
+            VALUES ('$subcategoria','$orden','$diretorio_subc','$url_sub','$categoria','$diretorio_bd','$status_ativo')";
             $operacao_inserir = mysqli_query($conecta, $inset);
             if($operacao_inserir){
             $retornar["sucesso"] = true;
             //registrar no log
-            $mensagem =  ( utf8_decode("Usúario") . " $nome_usuario_logado cadastrou a subcategoria $subcategoria");
+            $mensagem =  ( utf8_decode("Usuário") . " $nome_usuario_logado cadastrou a subcategoria $subcategoria");
             registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
             }
             
@@ -196,6 +199,8 @@ if(isset($_POST['formulario_editar_subcategoria'])){
         $url_sub = $_POST["url_sub"];
         $diretorio_bd = $_POST["diretorio_bd"];
         $categoria = $_POST["categoria"];
+        $status_ativo = $_POST["status_ativo"];
+    
 
         if($subcategoria == ""){
             $retornar["mensagem"] =mensagem_alerta_cadastro("subcategoria");
@@ -211,14 +216,17 @@ if(isset($_POST['formulario_editar_subcategoria'])){
             $retornar["mensagem"] ="Favor selecione a Categoria";
         }elseif($perfil_usuario_logado !="suporte"){
             $retornar["mensagem"] = mensagem_alerta_permissao();;
+        }elseif($status_ativo=="0"){
+            $retornar["mensagem"] =mensagem_alerta_cadastro("status");
         }else{
+         
 
-        $update = "UPDATE tb_subcategorias set cl_subcategoria = '$subcategoria',cl_ordem_menu = '$ordem' ,cl_diretorio = '$diretorio_subc', cl_url = '$url_sub', cl_categoria ='$categoria', cl_diretorio_bd = '$diretorio_bd' where cl_id = $id_subcategoria";
+        $update = "UPDATE tb_subcategorias set cl_subcategoria = '$subcategoria', cl_status_ativo='$status_ativo', cl_ordem_menu = '$ordem' ,cl_diretorio = '$diretorio_subc', cl_url = '$url_sub', cl_categoria ='$categoria', cl_diretorio_bd = '$diretorio_bd' where cl_id = $id_subcategoria";
         $operacao_update = mysqli_query($conecta, $update);
         if($operacao_update){
         $retornar["sucesso"] = true;
         //registrar no log
-        $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado alterou dados da subategoria $subcategoria");
+        $mensagem =  (utf8_decode("Usuário") . " $nome_usuario_logado alterou dados da subategoria $subcategoria");
         registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
             }  
         }
@@ -242,6 +250,7 @@ if(isset($_GET['editar_categoria'])==true){
     $categoria_b = utf8_encode($linha['cl_categoria']);
     $icone_b = $linha['cl_icone'];
     $ordem_b = $linha['cl_ordem'];
+   
     
 }
 
@@ -260,7 +269,7 @@ if(isset($_GET['editar_subcategoria'])==true){
     $url_b = $linha['cl_url'];
     $categoria_subcategoria_b = $linha['cl_categoria'];
     $diretorio_banco_b = $linha['cl_diretorio_bd'];
-
+    $status_ativo_b = $linha['cl_status_ativo'];
     
     
 }

@@ -2,7 +2,7 @@
 include "../../../conexao/conexao.php";
 include "../../../modal/configuracao/conta_financeira/gerenciar_conta_financeira.php";
 ?>
-<div class="modal fade" id="modal_conta_financeira" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="modal_conta_financeira" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -27,7 +27,7 @@ include "../../../modal/configuracao/conta_financeira/gerenciar_conta_financeira
                     <div class="row">
                         <div class="col-md  mb-2">
                             <label for="conta" class="form-label">Conta</label>
-                            <input type="text" class="form-control inputNumber" id="conta" name="conta" value="">
+                            <input type="text" class="form-control inputNumber"  id="conta" name="conta" value="">
                         </div>
 
                         <div class="col-md  mb-2">
@@ -48,7 +48,7 @@ include "../../../modal/configuracao/conta_financeira/gerenciar_conta_financeira
                 <div class="modal-footer">
 
                     <button type="submit" id="button_form" class="btn btn-success">Salvar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                 </div>
             </form>
         </div>

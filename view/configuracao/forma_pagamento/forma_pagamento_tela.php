@@ -2,7 +2,7 @@
 include "../../../conexao/conexao.php";
 include "../../../modal/configuracao/forma_pagamento/gerenciar_forma_pagamento.php";
 ?>
-<div class="modal fade" id="modal_forma_pagamento" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="modal_forma_pagamento" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -125,7 +125,7 @@ include "../../../modal/configuracao/forma_pagamento/gerenciar_forma_pagamento.p
                     <div class="modal-footer">
 
                         <button type="submit" id="button_form" class="btn btn-success">Salvar</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
                     </div>
             </form>
         </div>

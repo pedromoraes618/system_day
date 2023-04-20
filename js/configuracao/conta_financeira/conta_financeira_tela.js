@@ -1,7 +1,7 @@
-$("#voltar").click(function (e) {
-    $(".bloco-pesquisa-menu .bloco-pesquisa-2").css("display", "none") // aparecer tela de consulta
+// $("#voltar").click(function (e) {
+//     // $(".bloco-pesquisa-menu .bloco-pesquisa-2").css("display", "none") // aparecer tela de consulta
   
-})
+// })
 
 const formulario_post = document.getElementById("conta_financeira");
 let id_conta_financeira = document.getElementById("id")

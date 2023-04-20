@@ -82,6 +82,15 @@ function verificar_user($conecta, $usuario, $acao)
     }
 }
 
+function reduzir_texto($texto)
+{
+    if (strlen($texto) > 30) { // verifica se o texto é maior do que 30 caracteres
+        $texto = substr($texto, 0, 20) . "..."; // corta o texto em 30 caracteres e adiciona "..."
+    } else {
+        $texto = $texto; // se o texto for menor ou igual a 30 caracteres, mantém o texto original
+    }
+    return $texto;
+}
 
 function verificar_user_usuario($conecta, $id_user)
 {

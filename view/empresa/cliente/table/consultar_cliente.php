@@ -62,4 +62,4 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
     include "../../../../view/alerta/alerta_pesquisa.php"; // mesnsagem para usuario pesquisar
 }
 ?>
-<script src="js/empresa/parceiro/table/editar_cliente.js">
+<script src="js/empresa/cliente/table/editar_cliente.js">

@@ -6,30 +6,30 @@
 
         <?php include "../../input_include/usuario_logado.php"?>
 
-        <div class="col-sm  mb-1">
+        <div class="col-sm  mb-2">
             <label for="subcategoria" class="form-label">Subcategoria</label>
             <input type="text" class="form-control" id="subcategoria" name="subcategoria" placeholder="" value="">
         </div>
-        <div class="col-sm  mb-1">
+        <div class="col-sm  mb-2">
             <label for="ordem" class="form-label">Ordem</label>
             <input type="text" class="form-control" id="ordem" name="ordem" placeholder="" value="">
         </div>
-        <div class="col-sm mb-1">
+        <div class="col-sm mb-2">
             <label for="diretorio_subc" class="form-label">Diretorio subcategoria</label>
             <input type="text" class="form-control" id="diretorio_subc" name="diretorio_subc" placeholder="" value="">
         </div>
     </div>
     <div class="row">
-        <div class="col-sm  mb-1">
+        <div class="col-sm  mb-2">
             <label for="url_sub" class="form-label">Url subcategoria</label>
             <input type="text" class="form-control" id="url_sub" name="url_sub" placeholder="" value="">
         </div>
-        <div class="col-sm  mb-1">
+        <div class="col-sm  mb-2">
             <label for="diretorio_bd" class="form-label">Diretorio Banco de dados</label>
             <input type="text" class="form-control" id="diretorio_bd" name="diretorio_bd" placeholder="" value="">
         </div>
      
-        <div class="col-sm  mb-1">
+        <div class="col-sm-2  mb-2">
             <label for="categoria" class="form-label">Categoria</label>
             <select name="categoria" class="form-select" id="categoria">
                 <option value="0">Selecione</option>
@@ -41,6 +41,15 @@
 
                 <?php
             } ?>
+            </select>
+        </div>
+        <div class="col-sm-2  mb-2">
+            <label for="categoria" class="form-label">Status</label>
+            <select name="status_ativo" class="form-select" id="status_ativo">
+                <option value="0">Selecione</option>
+                <option value="SIM">Ativo</option>
+                <option value="NAO">Inativo</option>
+       
             </select>
         </div>
 

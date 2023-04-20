@@ -31,8 +31,9 @@
                         $subcategoria = utf8_encode($row['cl_subcategoria']);
                         $diretorio = $row['cl_diretorio'];
                         $url = $row['cl_url'];
+                        $status_ativo = $row['cl_status_ativo'];
                         
-                        if(consultar_acesso_subcategoria($id_user,$id_subcategoria) > 0 or  ($tipo == "adm")or ($tipo == "suporte")){ // usuario adm tem todos os acessos
+                        if((consultar_acesso_subcategoria($id_user,$id_subcategoria) > 0  or  ($tipo == "adm")or ($tipo == "suporte"))and $status_ativo=="SIM"){ // usuario adm tem todos os acessos
                     ?>
 
                     <li><a

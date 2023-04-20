@@ -12,7 +12,7 @@
         --cor_principal_hover_claro: #4785e4;
     }
 
-    <?php if ($tema_sistema == "dark" or $tema_sistema == "") { ?>.bloco .bloco-left .categoria .topo {
+    <?php if ($tema_sistema == "DARK" or $tema_sistema == "") { ?>.bloco .bloco-left .categoria .topo {
         color: var(--cor_texto);
     }
 
@@ -90,6 +90,22 @@
         border: 1px solid rgba(255, 255, 255, 0.18);
     }
 
+    .bloco .bloco-left .categoria nav ul ul {
+
+        background-color: var(--cor_principal);
+
+    }
+
+    .bloco .bloco-left .categoria nav ul ul::before {
+
+        border: 10px solid transparent;
+        border-right-color: var(--cor_principal);
+        border-left: none;
+        /* removemos a borda à esquerda */
+
+
+    }
+
     .bloco .bloco-right .topo .right ul ul li a {
         color: white;
 
@@ -108,8 +124,10 @@
         color: #bbbbbb;
     }
 
+    
+
     <?php
-    } elseif ($tema_sistema == "claro") { ?>.bloco .bloco-left .categoria .topo {
+    } elseif ($tema_sistema == "CLARO") { ?>.bloco .bloco-left .categoria .topo {
         color: white;
     }
 
@@ -137,6 +155,24 @@
 
     .bloco .bloco-left .categoria nav ul li:hover {
         background-color: var(--cor_principal_hover_claro);
+    }
+
+    .bloco .bloco-left .categoria nav ul ul {
+
+        background-color: var(--cor_principal_claro);
+
+    }
+
+    .bloco .bloco-left .categoria nav ul ul::before {
+
+        border: 10px solid transparent;
+        border-right-color: var(--cor_principal_claro);
+        border-left: none;
+        /* removemos a borda à esquerda */
+
+
+
+
     }
 
     .bloco .bloco-left .categoria nav ul ul li:hover {
@@ -176,7 +212,7 @@
     }
 
     .bloco .bloco-right .topo .right ul ul {
-        background-color:var(--cor_principal_claro);
+        background-color: var(--cor_principal_claro);
         box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);

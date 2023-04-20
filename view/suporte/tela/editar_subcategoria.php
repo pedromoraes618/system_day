@@ -6,35 +6,35 @@
 
         <?php include "../../input_include/usuario_logado.php"?>
         <input type="hidden" value="<?php echo $id_subcategoria_b; ?>" name="id_subcategoria">
-        <div class="col-sm  mb-1">
+        <div class="col-sm  mb-2">
             <label for="subcategoria" class="form-label">Subcategoria</label>
             <input type="text" class="form-control" id="subcategoria" name="subcategoria" placeholder=""
                 value="<?php echo $subcategoria_b ?>">
         </div>
-        <div class="col-sm  mb-1">
+        <div class="col-sm  mb-2">
             <label for="ordem" class="form-label">Ordem</label>
             <input type="text" class="form-control" id="ordem" name="ordem" placeholder=""
                 value="<?php echo $ordem_b ?>">
         </div>
-        <div class="col-sm mb-1">
+        <div class="col-sm mb-2">
             <label for="diretorio_subc" class="form-label">Diretorio subcategoria</label>
             <input type="text" class="form-control" id="diretorio_subc" name="diretorio_subc" placeholder=""
                 value="<?php echo $diretorio_b ?>">
         </div>
     </div>
     <div class="row">
-        <div class="col-sm  mb-1">
+        <div class="col-sm  mb-2">
             <label for="url_sub" class="form-label">Url subcategoria</label>
             <input type="text" class="form-control" id="url_sub" name="url_sub" placeholder=""
                 value="<?php echo $url_b ?>">
         </div>
-        <div class="col-sm  mb-1">
+        <div class="col-sm  mb-2">
             <label for="diretorio_bd" class="form-label">Diretorio Banco de dados</label>
             <input type="text" class="form-control" id="diretorio_bd" name="diretorio_bd" placeholder=""
                 value="<?php echo $diretorio_banco_b ?>">
         </div>
 
-        <div class="col-sm  mb-1">
+        <div class="col-sm-2  mb-2">
             <label for="categoria" class="form-label">Categoria</label>
             <select name="categoria" class="form-select" id="categoria">
                 <option value="0">Selecione</option>
@@ -51,6 +51,16 @@
                 <?php
             }
             } ?>
+            </select>
+        </div>
+
+        <div class="col-sm-2  mb-2">
+            <label for="categoria" class="form-label">Atvio</label>
+            <select name="status_ativo" class="form-select" id="status_ativo">
+                <option value="0">Selecione</option>
+                <option <?php echo ($status_ativo_b == "SIM" ) ? 'selected' : '' ; ?> value="SIM">Ativo</option>
+                <option  <?php echo ($status_ativo_b == "NAO" ) ? 'selected' : '' ; ?>  value="NAO">Inativo</option>
+       
             </select>
         </div>
 

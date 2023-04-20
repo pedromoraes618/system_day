@@ -14,7 +14,7 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                 <th scope="col">Parceiro</th>
                 <th scope="col">Descrição</th>
                 <th scope="col">Doc</th>
-            
+
                 <th scope="col">Status</th>
                 <th scope="col">Tipo</th>
                 <th scope="col">Valor</th>
@@ -40,15 +40,22 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                     <td class="max_width_descricao"><?php echo $razao_social_b;  ?><br>
                         <hr class="mb-0"><?php echo $nome_fantasia_b; ?>
                     </td>
-                    <td><?php echo ($descricao_b) ?></td>
+                    <td>
+                        <div class="texto-reduzido"><?php echo reduzir_texto($descricao_b) ?><div class="texto-caixa" ><?php echo $descricao_b; ?></div>
+                        </div>
+                    </td>
                     <td><?php echo ($doc_b) ?></td>
-        
+
                     <td><?php echo ($status_b) ?></td>
 
-                    <td><span
-                    class="badge text-bg-<?php if($tipo_b == "RECEITA" )
-                    {echo 'success' ;}elseif($tipo_b=="DESPESA"){echo 'danger';}else{echo 'default';}?>"><?php echo $tipo_b; ?></span>
-            </td>
+                    <td><span class="badge text-bg-<?php if ($tipo_b == "RECEITA") {
+                                                        echo 'success';
+                                                    } elseif ($tipo_b == "DESPESA") {
+                                                        echo 'danger';
+                                                    } else {
+                                                        echo 'default';
+                                                    } ?>"><?php echo $tipo_b; ?></span>
+                    </td>
                     <td><?php echo real_format($valor_liquido_b) ?></td>
                     <td class="td-btn"><button type="button" lancamento_financeiro_id=<?php echo $id_b; ?> class="btn btn-info   btn-sm editar_lancamento_financeira ">Editar</button>
                     </td>
@@ -66,4 +73,3 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
 }
 ?>
 <script src="js/financeiro/lancamento_financeiro/table/editar_lancamento_financeiro.js">
-    

@@ -17,6 +17,8 @@ include "view/tema_sistema/estilo.php";
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="icon" type="img/icon.svg" href="img/icon.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-labels@1.1.0/dist/chartjs-plugin-labels.min.js"></script>
+
 </head>
 
 <body>
