@@ -44,8 +44,8 @@ include "../../../modal/empresa/cliente/gerenciar_cliente.php";
             <label for="grupo_estoque" class="form-label">Status</label>
             <select name="grupo_estoque" class="form-select" id="grupo_estoque">
                 <option value="0">Selecione..</option>
-                <option selected value="S">Ativo</option>
-                <option value="N">Inativo</option>
+                <option selected value="SIM">Ativo</option>
+                <option value="NAO">Inativo</option>
             </select>
         </div>
 

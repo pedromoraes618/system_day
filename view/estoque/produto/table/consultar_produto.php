@@ -11,7 +11,7 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
             <tr>
                 <th scope="col">Código</th>
                 <th scope="col">Descrição</th>
-                <th scope="col">Referencia</th>
+                <th scope="col">Referência</th>
                 <th scope="col">Grupo</th>
                 <th scope="col">Und</th>
                 <th scope="col">Fabricante</th>

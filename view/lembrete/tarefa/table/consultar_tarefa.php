@@ -8,8 +8,8 @@ include "../../../../modal/lembrete/tarefa/gerenciar_tarefa.php";
             <th scope="col">Código</th>
             <th scope="col">Lançamento</th>
             <th scope="col">Descrição</th>
-            <th scope="col">Comentario</th>
-            <th scope="col">Usúario</th>
+            <th scope="col">Comentário</th>
+            <th scope="col">Usuário</th>
             <th scope="col">Status</th>
 
             <th scope="col">Prioridade</th>

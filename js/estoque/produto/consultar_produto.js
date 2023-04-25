@@ -52,7 +52,7 @@ $("#pesquisar_filtro_pesquisa").click(function() {
         input_pesquisa: conteudo_pesquisa.value,
         status: status_prod.value,//status
     }
-    const storage_pesquisa = JSON.stringify(valores);'x'
+    const storage_pesquisa = JSON.stringify(valores);
     localStorage.setItem("storage_pesquisa", storage_pesquisa);
     if(conteudo_pesquisa.value=="" && status_prod.value == "0" ){
         $(".alerta").html("<span class='alert alert-primary position-absolute' style role='alert'>Favor informe a palavra chave</span>")

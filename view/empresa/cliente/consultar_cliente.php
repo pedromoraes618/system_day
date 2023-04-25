@@ -7,6 +7,13 @@
 </div>
 <hr>
 <div class="row">
+    <div class="col-md-2 mb-2">
+        <select name="status" class="form-select" id="status">
+            <option value="0">Status..</option>
+            <option value="SIM">Ativo</option>
+            <option value="NAO">Inativo</option>
+        </select>
+    </div>
     <div class="col-md  mb-2">
         <div class="input-group">
             <input type="text" class="form-control" id="pesquisa_conteudo" placeholder="Tente pesquisar pela Razação social, cnpj ou cpf ou pelo nome fantasia" aria-label="Recipient's username" aria-describedby="button-addon2">

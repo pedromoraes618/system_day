@@ -46,8 +46,11 @@ include "../../../funcao/funcao.php";
             </div>
         </Div>
         <div class="col-md-auto  d-grid gap-2 d-sm-block mb-2">
-            <button type="button" id="adicionar_lancamento_financeiro" class="btn btn-dark" data-bs-toggle="modal">
-                Adicionar Lançamento
+            <button type="button" id="adicionar_lancamento_receita" class="btn btn-dark" data-bs-toggle="modal">
+                Adicionar Receita
+            </button>
+            <button type="button" id="adicionar_lancamento_despesa" class="btn btn-dark" data-bs-toggle="modal">
+                Adicionar Despesa
             </button>
         </div>
     </div>
@@ -60,5 +63,5 @@ include "../../../funcao/funcao.php";
 
 </div>
 
-
+<?php include '../../../funcao/funcaojavascript.jar'; ?>
 <script src="js/financeiro/lancamento_financeiro/consultar_lancamento_financeiro.js"></script>

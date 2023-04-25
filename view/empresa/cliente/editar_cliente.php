@@ -53,8 +53,8 @@ include "../../../modal/empresa/cliente/gerenciar_cliente.php";
             <label for="situacao" class="form-label">Status</label>
             <select name="situacao" class="form-select" id="situacao" >
                 <option value="0">Selecione..</option>
-                <option <?php echo ($status_b == 'S') ? 'selected' : ''  ?> value="S">Ativo</option>
-                <option <?php echo ($status_b == 'N') ? 'selected' : ''  ?> value="N">Inativo</option>
+                <option <?php echo ($status_b == 'SIM') ? 'selected' : ''  ?> value="SIM">Ativo</option>
+                <option <?php echo ($status_b == 'NAO') ? 'selected' : ''  ?> value="NAO">Inativo</option>
             </select>
         </div>
 

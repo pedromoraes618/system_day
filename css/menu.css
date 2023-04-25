@@ -644,6 +644,12 @@ table td {
     overflow: auto;
 }
 
+.card-body .tabela-dashboard {
+    overflow: auto;
+    max-height: 250px;
+}
+
+
 
 .bloco .bloco-right .bloco-pesquisa .tabela .thead-dark {
     background-color: var(--cor_principal);
@@ -821,6 +827,7 @@ select {
     -webkit-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
+
 }
 
 .bloco .bloco-right .bloco-pesquisa-menu .title label:hover {
@@ -879,6 +886,26 @@ select {
 }
 
 .bloco-pesquisa-1 .tabela::-webkit-scrollbar-thumb {
+    background: #051827;
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+
+}
+
+
+.card-body .tabela-dashboard::-webkit-scrollbar {
+    width: 10px;
+    /* width of the entire scrollbar */
+}
+
+.card-body .tabela-dashboard::-webkit-scrollbar-track {
+    /* color of the tracking area */
+    border: 2px solid #131520;
+    border-radius: 20px;
+}
+
+.card-body .tabela-dashboard::-webkit-scrollbar-thumb {
     background: #051827;
     /* color of the scroll thumb */
     border-radius: 20px;
@@ -955,6 +982,14 @@ select {
 .bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-2 .tabela {
     overflow: auto;
     max-height: 550px;
+}
+
+table tr th{
+    font-size: 0.9em;
+}
+
+table tr td{
+    font-size: 0.9em;
 }
 
 .bloco .bloco-right .bloco-pesquisa-menu .bloco-pesquisa-2 table {
@@ -1203,14 +1238,13 @@ select {
 
 .texto-reduzido .texto-caixa{
     display: none;
+    color: #8066f0;
 }
 
 .texto-reduzido:hover .texto-caixa{
     display: block;
     position: absolute;
     top: -50;
-    
-    background-color: var(--cor_principal);
     padding: 5px;
     border-radius: 5px;
     z-index: 2;
@@ -1218,13 +1252,11 @@ select {
 }
 
 .texto-reduzido:hover .texto-caixa::before{
-  content: "";
+ 
+    content: "";
     position: absolute;
     bottom: -10;
     left: 50%; /* posição à esquerda */
-    transform: translateX(0) rotate(-90deg); /* rotação da ponta */
-    border: 10px solid transparent;
-    border-right-color: var(--cor_principal);
     border-left: none;
     z-index: -1;
 }

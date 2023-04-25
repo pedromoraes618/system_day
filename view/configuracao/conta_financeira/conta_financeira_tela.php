@@ -27,7 +27,7 @@ include "../../../modal/configuracao/conta_financeira/gerenciar_conta_financeira
                     <div class="row">
                         <div class="col-md  mb-2">
                             <label for="conta" class="form-label">Conta</label>
-                            <input type="text" class="form-control inputNumber"  id="conta" name="conta" value="">
+                            <input type="text" class="form-control "  id="conta" name="conta" value="">
                         </div>
 
                         <div class="col-md  mb-2">

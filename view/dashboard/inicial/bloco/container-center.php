@@ -69,7 +69,7 @@
         </div>
     </div>
 </div>
-<div class="row m-1">
+<div class="row m-1 mb-3">
     <div class="col-md-6 p-0  shadow">
         <div class="card">
             <div class="card-header header-card-dashboard  border-0">
@@ -83,7 +83,7 @@
     <div class="col-md-6 6 p-0 shadow">
         <div class="card">
             <div class="card-header header-card-dashboard   border-0">
-            <h6> Receita por periodo</h6>
+                <h6> Receita por periodo</h6>
             </div>
             <div class="card-body">
                 <canvas id="myChart-2"></canvas>
@@ -92,6 +92,113 @@
     </div>
 
 </div>
+
+
+<div class="row m-1">
+    <div class="col-md-6 p-0  shadow">
+        <div class="card">
+            <div class="card-header header-card-dashboard  border-0">
+                <h6> Contas a receber hoje</h6>
+            </div>
+            <div class="card-body">
+                <div class="tabela-dashboard">
+                    <table class="table table-hover">
+                        <thead>
+
+                            <tr>
+                                <th scope="col">Data vencimento</th>
+                                <th scope="col">Cliente</th>
+                                <th scope="col">Valor</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>20/05/2023</td>
+                                <td>EFFMAX</td>
+                                <td>150</td>
+                            </tr>
+                            <tr>
+                                <td>20/05/2023</td>
+                                <td>EFFMAX</td>
+                                <td>150</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <th scope="col">Total</th>
+                            <th scope="col"></th>
+                            <th scope="col">300</th>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6 p-0  shadow">
+        <div class="card">
+            <div class="card-header header-card-dashboard  border-0">
+                <h6>Contas a pagar hoje</h6>
+            </div>
+            <div class="card-body">
+                <div class="tabela-dashboard">
+                    <table class="table table-hover">
+                        <thead>
+
+                            <tr>
+                                <th scope="col">Data vencimento</th>
+                                <th scope="col">Cliente</th>
+                                <th scope="col">Valor</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>20/05/2023</td>
+                                <td>EFFMAX</td>
+                                <td>150</td>
+                            </tr>
+                            <tr>
+                                <td>20/05/2023</td>
+                                <td>EFFMAX</td>
+                                <td>150</td>
+                            </tr>
+
+                        </tbody>
+                        <tfoot>
+                            <th scope="col">Total</th>
+                            <th scope="col"></th>
+                            <th scope="col">300</th>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
     var ctx = document.getElementById("myChart-1").getContext('2d');

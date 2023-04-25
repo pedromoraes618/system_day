@@ -1,33 +1,54 @@
 $("#voltar").click(function (e) {
     $(".bloco-pesquisa-menu .bloco-pesquisa-2").css("display", "none") // aparecer tela de consulta
-  
+
 })
 
-const formulario_post = document.getElementById("conta_financeira");
-let id_conta_financeira = document.getElementById("id")
+const formulario_post = document.getElementById("lancamento_financeiro");
+let id_formulario = document.getElementById("id")
 let titulo = document.getElementById('title_modal')
 let btn_form = document.getElementById('button_form')
+let tipo = document.getElementById('tipo')
 
+
+//modal para consultar o cliente
+$("#modal_parceiro").click(function () {
+    $.ajax({
+        type: 'GET',
+        data: "adicionar_lancamento_financeiro=true&tipo=RECEITA",
+        url: "view/include/parceiro/pesquisa_parceiro.php",
+        success: function (result) {
+            return $(".modal_parceiro").html(result) + $("#modal_pesquisa_parceiro").modal('show');
+
+        },
+    });
+});
 
 //retorna os dados para o formulario
-if (id_conta_financeira.value == "") {
-    $('#button_form').html('Cadastrar');
-    $('#ativo').attr('checked', true);
-    $(".title .sub-title").html("Cadastrar conta financeira")
+if (id_formulario.value == "") {
+
+    $('#button_form').html('Adicionar');
+    if (tipo.value == "RECEITA") {
+        $(".title .sub-title").html("Lançar Receita")//alterar a label cabeçalho
+    }
+    if (tipo.value == "DESPESA") {
+        $(".title .sub-title").html("Lançar Despesa")//alterar a label cabeçalho
+    }
+
 } else {
     $('#button_form').html('Alterar');
-    $(".title .sub-title").html("Editar conta financeira")
-    show(id_conta_financeira.value) // funcao para retornar os dados para o formulario
+    $(".title .sub-title").html("Alterar lançamento")
+    show(id_formulario.value) // funcao para retornar os dados para o formulario
 }
 
 //formulario para cadastro
-$("#conta_financeira").submit(function (e) {
-    if (id_conta_financeira.value == "") {//cadastrar
-        e.preventDefault()
+$("#lancamento_financeiro").submit(function (e) {
+
+    e.preventDefault()
+    if (id_formulario.value == "") {//cadastrar
         var formulario = $(this);
         Swal.fire({
             title: 'Tem certeza?',
-            text: "Deseja cadastrar essa conta financeira",
+            text: "Deseja adicionar esse lançamento?",
             icon: 'warning',
             showCancelButton: true,
             cancelButtonText: 'Não',
@@ -62,14 +83,16 @@ $("#conta_financeira").submit(function (e) {
 })
 
 function create(dados) {
+   
     $.ajax({
         type: "POST",
-        data: "formulario_conta_financeira=true&acao=create&" + dados.serialize(),
-        url: "modal/configuracao/conta_financeira/gerenciar_conta_financeira.php",
+        data: "formulario_lancamento_financeiro=true&acao=create&" + dados.serialize(),
+        url: "modal/financeiro/lancamento_financeiro/gerenciar_lancamento_financeiro.php",
         async: false
     }).then(sucesso, falha);
 
     function sucesso(data) {
+
         $dados = $.parseJSON(data)["dados"];
         if ($dados.sucesso == true) {
             Swal.fire({
@@ -80,10 +103,10 @@ function create(dados) {
                 timer: 3500
             })
 
-     
+
             formulario_post.reset(); // redefine os valores do formulário
             $('#pesquisar_filtro_pesquisa').trigger('click'); // clicar automaticamente para realizar a consulta
-         
+
         } else {
             Swal.fire({
                 icon: 'error',
@@ -106,8 +129,8 @@ function create(dados) {
 function update(dados) {
     $.ajax({
         type: "POST",
-        data: "formulario_conta_financeira=true&acao=update&" + dados.serialize(),
-        url: "modal/configuracao/conta_financeira/gerenciar_conta_financeira.php",
+        data: "formulario_lancamento_financeiro=true&acao=update&" + dados.serialize(),
+        url: "modal/financeiro/lancamento_financeiro/gerenciar_lancamento_financeiro.php",
         async: false
     }).then(sucesso, falha);
 
@@ -145,20 +168,37 @@ function update(dados) {
 function show(id) {
     $.ajax({
         type: "POST",
-        data: "formulario_conta_financeira=true&acao=show&conta_financeira_id=" + id,
-        url: "modal/configuracao/conta_financeira/gerenciar_conta_financeira.php",
+        data: "formulario_lancamento_financeiro=true&acao=show&conta_financeira_id=" + id,
+        url: "modal/financeiro/lancamento_financeiro/gerenciar_lancamento_financeiro.php",
         async: false
     }).then(sucesso, falha);
 
     function sucesso(data) {
         $dados = $.parseJSON(data)["dados"];
         if ($dados.sucesso == true) {
-            $("#descricao").val($dados.valores['descricao'])
-            $("#conta").val($dados.valores['conta'])
-            $("#digito_conta").val($dados.valores['digito_conta'])
-            $("#agencia").val($dados.valores['agencia'])
-            $("#numero_banco").val($dados.valores['numero_banco'])
+            $("#data_movimento").val($dados.valores['data_movimento'])
+            $("#data_vencimento").val($dados.valores['data_vencimento'])
+            $("#data_pagamento").val($dados.valores['data_pagamento'])
+            $("#conta_financeira").val($dados.valores['conta_financeira'])
+            $("#forma_pagamento").val($dados.valores['forma_pagamento'])
 
+            $("#parceiro_id").val($dados.valores['parceiro_id'])
+            $("#parceiro_descricao").val($dados.valores['parceiro_descricao'])
+
+            $("#status").val($dados.valores['status'])
+            $("#classificacao").val($dados.valores['classificacao'])
+            $("#descricao").val($dados.valores['descricao'])
+            $("#documento").val($dados.valores['documento'])
+            $("#ordem_servico").val($dados.valores['ordem_servico'])
+
+            $("#valor_bruto").val($dados.valores['valor_bruto'])
+            $("#valor_liquido").val($dados.valores['valor_liquido'])
+            $("#juros").val($dados.valores['juros'])
+            $("#taxa").val($dados.valores['taxa'])
+            $("#baixa_parcial").val($dados.valores['baixa_parcial'])
+            $("#desconto").val($dados.valores['desconto'])
+            $("#observacao").val($dados.valores['observacao'])
+    
         }
     }
 
@@ -168,3 +208,60 @@ function show(id) {
 
 }
 
+
+//calulcar o valor liquido do lancamento
+function calcula_v_liquido() {
+    var valor_bruto = $('#valor_bruto').val();
+    var juros = $('#juros').val();
+    var taxa = $('#taxa').val();
+    var baixa_parcial = $('#baixa_parcial').val();
+    var desconto = $('#desconto').val();
+
+    if (valor_bruto) {//verificando se tem um virgula e substituindo pelo ponto, apos isso e transformado para numero(parsefloat)
+        if (valor_bruto.includes(",")) {
+            valor_bruto = valor_bruto.replace(",", ".");
+        }
+        valor_bruto = parseFloat(valor_bruto)
+    }
+    let valorFinal = valor_bruto;
+
+
+    if (juros) {
+        if (juros.includes(",")) {
+            juros = juros.replace(",", ".");
+        }
+        juros = parseFloat(juros)
+        valorFinal = valorFinal + juros;
+    }
+
+    if (taxa) {
+        if (taxa.includes(",")) {
+            taxa = taxa.replace(",", ".");
+        }
+        taxa = parseFloat(taxa)
+        valorFinal = valorFinal + taxa;
+    }
+
+    if (baixa_parcial) {
+        if (baixa_parcial.includes(",")) {
+            baixa_parcial = baixa_parcial.replace(",", ".");
+        }
+        baixa_parcial = parseFloat(baixa_parcial)
+        valorFinal = valorFinal - baixa_parcial;
+    }
+
+    if (desconto) {
+        if (desconto.includes(",")) {
+            desconto = desconto.replace(",", ".");
+        }
+        desconto = parseFloat(desconto)
+        valorFinal = valorFinal - desconto;
+    }
+    
+    valorFinal = (valorFinal.toFixed(2));
+    $('#valor_liquido').val(valorFinal);
+    $('#valor_liquido_hidden').val(valorFinal);
+
+
+
+}

@@ -5,6 +5,7 @@
 <hr>
 
 <div class="row">
+    
     <div class="col-md  mb-2">
         <div class="input-group">
             <input type="text" class="form-control" id="pesquisa_conteudo" placeholder="Tente pesquisar pela descrição, referência, fabricante ou código"

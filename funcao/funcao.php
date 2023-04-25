@@ -27,9 +27,19 @@ function mensagem_alerta_cadastro($campo)
 function mensagem_alerta_permissao()
 {
     return "Ação bloqueada. Você não possui permissão para realizar esta ação no sistema. Por favor, verifique as suas permissões de acesso ou 
-     entre em contato com o administrador do sistema para obter mais informações.";
+     entre em contato com o administrador do sistema para obter mais informações";
 }
 
+//mensagem de alerta de caixa 
+function mensagem_alerta_caixa($valor)
+{
+    if ($valor == "VAZIO") {
+        return "O caixa desse período ainda não foi aberto, Favor verifique";
+    } 
+    if ($valor == "FECHADO") {
+        return "O caixa desse período já foi fechado, não é possivel realização a ação";
+    }
+}
 
 //mensagem de alerta de serie cadastrada
 function mensagem_serie_cadastrada()
@@ -45,6 +55,7 @@ function formatDateB($value)
         return $value;
     }
 }
+
 function formatarDataParaBancoDeDados($data)
 {
     // Cria um objeto DateTime a partir da string da data no formato 'dd/mm/aaaa'
@@ -443,4 +454,38 @@ function verifica_saldo_final($conecta, $consultar_tipo_contabilizacao, $dia, $m
     $linha = mysqli_fetch_assoc($consulta_caixa);
     $saldo_fechado = $linha['cl_valor_fechamento'];
     return $saldo_fechado;
+}
+
+//função para verificar os parametros do caixa do periodo
+function verifica_caixa_financeiro($conecta, $data_pagamento, $conta_financeira)
+{
+    $select = "SELECT * FROM tb_parametros where cl_id = '6'";
+    $conulta_parametros = mysqli_query($conecta, $select);
+    $linha = mysqli_fetch_assoc($conulta_parametros);
+    $consultar_tipo_contabilizacao = $linha['cl_valor'];
+
+    // Divide a data em partes
+    $partes = explode('-', $data_pagamento);
+    // Extrai o ano, o mês e o dia
+    $ano = $partes[0];
+    $mes = $partes[1];
+    $dia = $partes[2];
+
+
+    $select = "SELECT * FROM tb_caixa where cl_ano !='' and cl_conta ='$conta_financeira'";
+    if ($consultar_tipo_contabilizacao == "DIA") {
+        $select .= " and cl_dia = '$dia' and cl_mes ='$mes' and cl_ano='$ano' "; // se for por periodo de contabilização em dia a dia vai verifiar o dia, o mes e o ano
+    } elseif ($consultar_tipo_contabilizacao == "MES") {
+        $select .= " and cl_mes = '$mes' and cl_ano ='$ano'"; // se for por periodo de contabilização em mes a mes vai verifiar o mes e o ano
+    } else {
+        $select .= " and cl_dia = '$dia' and cl_mes ='$mes' and cl_ano='$ano' "; // se o paramentro estivir com valor incorreto será atribuido o periodo de dia a dia
+    }
+    $consulta_caixa = mysqli_query($conecta, $select);
+    $resultado_consulta = mysqli_num_rows($consulta_caixa);
+    $linha = mysqli_fetch_assoc($consulta_caixa);
+    $status_caixa = $linha['cl_status'];
+    $valor_aberto = $linha['cl_valor_abertura'];
+
+    $dados = array("resultado" => $resultado_consulta, "status" => $status_caixa, "valor_aberto" => $valor_aberto);
+    return $dados;
 }

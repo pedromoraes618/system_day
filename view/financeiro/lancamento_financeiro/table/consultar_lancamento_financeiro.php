@@ -11,17 +11,22 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
             <tr>
                 <th scope="col">Dt. Vencimento</th>
                 <th scope="col">Dt. Pagamento</th>
-                <th scope="col">Parceiro</th>
+                <th scope="col">Cliente / Fornecedor</th>
                 <th scope="col">Descrição</th>
                 <th scope="col">Doc</th>
-
+                <th scope="col">Forma Pgt</th>
                 <th scope="col">Status</th>
                 <th scope="col">Tipo</th>
                 <th scope="col">Valor</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            <?php while ($linha = mysqli_fetch_assoc($consultar_lancamento_financeiro)) {
+
+            <?php
+            $valor_total_receita = 0;
+            $valor_total_despesa = 0;
+            while ($linha = mysqli_fetch_assoc($consultar_lancamento_financeiro)) {
                 $id_b = $linha['cl_id'];
                 $data_vencimento = ($linha['cl_data_vencimento']);
                 $data_pagamento = ($linha['cl_data_pagamento']);
@@ -33,6 +38,15 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                 $status_b = utf8_encode($linha['status']);
                 $tipo_b = utf8_encode($linha['cl_tipo_lancamento']);
                 $valor_liquido_b = ($linha['cl_valor_liquido']);
+
+                if ($status_b != "Cancelado") {
+                    if ($tipo_b == "RECEITA") {
+                        $valor_total_receita = $valor_liquido_b + $valor_total_receita;
+                    } elseif ($tipo_b == "DESPESA") {
+                        $valor_total_despesa = $valor_liquido_b + $valor_total_despesa;
+                    }
+                }
+
             ?>
                 <tr>
                     <th scope="row"><?php echo formatDateB($data_vencimento) ?></th>
@@ -41,10 +55,11 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                         <hr class="mb-0"><?php echo $nome_fantasia_b; ?>
                     </td>
                     <td>
-                        <div class="texto-reduzido"><?php echo reduzir_texto($descricao_b) ?><div class="texto-caixa" ><?php echo $descricao_b; ?></div>
+                        <div class="texto-reduzido"><?php echo reduzir_texto($descricao_b) ?><div class="texto-caixa"><?php echo $descricao_b; ?></div>
                         </div>
                     </td>
                     <td><?php echo ($doc_b) ?></td>
+                    <td><?php echo ($forma_pagamento_b) ?></td>
 
                     <td><?php echo ($status_b) ?></td>
 
@@ -57,12 +72,25 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                                                     } ?>"><?php echo $tipo_b; ?></span>
                     </td>
                     <td><?php echo real_format($valor_liquido_b) ?></td>
-                    <td class="td-btn"><button type="button" lancamento_financeiro_id=<?php echo $id_b; ?> class="btn btn-info   btn-sm editar_lancamento_financeira ">Editar</button>
+                    <td class="td-btn"><button type="button" lancamento_financeiro_id="<?php echo $id_b; ?>" tipo="<?php echo $tipo_b; ?>" class="btn btn-info   btn-sm editar_lancamento_financeiro ">Editar</button>
                     </td>
                 </tr>
 
             <?php } ?>
+
         </tbody>
+        <tfoot>
+            <th scope="col">Total</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"><?php echo real_format($valor_total_receita - $valor_total_despesa); ?></th>
+            <th scope="col"></th>
+        </tfoot>
     </table>
     <label>
         Registros <?php echo $qtd; ?>

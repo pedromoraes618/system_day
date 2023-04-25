@@ -1,4 +1,4 @@
-const OPENAI_API_KEY = "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";
+const OPENAI_API_KEY = "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";
 const form_chat = document.getElementById("form_chat");
 var buscar_chat = document.getElementById("buscar_chat");
 

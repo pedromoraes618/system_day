@@ -28,7 +28,8 @@ $(".selecionar_cest").click(function () {
     var cest = $(this).attr("valor")
     var input_cest = document.getElementById("cest")
     input_cest.value = cest
-    $('.btn-close').trigger('click'); // clicar automaticamente
+    $("#modal_cunsultar_cest").modal('hide');//fechar o modal
+
 })
 
 //pesquisar ncm e informar no campo
@@ -56,7 +57,7 @@ $(".selecionar_ncm").click(function () {
     var ncm = $(this).attr("valor")
     var input_ncm = document.getElementById("ncm")
     input_ncm.value = ncm
-    $('.btn-close').trigger('click');
+    $('#modal_cunsultar_ncm').modal('hide')//fechar o modal
 })
 
 
@@ -68,9 +69,7 @@ function maregm_lucro() {
     //transformar em float
     preco_venda = parseFloat(preco_venda)
     preco_custo = parseFloat(preco_custo)
-
     var maregm_lucro = (((preco_venda - preco_custo) / preco_venda) * 100).toFixed(2);
-
     var margem = document.getElementById("margem_lucro")
     margem.value = maregm_lucro
 }

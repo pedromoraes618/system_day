@@ -19,11 +19,19 @@ if (isset($_GET['consultar_cliente'])) {
         }
     } else {
         $pesquisa = utf8_decode($_GET['conteudo_pesquisa']); //filtro
+        if (isset($_GET['status'])) {
+            $status_pesquisa = $_GET['status'];
+        }
         $remove_chars = array('.', '/', '-');
         $pesquisa = str_replace(($remove_chars), '', $pesquisa); // remover caracteres especias
         $select = "SELECT clt.cl_id,clt.cl_bairro,cid.cl_nome as cidade,clt.cl_email,clt.cl_situacao_ativo,clt.cl_razao_social,clt.cl_nome_fantasia,clt.cl_cnpj_cpf,est.cl_uf from tb_parceiros as clt
             inner join tb_estados as est on clt.cl_estado_id = est.cl_id inner join tb_cidades as cid on clt.cl_cidade_id
-            = cid.cl_id where clt.cl_razao_social LIKE '%{$pesquisa}%' or clt.cl_nome_fantasia LIKE '%{$pesquisa}%' or clt.cl_cnpj_cpf LIKE '%{$pesquisa}%'  ORDER BY clt.cl_id";
+            = cid.cl_id where (clt.cl_razao_social LIKE '%{$pesquisa}%' or clt.cl_nome_fantasia LIKE '%{$pesquisa}%' or clt.cl_cnpj_cpf LIKE '%{$pesquisa}%' or clt.cl_id ='$pesquisa') ";
+        if (isset($status_pesquisa) and $status_pesquisa != "0") {
+            $select .= " and clt.cl_situacao_ativo = '$status_pesquisa' ";
+        }
+        $select .= " ORDER BY clt.cl_id ";
+
         $consultar_clientes = mysqli_query($conecta, $select);
         if (!$consultar_clientes) {
             die("Falha no banco de dados");
@@ -81,11 +89,11 @@ if (isset($_POST['formulario_cadastrar_cliente'])) {
         $insert = "INSERT INTO `system_day`.`tb_parceiros` ( `cl_data_cadastro`, `cl_usuario_id`, `cl_razao_social`, 
         `cl_nome_fantasia`, `cl_cnpj_cpf`, `cl_inscricao_estadual`, `cl_cep`, `cl_bairro`, `cl_endereco`, `cl_cidade_id`, 
         `cl_estado_id`, `cl_pais`, `cl_telefone`, `cl_email`, `cl_observacao`, `cl_situacao_ativo`) VALUES 
-        ('$data_lancamento', '$id_usuario_logado', '$rzaosocial', '$nfantasia', '$cnpjcpf', '$ie', '$cep', '$bairro', '$endereco', '$cidade', '$estado', 'BRASIL', '$telefone', '$email', '$observacao', 'S');";
+        ('$data_lancamento', '$id_usuario_logado', '$rzaosocial', '$nfantasia', '$cnpjcpf', '$ie', '$cep', '$bairro', '$endereco', '$cidade', '$estado', 'BRASIL', '$telefone', '$email', '$observacao', 'SIM')";
         $operacao_inserir = mysqli_query($conecta, $insert);
         if ($operacao_inserir) {
             $retornar["dados"] = array("sucesso" => true, "title" => "Cadastrado realizado com sucesso");
-            $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado cadastrou o parceiro $rzaosocial");
+            $mensagem =  utf8_decode("Usuário $nome_usuario_logado cadastrou o parceiro $rzaosocial");
             registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
         }
     }
@@ -136,7 +144,7 @@ if (isset($_POST['formulario_editar_cliente'])) {
         $retornar["dados"] = array("sucesso" => false, "title" => "Favor verificque o campo Cnpj \ cpf, O cnpj está Incorreto");
     } elseif ((!validaCPF($cnpjcpf)) and (strlen($cnpjcpf) > 0 and strlen($cnpjcpf) <= 11)) { // validar cpf
         $retornar["dados"] = array("sucesso" => false, "title" => "Favor verificque o campo Cnpj \ cpf, O cpf está Incorreto");
-    } elseif (consultar_cnpj_cadastrado($conecta, $cnpjcpf, $id_cliente) > 0 ) { //verificar se já existe algum cliente cadastrado com o mesmo cnpj que não seja ele mesmo
+    } elseif (consultar_cnpj_cadastrado($conecta, $cnpjcpf, $id_cliente) > 0) { //verificar se já existe algum cliente cadastrado com o mesmo cnpj que não seja ele mesmo
         $retornar["dados"] = array("sucesso" => false, "title" => "Já existe um cadastrado com esses dados, favor verifique o campo Cnpj/Cpf");
     } elseif (($email != "") and (!filter_var($email, FILTER_VALIDATE_EMAIL))) { //validar email
         $retornar["dados"] = array("sucesso" => false, "title" => "Esse email não é valido,Favor verifique");
@@ -148,7 +156,7 @@ if (isset($_POST['formulario_editar_cliente'])) {
         $operacao_update = mysqli_query($conecta, $update);
         if ($operacao_update) {
             $retornar["dados"] = array("sucesso" => true, "title" => "Dados alterados com sucesso");
-            $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado Editou o parceiro codigo $id_cliente");
+            $mensagem =  utf8_decode("Usuário $nome_usuario_logado Editou o parceiro código $id_cliente");
             registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
         }
     }

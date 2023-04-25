@@ -39,7 +39,7 @@ if (localStorage.getItem("storage_pesquisa")) {
 }
 
 
-$("#pesquisar_filtro_pesquisa").click(function (e) {
+$("#pesquisar_filtro_pesquisa").click(function () {
     localStorage.setItem("storage_pesquisa", conteudo_pesquisa.value);
     $.ajax({
         type: 'GET',

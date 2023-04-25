@@ -97,7 +97,7 @@ if(isset($_POST['formulario_cadastrar_tarefa'])){
         if($operacao_inserir){
         $retornar["sucesso"] = true;
         //registrar no log
-        $mensagem =  ( utf8_decode("Usúario") . " $nome_usuario_logado adicionou o lembrete $descricao ");
+        $mensagem =  ( utf8_decode("Usuário") . " $nome_usuario_logado adicionou o lembrete $descricao ");
         registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
         }
             
@@ -153,7 +153,7 @@ if(isset($_POST['formulario_editar_tarefa'])){
         if($operacao_update){
         $retornar["sucesso"] = true;
         //registrar no log
-        $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado alterou tarefa de codigo $id_tarefa");
+        $mensagem =  (utf8_decode("Usuário") . " $nome_usuario_logado alterou tarefa de codigo $id_tarefa");
         registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
             }  
         }
@@ -179,7 +179,7 @@ if(isset($_POST['remover_tarefa'])){
         if($operacao_delete){
         $retornar["sucesso"] = true;
         //registrar no log
-        $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado removeu tarefa de codigo $id_tarefa");
+        $mensagem =  (utf8_decode("Usuário") . " $nome_usuario_logado removeu tarefa de codigo $id_tarefa");
         registrar_log($conecta,$nome_usuario_logado,$data,$mensagem);
         }  
         

@@ -80,6 +80,7 @@ if (isset($_POST['fechar_caixa'])) {
 
     $select = "SELECT * FROM tb_conta_financeira";
     $consulta_conta_financeira = mysqli_query($conecta, $select);
+
     while ($linha = mysqli_fetch_array($consulta_conta_financeira)) { //verificar todas as contas financeiras
         $conta_financeira = $linha['cl_conta'];
 
@@ -87,8 +88,56 @@ if (isset($_POST['fechar_caixa'])) {
         $resultado_consulta = $caixa['resultado'];
         //$saldo_final_periodo_anterior =  verifica_saldo_final($conecta, $consultar_tipo_contabiizacao, $dia, $mes, $ano);
         if ($resultado_consulta > 0) { // se o caixa já estiver aberto apenas reabir o periodo
+
+            // $contador = 0;
+            // $select = "SELECT sum(cl_valor_liquido) as valores from tb_lancamento_financeiro where
+            // (cl_status_id = 2 or cl_status_id = 4)  and cl_conta_financeira = '$conta_financeira'";
+            // if ($consultar_tipo_contabiizacao == "DIA") {
+            //     $select .= " and cl_data_pagamento between '$ano-$mes-$dia' and '$ano-$mes-$dia' ";
+            // } else {
+            //     $select .= " and cl_data_pagamento between '$ano-$mes-01' and '$ano-$mes-31' ";
+            // }
+
+            // $select .= " group by cl_status_id order by cl_status_id asc ";
+            // $consultar_valores_caixa = mysqli_query($conecta, $select);
+            // while ($linha = mysqli_fetch_assoc($consultar_valores_caixa)) {
+            //     $valor = $linha['valores'];
+            //     $contador = $contador + 1;
+            //     if ($contador == 1) {
+            //         $receita = $valor;
+            //     } elseif ($contador == 2) {
+            //         $despesa = $valor;
+            //     }
+            //     $total_caixa = $receita - $despesa;
+            // }
+
+            $select = "SELECT sum(cl_valor_liquido) as valores from tb_lancamento_financeiro where
+            cl_status_id = 2  and cl_conta_financeira = '$conta_financeira'";
+            if ($consultar_tipo_contabiizacao == "DIA") {
+                $select .= " and cl_data_pagamento between '$ano-$mes-$dia' and '$ano-$mes-$dia' ";
+            } else {
+                $select .= " and cl_data_pagamento between '$ano-$mes-01' and '$ano-$mes-31' ";
+            }
+            $consultar_receita_caixa = mysqli_query($conecta, $select);
+            $linha = mysqli_fetch_assoc($consultar_receita_caixa);
+            $receita = $linha['valores'];
+
+
+            $select = "SELECT sum(cl_valor_liquido) as valores from tb_lancamento_financeiro where
+            cl_status_id = 4  and cl_conta_financeira = '$conta_financeira'";
+            if ($consultar_tipo_contabiizacao == "DIA") {
+                $select .= " and cl_data_pagamento between '$ano-$mes-$dia' and '$ano-$mes-$dia' ";
+            } else {
+                $select .= " and cl_data_pagamento between '$ano-$mes-01' and '$ano-$mes-31' ";
+            }
+            $consultar_receita_caixa = mysqli_query($conecta, $select);
+            $linha = mysqli_fetch_assoc($consultar_receita_caixa);
+            $despesa = $linha['valores'];
+
+            $total_caixa = $receita - $despesa;
+
             $valor_abertura = $caixa['valor_aberto'];
-            $valor_fechado = $valor_abertura + 5; //valor de abertura vai somar com o valor do financeiro, isso resultara no saldo final do periodo
+            $valor_fechado = $valor_abertura + $total_caixa; //valor de abertura vai somar com o valor do financeiro, isso resultara no saldo final do periodo
 
             $update = "UPDATE tb_caixa SET cl_valor_fechamento='$valor_fechado',cl_conta='$conta_financeira',cl_status='fechado',cl_usuario_fechamento='$user_id', cl_data_fechamento='$data_fechamento', cl_usuario_abertura='$user_id' 
         WHERE cl_mes = '$mes' and cl_ano = '$ano' and cl_conta = '$conta_financeira'";

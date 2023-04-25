@@ -19,12 +19,14 @@ include "../../../../funcao/funcao.php";
         
         }else{
             $pesquisa = utf8_decode($_GET['conteudo_pesquisa']);//filtro
-            $status_prod = $_GET['status_prod'];
+            if(isset($_GET['status_prod'])){
+               $status_prod = $_GET['status_prod'];
+            }
             $select = "SELECT prd.cl_id as produtoid,prd.cl_descricao as descricao,prd.cl_codigo,prd.cl_estoque_minimo,prd.cl_estoque_maximo,prd.cl_referencia,prd.cl_status_ativo as ativo, subgrp.cl_descricao as subgrupo,und.cl_sigla as und,frb.cl_descricao as fabricante,prd.cl_estoque,prd.cl_preco_venda 
             from tb_produtos as prd inner join tb_subgrupo_estoque as subgrp on subgrp.cl_id = prd.cl_grupo_id inner join
             tb_unidade_medida as und on und.cl_id = prd.cl_und_id inner join tb_fabricantes as frb on frb.cl_id = prd.cl_fabricante_id where (prd.cl_descricao like '%{$pesquisa}%' or
             prd.cl_id  like '%{$pesquisa}%' or frb.cl_descricao like '%{$pesquisa}%' or prd.cl_referencia LIKE '%{$pesquisa}%')";
-            if($status_prod!="0"){
+            if(isset($status_prod ) and $status_prod!="0"){
             $select .=" and prd.cl_status_ativo = '$status_prod' ";
             }
             $select .=" ORDER BY prd.cl_id ";

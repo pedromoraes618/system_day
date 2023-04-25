@@ -14,11 +14,9 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                 <th scope="col">Razão social</th>
                 <th scope="col">Cnpj/Cpf</th>
                 <th scope="col">Cidade</th>
-                <th scope="col">Bairro</th>
-                <th scope="col">Ult. Venda</th>
                 <th scope="col">Status</th>
                 <th scope="col"></th>
-                <th scope="col"></th>
+
             </tr>
 
         </thead>
@@ -42,13 +40,16 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                     </td>
                     <td><?php echo formatCNPJCPF($cnpj_cpf_b);  ?></td>
                     <td><?php echo $cidade_b . ' - ' . $uf_b;  ?></td>
-                    <td><?php echo $bairro_b; ?></td>
-                    <td></td>
                     <td><span class='badge text-bg-<?php echo ($situacao_b == "SIM") ? 'success' : 'danger' ?>'><?php echo ($situacao_b == "SIM") ? 'Ativo' : 'Inativo' ?></td>
-                    <td class="td-btn"><button type="button" id_cliente=<?php echo $cliente_id_b; ?> class="btn btn-info   btn-sm editar_cliente ">Editar</button>
+
+                    <td class="td-btn">
+                        <?php if ($situacao_b == "SIM") { ?>
+                            <button type="button" r_social=<?php echo $razao_social_b; ?> id_parceiro=<?php echo $cliente_id_b; ?> class="btn btn-info   btn-sm selecionar_parceiro ">Selecionar</button>
+                        <?php } ?>
                     </td>
-                    <td class="td-btn"><button disabled type="button" cliente_id=<?php echo $cliente_id_b; ?> class="btn btn-warning   btn-sm consultar_historico ">Historico</button>
-                    </td>
+
+                    <td><input type="hidden" id="cliente_razao" value="<?php echo $razao_social_b; ?>"></td>
+
                 </tr>
 
             <?php } ?>
@@ -62,4 +63,4 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
     include "../../../../view/alerta/alerta_pesquisa.php"; // mesnsagem para usuario pesquisar
 }
 ?>
-<script src="js/empresa/cliente/table/editar_cliente.js">
+<script src="js/include/parceiro/pesquisa_parceiro.js">

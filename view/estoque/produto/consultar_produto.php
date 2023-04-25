@@ -15,14 +15,15 @@
             <input type="text" class="form-control" id="pesquisa_conteudo" placeholder="Tente pesquisar pela descrição, referência, fabricante ou código" aria-label="Recipient's username" aria-describedby="button-addon2">
             <button class="btn btn-outline-secondary" type="button" id="pesquisar_filtro_pesquisa">Pesquisar</button>
         </div>
+        <div class="alerta">
+
+        </div>
     </div>
     <div class="col-md-auto  d-grid gap-2 d-sm-block mb-1">
         <button class="btn btn-dark" type="button" id="adicionar_produto">Adicionar produto</button>
     </div>
 </div>
-<div class="alerta">
 
-</div>
 <div class="tabela">
 
 </div>
