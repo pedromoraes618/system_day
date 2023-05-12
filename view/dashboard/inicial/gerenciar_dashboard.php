@@ -17,10 +17,10 @@
                     </div>
                 </div>
             </div>
-            <div id="container-center-1" class="col-md-10 p-0 m-1 ">
+            <div id="container-center-1" class="col-md-10 p-0  ">
 
             </div>
-            <div id="container-right-1" class="col p-0 m-1">
+            <div id="container-right-1" class="col-md-2 p-0 ">
 
             </div>
         </div>

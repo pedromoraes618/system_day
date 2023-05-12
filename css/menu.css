@@ -70,6 +70,8 @@ input[type=number] {
 
     .bloco .bloco-left .categoria .topo {
         padding: 20px;
+        padding-top: 20px;
+        padding-bottom: 70px;
     }
 
     .bloco .bloco-left .categoria nav ul li p {
@@ -190,6 +192,9 @@ table td {
     font-size: 0.9em;
 }
 
+.img-logo{
+    width: 100px;
+}
 .bloco {
 
     display: flex;
@@ -1169,7 +1174,7 @@ table tr td{
     padding: 30px;
     position: relative;
     align-items: center;
-    margin: 20px;
+    /* margin: 20px; */
     border-radius: 5px;
 
 }
@@ -1259,4 +1264,27 @@ table tr td{
     left: 50%; /* posição à esquerda */
     border-left: none;
     z-index: -1;
+}
+
+.sem_registro{
+    text-align: center;
+}
+
+ .img_sem_registro{
+    width: 180px;
+   
+}
+
+.tabela_modal {
+    overflow: auto;
+    max-height: 300px;
+}
+
+.listar_fpg_venda{
+    max-height: 300px;
+    overflow: auto;
+    cursor: pointer;
+}
+.listar_fpg_venda li:hover{
+   background-color: #e9ecef;
 }

@@ -4,7 +4,7 @@ $("#cadastrar_usuario").submit(function(e) {
     var cadastrar_user = $(this);
     Swal.fire({
         title: 'Tem certeza?',
-        text: "Deseja cadastrar esse Usúario?",
+        text: "Deseja cadastrar esse Usuário?",
         icon: 'warning',
         showCancelButton: true,
         cancelButtonText: 'Não',
@@ -39,7 +39,7 @@ function cadastrar_usuario(dados) {
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Usúario cadastrado com sucesso',
+                title: 'Usuário cadastrado com sucesso',
                 showConfirmButton: false,
                 timer: 1500
             })

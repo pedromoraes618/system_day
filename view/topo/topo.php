@@ -48,7 +48,7 @@
 
 </div>
 <?php
-include "ajuda/chat.php";
+// include "ajuda/chat.php";
 if (isset($_GET['ctg']) and isset($_GET['id'])) {
 ?>
     <div class="bloco-topo">
@@ -59,7 +59,7 @@ if (isset($_GET['ctg']) and isset($_GET['id'])) {
 }
 ?>
 <script src="js/jquery.js"></script>
-<script src="js/topo/ajuda/chat.js"></script>
+<!-- <script src="js/topo/ajuda/chat.js"></script> -->
 <script>
     const acesso_menu_user = document.getElementById('dropdown_user');
     document.addEventListener('mousedown', (event) => {

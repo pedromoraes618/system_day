@@ -7,7 +7,7 @@
             </div>
         </div>
         <hr>
-        <div class="row mb-3">
+        <div class="row mb-2">
             <input type="hidden" name="formulario_cadastrar_usuario">
 
             <?php include "../../input_include/usuario_logado.php" ?>
@@ -37,7 +37,7 @@
 
                 </select>
             </div>
-            <div class="col-md-3  mb-1">
+            <div class="col-md-2  mb-2">
                 <label for="situacao" class="form-label">Situação</label>
                 <select name="situacao" class="form-select" id="situacao">
                     <option value="s">Selecione...</option>
@@ -45,9 +45,29 @@
                     <option value="0">Inativo</option>
                 </select>
             </div>
-            <div class="col-md  mb-1">
+            <div class="col-md-2  mb-2">
+                <label for="cargo" class="form-label">Cargo</label>
+                <select name="cargo" class="form-select" id="cargo">
+                    <option value="s">Selecione...</option>
+                    <option value="VENDAS">Vendas</option>
+                    <option value="FINANCEIRO">Financeiro</option>
+                    <option value="GERENTE">Gerente</option>
+                    <option value="ESTOQUE">Estoque</option>
+                </select>
+            </div>
+            <div class="col-md  mb-2">
                 <label for="nome" class="form-label">Email</label>
                 <input type="text" class="form-control" id="email" autocomplete="off" name="email" value="">
+            </div>
+
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm  mb-2">
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="vendedor" type="checkbox" id="vendedor">
+                    <label class="form-check-label" for="vendedor">Vendedor</label>
+                </div>
             </div>
 
         </div>

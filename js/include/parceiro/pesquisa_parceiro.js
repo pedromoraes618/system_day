@@ -22,7 +22,7 @@ $("#pesquisar_parceiro").click(function () {
 $(".selecionar_parceiro").click(function(){
    
     var id_parceiro = $(this).attr("id_parceiro")
-    var r_social = $('#cliente_razao').val()
+    var r_social = $('#'+id_parceiro).val()
     $('#parceiro_descricao').val(r_social )
     $('#parceiro_id').val(id_parceiro)
     $("#modal_pesquisa_parceiro").modal('hide');

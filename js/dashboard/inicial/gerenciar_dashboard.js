@@ -45,11 +45,11 @@ $(document).ready(function () {
 
 
 function gerente(periodo,usuario) {
-   
+  
     $.ajax({
         type: 'GET',
         data: "dashboard_inicial=true&periodo=" + periodo+"&usuario="+usuario,
-        url: "view/dashboard/inicial/bloco/container-center.php",
+        url: "view/dashboard/inicial/bloco/gerente/container_center.php",
         success: function (result) {
             return $(".bloco-pesquisa-menu .bloco-pesquisa-1-dashboard #container-center-1 ").html(result);
         },
@@ -58,7 +58,7 @@ function gerente(periodo,usuario) {
     $.ajax({
         type: 'GET',
         data: "dashboard_inicial=truel&periodo=" + periodo+"&usuario="+usuario,
-        url: "view/dashboard/inicial/bloco/container-right-1.php",
+        url: "view/dashboard/inicial/bloco/gerente/container_right.php",
         success: function (result) {
             return $(".bloco-pesquisa-menu .bloco-pesquisa-1-dashboard #container-right-1").html(result);
         },

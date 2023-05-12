@@ -16,16 +16,16 @@ include "../../../modal/configuracao/users/usuario.php";
             <?php include "../../input_include/usuario_logado.php" ?>
 
             <input type="hidden" value="<?php echo $id_user; ?>" name="id_user">
-            <div class="col-sm  mb-1">
+            <div class="col-md  mb-2">
                 <label for="nome" class="form-label">Nome</label>
                 <input type="text" class="form-control" id="nome" name="nome" placeholder="" value="<?php echo $nome_b ?>">
             </div>
-            <div class="col-sm  mb-1">
+            <div class="col-md  mb-2">
                 <label for="usuario" class="form-label">Usúario</label>
                 <input type="text" readonly class="form-control inputUser" id="usuario" name="usuario" placeholder="Apenas letras e números" value="<?php echo $usuario_b; ?>">
             </div>
 
-            <div class="col-sm  mb-1">
+            <div class="col-md  mb-1">
                 <label for="perfil" class="form-label">Perfil</label>
                 <select name="perfil" id="perfil" class="form-select">
                     <option value="0">Selecione...</option>
@@ -38,7 +38,7 @@ include "../../../modal/configuracao/users/usuario.php";
 
                 </select>
             </div>
-            <div class="col-sm  mb-2">
+            <div class="col-md  mb-2">
                 <label for="situacao" class="form-label">Situação</label>
                 <select name="situacao" class="form-select" id="situacao">
                     <option value="s">Selecione...</option>
@@ -51,12 +51,29 @@ include "../../../modal/configuracao/users/usuario.php";
                 </select>
             </div>
 
-
         </div>
         <div class="row mb-2">
-            <div class="col-md-4  mb-1">
+            <div class="col-md-2  mb-2">
+                <label for="cargo" class="form-label">Cargo</label>
+                <select name="cargo" class="form-select" id="cargo">
+                    <option value="s">Selecione...</option>
+                    <option <?php if($cargo_b =="VENDAS"){echo 'selected';}  ?>  value="VENDAS">Vendas</option>
+                    <option <?php if($cargo_b =="FINANCEIRO"){echo 'selected';}  ?> value="FINANCEIRO">Financeiro</option>
+                    <option <?php if($cargo_b =="GERENTE"){echo 'selected';}  ?> value="GERENTE">Gerente</option>
+                    <option <?php if($cargo_b =="ESTOQUE"){echo 'selected';}  ?> value="ESTOQUE">Estoque</option>
+                </select>
+            </div>
+            <div class="col-md-4  mb-2">
                 <label for="nome" class="form-label">Email</label>
                 <input type="text" class="form-control" id="email" autocomplete="off" name="email" value="<?php echo $email_b ?>">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" <?php if($vendedor_b=="SIM"){echo 'checked';} ?>  name="vendedor" type="checkbox" id="vendedor">
+                    <label class="form-check-label" for="vendedor">Vendedor</label>
+                </div>
             </div>
         </div>
         <div class="row">

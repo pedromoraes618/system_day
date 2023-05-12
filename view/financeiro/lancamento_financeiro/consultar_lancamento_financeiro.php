@@ -46,10 +46,10 @@ include "../../../funcao/funcao.php";
             </div>
         </Div>
         <div class="col-md-auto  d-grid gap-2 d-sm-block mb-2">
-            <button type="button" id="adicionar_lancamento_receita" class="btn btn-dark" data-bs-toggle="modal">
+            <button type="button" id="adicionar_lancamento_receita" class="btn btn-dark" >
                 Adicionar Receita
             </button>
-            <button type="button" id="adicionar_lancamento_despesa" class="btn btn-dark" data-bs-toggle="modal">
+            <button type="button" id="adicionar_lancamento_despesa" class="btn btn-dark" >
                 Adicionar Despesa
             </button>
         </div>

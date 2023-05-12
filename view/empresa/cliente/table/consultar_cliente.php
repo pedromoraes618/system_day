@@ -4,6 +4,7 @@ include "../../../../modal/empresa/cliente/gerenciar_cliente.php";
 
 ?>
 <?php
+
 if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == "S")) { //consultar parametro para carrregar inicialmente a tabela
 ?>
     <table class="table table-hover">
@@ -32,7 +33,7 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                 $cidade_b = utf8_encode($linha['cidade']);
                 $situacao_b = $linha['cl_situacao_ativo'];
                 $email_b = $linha['cl_email'];
-                $bairro_b = $linha['cl_bairro'];
+                $bairro_b = utf8_encode($linha['cl_bairro']);
             ?>
                 <tr class="rounded">
 

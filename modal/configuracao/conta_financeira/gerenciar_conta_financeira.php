@@ -8,11 +8,11 @@ if (isset($_GET['consultar_conta_financeira'])) {
    if ($consulta == "inicial") {
       $consultar_tabela_inicialmente =  verficar_paramentro($conecta, "tb_parametros", "cl_id", "1"); //VERIFICAR PARAMETRO ID - 1
       $select = "SELECT * from tb_conta_financeira ";
-      $consultar_forma_pagamento = mysqli_query($conecta, $select);
-      if (!$consultar_forma_pagamento) {
+      $consultar_conta_financeira = mysqli_query($conecta, $select);
+      if (!$consultar_conta_financeira) {
          die("Falha no banco de dados");
       } else {
-         $qtd = mysqli_num_rows($consultar_forma_pagamento);
+         $qtd = mysqli_num_rows($consultar_conta_financeira);
       }
    } else {
       $pesquisa = utf8_decode($_GET['conteudo_pesquisa']); //filtro

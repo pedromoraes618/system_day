@@ -1,4 +1,4 @@
-$("#voltar_consulta").click(function (e) {
+$("#voltar_consulta").click(function () {
     $(".bloco-pesquisa-menu .bloco-pesquisa-1").css("display", "block") // remover tela de cadastro
     $(".bloco-pesquisa-menu .bloco-pesquisa-2").css("display", "none") // aparecer tela de consulta
     $.ajax({

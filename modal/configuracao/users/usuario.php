@@ -43,6 +43,12 @@ if (isset($_POST['formulario_cadastrar_usuario'])) {
     $perfil = $_POST["perfil"];
     $situacao =  $_POST["situacao"];
     $email =  $_POST["email"];
+    $cargo =  $_POST["cargo"];
+    if (isset($_POST['vendedor'])) { //verificar se o usuario é um vendedor
+        $vendedor = "SIM";
+    } else {
+        $vendedor = "NAO";
+    }
 
     if ($nome == "") {
         $retornar["mensagem"] = mensagem_alerta_cadastro("nome");
@@ -58,20 +64,22 @@ if (isset($_POST['formulario_cadastrar_usuario'])) {
         $retornar["mensagem"] = mensagem_alerta_cadastro("perfil");
     } elseif ($situacao == "s") {
         $retornar["mensagem"] = mensagem_alerta_cadastro("situacao");
-    } elseif((!filter_var($email, FILTER_VALIDATE_EMAIL) and $email!="")) {
+    } elseif ((!filter_var($email, FILTER_VALIDATE_EMAIL) and $email != "")) {
         $retornar["mensagem"] = "Esse Email não é valido, favor verifique!";
+    } elseif ($cargo == "0") {
+        $retornar["mensagem"] = mensagem_alerta_cadastro("cargo");
     } else {
 
         if (verificar_user($conecta, $usuario, "cadastrar") > 0) {
-            $retornar["mensagem"] = "Já existe uma pessoa com o mesmo nome de usúario, favor verifique!";
+            $retornar["mensagem"] = "Já existe uma pessoa com o mesmo nome de usuário, favor verifique";
         } else {
             $senha = base64_encode($senha); //criptografar a senha
-            $inset = "INSERT INTO tb_users (cl_data_cadastro,cl_nome,cl_usuario,cl_senha,cl_tipo,cl_ativo,cl_email) VALUES ('$data','$nome','$usuario','$senha','$perfil','$situacao','$email')";
+            $inset = "INSERT INTO tb_users (cl_data_cadastro,cl_nome,cl_usuario,cl_senha,cl_tipo,cl_ativo,cl_email,cl_usuario_area,cl_vendedor) VALUES ('$data','$nome','$usuario','$senha','$perfil','$situacao','$email','$cargo','$vendedor')";
             $operacao_inserir = mysqli_query($conecta, $inset);
             if ($operacao_inserir) {
                 $retornar["sucesso"] = true;
                 //registrar no log
-                $mensagem =  utf8_decode("Usúario $nome_usuario_logado cadastrou o novo usário $usuario");
+                $mensagem =  utf8_decode("Usuário $nome_usuario_logado cadastrou o novo usuário $usuario");
                 registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
             }
         }
@@ -97,6 +105,8 @@ if (isset($_GET['editar_user']) == true or isset($_GET['resetar_senha']) == true
     $perfil_b = $linha['cl_tipo'];
     $situacao_b = $linha['cl_ativo'];
     $email_b = $linha['cl_email'];
+    $cargo_b = $linha['cl_usuario_area'];
+    $vendedor_b = $linha['cl_vendedor'];
 }
 
 
@@ -112,6 +122,13 @@ if (isset($_POST['formulario_editar_usuario'])) {
     $perfil = $_POST["perfil"];
     $situacao =  $_POST["situacao"];
     $email =  $_POST["email"];
+    $cargo =  $_POST["cargo"];
+    if (isset($_POST['vendedor'])) { //verificar se o usuario é um vendedor
+        $vendedor = "SIM";
+    } else {
+        $vendedor = "NAO";
+    }
+
 
     if ($nome == "") {
         $retornar["mensagem"] = mensagem_alerta_cadastro("nome");
@@ -119,17 +136,19 @@ if (isset($_POST['formulario_editar_usuario'])) {
         $retornar["mensagem"] = mensagem_alerta_cadastro("perfil");
     } elseif ($situacao == "s") {
         $retornar["mensagem"] = mensagem_alerta_cadastro("situacao");
-    }elseif((!filter_var($email, FILTER_VALIDATE_EMAIL) and $email!="")) {
-        $retornar["mensagem"] = "Esse Email não é valido, favor verifique!";
-    }  else {
+    } elseif ((!filter_var($email, FILTER_VALIDATE_EMAIL) and $email != "")) {
+        $retornar["mensagem"] = "Esse Email não é valido, favor verifique";
+    }  elseif ($cargo == "0") {
+        $retornar["mensagem"] = mensagem_alerta_cadastro("cargo");
+    } else {
 
         if (verificar_user($conecta, $usuario, "editar") == $id_user or verificar_user($conecta, $usuario, "editar") == "") {
-            $update = "UPDATE tb_users set cl_nome = '$nome',cl_tipo = '$perfil',cl_ativo ='$situacao',cl_email='$email' where cl_id = $id_user ";
+            $update = "UPDATE tb_users set cl_nome = '$nome',cl_tipo = '$perfil',cl_ativo ='$situacao',cl_email='$email',cl_usuario_area ='$cargo',cl_vendedor='$vendedor' where cl_id = $id_user ";
             $operacao_update = mysqli_query($conecta, $update);
             if ($operacao_update) {
                 $retornar["sucesso"] = true;
                 //registrar no log
-                $mensagem =  utf8_decode("Usúario $nome_usuario_logado alterou dados do usúario $usuario");
+                $mensagem =  utf8_decode("Usúario $nome_usuario_logado alterou dados do usuário $usuario");
                 registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
             }
         } else {
@@ -166,7 +185,7 @@ if (isset($_POST['formulario_resetar_senha_usuario'])) {
         $operacao_update = mysqli_query($conecta, $update);
         if ($operacao_update) {
             $retornar["sucesso"] = true;
-            $mensagem =  utf8_decode("Usúario $nome_usuario_logado Resetou a senha do  usúario $usuario");
+            $mensagem =  utf8_decode("Usuário $nome_usuario_logado Resetou a senha do  usuário $usuario");
             registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
         }
     }

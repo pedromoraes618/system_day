@@ -7,7 +7,8 @@ if (isset($_GET['consultar_cliente'])) {
     $consulta = $_GET['consultar_cliente'];
 
     if ($consulta == "inicial") {
-        $consultar_tabela_inicialmente =  verficar_paramentro($conecta, "tb_parametros", "cl_id", "1"); //VERIFICAR PARAMETRO ID - 1
+        // $consultar_tabela_inicialmente =  verficar_paramentro($conecta, "tb_parametros", "cl_id", "1"); //VERIFICAR PARAMETRO ID - 1
+        $consultar_tabela_inicialmente = "N";
         $select = "SELECT clt.cl_id,clt.cl_bairro,cid.cl_nome as cidade,clt.cl_email,clt.cl_situacao_ativo,clt.cl_nome_fantasia,clt.cl_razao_social,clt.cl_cnpj_cpf,est.cl_uf from tb_parceiros as clt
             inner join tb_estados as est on clt.cl_estado_id = est.cl_id inner join tb_cidades as cid on clt.cl_cidade_id
             = cid.cl_id";

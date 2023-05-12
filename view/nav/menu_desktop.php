@@ -1,7 +1,8 @@
 <div class="categoria">
     <div class="topo">
-    <i class="bi bi-circle-half"></i>
-        <p> System Day</p>
+    <!-- <i class="bi bi-circle-half"></i> -->
+        <!-- <p> System Day</p> -->
+        <img class="img-logo" src="img/logo_effmax.svg" alt="">
 
 
     </div>

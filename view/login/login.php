@@ -22,9 +22,11 @@
         <div class="bloco">
             <div class="group-bloco">
                 <div class="titulo">
-                    <i class="fa-solid fa-right-to-bracket"></i>
-                    <p>Acesso ao login</p>
-                    <hr>
+                    <!-- <i class="fa-solid fa-right-to-bracket"></i> -->
+                    <img class="img-logo" width="150" src="img/logo_effmax.png" alt="">
+             
+                    <p>Login</p>
+                
                 </div>
 
                 <form id="form-login">

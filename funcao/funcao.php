@@ -11,6 +11,16 @@ $data_final_log = date('d/m/Y');
 
 $data_inicial = date('01/m/Y');
 $data_final = date('d/m/Y');
+
+
+$data_dia_bd = date('Y-m-d');
+
+$data_inicial_mes_bd = date('Y-m-01');
+$data_final_mes_bd = date('Y-m-d');
+
+$data_inical_ano_bd = date('Y-01-01');
+$data_final_ano_bd = date('Y-m-d');
+
 ///formatar data 
 function formatarTimeStamp($value)
 {
@@ -35,7 +45,7 @@ function mensagem_alerta_caixa($valor)
 {
     if ($valor == "VAZIO") {
         return "O caixa desse período ainda não foi aberto, Favor verifique";
-    } 
+    }
     if ($valor == "FECHADO") {
         return "O caixa desse período já foi fechado, não é possivel realização a ação";
     }
@@ -488,4 +498,18 @@ function verifica_caixa_financeiro($conecta, $data_pagamento, $conta_financeira)
 
     $dados = array("resultado" => $resultado_consulta, "status" => $status_caixa, "valor_aberto" => $valor_aberto);
     return $dados;
+}
+
+function validar_usuario($conecta, $id_usuario, $senha)
+{ //validar usuario
+    $senha = base64_encode($senha); //criptografar a senha
+    $select = "SELECT * FROM tb_users where cl_id ='$id_usuario' and cl_senha ='$senha'";
+    $consulta_usuario = mysqli_query($conecta, $select);
+    $valida = mysqli_num_rows($consulta_usuario);
+
+    if ($valida > 0) { //validado usuario
+        return true;
+    } else { //não foi validado
+        return false;
+    }
 }

@@ -48,7 +48,7 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                         <?php } ?>
                     </td>
 
-                    <td><input type="hidden" id="cliente_razao" value="<?php echo $razao_social_b; ?>"></td>
+                    <td><input type="hidden" id="<?php echo $cliente_id_b; ?>" class="cliente_razao" value="<?php echo $razao_social_b; ?>"></td>
 
                 </tr>
 

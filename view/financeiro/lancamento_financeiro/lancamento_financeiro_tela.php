@@ -130,8 +130,6 @@ include "../../../funcao/funcao.php";
                         </div>
                     </div>
                     <div class="row mb-2">
-
-
                         <div class="col-md  mb-2">
                             <label for="conta" class="form-label">Valor Bruto</label>
                             <div class="input-group mb-3">
@@ -199,13 +197,17 @@ include "../../../funcao/funcao.php";
 
                         </div>
                     </div>
+                    <hr>
+                    <div class="row mb-2">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
+                            <button type="submit" id="button_form" onclick="calcula_v_liquido() " class="btn btn-success">Salvar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
                 </div>
 
 
-                <div class="modal-footer">
-                    <button type="submit" id="button_form" onclick="calcula_v_liquido() " class="btn btn-success">Salvar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                </div>
+
             </form>
         </div>
     </div>

@@ -23,9 +23,10 @@ include "parameters/parameters.php";
         <div class="bloco">
             <div class="group-bloco">
                 <div class="titulo">
-                    <i class="fa-solid fa-unlock"></i>
+                    <!-- <i class="fa-solid fa-unlock"></i> -->
+                    <img class="img-logo" src="img/logo_effmax.png" alt="">
                     <p>Resetar Senha</p>
-                    <hr>
+                  
 
                 </div>
                 <form id="formulario_resetar_senha">

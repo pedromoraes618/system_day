@@ -17,7 +17,7 @@ include "view/tema_sistema/estilo.php";
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="icon" type="img/icon.svg" href="img/icon.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-labels@1.1.0/dist/chartjs-plugin-labels.min.js"></script>
+
 
 </head>
 
@@ -44,6 +44,7 @@ include "view/tema_sistema/estilo.php";
 
   
     <script src="js/jquery.js"></script>
+
     <script src="https://malsup.github.io/jquery.form.js"></script>
     <script src="js/menu/estilo/gerenciar_menu.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
