@@ -28,7 +28,7 @@ include "../../../modal/autorizador/usuario.php";
                         <select name="" class="form-control" id="id_usuario_autorizador">
                             <option value="">Selecione</option>
                             <?php 
-                            while($linha = mysqli_fetch_assoc($consultar_usuarios)){
+                            while($linha = mysqli_fetch_assoc($consultar_usuarios_autorizados)){
                                 $id_usuario = $linha['cl_id'];
                                 $usuario = $linha['cl_usuario'];
                                 echo "<option value='$id_usuario'>$usuario</option>";

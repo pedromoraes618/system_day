@@ -27,4 +27,4 @@ if (isset($_POST['autorizar_acao'])) {
 
 
 $select = "SELECT * from tb_users where cl_autorizar_desconto ='SIM' and cl_ativo ='1' ";
-$consultar_usuarios = mysqli_query($conecta, $select);
+$consultar_usuarios_autorizados = mysqli_query($conecta, $select);

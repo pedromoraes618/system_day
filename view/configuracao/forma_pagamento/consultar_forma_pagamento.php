@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="col-md-auto  d-grid gap-2 d-sm-block mb-1">
-        <button type="button" id="adicionar_fpg" class="btn btn-dark" data-bs-toggle="modal">
+        <button type="button" id="adicionar_fpg" class="btn btn-dark" >
             Cadastrar forma de pagamento
         </button>
     </div>

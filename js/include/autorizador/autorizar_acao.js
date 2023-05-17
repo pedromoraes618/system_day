@@ -1,5 +1,5 @@
 
-function autorizar_acao(id_usuario, senha, itens) {
+function autorizar_acao_incluir_prd_venda(id_usuario, senha, itens) {
     $.ajax({
         type: "POST",
         data: {
@@ -17,7 +17,6 @@ function autorizar_acao(id_usuario, senha, itens) {
         $dados = $.parseJSON(data)["dados"];
         if ($dados.sucesso == true) {
             produtos.push(itens)//guarda as informações do produto no array
-            console.log(produtos)
             exibirProdutos(produtos);//listar os produtos na tela
             $(".table #valor_total_produtos").html(exibirValorTotalProdutos(produtos))
             resetarValoresProdutos()
@@ -42,9 +41,8 @@ function autorizar_acao(id_usuario, senha, itens) {
 $("#autorizar_acao").click(function () {
 
     if ($("#autorizar_acao").hasClass("autorizar_desconto_prd_venda")) {//verificar se existe a classe
-        var usuario_Id = $("#id_usuario_autorizador").val()
+        var usuario_id = $("#id_usuario_autorizador").val()
         var senha = $("#senha_autorizador").val()
-
 
         /*pegar os valores  */
         var data_movimento = $("#data_movimento").val()
@@ -72,6 +70,7 @@ $("#autorizar_acao").click(function () {
 
         };
 
-        autorizar_acao(usuario_Id, senha, itens)//funcao validador de autorizacao
+        autorizar_acao_incluir_prd_venda(usuario_id, senha, itens)//funcao validador de autorizacao
+
     }
 });

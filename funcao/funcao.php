@@ -189,6 +189,17 @@ function consultar_serie($conecta, $serie)
 }
 
 
+//funcao para saber qual é o valor da serie
+function consultar_valor_serie($conecta, $id)
+{
+    //consultar nome da subcategoria
+    $select = "SELECT * from tb_serie where cl_id = $id ";
+    $consulta_serie = mysqli_query($conecta, $select);
+    $linha = mysqli_fetch_assoc($consulta_serie);
+    $valor = $linha['cl_valor'];
+    return $valor;
+}
+
 //funcao para realizar ajuste de estoque
 function ajuste_estoque($conecta, $data, $doc, $tipo, $produto_id, $quantidade, $empresa_id, $usuario_id, $forma_pagamento_id, $valor_venda, $valor_compra, $ajuste_inical, $motivo)
 {
@@ -221,6 +232,29 @@ function adicionar_valor_serie($conecta, $serie, $valor)
     } else {
         return false;
     }
+}
+
+//funcao para atualizar valor em serie
+function atualizar_valor_serie($conecta, $id, $valor)
+{
+    //consultar nome da subcategoria
+    $update = "UPDATE `tb_serie` SET `cl_valor`= '$valor' where cl_id = $id";
+    $update_serie = mysqli_query($conecta, $update);
+    if ($update_serie) {
+        return true;
+    } else {
+        return false;
+    }
+}
+//funcao para atualizar valor em serie
+function verifcar_descricao_serie($conecta, $id)
+{
+    //consultar nome da subcategoria
+    $select = "SELECT * from tb_serie where cl_id = $id ";
+    $consulta_serie = mysqli_query($conecta, $select);
+    $linha = mysqli_fetch_assoc($consulta_serie);
+    $valor = $linha['cl_descricao'];
+    return $valor;
 }
 
 //consultar se já existe um parceiro cadastrado no sistema com o mesmo cnpj que não seja ele propio
@@ -512,4 +546,38 @@ function validar_usuario($conecta, $id_usuario, $senha)
     } else { //não foi validado
         return false;
     }
+}
+
+
+function recebimento_nf_recebida($conecta, $fpg_id, $data, $serie_nf, $numero_nf, $parceiro_id, $classificacao, $valor, $documento) //verificar se a forma de pagamento é com stauts recebido se for realizar o lançamento financeiro
+{
+    $select = "SELECT * FROM tb_forma_pagamento where cl_id = $fpg_id ";
+    $consulta_forma_pagamento = mysqli_query($conecta, $select);
+    $linha = mysqli_fetch_assoc($consulta_forma_pagamento);
+    $status_id = $linha['cl_status_id'];
+    $conta_financeira = $linha['cl_conta_financeira'];
+    if ($status_id == "2") {
+        $descricao = utf8_decode("Lançamento referente a $serie_nf $numero_nf");
+        $insert = "INSERT INTO `system_day`.`tb_lancamento_financeiro` (`cl_data_lancamento`, `cl_data_vencimento`,
+        `cl_data_pagamento`, `cl_conta_financeira`, `cl_forma_pagamento_id`, `cl_parceiro_id`, `cl_tipo_lancamento`, 
+        `cl_status_id`, `cl_valor_bruto`, `cl_valor_liquido`,`cl_documento`, `cl_classificacao_id`, `cl_descricao`, `cl_nf`, `cl_serie_nf`)
+         VALUES ('$data', '$data', '$data', '$conta_financeira', '$fpg_id', '$parceiro_id', 'RECEITA', '2', '$valor', '$valor',
+          '$documento', '$classificacao','$descricao' ,  '$numero_nf', '$serie_nf')";
+        $operacao_insert = mysqli_query($conecta, $insert);
+        if ($operacao_insert) {
+            return true;
+        }
+    } else {
+        return false;
+    }
+}
+
+function verifica_desconto_fpg($conecta, $fpg_id)
+{
+    $select = "SELECT * FROM tb_forma_pagamento where cl_id = $fpg_id ";
+    $consulta_forma_pagamento = mysqli_query($conecta, $select);
+    $linha = mysqli_fetch_assoc($consulta_forma_pagamento);
+    $desconto_maximo = $linha['cl_desconto_maximo'];
+    return $desconto_maximo;
+
 }

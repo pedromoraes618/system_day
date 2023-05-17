@@ -109,8 +109,11 @@ function exibirValorTotalProdutos(produtos) {//consultar o valor dos produtos
         var valorFormatado = valor_total_produtos.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });//formatar para moeda brasileira
 
     }
-    return valorFormatado
+    $("#valor_bruto_venda").val(valor_total_produtos)//jogar o valor para o input valor_bruto_venda
+    return valorFormatado // retornar formatado para a listagem dos produtos
 }
+
+
 /*funcões */
 
 
@@ -180,7 +183,7 @@ if (id_formulario.value == "") {
     })
 
     $('#concluir_venda').click(function () {
-
+        var cliente = $("#parceiro_descricao").val()
         if (momento_venda.value == "") {
             Swal.fire({
                 icon: 'error',
@@ -192,7 +195,11 @@ if (id_formulario.value == "") {
         } else if (momento_venda.value == "1") {//venda iniciada
             $.ajax({
                 type: 'GET',
-                data: "concluir_venda=true&id_user_logado=" + id_user_logado,
+                data: {
+                    concluir_venda: true,
+                    id_user_logado: id_user_logado,
+                    cliente_razao: cliente
+                },
                 url: "view/include/finalizar_venda/finalizar_venda.php",
                 success: function (result) {
                     return $(".modal_externo_finalizar_venda").html(result) + $("#modal_finalizar_venda").modal('show')
@@ -250,12 +257,13 @@ $("#lancamento_financeiro").submit(function (e) {
 
 })
 
-function create(dados) {
+function create(dados, produtos) {
 
+    let produtosJSON = JSON.stringify(produtos); //codificar para json
     $.ajax({
         type: "POST",
-        data: "formulario_lancamento_financeiro=true&acao=create&" + dados.serialize(),
-        url: "modal/financeiro/lancamento_financeiro/gerenciar_lancamento_financeiro.php",
+        data: "venda_mercadoria=true&acao=create&" + dados.serialize() + "&produtos=" + produtosJSON,
+        url: "modal/venda/venda_mercadoria/gerenciar_venda.php",
         async: false
     }).then(sucesso, falha);
 
@@ -270,9 +278,14 @@ function create(dados) {
                 showConfirmButton: false,
                 timer: 3500
             })
+            $("#momento_venda").val('')//resetar o status da venda
             formulario_post.reset(); // redefine os valores do formulário
-            $('#pesquisar_filtro_pesquisa').trigger('click'); // clicar automaticamente para realizar a consulta
-
+            $(".title .status_momento_venda").css("display", "none")//display none para a label que ira informar o usuario qual é o status momento da venda
+            produtos.length = 0 // resetar array de produtos
+            $('#tabela_produtos').empty();//resetar a tabela
+            $(".table #valor_total_produtos").html((0))
+         
+           
         } else {
             Swal.fire({
                 icon: 'error',
@@ -281,7 +294,7 @@ function create(dados) {
                 timer: 7500,
 
             })
-
+         
         }
     }
 
@@ -313,7 +326,7 @@ function adicionar_produto_venda(itens) {
         if ($dados.sucesso == true) {//se tiver ok com as informações do prduto
             produtos.push(itens)//guarda as informações do produto no array
             exibirProdutos(produtos);//listar os produtos na tela
-            $(".table #valor_total_produtos").html(exibirValorTotalProdutos(produtos))
+            $(".table #valor_total_produtos").html(exibirValorTotalProdutos(produtos))//retornar p somatorio dos valores dos produto
             resetarValoresProdutos()
         } else if ($dados.sucesso == "autorizar") {//validar autorizacao ao adicionar o produto
             $.ajax({
@@ -323,8 +336,8 @@ function adicionar_produto_venda(itens) {
                 success: function (result) {
                     return $(".modal_externo").html(result)
                         + $("#modal_autorizar_acao").modal('show')
-                        +$("#autorizar_acao").addClass("autorizar_desconto_prd_venda"); 
-                       
+                        + $("#autorizar_acao").addClass("autorizar_desconto_prd_venda");
+
                 },
 
             });

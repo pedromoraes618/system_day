@@ -50,7 +50,7 @@ include "../../../funcao/funcao.php";
                             <div class="col-md  mb-2">
                                 <label for="parceiro_descricao" class="form-label">Cliente</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" disabled id="parceiro_descricao" placeholder="Pesquise pelo Cliente/Fornecedor" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                    <input type="text" class="form-control" readonly id="parceiro_descricao" name="parceiro_descricao" placeholder="Pesquise pelo Cliente/Fornecedor" aria-label="Recipient's username" aria-describedby="button-addon2">
                                     <input type="hidden" class="form-control" name="parceiro_id" id="parceiro_id" value="">
                                     <button class="btn btn-outline-secondary" type="button" name="modal_parceiro" id="modal_parceiro">Pesquisar</button>
                                     <button class="btn btn-outline-danger " type="button" name="modal_parceiro_avulso" id="modal_parceiro_avulso">S/Cadastro</button>
@@ -108,6 +108,9 @@ include "../../../funcao/funcao.php";
                             </div>
                         </div>
                     </div>
+        
+                    <input type="hidden" class="form-control" name="valor_bruto_venda" id="valor_bruto_venda" value="">
+
                     <div class="card p-2 border-0 border-top shadow tabela_modal tabela mb-2">
                         <table class="table table-hover">
                             <thead>
