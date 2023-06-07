@@ -27,7 +27,7 @@ include "../../../funcao/funcao.php";
        
         <div class="col-md  mb-2">
             <div class="input-group">
-                <input type="text" class="form-control" id="pesquisa_conteudo" placeholder="Tente pesquisar pelo número da venda ou cliente" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <input type="text" class="form-control" id="pesquisa_conteudo" placeholder="Tente pesquisar pelo Nº da venda ou cliente" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <button class="btn btn-outline-secondary" type="button" id="pesquisar_filtro_pesquisa">Pesquisar</button>
             </div>
         </Div>

@@ -59,6 +59,7 @@ include "../../../funcao/funcao.php";
 <div class="tabela">
 
 </div>
+
 <div class="modal_show">
 
 </div>

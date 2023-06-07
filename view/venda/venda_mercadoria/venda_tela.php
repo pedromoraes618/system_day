@@ -5,8 +5,8 @@ include "../../../modal/venda/venda_mercadoria/gerenciar_venda.php";
 include "../../../funcao/funcao.php";
 ?>
 <div class="modal fade" id="modal_adicionar_venda" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
+    <div class="modal-dialog modal-xl   ">
+        <div class="modal-content ">
             <div class="modal-header">
                 <h1 class="modal-title fs-5">Venda mercadoria</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

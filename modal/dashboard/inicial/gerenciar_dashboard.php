@@ -54,6 +54,13 @@ if (isset($_GET['dashboard_inicial'])) {
     as usuario_func,trf.cl_prioridade,trf.cl_data_limite,strf.cl_descricao as status from tb_tarefas as trf inner join tb_users as user on user.cl_id = trf.cl_usuario_func inner join tb_users as userord on userord.cl_id = trf.cl_usuario
     inner join tb_status_tarefas as strf on strf.cl_id = trf.cl_status where user.cl_usuario   = '$usuario' and (trf.cl_status ='1' or trf.cl_status='2') ";
 
+    $select_desempenho_equipe = " SELECT user.cl_usuario  as vendedor ,sum(cl_valor_liquido) as valor,count(*) as vendas  from tb_nf_saida as nf inner join tb_users as user on user.cl_id = nf.cl_vendedor_id 
+    WHERE cl_operacao='VENDA' and cl_status_venda ='2' ";
+   
+   $select_faturamento_em_venda = " SELECT sum(cl_valor_liquido) as valor from tb_nf_saida as nf inner join tb_users as user on user.cl_id = nf.cl_vendedor_id 
+    WHERE cl_operacao='VENDA' and cl_status_venda ='2' ";
+
+
     if ($periodo == "DIA") {
 
         $select_receita .= " cl_data_pagamento between '$data_dia_bd' and '$data_dia_bd' and cl_status_id ='2' "; //receita
@@ -61,6 +68,8 @@ if (isset($_GET['dashboard_inicial'])) {
         $select_a_receber .= " lcf.cl_data_vencimento between '$data_dia_bd' and '$data_dia_bd' and lcf.cl_status_id ='1' order by lcf.cl_data_vencimento desc"; //contas a receber
         $select_a_pagar .= " lcf.cl_data_vencimento between '$data_dia_bd' and '$data_dia_bd' and lcf.cl_status_id ='3'order by lcf.cl_data_vencimento  desc"; //contas a pagar
         $select_lembretes .= " and  trf.cl_data_lancamento between '$data_dia_bd' and '$data_dia_bd'"; //lembretes
+        $select_desempenho_equipe .= " and cl_data_movimento between '$data_dia_bd' and '$data_dia_bd' ";//desempenho equipe
+        $select_faturamento_em_venda .= " and cl_data_movimento between '$data_dia_bd' and '$data_dia_bd' ";//faturamento total em venda
 
     } elseif ($periodo == "MES") {
 
@@ -69,6 +78,8 @@ if (isset($_GET['dashboard_inicial'])) {
         $select_a_receber .= " lcf.cl_data_vencimento between '$data_inicial_mes_bd' and '$data_final_mes_bd' and lcf.cl_status_id ='1' order by lcf.cl_data_vencimento desc"; //contas a receber
         $select_a_pagar .= " lcf.cl_data_vencimento between '$data_inicial_mes_bd' and '$data_final_mes_bd' and lcf.cl_status_id ='3'order by lcf.cl_data_vencimento desc "; //contas a pagar
         $select_lembretes .= " and  trf.cl_data_lancamento between '$data_inicial_mes_bd' and '$data_final_mes_bd'"; //lembretes
+        $select_desempenho_equipe .= " and cl_data_movimento between '$data_inicial_mes_bd' and '$data_final_mes_bd' ";//desempenho equipe
+        $select_faturamento_em_venda .= " and cl_data_movimento between '$data_inicial_mes_bd' and '$data_final_mes_bd' ";//faturamento total em venda
     } else {
 
         $select_receita .= " cl_data_pagamento between '$data_inical_ano_bd' and '$data_final_ano_bd' and cl_status_id ='2' "; //receita
@@ -76,8 +87,17 @@ if (isset($_GET['dashboard_inicial'])) {
         $select_a_receber .= " lcf.cl_data_vencimento between '$data_inical_ano_bd' and '$data_final_ano_bd' and lcf.cl_status_id ='1' order by lcf.cl_data_vencimento desc "; //contas a receber
         $select_a_pagar .= " lcf.cl_data_vencimento between '$data_inical_ano_bd' and '$data_final_ano_bd' and lcf.cl_status_id ='3'order by lcf.cl_data_vencimento desc"; //contas a pagar
         $select_lembretes .= " and  trf.cl_data_lancamento between '$data_inical_ano_bd' and '$data_final_ano_bd'"; //lembretes
-
+        $select_desempenho_equipe .= " and cl_data_movimento  between '$data_inical_ano_bd' and '$data_final_ano_bd' ";//desempenho equipe
+        $select_faturamento_em_venda .= " and cl_data_movimento  between '$data_inical_ano_bd' and '$data_final_ano_bd' ";//faturamento total em venda
     }
+
+    if (verficar_paramentro($conecta, "tb_parametros", "cl_id", "12") == "QUANTIDADE") {
+        $select_desempenho_equipe .= " group by cl_vendedor_id order by vendas desc ";
+    } else {
+        $select_desempenho_equipe .= " group by cl_vendedor_id order by valor desc ";
+    }
+
+
     $consultar_receita_total = mysqli_query($conecta, $select_receita); //receita para o card //container center 
     $linha = mysqli_fetch_assoc($consultar_receita_total);
     $receita_total = ($linha['valor']);
@@ -95,6 +115,14 @@ if (isset($_GET['dashboard_inicial'])) {
     $consultar_lembretes = mysqli_query($conecta, $select_lembretes); //consultar tarefas
     $qtd_consultar_lembretes = mysqli_num_rows($consultar_lembretes);
 
+    $consultar_desemepenho_equipe = mysqli_query($conecta, $select_desempenho_equipe); //consultar desemémhp da equipe para dashboard
+    $qtd_desempenho_equipe = mysqli_num_rows($consultar_desemepenho_equipe);
+
+
+    $consultar_faturamento_venda = mysqli_query($conecta, $select_faturamento_em_venda); //faturamento total em venda por periodo
+    $linha = mysqli_fetch_assoc($consultar_faturamento_venda);
+    $valor_total_venda = ($linha['valor']);
+
     function consultar_receita_anual_detalhado($i, $ano)
     { //arrey de receita por mes durante o ano
         include "../../../../../conexao/conexao.php";
@@ -105,11 +133,11 @@ if (isset($_GET['dashboard_inicial'])) {
         return $valor_total;
     }
 
-    
+
     function consultar_receita_anual_anterior_detalhado($i, $ano)
     { //arrey de receita por mes durante o ano
         include "../../../../../conexao/conexao.php";
-        $ano = $ano-1;
+        $ano = $ano - 1;
         $select = "SELECT sum(cl_valor_liquido) as valor from tb_lancamento_financeiro where cl_data_pagamento between '$ano-$i-01' and '$ano-$i-31' and cl_status_id ='2'";
         $consulta_valores_receita_array = mysqli_query($conecta, $select);
         $linha = mysqli_fetch_assoc($consulta_valores_receita_array);
@@ -130,7 +158,7 @@ if (isset($_GET['dashboard_inicial'])) {
     { //arrey de despesa por mes durante o ano
 
         include "../../../../../conexao/conexao.php";
-        $ano = $ano-1;
+        $ano = $ano - 1;
         $select = "SELECT sum(cl_valor_liquido) as valor from tb_lancamento_financeiro where cl_data_pagamento between '$ano-$i-01' and '$ano-$i-31' and cl_status_id ='4'";
         $consulta_valores_receita_array = mysqli_query($conecta, $select);
         $linha = mysqli_fetch_assoc($consulta_valores_receita_array);

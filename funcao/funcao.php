@@ -177,11 +177,11 @@ function consultar_subcategoria_acesso($conecta, $id_subcategoria)
 }
 
 
-//funcao para saber qual é o valor da serie
-function consultar_serie($conecta, $serie)
+//funcao para saber qual é o valor da serie pelo id
+function consultar_serie($conecta, $id_serie)
 {
     //consultar nome da subcategoria
-    $select = "SELECT * from tb_serie where cl_descricao = '$serie' ";
+    $select = "SELECT * from tb_serie where cl_id = '$id_serie' ";
     $consulta_serie = mysqli_query($conecta, $select);
     $linha = mysqli_fetch_assoc($consulta_serie);
     $valor = $linha['cl_valor'];
@@ -222,10 +222,10 @@ function ajuste_qtd_produto($conecta, $produto_id, $quantidade)
 
 
 //funcao para atualizar valor em serie
-function adicionar_valor_serie($conecta, $serie, $valor)
+function adicionar_valor_serie($conecta, $id_serie, $valor)
 {
     //consultar nome da subcategoria
-    $update = "UPDATE `tb_serie` SET `cl_valor`= '$valor' where cl_descricao = '$serie'";
+    $update = "UPDATE `tb_serie` SET `cl_valor`= '$valor' where cl_id = '$id_serie'";
     $update_serie = mysqli_query($conecta, $update);
     if ($update_serie) {
         return true;
@@ -579,5 +579,29 @@ function verifica_desconto_fpg($conecta, $fpg_id)
     $linha = mysqli_fetch_assoc($consulta_forma_pagamento);
     $desconto_maximo = $linha['cl_desconto_maximo'];
     return $desconto_maximo;
+}
+//verificar se doc está repetido
+function verifica_repeticao_doc($conecta, $tabela, $filtro1, $filtro2, $valor1, $valor2)
+{
+    $select = "SELECT count(*) as repetiacao FROM $tabela where $filtro1 = '$valor1' and $filtro2 = '$valor2' ";
+    $consulta_repeticao_doc = mysqli_query($conecta, $select);
+    $linha = mysqli_fetch_assoc($consulta_repeticao_doc);
+    $repeticao = $linha['repetiacao'];
+    if ($repeticao > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
+
+//função para retornar o ultimo id de uma tabela
+function retornar_ultimo_id($conecta,$tabela)
+{
+    //pegar o id do ultimo produto cadastrado
+    $select = "SELECT max(cl_id) as id from $tabela";
+    $consultar_produto = mysqli_query($conecta, $select);
+    $linha = mysqli_fetch_assoc($consultar_produto);
+    $id_b = $linha['id'];
+    return $id_b;
 }

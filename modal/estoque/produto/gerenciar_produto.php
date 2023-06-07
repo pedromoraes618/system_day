@@ -168,35 +168,28 @@ if (isset($_POST['formulario_cadastrar_produto'])) {
          }
       }
 
-      if (consultar_serie($conecta, "PRD") == "") { // verificar se a serie está cadastrada
+      if (verifcar_descricao_serie($conecta, "2") == "") { // verificar se a serie está cadastrada
          $retornar["dados"] = array("sucesso" => "false", "title" => mensagem_serie_cadastrada());
       } else {
 
-         $codigo_produto = consultar_serie($conecta, "PRD");
-         $codigo_produto = $codigo_produto + 1; //incremento para adicionar ao codigo do produto
+         //$codigo_produto = consultar_serie($conecta, "PRD");
+     //    $codigo_produto = $codigo_produto + 1; //incremento para adicionar ao codigo do produto
 
-         $inset = "INSERT INTO tb_produtos (cl_data_cadastro,cl_codigo,cl_descricao,cl_tamanho,cl_localizacao,cl_referencia,cl_codigo_barra,cl_observacao,cl_preco_custo,cl_preco_venda,cl_estoque,
+         $inset = "INSERT INTO tb_produtos (cl_data_cadastro,cl_descricao,cl_tamanho,cl_localizacao,cl_referencia,cl_codigo_barra,cl_observacao,cl_preco_custo,cl_preco_venda,cl_estoque,
         cl_preco_promocao,cl_desconto_maximo,cl_margem_lucro,cl_cest,cl_ncm,cl_cst_icms,cl_cst_pis_s,cl_cst_pis_e,cl_cst_cofins_s,cl_cst_cofins_e,
         cl_estoque_minimo,cl_estoque_maximo,cl_cfop_interno,cl_cfop_externo,cl_equivalencia,cl_fabricante_id,cl_und_id,cl_grupo_id,cl_tipo_id,cl_status_ativo)
-         VALUES ('$data_lancamento','$codigo_produto','$descricao','$tamanho','$local_produto','$referencia','$codigo_barras','$observacao','$prc_custo','$prc_venda','$estoque',
+         VALUES ('$data_lancamento','$descricao','$tamanho','$local_produto','$referencia','$codigo_barras','$observacao','$prc_custo','$prc_venda','$estoque',
          '$prc_promocao','$desconto_maximo','$margem_lucro','$cest','$ncm','$cst_icms','$cst_pis_s','$cst_pis_e','$cst_cofins_s','$cst_cofins_e',
          '$est_minimo','$est_maximo','$cfop_interno','$cfop_externo','$equivalencia','$fabricante','$unidade_md','$grupo_estoque','$tipo','$status')";
          $operacao_inserir = mysqli_query($conecta, $inset);
          if ($operacao_inserir) {
+         
             //pegar o id do ultimo produto cadastrado
-            $select = "SELECT max(cl_id) as id from tb_produtos";
-            $consultar_produto = mysqli_query($conecta, $select);
-            $linha = mysqli_fetch_assoc($consultar_produto);
-            $id_produto_b = $linha['id'];
+            $id_produto_b = retornar_ultimo_id($conecta,"tb_produtos");
 
-
-            $retornar["dados"] = array("sucesso" => true, "title" => "cadastro realizado com sucesso, código do produto $codigo_produto");
             //registrar no log
-            $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado cadastrou o produto de codigo $codigo_produto");
+            $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado cadastrou o produto de codigo $id_produto_b");
             registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
-
-
-
 
             //verificar parametro cliente responsavel para ajuste de estoque
             $empresa_ajuste = verficar_paramentro($conecta, "tb_parametros", "cl_id", "3");
@@ -205,20 +198,22 @@ if (isset($_POST['formulario_cadastrar_produto'])) {
             $forma_pagamento_ajuste = verficar_paramentro($conecta, "tb_parametros", "cl_id", "4");
 
 
-            $ajuste_estoque = consultar_serie($conecta, "AJST");
+            $ajuste_estoque = consultar_serie($conecta, "2");
             $ajuste_estoque = $ajuste_estoque + 1; //incremento para adicionar na serie ajuste de estoque
 
             //adicionar ao ajuste de estoque
             ajuste_estoque($conecta, $data, "AJST-$ajuste_estoque", "ENTRADA", $id_produto_b, $estoque, $empresa_ajuste, $id_usuario_logado, $forma_pagamento_ajuste, $prc_venda, "0", '1', '');
 
-            //atualizar valor em serie PRD
-            adicionar_valor_serie($conecta, "PRD", $codigo_produto);
+            // //atualizar valor em serie PRD
+            // adicionar_valor_serie($conecta, "PRD", $codigo_produto);
 
             //atualizar valor em serie ajst // ajuste de estoque
-            adicionar_valor_serie($conecta, "AJST", $ajuste_estoque);
+            adicionar_valor_serie($conecta, "2", $ajuste_estoque);
+            $retornar["dados"] = array("sucesso" => true, "title" => "cadastro realizado com sucesso, código do produto $id_produto_b");
+        
 
             //registrar no log
-            $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado adicionou ao cadastrar o produto o ajuste inicial $estoque, produto codigo $codigo_produto");
+            $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado adicionou ao cadastrar o produto o ajuste inicial $estoque, produto codigo $id_produto_b");
             registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
          }
       }
@@ -238,7 +233,7 @@ if (isset($_POST['formulario_editar_produto'])) {
    $perfil_usuario_logado = $_POST['perfil_usuario_logado'];
 
    $id_produto = $_POST['id_produto'];
-   $codigo_produto = ($_POST["codigo_produto"]);
+  // $codigo_produto = ($_POST["codigo_produto"]);
    $descricao = utf8_decode($_POST["descricao"]);
    $referencia = utf8_decode($_POST["referencia"]);
    $fabricante = utf8_decode($_POST["fabricante"]);
@@ -356,7 +351,7 @@ if (isset($_POST['formulario_editar_produto'])) {
       $operacao_update = mysqli_query($conecta, $update);
       $retornar["dados"] = array("sucesso" => true, "title" => "Produto alterado com sucesso");
       //registrar no log
-      $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado Alterou o produto de codigo $codigo_produto");
+      $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado Alterou o produto de codigo $id_produto");
       registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
    }
 

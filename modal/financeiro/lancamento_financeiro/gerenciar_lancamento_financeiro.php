@@ -65,47 +65,47 @@ if (isset($_POST['formulario_lancamento_financeiro'])) {
    include "../../../funcao/funcao.php";
    $retornar = array();
    $acao = $_POST['acao'];
-   if ($acao == "show") {
-      $conta_financeira_id = $_POST['conta_financeira_id'];
-      $select = "SELECT lcf.cl_data_lancamento,lcf.cl_data_vencimento,lcf.cl_data_pagamento,lcf.cl_conta_financeira,lcf.cl_forma_pagamento_id,lcf.cl_parceiro_id,parc.cl_razao_social,lcf.cl_tipo_lancamento,
-      lcf.cl_status_id,lcf.cl_valor_bruto,lcf.cl_valor_liquido,lcf.cl_bx_parcial,lcf.cl_juros,lcf.cl_taxa,lcf.cl_desconto,lcf.cl_documento,lcf.cl_classificacao_id,lcf.cl_descricao,lcf.cl_observacao,cl_ordem_servico
-               from tb_lancamento_financeiro as lcf inner join tb_parceiros as parc on parc.cl_id = lcf.cl_parceiro_id WHERE lcf.cl_id = $conta_financeira_id  ";
-      $consultar_lancamento_financeiro = mysqli_query($conecta, $select);
-      $linha = mysqli_fetch_assoc($consultar_lancamento_financeiro);
-      $data_lancamento =  ($linha['cl_data_lancamento']);
-      $data_vencimento =  ($linha['cl_data_vencimento']);
-      $data_pagamento =  ($linha['cl_data_pagamento']);
-      $conta_financeira =  ($linha['cl_conta_financeira']);
-      $forma_pagamento =  ($linha['cl_forma_pagamento_id']);
-      $parceiro_id =  ($linha['cl_parceiro_id']);
-      $parceiro =  utf8_encode($linha['cl_razao_social']);
-      $status =  utf8_encode($linha['cl_status_id']);
-      $valor_bruto =  utf8_encode($linha['cl_valor_bruto']);
+   // if ($acao == "show") {
+   //    $conta_financeira_id = $_POST['conta_financeira_id'];
+   //    $select = "SELECT lcf.cl_data_lancamento,lcf.cl_data_vencimento,lcf.cl_data_pagamento,lcf.cl_conta_financeira,lcf.cl_forma_pagamento_id,lcf.cl_parceiro_id,parc.cl_razao_social,lcf.cl_tipo_lancamento,
+   //    lcf.cl_status_id,lcf.cl_valor_bruto,lcf.cl_valor_liquido,lcf.cl_bx_parcial,lcf.cl_juros,lcf.cl_taxa,lcf.cl_desconto,lcf.cl_documento,lcf.cl_classificacao_id,lcf.cl_descricao,lcf.cl_observacao,cl_ordem_servico
+   //             from tb_lancamento_financeiro as lcf inner join tb_parceiros as parc on parc.cl_id = lcf.cl_parceiro_id WHERE lcf.cl_id = $conta_financeira_id  ";
+   //    $consultar_lancamento_financeiro = mysqli_query($conecta, $select);
+   //    $linha = mysqli_fetch_assoc($consultar_lancamento_financeiro);
+   //    $data_lancamento =  ($linha['cl_data_lancamento']);
+   //    $data_vencimento =  ($linha['cl_data_vencimento']);
+   //    $data_pagamento =  ($linha['cl_data_pagamento']);
+   //    $conta_financeira =  ($linha['cl_conta_financeira']);
+   //    $forma_pagamento =  ($linha['cl_forma_pagamento_id']);
+   //    $parceiro_id =  ($linha['cl_parceiro_id']);
+   //    $parceiro =  utf8_encode($linha['cl_razao_social']);
+   //    $status =  utf8_encode($linha['cl_status_id']);
+   //    $valor_bruto =  utf8_encode($linha['cl_valor_bruto']);
 
 
-      $descricao =  utf8_encode($linha['cl_descricao']);
+   //    $descricao =  utf8_encode($linha['cl_descricao']);
 
-      $informacao = array(
-         "data_movimento" => formatDateB($data_lancamento),
-         "data_vencimento" => formatDateB($data_vencimento),
-         "data_pagamento" => formatDateB($data_pagamento),
-         "conta_financeira" => $conta_financeira,
-         "forma_pagamento" => $forma_pagamento,
-         "parceiro_id" => $parceiro_id,
-         "parceiro_descricao" => $parceiro,
+   //    $informacao = array(
+   //       "data_movimento" => formatDateB($data_lancamento),
+   //       "data_vencimento" => formatDateB($data_vencimento),
+   //       "data_pagamento" => formatDateB($data_pagamento),
+   //       "conta_financeira" => $conta_financeira,
+   //       "forma_pagamento" => $forma_pagamento,
+   //       "parceiro_id" => $parceiro_id,
+   //       "parceiro_descricao" => $parceiro,
 
-         "status" => $status,
-         "valor_bruto" => $valor_bruto,
-         "parceiro_descricao" => $parceiro,
-         "parceiro_descricao" => $parceiro,
+   //       "status" => $status,
+   //       "valor_bruto" => $valor_bruto,
+   //       "parceiro_descricao" => $parceiro,
+   //       "parceiro_descricao" => $parceiro,
 
-         "descricao" => $descricao,
+   //       "descricao" => $descricao,
 
 
-      );
+   //    );
 
-      $retornar["dados"] = array("sucesso" => true, "valores" => $informacao);
-   }
+   //    $retornar["dados"] = array("sucesso" => true, "valores" => $informacao);
+   // }
    if ($acao == "show") {
       $conta_financeira_id = $_POST['conta_financeira_id'];
       $select = "SELECT lcf.cl_data_lancamento,lcf.cl_data_vencimento,lcf.cl_data_pagamento,lcf.cl_conta_financeira,lcf.cl_forma_pagamento_id,lcf.cl_parceiro_id,parc.cl_razao_social,lcf.cl_tipo_lancamento,

@@ -63,7 +63,7 @@ include "../../../../../modal/dashboard/inicial/gerenciar_dashboard.php";
             <div class="card-body">
                 <div class="row">
                     <div class="col-8  ">
-                        <h5 class="card-title">R$ 3.000,00</h5>
+                        <h5 class="card-title"><?php echo real_format($valor_total_venda); ?></h5>
                     </div>
                     <div class="col-4 text-center">
                         <i class="bi bi-cart-check btn btn-outline-light"></i>

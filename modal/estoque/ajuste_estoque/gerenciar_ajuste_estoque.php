@@ -34,11 +34,11 @@ if (isset($_POST['formulario_cadastrar_ajuste_estoque'])) {
                 }
             }
 
-            if (consultar_serie($conecta, "AJST") == "") { // verificar se a serie está cadastrada
+            if (verifcar_descricao_serie($conecta, "2") == "") { // verificar se a serie está cadastrada
                 $retornar["dados"] = array("sucesso" => "false", "title" => mensagem_serie_cadastrada());
             } else {
 
-                $ajuste_estoque = consultar_serie($conecta, "AJST");
+                $ajuste_estoque = consultar_serie($conecta, "2");
                 $ajuste_estoque = $ajuste_estoque + 1; //incremento para adicionar na serie ajuste de estoque
 
 
@@ -82,7 +82,7 @@ if (isset($_POST['formulario_cadastrar_ajuste_estoque'])) {
 
 
                             //atualizar valor em serie ajst // ajuste de estoque
-                            adicionar_valor_serie($conecta, "AJST", $ajuste_estoque);
+                            adicionar_valor_serie($conecta, "2", $ajuste_estoque);
 
                             //registrar no log
                             $mensagem = (utf8_decode("Usúario") . " $nome_usuario_logado realizou o ajuste de estoque do produto de codigo $codigo_produto tipo de ajuste $tipo, quantidade $quantidade ");

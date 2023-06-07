@@ -8,15 +8,15 @@ include "../../../../../modal/dashboard/inicial/gerenciar_dashboard.php";
     </div>
     <div class="card-body card-right p-1">
         <?php if ($qtd_consultar_lembretes > 0) { ?>
-            <?php while ($linhas = mysqli_fetch_assoc($consultar_lembretes)) {
-                $id_tarefa_b = $linhas['cl_id'];
-                $data_lancamento_b = ($linhas['cl_data_lancamento']);
-                $descricao_b = utf8_encode($linhas['cl_descricao']);
-                $comentario_b = utf8_encode($linhas['cl_comentario']);
-                $status_b = $linhas['status'];
-                $prioridade_b = $linhas['cl_prioridade'];
-                $data_limite_b = ($linhas['cl_data_limite']);
-                $usuario_func = $linhas['usuario_func'];
+            <?php while ($linha = mysqli_fetch_assoc($consultar_lembretes)) {
+                $id_tarefa_b = $linha['cl_id'];
+                $data_lancamento_b = ($linha['cl_data_lancamento']);
+                $descricao_b = utf8_encode($linha['cl_descricao']);
+                $comentario_b = utf8_encode($linha['cl_comentario']);
+                $status_b = $linha['status'];
+                $prioridade_b = $linha['cl_prioridade'];
+                $data_limite_b = ($linha['cl_data_limite']);
+                $usuario_func = $linha['usuario_func'];
                 if ($prioridade_b == "1") {
                     $bordar = 'border border-danger-subtle';
                 } else {
@@ -47,17 +47,27 @@ include "../../../../../modal/dashboard/inicial/gerenciar_dashboard.php";
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <tH>Rank</td>
+                        <tH>Vnd</td>
                         <tH>Vendedor</tH>
                         <tH>Valor</tH>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1º</td>
-                        <td>Pedro</td>
-                        <td>R$ 5.000,00</td>
-                    </tr>
+                    <?php if ($qtd_desempenho_equipe > 0) { ?>
+                        <?php while ($linha = mysqli_fetch_assoc($consultar_desemepenho_equipe)) {
+                            $vendedor_b = $linha['vendedor'];
+                            $valor_b = $linha['valor'];
+                            $vendas_b = $linha['vendas'];
+                        ?>
+                            <tr>
+                                <td><?php echo $vendas_b; ?></td>
+                                <td><?php echo $vendedor_b; ?></td>
+                                <td><?php echo $valor_b; ?></td>
+                            </tr>
+                    <?php }
+                    }else{
+                        echo '<div class="sem_registro"><img class="img-fluid img_sem_registro" src="img/sem_registro.svg"> </div>';
+                    }?>
                 </tbody>
             </table>
         </div>

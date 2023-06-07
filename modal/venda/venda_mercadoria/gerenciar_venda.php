@@ -14,9 +14,9 @@ if (isset($_GET['consultar_venda'])) {
 
    if ($consulta == "inicial") {
       $consultar_tabela_inicialmente =  verficar_paramentro($conecta, "tb_parametros", "cl_id", "1"); //VERIFICAR PARAMETRO ID - 1
-      $select = "SELECT nf.cl_id as id,nf.cl_data_movimento,nf.cl_numero_nf,nf.cl_serie_nf,nf.cl_status_recebimento,user.cl_usuario as vendedor,
+      $select = "SELECT  nf.cl_id as id,nf.cl_data_movimento,nf.cl_numero_nf,nf.cl_serie_nf,nf.cl_status_recebimento,user.cl_usuario as vendedor,
       nf.cl_valor_desconto,nf.cl_valor_liquido,prc.cl_razao_social,prc.cl_nome_fantasia,fpg.cl_descricao as formapgt from tb_nf_saida as nf inner join tb_parceiros as prc on prc.cl_id = nf.cl_parceiro_id inner join
-       tb_forma_pagamento as fpg on fpg.cl_id = nf.cl_forma_pagamento_id inner join tb_users as user on user.cl_id = nf.cl_usuario_id WHERE nf.cl_data_movimento between '$data_inicial' and '$data_final' order by nf.cl_status_recebimento asc";
+       tb_forma_pagamento as fpg on fpg.cl_id = nf.cl_forma_pagamento_id inner join tb_users as user on user.cl_id = nf.cl_vendedor_id WHERE nf.cl_data_movimento between '$data_inicial' and '$data_final' order by nf.cl_status_recebimento asc";
       $consultar_venda_mercadoria = mysqli_query($conecta, $select);
       if (!$consultar_venda_mercadoria) {
          die("Falha no banco de dados");
@@ -29,7 +29,7 @@ if (isset($_GET['consultar_venda'])) {
 
       $select = "SELECT nf.cl_id as id,nf.cl_data_movimento,nf.cl_numero_nf,nf.cl_serie_nf,nf.cl_status_recebimento,user.cl_usuario as vendedor,
       nf.cl_valor_desconto,nf.cl_valor_liquido,prc.cl_razao_social,prc.cl_nome_fantasia,fpg.cl_descricao as formapgt from tb_nf_saida as nf inner join tb_parceiros as prc on prc.cl_id = nf.cl_parceiro_id inner join
-       tb_forma_pagamento as fpg on fpg.cl_id = nf.cl_forma_pagamento_id inner join tb_users as user on user.cl_id = nf.cl_usuario_id WHERE nf.cl_data_movimento between '$data_inicial' and '$data_final' and 
+       tb_forma_pagamento as fpg on fpg.cl_id = nf.cl_forma_pagamento_id inner join tb_users as user on user.cl_id = nf.cl_vendedor_id WHERE nf.cl_data_movimento between '$data_inicial' and '$data_final' and 
       (nf.cl_numero_nf  like '%$pesquisa%' or prc.cl_razao_social  like '%$pesquisa%' or prc.cl_nome_fantasia  like '%$pesquisa%' )  ";
 
       if ($status_recebimento != "0") {
@@ -505,6 +505,8 @@ if (isset($_POST['venda_mercadoria'])) {
          $retornar["dados"] =  array("sucesso" => "autorizar", "title" => "Não é possivel finalizar a venda, o desconto está acima do permitido, continue com a operação autorizando com a senha");
       } elseif ($desconto_venda_real > (verifica_desconto_fpg($conecta, $forma_pagamento_id_venda)) and (validar_usuario($conecta,$autorizador_id,$senha_autorizador)==false)) {
          $retornar["dados"] =  array("sucesso" => "autorizar", "title" => "Não é possivel finalizar a venda, senha incorreta, autorização não permitida");
+      }elseif(verifica_repeticao_doc($conecta,"tb_nf_saida","cl_serie_nf","cl_numero_nf",$serie_venda,$nf_novo)){//verificar se já existe essa venda se sim, não realizar a venda
+         $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel finalizar essa venda, o número de venda $nf_novo já está registrado no sistema, favor verifique");
       } else {
 
          $valor_liquido_venda = $valor_total_bruto - $desconto_venda_real; //valor liquido da venda
@@ -541,17 +543,22 @@ if (isset($_POST['venda_mercadoria'])) {
 
          $insert = "INSERT INTO `system_day`.`tb_nf_saida` ( `cl_data_movimento`,  `cl_parceiro_id`, `cl_parceiro_avulso`, 
          `cl_forma_pagamento_id`, `cl_numero_nf`, `cl_numero_venda`, `cl_serie_nf`, `cl_status_recebimento`, `cl_valor_bruto`, 
-         `cl_valor_liquido`, `cl_valor_desconto`,`cl_usuario_id`,`cl_observacao`,`cl_data_recebimento`,`cl_usuario_id_recebimento`) VALUES
+         `cl_valor_liquido`, `cl_valor_desconto`,`cl_usuario_id`,`cl_observacao`,`cl_data_recebimento`,`cl_usuario_id_recebimento`,`cl_operacao`,`cl_vendedor_id`,`cl_status_venda` ) VALUES
             ( '$data_lancamento', '$parceiro_id', '$parceiro_avulso', '$forma_pagamento_id_venda', '$nf_novo', '$nf_novo', '$serie_venda', '$status_recebimento',
-            '$valor_total_bruto', '$valor_liquido_venda', '$desconto_venda_real','$id_usuario_logado','$observacao','$data_recebimento','$usuario_id_recebimento' )";
+            '$valor_total_bruto', '$valor_liquido_venda', '$desconto_venda_real','$id_usuario_logado','$observacao','$data_recebimento','$usuario_id_recebimento','VENDA', '$vendedor_id_venda','2')";//STATUS 2 PARA VENDA FINALIZADA
          $operacao_insert = mysqli_query($conecta, $insert);
          if ($operacao_insert) {
-            $retornar["dados"] = array("sucesso" => true, "title" => "Venda finalizada com sucesso");
+            $retornar["dados"] = array("sucesso" => true, "title" => "Venda  Nº $nf_novo finalizada com sucesso ");
 
+
+            //atualizar valor em serie de venda
+            adicionar_valor_serie($conecta, "12", $nf_novo);
+            
             $mensagem = utf8_decode("Usuário $nome_usuario_logado realizou a venda Nº $nf_novo");
             registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+
          } else {
-            $retornar["dados"] = array("sucesso" => false, "title" => "Erro ao finalizar a venda, favor comunique o suporte do sistema");
+            $retornar["dados"] = array("sucesso" => false, "title" => "Erro ao finalizar a venda Nº $nf_novo, favor comunique o suporte do sistema");
             $mensagem = utf8_decode("Tentativa sem sucesso de finalizar a venda Nº $nf_novo");
             registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
          }

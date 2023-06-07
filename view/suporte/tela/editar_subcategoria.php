@@ -55,7 +55,7 @@
         </div>
 
         <div class="col-sm-2  mb-2">
-            <label for="categoria" class="form-label">Atvio</label>
+            <label for="categoria" class="form-label">Status</label>
             <select name="status_ativo" class="form-select" id="status_ativo">
                 <option value="0">Selecione</option>
                 <option <?php echo ($status_ativo_b == "SIM" ) ? 'selected' : '' ; ?> value="SIM">Ativo</option>

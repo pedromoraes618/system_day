@@ -4,9 +4,9 @@ include "../../../modal/venda/venda_mercadoria/gerenciar_venda.php";
 include "../../../modal/autorizador/usuario.php";
 include "../../../funcao/funcao.php";
 ?>
-<div class="modal fade" id="modal_finalizar_venda" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+<div class="modal fade " id="modal_finalizar_venda" data-bs-backdrop="static" data-bs-keyboard="false"  tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg ">
+        <div class="modal-content border border-primary">
             <div class="modal-header">
                 <h1 class="modal-title fs-5">Finalizar venda</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -145,6 +145,7 @@ include "../../../funcao/funcao.php";
 
             <div class="modal-footer">
                 <button type="submit" class="btn btn-success" id="finalizar_venda">Finalizar venda</button>
+                <button type="submit" class="btn btn-warning" id="adiar">Finalizar venda</button>
                 <button type="button" id="fechar_modal" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
 
             </div>
