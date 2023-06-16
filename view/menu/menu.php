@@ -23,7 +23,7 @@ include "view/tema_sistema/estilo.php";
 
 <body>
     <div class="bloco">
-        <!-- menu -->
+        <!-- menu -->   
         <div class="bloco-left">
             <?php
             include "modal/category/consultar_categoria.php";

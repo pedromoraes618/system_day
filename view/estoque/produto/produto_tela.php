@@ -1,7 +1,10 @@
 <?php
 include "../../../conexao/conexao.php";
 include "../../../modal/estoque/produto/gerenciar_produto.php";
+
+
 ?>
+
 <div class="modal fade" id="modal_produto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl   ">
         <div class="modal-content ">
@@ -12,9 +15,7 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
 
             <form action="" id="produto">
                 <?php include "../../input_include/usuario_logado.php" ?>
-                <input type="hidden" id="id" name="id" value="<?php if (isset($_GET['form_id'])) {
-                                                                    echo $_GET['form_id'];
-                                                                } ?>">
+                <input type="hidden" id="id" name="id" value="<?php echo $form_id; ?>">
 
                 <div class="modal-body">
                     <div class="title mb-2">
@@ -22,16 +23,24 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
                     </div>
                     <div class="row  mb-2">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
-                            <button type="submit" id="button_form"  class="btn btn-sm btn-success"></button>
+                            <button type="submit" id="button_form" class="btn btn-sm btn-success"></button>
                             <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Fechar</button>
                         </div>
                     </div>
+                    <?php if ($form_id != "") {
+                        echo  "<div class='row mb-2'>
+                <div class='col-md-2'>
+                <label for='codigo' class='form-label'>Código</label>
+                <input type='text' class='form-control' id='codigo' name='codigo' value='$form_id'></div>
+                </div>";
+                    } ?>
+
                     <div class="row mb-2">
                         <input type="hidden" name="formulario_cadastrar_produto">
                         <?php include "../../input_include/usuario_logado.php" ?>
                         <div class="col-sm col-md-5  mb-2">
                             <label for="descricao" class="form-label">Descrição</label>
-                            <input type="text" class="form-control " id="descricao" name="descricao" value="">
+                            <input type="text" class="form-control" id="descricao" name="descricao" value="">
                         </div>
                         <div class="col-sm-6 col-md-2   mb-2">
                             <label for="referencia" class="form-label">Referência</label>
@@ -183,17 +192,17 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
                         <div class="col-sm-6 col-md-2   mb-2">
                             <label for="cest" class="form-label">Cest</label>
                             <div class="input-group c mb-3">
-                                <input type="text" class="form-control inputNumber" id="cest" name="cest" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <input type="text" class="form-control inputNumber" id="cest" name="cest">
 
-                                <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modal_cunsultar_cest" data-bs-whatever="@mdo" title="pesquise pelo cest" type="button"><i class="bi bi-search"></i></button>
+                                <button class="btn btn-outline-secondary" id="modal_cest" type="button"><i class="bi bi-search"></i></button>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-2   mb-2">
                             <label for="ncm" class="form-label">Ncm</label>
                             <div class="input-group c mb-3">
-                                <input type="text" class="form-control inputNumber" id="ncm" name="ncm" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <input type="text" class="form-control inputNumber" id="ncm" name="ncm">
 
-                                <button class="btn btn-outline-secondary" title="pesquise pelo ncm" data-bs-toggle="modal" data-bs-target="#modal_cunsultar_ncm" data-bs-whatever="@mdo" type="button"><i class="bi bi-search"></i></button>
+                                <button class="btn btn-outline-secondary" title="pesquise pelo ncm" id="modal_ncm" type="button"><i class="bi bi-search"></i></button>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-2   mb-2">
@@ -302,7 +311,8 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
 <script src="js/funcao.js"></script>
 <script src="js/configuracao/users/user_logado.js"></script>
 <script src="js/estoque/produto/produto_tela.js"></script>
+<!-- <script src="js/estoque/produto/funcao/consultar.js"></script> -->
 <!-- 
-<script src="js/estoque/produto/funcao/consultar.js"></script>
+
 
 <script src="js/estoque/produto/cadastrar_produto.js"></script> -->
