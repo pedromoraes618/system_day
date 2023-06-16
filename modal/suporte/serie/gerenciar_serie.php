@@ -34,6 +34,7 @@ if(isset($_POST['formulario_cadastrar_serie'])){
 
         $descricao = utf8_decode($_POST["descricao"]);
         $valor = utf8_decode($_POST["valor"]);
+        $informacao = utf8_decode($_POST["informacao"]);
 
         if($descricao == ""){
         
@@ -44,8 +45,8 @@ if(isset($_POST['formulario_cadastrar_serie'])){
             $retornar["dados"] = array("sucesso"=>"false","title"=>mensagem_alerta_permissao());
         }else{
          
-        $inset = "INSERT INTO tb_serie (cl_descricao,cl_valor)
-         VALUES ('$descricao','$valor')";
+        $inset = "INSERT INTO tb_serie (cl_descricao,cl_valor,informacao)
+         VALUES ('$descricao','$valor','$informacao')";
         $operacao_inserir = mysqli_query($conecta, $inset);
         if($operacao_inserir){
             $retornar["dados"] = array("sucesso"=>true,"title"=>"Cadastrado realizado com sucesso");
@@ -73,18 +74,17 @@ if(isset($_POST['formulario_editar_serie'])){
         $perfil_usuario_logado = $_POST['perfil_usuario_logado'];
 
         $id_serie = $_POST["id_serie"];
-        $descricao = utf8_decode($_POST["descricao"]);
+       // $descricao = utf8_decode($_POST["descricao"]);
         $valor = utf8_decode($_POST["valor"]);
+        $informacao = utf8_decode($_POST["informacao"]);
 
-        if($descricao == ""){
-            $retornar["dados"] = array("sucesso"=>"false","title"=>mensagem_alerta_cadastro("descricão"));
-        }elseif($valor==""){
+       if($valor==""){
             $retornar["dados"] = array("sucesso"=>"false","title"=>mensagem_alerta_cadastro("valor"));
         }elseif($perfil_usuario_logado !="suporte"){
             $retornar["dados"] = array("sucesso"=>"false","title"=>mensagem_alerta_permissao());
         }else{
          
-        $update = "UPDATE tb_serie set cl_descricao = '$descricao',cl_valor='$valor' where cl_id = $id_serie";
+        $update = "UPDATE tb_serie set cl_informacao = '$informacao',cl_valor='$valor' where cl_id = $id_serie";
         $operacao_update = mysqli_query($conecta, $update);
         if($operacao_update){
             $retornar["dados"] = array("sucesso"=>true,"title"=>"Serie alterada com sucesso");
@@ -107,5 +107,5 @@ if(isset($_GET['editar_serie'])==true){
     $linha  = mysqli_fetch_assoc($consultar_serie);
     $descricao_b = utf8_encode($linha['cl_descricao']);
     $valor_b = utf8_encode($linha['cl_valor']);
- 
+    $informacao_b = utf8_encode($linha['cl_informacao']);
 }

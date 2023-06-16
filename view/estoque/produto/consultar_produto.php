@@ -27,5 +27,7 @@
 <div class="tabela">
 
 </div>
+<div class="modal_show">
 
+</div>
 <script src="js/estoque/produto/consultar_produto.js"></script>

@@ -22,7 +22,10 @@
             <label for="descricao" class="form-label">Valor</label>
             <input type="text" class="form-control" id="valor" name="valor" placeholder="" value="">
         </div>
-
+        <div class="col-sm-6 col-md mb-2">
+            <label for="informacao" class="form-label">Informação</label>
+            <input type="text" class="form-control" id="informacao" name="informacao" placeholder="" value="">
+        </div>
         <div class="group-btn d-grid gap-2 d-sm-block">
             <button type="subbmit" class="btn btn-success">Cadastrar</button>
         </div>

@@ -18,12 +18,16 @@ include "../../../modal/suporte/serie/gerenciar_serie.php"; // trazer as informa
         <input type="hidden" value="<?php echo $id_serie; ?>" name="id_serie">
 
         <div class="col-sm-6 col-md mb-2">
-            <label for="descricao" class="form-label">Descrição</label>
-            <input type="text" class="form-control" id="descricao" name="descricao" placeholder="" value="<?php echo $descricao_b ?>">
+            <label for="descricao"  class="form-label">Descrição</label>
+            <input type="text" disabled class="form-control" id="descricao" name="descricao" placeholder="" value="<?php echo $descricao_b ?>">
         </div>
         <div class="col-sm-6 col-md mb-2">
             <label for="descricao" class="form-label">Valor</label>
             <input type="text" class="form-control" id="valor" name="valor" placeholder="" value="<?php echo $valor_b ?>">
+        </div>
+        <div class="col-sm-6 col-md mb-2">
+            <label for="informacao" class="form-label">Informação</label>
+            <input type="text" class="form-control" id="informacao" name="informacao" placeholder="" value="<?php echo $informacao_b; ?>">
         </div>
 
         <div class="group-btn d-grid gap-2 d-sm-block">

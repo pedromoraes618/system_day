@@ -146,7 +146,7 @@ include "../../../funcao/funcao.php";
                         </table>
                     </div>
                 </div>
-                <div sr class="modal_externo_finalizar_venda">
+                <div class="modal_externo_finalizar_venda">
 
                 </div>
             </form>

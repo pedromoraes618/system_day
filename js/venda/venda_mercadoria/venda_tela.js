@@ -1,7 +1,7 @@
-$("#voltar").click(function () {
-    $(".bloco-pesquisa-menu .bloco-pesquisa-2").css("display", "none") // aparecer tela de consulta
+// $("#voltar").click(function () {
+//     $(".bloco-pesquisa-menu .bloco-pesquisa-2").css("display", "none") // aparecer tela de consulta
 
-})
+// })
 
 const formulario_post = document.getElementById("venda_mercadoria");
 let id_formulario = document.getElementById("id")
@@ -215,47 +215,47 @@ if (id_formulario.value == "") {
     show(id_formulario.value) // funcao para retornar os dados para o formulario
 }
 
-//formulario para cadastro
-$("#lancamento_financeiro").submit(function (e) {
+// //formulario para cadastro
+// $("#lancamento_financeiro").submit(function (e) {
 
-    e.preventDefault()
-    if (id_formulario.value == "") {//cadastrar
-        var formulario = $(this);
-        Swal.fire({
-            title: 'Tem certeza?',
-            text: "Deseja adicionar esse lançamento?",
-            icon: 'warning',
-            showCancelButton: true,
-            cancelButtonText: 'Não',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sim'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                var retorno = create(formulario)
-            }
-        })
-    } else {//editar
-        e.preventDefault()
-        var formulario = $(this);
-        Swal.fire({
-            title: 'Tem certeza?',
-            text: "Deseja alterar essa conta financeira",
-            icon: 'warning',
-            showCancelButton: true,
-            cancelButtonText: 'Não',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sim'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                var retorno = update(formulario)
-            }
-        })
-    }
+//     e.preventDefault()
+//     if (id_formulario.value == "") {//cadastrar
+//         var formulario = $(this);
+//         Swal.fire({
+//             title: 'Tem certeza?',
+//             text: "Deseja adicionar esse lançamento?",
+//             icon: 'warning',
+//             showCancelButton: true,
+//             cancelButtonText: 'Não',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             confirmButtonText: 'Sim'
+//         }).then((result) => {
+//             if (result.isConfirmed) {
+//                 var retorno = create(formulario)
+//             }
+//         })
+//     } else {//editar
+//         e.preventDefault()
+//         var formulario = $(this);
+//         Swal.fire({
+//             title: 'Tem certeza?',
+//             text: "Deseja alterar essa conta financeira",
+//             icon: 'warning',
+//             showCancelButton: true,
+//             cancelButtonText: 'Não',
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             confirmButtonText: 'Sim'
+//         }).then((result) => {
+//             if (result.isConfirmed) {
+//                 var retorno = update(formulario)
+//             }
+//         })
+//     }
 
 
-})
+// })
 
 function create(dados, produtos) {
 

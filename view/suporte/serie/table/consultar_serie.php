@@ -14,6 +14,7 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
             <th scope="col">Código</th>
             <th scope="col">Descrição</th>
             <th scope="col">Valor</th>
+            <th scope="col">Informção</th>
             <th scope="col"></th>
 
         </tr>
@@ -23,12 +24,13 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
                 $id_serie_b = $linha['cl_id'];
                 $descricao_b = $linha['cl_descricao'];
                 $valor_b = $linha['cl_valor'];
+                $informacao_b = utf8_encode($linha['cl_informacao']);
             ?>
         <tr>
             <th scope="row"><?php echo $id_serie_b ?></th>
             <td><?php echo $descricao_b; ?></td>
             <td><?php echo $valor_b; ?></td>
-
+            <td><?php echo $informacao_b; ?></td>
             <td class="td-btn"><button type="button" id_serie=<?php echo $id_serie_b; ?>
                     class="btn btn-sm btn-info editar_serie">Editar</button>
             </td>
