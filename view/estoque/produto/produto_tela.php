@@ -13,8 +13,8 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form action="" id="produto">
-                <?php include "../../input_include/usuario_logado.php" ?>
+            <form  id="produto">
+
                 <input type="hidden" id="id" name="id" value="<?php echo $form_id; ?>">
 
                 <div class="modal-body">
@@ -36,7 +36,6 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
                     } ?>
 
                     <div class="row mb-2">
-                        <input type="hidden" name="formulario_cadastrar_produto">
                         <?php include "../../input_include/usuario_logado.php" ?>
                         <div class="col-sm col-md-5  mb-2">
                             <label for="descricao" class="form-label">Descrição</label>
@@ -57,7 +56,7 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
                     </div>
                     <div class="row mb-2">
                         <div class="col-md-4  mb-2">
-                            <label for="grupo_estoque" class="form-label">Grupo</label>
+                            <label for="c" class="form-label">Grupo</label>
                             <select name="grupo_estoque" title="ao selecionar o grupo, os campos serão preenchidos automaticamente, para desativar essa funcionalidade verifique com o suporte" class="form-select" id="grupo_estoque">
                                 <option value="0">Selecione..</option>
                                 <?php while ($linha  = mysqli_fetch_assoc($consultar_subgrupo_estoque)) {
@@ -175,10 +174,7 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
                             <label for="prc_promocao" class="form-label">Preço Promoção</label>
                             <input type="text" class="form-control inputNumber" id="prc_promocao" name="prc_promocao" value="">
                         </div>
-                        <div class="col-sm-6 col-md-2   mb-2">
-                            <label for="desconto_maximo" class="form-label">Desconto Máximo %</label>
-                            <input type="text" class="form-control inputNumber" id="desconto_maximo" name="desconto_maximo" value="">
-                        </div>
+           
 
                     </div>
 

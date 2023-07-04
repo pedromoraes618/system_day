@@ -61,7 +61,7 @@ $("#lancamento_financeiro").submit(function (e) {
             }
         })
     } else {//editar
-        e.preventDefault()
+        //e.preventDefault()
         var formulario = $(this);
         Swal.fire({
             title: 'Tem certeza?',

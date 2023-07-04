@@ -8,6 +8,7 @@ let id_formulario = document.getElementById("id")
 let titulo = document.getElementById('title_modal')
 let btn_form = document.getElementById('button_form')
 let tipo = document.getElementById('tipo')
+let codigo_nf = document.getElementById('codigo_nf')
 var id_user_logado = $("#id_user_logado").val()
 var produtos = [];//array de produtos
 
@@ -26,7 +27,6 @@ $("#modal_parceiro").click(function () {
 
 //modal para adicionar parceiro avulso
 $("#modal_parceiro_avulso").click(function () {
-
     $.ajax({
         type: 'GET',
         data: "adicionar_parceiro_avulso=true",
@@ -66,6 +66,10 @@ $("#modal_observacao").click(function () {
 });
 
 
+$(".fechar_tela_venda").click(function(){
+    $('#pesquisar_filtro_pesquisa').trigger('click'); // clicar automaticamente para realizar fechar o modal
+})
+
 /*funcões */
 function resetarValoresProdutos() {
     $("#produto_id").val('')
@@ -82,78 +86,77 @@ function resetarValoresProdutos() {
 }
 
 
-function exibirProdutos(produtos) {//listar os produtos 
-    valor_total_produtos = 0
-    var tabela = $('#tabela_produtos');
-    tabela.empty();
-    for (var i = 0; i < produtos.length; i++) {
-        item = i + 1;
-        id_prod = produtos[i].id_produto
-        descricao_prod = produtos[i].descricao_produto
-        referencia_prod = produtos[i].referencia
-        unidade_prod = produtos[i].unidade
-        preco_venda_prod = produtos[i].preco_venda
-        quantidade_prod = produtos[i].quantidade
-        valor_total_prod = produtos[i].valor_total
-        tabela.append('<tr><td>' + item + '</td><td>' + id_prod + '</td><td>' +
-            descricao_prod + '</td><td>' + unidade_prod + '</td><td>' + referencia_prod + '</td><td>' + preco_venda_prod +
-            '</td><td>' + quantidade_prod + '</td><td>' + valor_total_prod + '</td><td class="td-btn"><button type="button" venda_mercadoria_id=' + id_prod + ' class="btn btn-info   btn-sm editar_venda_mercadoria">Editar</button> </td></tr>');
-    }
+// function exibirProdutos(produtos) {//listar os produtos 
+//     valor_total_produtos = 0
+//     var tabela = $('#tabela_produtos');
+//     tabela.empty();
+//     for (var i = 0; i < produtos.length; i++) {
+//         item = i + 1;
+//         id_prod = produtos[i].id_produto
+//         descricao_prod = produtos[i].descricao_produto
+//         referencia_prod = produtos[i].referencia
+//         unidade_prod = produtos[i].unidade
+//         preco_venda_prod = produtos[i].preco_venda
+//         quantidade_prod = produtos[i].quantidade
+//         valor_total_prod = produtos[i].valor_total
+//         tabela.append('<tr><td>' + item + '</td><td>' + id_prod + '</td><td>' +
+//             descricao_prod + '</td><td>' + unidade_prod + '</td><td>' + referencia_prod + '</td><td>' + preco_venda_prod +
+//             '</td><td>' + quantidade_prod + '</td><td>' + valor_total_prod + '</td><td class="td-btn"><button type="button" venda_mercadoria_id=' + id_prod + ' class="btn btn-info   btn-sm editar_venda_mercadoria">Editar</button> </td></tr>');
+//     }
+// }
+// function exibirValorTotalProdutos(produtos) {//consultar o valor dos produtos
+//     valor_total_produtos = 0;
+//     for (var i = 0; i < produtos.length; i++) {
+//         valor_total_prod = produtos[i].valor_total
+//         valor_total_prod = parseFloat(valor_total_prod)
+//         valor_total_produtos = valor_total_prod + valor_total_produtos
+//         var valorFormatado = valor_total_produtos.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });//formatar para moeda brasileira
+
+//     }
+//     $("#valor_bruto_venda").val(valor_total_produtos)//jogar o valor para o input valor_bruto_venda
+//     return valorFormatado // retornar formatado para a listagem dos produtos
+// }
+
+
+function generateUniqueId() {
+    var timestamp = Date.now().toString(); // Obter o timestamp atual como uma string
+    var randomNum = Math.random().toString().substr(2, 5); // Gerar um número aleatório e extrair uma parte dele
+    var uniqueId = timestamp + randomNum; // Concatenar o timestamp e o número aleatório
+    return uniqueId;
 }
-function exibirValorTotalProdutos(produtos) {//consultar o valor dos produtos
-    valor_total_produtos = 0;
-    for (var i = 0; i < produtos.length; i++) {
-        valor_total_prod = produtos[i].valor_total
-        valor_total_prod = parseFloat(valor_total_prod)
-        valor_total_produtos = valor_total_prod + valor_total_produtos
-        var valorFormatado = valor_total_produtos.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });//formatar para moeda brasileira
-
-    }
-    $("#valor_bruto_venda").val(valor_total_produtos)//jogar o valor para o input valor_bruto_venda
-    return valorFormatado // retornar formatado para a listagem dos produtos
-}
-
-
-/*funcões */
-
 
 //retorna os dados para o formulario
 if (id_formulario.value == "") {
     $('#alterar_venda').html('Concluir');
     $(".title .sub-title").html("Lançar venda")//alterar a label cabeçalho
-    var momento_venda = document.getElementById("momento_venda")//status da venda//1-iniciado 2-finalizado 3-edicao
+    // var momento_venda = document.getElementById("momento_venda")//status da venda//1-iniciado 2-finalizado 3-edicao
     $(".title .status_momento_venda").css("display", "none")//display none para a label que ira informar o usuario qual é o status momento da venda
 
     $('#iniciar_venda').click(function () {//iniciar venda
-        var tabela = $('#tabela_produtos');
         formulario_post.reset(); // redefine os valores do formulário
+        $("#codigo_nf").val(generateUniqueId())//gerar_codigo_nf automaticamente
         $(".title .status_momento_venda").html("Venda Iniciada")//alterar a label cabeçalho
         $(".title .status_momento_venda").css("display", "")//display block para a label que ira informar o usuario qual é o status momento da venda
         setTimeout(function () {
             $(".title .status_momento_venda").html("Venda em Andamento..")//alterar a label cabeçalho
         }, 3000);
-        tabela.empty();//resetar a tabela
-        $(".table #valor_total_produtos ").html((0))
-        if (momento_venda.value == "") {
-            $("#momento_venda").val('1');//venda iniciada
 
-        }
-
+        tabela_produtos(codigo_nf.value);
     })
 
 
+
     $("#adicionar_produto").click(function () {//adicionar o produto na venda
-        if (momento_venda.value == "") {
+        if (codigo_nf.value == "") {
             Swal.fire({
                 icon: 'error',
                 title: 'Verifique!',
                 text: "A venda ainda não foi iniciada, Favor clique no botão Iniciar venda",
                 timer: 7500,
             })
-        } else if (momento_venda.value == "1") {//venda iniciada
+        } else {//venda iniciada
 
             /*pegar os valores  */
-            var data_movimento = $("#data_movimento").val()
             var id_produto = $("#produto_id").val()
             var descricao_produto = $("#descricao_produto").val()
             var unidade = $("#unidade").val()
@@ -161,30 +164,28 @@ if (id_formulario.value == "") {
             var preco_venda = $("#preco_venda").val()
             var valor_total = $("#valor_total").val()
             var referencia = $("#referencia").val()
-            var estoque = $("#estoque").val()
-            var preco_venda_atual = $("#preco_venda_atual").val()
+            //  var referencia = $("#referencia").val()
 
             var itens = {
-                data_movimento: data_movimento,
                 id_produto: id_produto,
                 descricao_produto: descricao_produto,
                 unidade: unidade,
-                estoque: estoque,
                 preco_venda: preco_venda,
                 quantidade: quantidade,
                 valor_total: valor_total,
                 referencia: referencia,
-                preco_venda_atual: preco_venda_atual,
 
             };
-            adicionar_produto_venda(itens)//função para adicioonar o produto na venda validando as informações do produto e exibir a listagem de produtos
+            adicionar_produto_venda(itens, codigo_nf.value, id_user_logado, user_logado, "false")//função para adicioonar o produto na venda validando as informações do produto e exibir a listagem de produtos
         }
 
     })
 
     $('#concluir_venda').click(function () {
         var cliente = $("#parceiro_descricao").val()
-        if (momento_venda.value == "") {
+        var valor_total_produtos = $("#vlr_total_prod").val();
+
+        if (codigo_nf.value == "") {
             Swal.fire({
                 icon: 'error',
                 title: 'Verifique!',
@@ -192,13 +193,15 @@ if (id_formulario.value == "") {
                 timer: 7500,
 
             })
-        } else if (momento_venda.value == "1") {//venda iniciada
+        } else {//venda iniciada
+
             $.ajax({
                 type: 'GET',
                 data: {
                     concluir_venda: true,
                     id_user_logado: id_user_logado,
-                    cliente_razao: cliente
+                    cliente_razao: cliente,
+                    vlr_total_venda: valor_total_produtos,
                 },
                 url: "view/include/finalizar_venda/finalizar_venda.php",
                 success: function (result) {
@@ -215,47 +218,18 @@ if (id_formulario.value == "") {
     show(id_formulario.value) // funcao para retornar os dados para o formulario
 }
 
-// //formulario para cadastro
-// $("#lancamento_financeiro").submit(function (e) {
+function tabela_produtos(codigo_nf) {//tabela de produtos
+    $.ajax({
+        type: 'GET',
+        data: "tabela_produto=true&codigo_nf=" + codigo_nf,
+        url: "view/venda/venda_mercadoria/table/tabela_produtos.php",
+        success: function (result) {
+            return $(".tabela_externa").html(result)
 
-//     e.preventDefault()
-//     if (id_formulario.value == "") {//cadastrar
-//         var formulario = $(this);
-//         Swal.fire({
-//             title: 'Tem certeza?',
-//             text: "Deseja adicionar esse lançamento?",
-//             icon: 'warning',
-//             showCancelButton: true,
-//             cancelButtonText: 'Não',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             confirmButtonText: 'Sim'
-//         }).then((result) => {
-//             if (result.isConfirmed) {
-//                 var retorno = create(formulario)
-//             }
-//         })
-//     } else {//editar
-//         e.preventDefault()
-//         var formulario = $(this);
-//         Swal.fire({
-//             title: 'Tem certeza?',
-//             text: "Deseja alterar essa conta financeira",
-//             icon: 'warning',
-//             showCancelButton: true,
-//             cancelButtonText: 'Não',
-//             confirmButtonColor: '#3085d6',
-//             cancelButtonColor: '#d33',
-//             confirmButtonText: 'Sim'
-//         }).then((result) => {
-//             if (result.isConfirmed) {
-//                 var retorno = update(formulario)
-//             }
-//         })
-//     }
+        },
+    })
+}
 
-
-// })
 
 function create(dados, produtos) {
 
@@ -278,14 +252,14 @@ function create(dados, produtos) {
                 showConfirmButton: false,
                 timer: 3500
             })
-            $("#momento_venda").val('')//resetar o status da venda
+            $("#codigo_nf").val('')//resetar o status da venda
             formulario_post.reset(); // redefine os valores do formulário
             $(".title .status_momento_venda").css("display", "none")//display none para a label que ira informar o usuario qual é o status momento da venda
             produtos.length = 0 // resetar array de produtos
             $('#tabela_produtos').empty();//resetar a tabela
             $(".table #valor_total_produtos").html((0))
-         
-           
+            $('#fechar_modal').trigger('click'); // clicar automaticamente para realizar fechar o modal
+
         } else {
             Swal.fire({
                 icon: 'error',
@@ -294,7 +268,7 @@ function create(dados, produtos) {
                 timer: 7500,
 
             })
-         
+
         }
     }
 
@@ -305,7 +279,7 @@ function create(dados, produtos) {
 }
 
 
-function adicionar_produto_venda(itens) {
+function adicionar_produto_venda(itens, codigo_nf, id_user_logado, user_logado, autorizador) {
 
     let itensJSON = JSON.stringify(itens); //codificar para json
     $.ajax({
@@ -314,7 +288,10 @@ function adicionar_produto_venda(itens) {
             venda_mercadoria: true,
             acao: "validar_produto",
             itens: itensJSON,
-            resgistro: "sem_registro"
+            cd_nf: codigo_nf,
+            id_user: id_user_logado,
+            user_nome: user_logado,
+            check_autorizador: autorizador,
         },
         url: "modal/venda/venda_mercadoria/gerenciar_venda.php",
         async: false
@@ -324,9 +301,11 @@ function adicionar_produto_venda(itens) {
 
         $dados = $.parseJSON(data)["dados"];
         if ($dados.sucesso == true) {//se tiver ok com as informações do prduto
-            produtos.push(itens)//guarda as informações do produto no array
-            exibirProdutos(produtos);//listar os produtos na tela
-            $(".table #valor_total_produtos").html(exibirValorTotalProdutos(produtos))//retornar p somatorio dos valores dos produto
+            // produtos.push(itens)//guarda as informações do produto no array
+            // exibirProdutos(produtos);//listar os produtos na tela
+            // $(".table #valor_total_produtos").html(exibirValorTotalProdutos(produtos))//retornar p somatorio dos valores dos produto
+
+            tabela_produtos(codigo_nf)
             resetarValoresProdutos()
         } else if ($dados.sucesso == "autorizar") {//validar autorizacao ao adicionar o produto
             $.ajax({
@@ -351,89 +330,6 @@ function adicionar_produto_venda(itens) {
                 timer: 7500,
 
             })
-        }
-    }
-
-    function falha() {
-        console.log("erro");
-    }
-
-}
-
-
-function update(dados) {
-    $.ajax({
-        type: "POST",
-        data: "formulario_lancamento_financeiro=true&acao=update&" + dados.serialize(),
-        url: "modal/financeiro/lancamento_financeiro/gerenciar_lancamento_financeiro.php",
-        async: false
-    }).then(sucesso, falha);
-
-    function sucesso(data) {
-        $dados = $.parseJSON(data)["dados"];
-        if ($dados.sucesso == true) {
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: $dados.title,
-                showConfirmButton: false,
-                timer: 3500
-            })
-            $('#pesquisar_filtro_pesquisa').trigger('click'); // clicar automaticamente para realizar a consulta
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Verifique!',
-                text: $dados.title,
-                timer: 7500,
-
-            })
-        }
-    }
-
-    function falha() {
-        console.log("erro");
-    }
-
-}
-
-
-
-//mostrar as informações no formulario show
-function show(id) {
-    $.ajax({
-        type: "POST",
-        data: "formulario_lancamento_financeiro=true&acao=show&conta_financeira_id=" + id,
-        url: "modal/financeiro/lancamento_financeiro/gerenciar_lancamento_financeiro.php",
-        async: false
-    }).then(sucesso, falha);
-
-    function sucesso(data) {
-        $dados = $.parseJSON(data)["dados"];
-        if ($dados.sucesso == true) {
-            $("#data_movimento").val($dados.valores['data_movimento'])
-            $("#data_vencimento").val($dados.valores['data_vencimento'])
-            $("#data_pagamento").val($dados.valores['data_pagamento'])
-            $("#conta_financeira").val($dados.valores['conta_financeira'])
-            $("#forma_pagamento").val($dados.valores['forma_pagamento'])
-
-            $("#parceiro_id").val($dados.valores['parceiro_id'])
-            $("#parceiro_descricao").val($dados.valores['parceiro_descricao'])
-
-            $("#status").val($dados.valores['status'])
-            $("#classificacao").val($dados.valores['classificacao'])
-            $("#descricao").val($dados.valores['descricao'])
-            $("#documento").val($dados.valores['documento'])
-            $("#ordem_servico").val($dados.valores['ordem_servico'])
-
-            $("#valor_bruto").val($dados.valores['valor_bruto'])
-            $("#valor_liquido").val($dados.valores['valor_liquido'])
-            $("#juros").val($dados.valores['juros'])
-            $("#taxa").val($dados.valores['taxa'])
-            $("#baixa_parcial").val($dados.valores['baixa_parcial'])
-            $("#desconto").val($dados.valores['desconto'])
-            $("#observacao").val($dados.valores['observacao'])
-
         }
     }
 

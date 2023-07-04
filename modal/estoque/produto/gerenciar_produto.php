@@ -53,6 +53,7 @@ if (isset($_POST['formulario_produto'])) {
    $acao = $_POST['acao'];
 
    $ncm_obrigatorio = verficar_paramentro($conecta, "tb_parametros", "cl_id", "13");
+   $serie_ajst = verifcar_descricao_serie($conecta, 2);
 
    if ($acao == "show") {
       $id_produto = $_POST['produto_id'];
@@ -148,7 +149,6 @@ if (isset($_POST['formulario_produto'])) {
       $prc_custo = ($_POST["prc_custo"]);
       $margem_lucro = ($_POST["margem_lucro"]);
       $prc_promocao = ($_POST["prc_promocao"]);
-      $desconto_maximo = ($_POST["desconto_maximo"]);
       $cest = ($_POST["cest"]);
       $ncm = ($_POST["ncm"]);
       $cst_icms = ($_POST["cst_icms"]);
@@ -171,9 +171,8 @@ if (isset($_POST['formulario_produto'])) {
          $retornar["dados"] =  array("sucesso" => "false", "title" => mensagem_alerta_cadastro("status"));
       } elseif ($unidade_md == "0") {
          $retornar["dados"] =  array("sucesso" => "false", "title" => mensagem_alerta_cadastro("unidade de medida"));
-      }elseif($ncm =="" and $ncm_obrigatorio =="S"){
+      } elseif ($ncm == "" and $ncm_obrigatorio == "S") {
          $retornar["dados"] =  array("sucesso" => "false", "title" => mensagem_alerta_cadastro("Ncm"));
-
       } else {
 
          if ($prc_custo != "") {
@@ -196,11 +195,7 @@ if (isset($_POST['formulario_produto'])) {
                $prc_promocao = formatDecimal($prc_promocao); // formatar virgula para ponto
             }
          }
-         if ($desconto_maximo != "") {
-            if (verificaVirgula($desconto_maximo)) { //verificar se tem virgula
-               $desconto_maximo =  formatDecimal($desconto_maximo); // formatar virgula para ponto
-            }
-         }
+
          if ($estoque != "") {
             if (verificaVirgula($estoque)) { //verificar se tem virgula
                $estoque = formatDecimal($estoque); // formatar virgula para ponto
@@ -260,10 +255,10 @@ if (isset($_POST['formulario_produto'])) {
             //    $codigo_produto = $codigo_produto + 1; //incremento para adicionar ao codigo do produto
 
             $inset = "INSERT INTO tb_produtos (cl_data_cadastro,cl_descricao,cl_tamanho,cl_localizacao,cl_referencia,cl_codigo_barra,cl_observacao,cl_preco_custo,cl_preco_venda,cl_estoque,
-           cl_preco_promocao,cl_desconto_maximo,cl_margem_lucro,cl_cest,cl_ncm,cl_cst_icms,cl_cst_pis_s,cl_cst_pis_e,cl_cst_cofins_s,cl_cst_cofins_e,
+           cl_preco_promocao,cl_margem_lucro,cl_cest,cl_ncm,cl_cst_icms,cl_cst_pis_s,cl_cst_pis_e,cl_cst_cofins_s,cl_cst_cofins_e,
            cl_estoque_minimo,cl_estoque_maximo,cl_cfop_interno,cl_cfop_externo,cl_equivalencia,cl_fabricante_id,cl_und_id,cl_grupo_id,cl_tipo_id,cl_status_ativo)
             VALUES ('$data_lancamento','$descricao','$tamanho','$local_produto','$referencia','$codigo_barras','$observacao','$prc_custo','$prc_venda','$estoque',
-            '$prc_promocao','$desconto_maximo','$margem_lucro','$cest','$ncm','$cst_icms','$cst_pis_s','$cst_pis_e','$cst_cofins_s','$cst_cofins_e',
+            '$prc_promocao','$margem_lucro','$cest','$ncm','$cst_icms','$cst_pis_s','$cst_pis_e','$cst_cofins_s','$cst_cofins_e',
             '$est_minimo','$est_maximo','$cfop_interno','$cfop_externo','$equivalencia','$fabricante','$unidade_md','$grupo_estoque','$tipo','$status')";
             $operacao_inserir = mysqli_query($conecta, $inset);
             if ($operacao_inserir) {
@@ -272,7 +267,7 @@ if (isset($_POST['formulario_produto'])) {
                $id_produto_b = retornar_ultimo_id($conecta, "tb_produtos");
 
                //registrar no log
-               $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado cadastrou o produto de codigo $id_produto_b");
+               $mensagem =  utf8_decode("Usuário $nome_usuario_logado cadastrou o produto de código $id_produto_b");
                registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
 
                //verificar parametro cliente responsavel para ajuste de estoque
@@ -286,7 +281,7 @@ if (isset($_POST['formulario_produto'])) {
                $ajuste_estoque = $ajuste_estoque + 1; //incremento para adicionar na serie ajuste de estoque
 
                //adicionar ao ajuste de estoque
-               ajuste_estoque($conecta, $data, "AJST-$ajuste_estoque", "ENTRADA", $id_produto_b, $estoque, $empresa_ajuste, $id_usuario_logado, $forma_pagamento_ajuste, $prc_venda, "0", '1', '');
+               ajuste_estoque($conecta, $data, "$serie_ajst-$ajuste_estoque", "ENTRADA", $id_produto_b, $estoque, $empresa_ajuste, "", $id_usuario_logado, $forma_pagamento_ajuste, $prc_venda, "0", '1', '',"");
 
                // //atualizar valor em serie PRD
                // adicionar_valor_serie($conecta, "PRD", $codigo_produto);
@@ -297,7 +292,7 @@ if (isset($_POST['formulario_produto'])) {
 
 
                //registrar no log
-               $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado adicionou ao cadastrar o produto o ajuste inicial $estoque, produto codigo $id_produto_b");
+               $mensagem =  utf8_decode("Usuário $nome_usuario_logado adicionou ao cadastrar o produto o ajuste inicial $estoque, produto codigo $id_produto_b");
                registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
             }
          }
@@ -329,7 +324,6 @@ if (isset($_POST['formulario_produto'])) {
 
       $margem_lucro = ($_POST["margem_lucro"]);
       $prc_promocao = ($_POST["prc_promocao"]);
-      $desconto_maximo = ($_POST["desconto_maximo"]);
       $cest = ($_POST["cest"]);
       $ncm = ($_POST["ncm"]);
       $cst_icms = ($_POST["cst_icms"]);
@@ -352,7 +346,7 @@ if (isset($_POST['formulario_produto'])) {
          $retornar["dados"] =  array("sucesso" => "false", "title" => mensagem_alerta_cadastro("status"));
       } elseif ($unidade_md == "0") {
          $retornar["dados"] =  array("sucesso" => "false", "title" => mensagem_alerta_cadastro("unidade de medida"));
-      } elseif($ncm =="" and $ncm_obrigatorio=="S"){
+      } elseif ($ncm == "" and $ncm_obrigatorio == "S") {
          $retornar["dados"] =  array("sucesso" => "false", "title" => mensagem_alerta_cadastro("ncm"));
       } else {
 
@@ -366,11 +360,7 @@ if (isset($_POST['formulario_produto'])) {
                $prc_promocao = formatDecimal($prc_promocao); // formatar virgula para ponto
             }
          }
-         if ($desconto_maximo != "") {
-            if (verificaVirgula($desconto_maximo)) { //verificar se tem virgula
-               $desconto_maximo =  formatDecimal($desconto_maximo); // formatar virgula para ponto
-            }
-         }
+
 
          if ($est_minimo != "") {
             if (verificaVirgula($est_minimo)) { //verificar se tem virgula
@@ -421,7 +411,7 @@ if (isset($_POST['formulario_produto'])) {
 
          $update = "UPDATE `tb_produtos` SET `cl_descricao`= '$descricao', `cl_tamanho` = '$tamanho', `cl_localizacao` = '$local_produto', `cl_referencia` = '$referencia',
          `cl_equivalencia` = '$equivalencia', `cl_observacao` = '$observacao', `cl_codigo_barra` = '$codigo_barras', `cl_preco_promocao` =
-         '$prc_promocao', `cl_desconto_maximo` = '$desconto_maximo', `cl_margem_lucro` = '$margem_lucro', `cl_cest` = '$cest', `cl_ncm` = '$ncm', `cl_cst_icms` = '$cst_icms',
+         '$prc_promocao', `cl_margem_lucro` = '$margem_lucro', `cl_cest` = '$cest', `cl_ncm` = '$ncm', `cl_cst_icms` = '$cst_icms',
          `cl_cst_pis_s` = '$cst_pis_s', `cl_cst_pis_e` = '$cst_pis_e', `cl_cst_cofins_s` = '$cst_cofins_s', `cl_cst_cofins_e` = '$cst_cofins_e',
           `cl_estoque_minimo` = '$est_minimo', `cl_estoque_maximo`= '$est_maximo', `cl_cfop_interno` = '$cfop_interno', `cl_cfop_externo` = '$cfop_externo', 
           `cl_fabricante_id` = '$fabricante', `cl_grupo_id` = '$grupo_estoque', `cl_und_id` = '$unidade_md', `cl_tipo_id` = '$tipo', 
@@ -429,7 +419,7 @@ if (isset($_POST['formulario_produto'])) {
          $operacao_update = mysqli_query($conecta, $update);
          $retornar["dados"] = array("sucesso" => true, "title" => "Produto alterado com sucesso");
          //registrar no log
-         $mensagem =  (utf8_decode("Usúario") . " $nome_usuario_logado Alterou o produto de codigo $id_produto");
+         $mensagem =  utf8_decode("Usúario $nome_usuario_logado Alterou o produto de codigo $id_produto");
          registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
       }
    }

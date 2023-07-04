@@ -7,13 +7,13 @@ if (isset($_POST['autorizar_acao'])) {
     include "../../funcao/funcao.php";
     $retornar = array();
     $acao = $_POST['acao'];
-    $tela = $_POST['tela'];
+   // $tela = $_POST['tela'];
 
 
     $id_usuario = $_POST['usuario_id'];
     $senha = $_POST['senha'];
 
-    if ($acao == "validar_usuario" and $tela == "venda") {
+    if ($acao == "validar_usuario") {
         if (validar_usuario($conecta, $id_usuario, $senha) == false) {
             $retornar["dados"] = array("sucesso" => false, "title" => "Senha incorreta, autorização não permitida"); //alertar o usuario que o caixa está fechado
 

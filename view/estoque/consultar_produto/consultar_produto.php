@@ -10,13 +10,10 @@
             <button class="btn btn-outline-secondary" type="button" id="pesquisar_filtro_pesquisa">Pesquisar</button>
         </div>
     </div>
+</div>
 
-</div>
-<div class="alerta">
-    
-</div>
-<div class="tabela">
+<div class="alerta"></div>
 
-</div>
+<div class="tabela"></div>
 
 <script src="js/estoque/consultar_produto/consultar_produto.js"></script>

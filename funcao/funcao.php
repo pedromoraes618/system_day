@@ -201,12 +201,11 @@ function consultar_valor_serie($conecta, $id)
 }
 
 //funcao para realizar ajuste de estoque
-function ajuste_estoque($conecta, $data, $doc, $tipo, $produto_id, $quantidade, $empresa_id, $usuario_id, $forma_pagamento_id, $valor_venda, $valor_compra, $ajuste_inical, $motivo)
+function ajuste_estoque($conecta, $data, $doc, $tipo, $produto_id, $quantidade, $empresa_id, $parceiro_id, $usuario_id, $forma_pagamento_id, $valor_venda, $valor_compra, $ajuste_inical, $motivo,$codigo_nf)
 {
-
     $inset = "INSERT INTO `tb_ajuste_estoque` (`cl_data_lancamento`, `cl_documento`, `cl_produto_id`, `cl_tipo`, `cl_quantidade`, 
-    `cl_empresa_id`, `cl_usuario_id`, `cl_forma_pagamento_id`, `cl_valor_venda`, `cl_valor_compra`,`cl_ajuste_inicial`,`cl_status`,`cl_motivo`) VALUES 
-    ('$data', '$doc', '$produto_id', '$tipo', '$quantidade', '$empresa_id', '$usuario_id', '$forma_pagamento_id', '$valor_venda', '$valor_compra','$ajuste_inical','ok','$motivo')";
+    `cl_empresa_id`,`cl_parceiro_id`,`cl_usuario_id`, `cl_forma_pagamento_id`, `cl_valor_venda`, `cl_valor_compra`,`cl_ajuste_inicial`,`cl_status`,`cl_motivo`,`cl_codigo_nf`) VALUES 
+    ('$data', '$doc', '$produto_id', '$tipo', '$quantidade', '$empresa_id','$parceiro_id','$usuario_id', '$forma_pagamento_id', '$valor_venda', '$valor_compra','$ajuste_inical','ok','$motivo','$codigo_nf')";
     $operacao_inserir = mysqli_query($conecta, $inset);
     return $operacao_inserir;
 }
@@ -549,7 +548,7 @@ function validar_usuario($conecta, $id_usuario, $senha)
 }
 
 
-function recebimento_nf_recebida($conecta, $fpg_id, $data, $serie_nf, $numero_nf, $parceiro_id, $classificacao, $valor, $documento) //verificar se a forma de pagamento é com stauts recebido se for realizar o lançamento financeiro
+function recebimento_nf_recebida($conecta, $fpg_id, $data, $serie_nf, $numero_nf, $parceiro_id, $classificacao, $valor, $documento,$codigo_nf) //verificar se a forma de pagamento é com stauts recebido se for realizar o lançamento financeiro
 {
     $select = "SELECT * FROM tb_forma_pagamento where cl_id = $fpg_id ";
     $consulta_forma_pagamento = mysqli_query($conecta, $select);
@@ -560,9 +559,9 @@ function recebimento_nf_recebida($conecta, $fpg_id, $data, $serie_nf, $numero_nf
         $descricao = utf8_decode("Lançamento referente a $serie_nf $numero_nf");
         $insert = "INSERT INTO `system_day`.`tb_lancamento_financeiro` (`cl_data_lancamento`, `cl_data_vencimento`,
         `cl_data_pagamento`, `cl_conta_financeira`, `cl_forma_pagamento_id`, `cl_parceiro_id`, `cl_tipo_lancamento`, 
-        `cl_status_id`, `cl_valor_bruto`, `cl_valor_liquido`,`cl_documento`, `cl_classificacao_id`, `cl_descricao`, `cl_nf`, `cl_serie_nf`)
+        `cl_status_id`, `cl_valor_bruto`, `cl_valor_liquido`,`cl_documento`, `cl_classificacao_id`, `cl_descricao`, `cl_nf`, `cl_serie_nf`, `cl_codigo_nf` )
          VALUES ('$data', '$data', '$data', '$conta_financeira', '$fpg_id', '$parceiro_id', 'RECEITA', '2', '$valor', '$valor',
-          '$documento', '$classificacao','$descricao' ,  '$numero_nf', '$serie_nf')";
+          '$documento', '$classificacao','$descricao','$numero_nf','$serie_nf','$codigo_nf' )";
         $operacao_insert = mysqli_query($conecta, $insert);
         if ($operacao_insert) {
             return true;
@@ -596,7 +595,7 @@ function verifica_repeticao_doc($conecta, $tabela, $filtro1, $filtro2, $valor1, 
 
 
 //função para retornar o ultimo id de uma tabela
-function retornar_ultimo_id($conecta,$tabela)
+function retornar_ultimo_id($conecta, $tabela)
 {
     //pegar o id do ultimo produto cadastrado
     $select = "SELECT max(cl_id) as id from $tabela";
@@ -604,4 +603,81 @@ function retornar_ultimo_id($conecta,$tabela)
     $linha = mysqli_fetch_assoc($consultar_produto);
     $id_b = $linha['id'];
     return $id_b;
+}
+
+function validar_prod_venda($conecta, $id_produto, $retorno)
+{
+    //pegar o id do ultimo produto cadastrado
+    $select = "SELECT * from tb_produtos where cl_id =$id_produto ";
+    $consultar_produto = mysqli_query($conecta, $select);
+    $linha = mysqli_fetch_assoc($consultar_produto);
+    $valor = $linha["$retorno"];
+    return $valor;
+}
+
+function validar_qtd_prod_venda($conecta, $id_produto, $codigo_nf, $quantidade)
+{
+    $select = " SELECT sum(cl_quantidade) as qtd from tb_nf_saida_item where cl_item_id = '$id_produto' and cl_codigo_nf ='$codigo_nf' ";
+    $consultar_produto = mysqli_query($conecta, $select);
+    $linha = mysqli_fetch_assoc($consultar_produto);
+    $valor = $linha["qtd"];
+    $total = $valor + $quantidade;
+    return $total;
+}
+function valores_prod_nf($conecta, $codigo_nf)
+{
+    $select = "SELECT sum(cl_valor_total) as vlr_total from tb_nf_saida_item where cl_codigo_nf ='$codigo_nf' ";
+    $consultar_vlr_produto = mysqli_query($conecta, $select);
+    $linha = mysqli_fetch_assoc($consultar_vlr_produto);
+    $valor = $linha["vlr_total"];
+    return $valor;
+}
+function finalizar_produtos_nf($conecta, $codigo_nf, $serie_vnd, $numero_nf, $desconto, $data, $parceiro_id, $id_usuario_logado, $forma_pagamento_id)
+{
+    $ordem_item = 0;
+
+    $select = "SELECT * from tb_nf_saida_item where cl_codigo_nf ='$codigo_nf' ";
+    $consultar_produto_nf = mysqli_query($conecta, $select);
+    $qtd_prod = mysqli_num_rows($consultar_produto_nf);
+
+    if ($desconto != "0") {
+        $desconto_rat = $desconto / $qtd_prod; //rateio do desconto
+    } else {
+        $desconto_rat = 0;
+    }
+
+    while ($linha = mysqli_fetch_assoc($consultar_produto_nf)) {
+        $id_produto = $linha['cl_item_id'];
+        $quantidade_vendida = $linha['cl_quantidade'];
+        $prc_venda_unitario = $linha['cl_valor_unitario'];
+
+        $estoque = validar_prod_venda($conecta, $id_produto, "cl_estoque");
+
+        $quantidade_atual = $estoque - $quantidade_vendida;
+        $ordem_item = $ordem_item + 1;
+        $update = "UPDATE `system_day`.`tb_nf_saida_item` SET `cl_numero_nf` = '$numero_nf', `cl_item_ordem` = '$ordem_item', 
+        `cl_desconto_rat` = '$desconto_rat', `cl_status` = '1' WHERE `tb_nf_saida_item`.`cl_codigo_nf` = '$codigo_nf' ";
+        $operacao_update = mysqli_query($conecta, $update);
+        if ($operacao_update) {
+            $update = "UPDATE `system_day`.`tb_produtos` SET `cl_estoque` = '$quantidade_atual' WHERE `tb_produtos`.`cl_id` = $id_produto ";
+            $operacao_update_estoque = mysqli_query($conecta, $update);
+            //adicionar ao ajuste de estoque
+            ajuste_estoque($conecta, $data, "$serie_vnd-$numero_nf", "SAIDA", $id_produto, $quantidade_vendida, "1", $parceiro_id, $id_usuario_logado, $forma_pagamento_id, $prc_venda_unitario, "0", '0', '',"$codigo_nf");
+        }
+    };
+}
+
+function consulta_parceiro($conecta, $parceiro_id, $filtro_valor)
+{
+    $select = "SELECT * from tb_parceiros where cl_id = $parceiro_id ";
+    $consultar_parceiro = mysqli_query($conecta, $select);
+    $linha = mysqli_fetch_assoc($consultar_parceiro);
+    $valor = $linha["$filtro_valor"];
+    return $valor;
+}
+
+
+function calcularPorcentagemDesconto($valorUnitario, $valorAtual) {
+    $porcentagemDesconto = (($valorAtual - $valorUnitario) / $valorAtual) * 100;
+    return  number_format($porcentagemDesconto, 2);
 }

@@ -46,7 +46,13 @@ if (isset($_GET['consultar_venda'])) {
    }
 }
 
-
+if (isset($_GET['tabela_produto'])) {
+   include "../../../../conexao/conexao.php";
+   include "../../../../funcao/funcao.php";
+   $codigo_nf = $_GET['codigo_nf'];
+   $select  = "SELECT * from tb_nf_saida_item where cl_codigo_nf = '$codigo_nf'";
+   $consultar_produtos = mysqli_query($conecta, $select);
+}
 
 if (isset($_POST['venda_mercadoria'])) {
    include "../../../conexao/conexao.php";
@@ -61,42 +67,127 @@ if (isset($_POST['venda_mercadoria'])) {
    $nf_novo = $nf_atual + 1;
 
    if ($acao == "validar_produto") { //validar dados do produto
-      $registro = $_POST['resgistro'];
-      $itensJSON = $_POST['itens'];
+      // $registro = $_POST['resgistro'];
+      $codigo_nf = $_POST['cd_nf'];
+      $id_user_logado = $_POST['id_user'];
+      $nome_usuario_logado = $_POST['user_nome'];
+      $check_autorizador = $_POST['check_autorizador'];
+
+      $itensJSON = $_POST['itens']; //array de produtos
       $itens = json_decode($itensJSON, true); //recuperar valor do array javascript decodificando o json
 
-      $estoque = $itens['estoque'];
       $id_produto = $itens['id_produto'];
-      $descricao_produto = $itens['descricao_produto'];
+      $descricao_produto = utf8_decode($itens['descricao_produto']);
       $preco_venda = $itens['preco_venda'];
       $quantidade = $itens['quantidade'];
-      $valor_total = $itens['valor_total'];
-      $preco_venda_atual = $itens['preco_venda_atual'];
+      $unidade = utf8_decode($itens['unidade']);
 
-      if ($preco_venda != "" and $preco_venda_atual != "") {
-         $calula_desconto = (($preco_venda * 100) / $preco_venda_atual);
-         $calula_desconto = (100 - $calula_desconto);
-      }
+      if ($id_produto == "") { //validar se algum produto já foi selecionado
+         $retornar["dados"] =  array("sucesso" => false, "title" => "Favor Selecione um produto");
+      } else {
+         //$valor_total = $itens['valor_total'];
+         $estoque =  validar_prod_venda($conecta, $id_produto, "cl_estoque"); //estoque disponivel do produto
+         $preco_venda_atual =  validar_prod_venda($conecta, $id_produto, "cl_preco_venda"); //preco de venda do produto no cadastro
+         $referencia =  validar_prod_venda($conecta, $id_produto, "cl_referencia"); //preco de venda do produto no cadastro
+         $valor_total = $preco_venda * $quantidade;
 
-      if ($registro == 'sem_registro') {
-         if ($estoque == "" or $id_produto == "" or $descricao_produto == "" or $preco_venda == ""  or $quantidade == "" or $valor_total == ""  or $preco_venda_atual == "" or $quantidade == "0" or $preco_venda == "0" or $preco_venda_atual == "0" or $valor_total = "0") {
+         if ($preco_venda != "" and $preco_venda_atual != "") {
+            $calula_desconto = (($preco_venda * 100) / $preco_venda_atual);
+            $calula_desconto = (100 - $calula_desconto); //desconto em porcentagem
+
+            $desconto_real = $preco_venda_atual - $preco_venda; //desconto em real
+         }
+
+
+         if ($estoque == "" or $id_produto == "" or $descricao_produto == "" or $preco_venda == ""  or $quantidade == "" or $valor_total == ""  or $preco_venda_atual == "" or $quantidade == "0" or $preco_venda == "0" or $preco_venda_atual == "0") {
             $retornar["dados"] =  array("sucesso" => false, "title" => "Favor informe todas as informações do produto");
          } elseif ($validar_venda_sem_estoque == "N" and $estoque == 0) {
             $retornar["dados"] =  array("sucesso" => false, "title" => "Não é possivel adicionar o produto, pois está sem estoque");
-         } elseif (($desconto_maximo_produto < $calula_desconto and ($desconto_maximo_produto != ""))) {
+         } elseif (($desconto_maximo_produto < $calula_desconto and ($desconto_maximo_produto != "") and ($check_autorizador != "true"))) {
             $retornar["dados"] =  array("sucesso" => "autorizar", "title" => "Não é possivel adicionar o produto, o desconto está acima do permitido, continue com a operação autorizando com a senha");
+         } elseif (validar_qtd_prod_venda($conecta, $id_produto, $codigo_nf, $quantidade) > $estoque) { //validar se a quantidade adicionado mais o mesmo produto que esta na venda atende o estoque
+            $retornar["dados"] =  array("sucesso" => false, "title" => "Não é possivel adicionar o produto, a demanda no estoque não atende");
          } else {
-            $retornar["dados"] =  array("sucesso" => true);
+            $insert = "INSERT INTO `system_day`.`tb_nf_saida_item` ( `cl_data_movimento`, `cl_codigo_nf`, `cl_usuario_id`, `cl_serie_nf`, 
+              `cl_item_id`, `cl_descricao_item`, `cl_quantidade`, `cl_unidade`, `cl_valor_unitario`, `cl_valor_total`,
+             `cl_desconto`, `cl_referencia`,`cl_status`) VALUES ( '$data_lancamento', '$codigo_nf', '$id_user_logado', '$serie_venda',
+                  '$id_produto', '$descricao_produto', '$quantidade', '$unidade', '$preco_venda', '$valor_total', '$desconto_real',
+             '$referencia','2') ";
+            $operacao_insert = mysqli_query($conecta, $insert);
+            if ($operacao_insert) {
+               $retornar["dados"] =  array("sucesso" => true);
+            } else {
+               $mensagem = utf8_decode("Tentativa do usuário $nome_usuario_logado adicionar um produto em uma venda com erro");
+               registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+               $retornar["dados"] =  array("sucesso" => false, "title" => "Erro, não foi possivel adicionar o produto, favor verifique com o suporte");
+            }
+         }
+      }
+   }
+   if ($acao == "validar_alteracao_produto") { //validar dados do produto
+      // $registro = $_POST['resgistro'];
+      $codigo_nf = $_POST['cd_nf'];
+      $id_user_logado = $_POST['id_user'];
+     // $nome_usuario_logado = $_POST['user_nome'];
+     $nome_usuario_logado = consulta_tabela($conecta,"tb_users","cl_id",$id_user_logado,"cl_usuario");
+      $check_autorizador = $_POST['check_autorizador'];
+
+      $itensJSON = $_POST['itens']; //array de produtos
+      $itens = json_decode($itensJSON, true); //recuperar valor do array javascript decodificando o json
+
+      $id_produto = $itens['id_produto'];//id do produto que está cadastrado no sistema
+      $id_item_nf = $itens['id_item_nf'];//id do produto na tabela nfe_saida_item
+      $descricao_produto = utf8_decode($itens['descricao_produto']);
+      $preco_venda = $itens['preco_venda'];
+      $quantidade = $itens['quantidade'];
+      $unidade = utf8_decode($itens['unidade']);
+
+      if ($id_item_nf == "") { //validar se algum produto já foi selecionado
+         $retornar["dados"] =  array("sucesso" => false, "title" => "Favor Selecione um produto");
+      } else {
+         //$valor_total = $itens['valor_total'];
+         $estoque =  validar_prod_venda($conecta, $id_produto, "cl_estoque"); //estoque disponivel do produto
+         $preco_venda_atual =  validar_prod_venda($conecta, $id_produto, "cl_preco_venda"); //preco de venda do produto no cadastro
+         $referencia =  validar_prod_venda($conecta, $id_produto, "cl_referencia"); //preco de venda do produto no cadastro
+         $valor_total = $preco_venda * $quantidade;
+
+         if ($preco_venda != "" and $preco_venda_atual != "") {
+            $calula_desconto = (($preco_venda * 100) / $preco_venda_atual);
+            $calula_desconto = (100 - $calula_desconto); //desconto em porcentagem
+
+            $desconto_real = $preco_venda_atual - $preco_venda; //desconto em real
+         }
+
+
+         if ($estoque == "" or $id_produto == "" or $descricao_produto == "" or $preco_venda == ""  or $quantidade == "" or $valor_total == ""  or $preco_venda_atual == "" or $quantidade == "0" or $preco_venda == "0" or $preco_venda_atual == "0") {
+            $retornar["dados"] =  array("sucesso" => false, "title" => "Favor informe todas as informações do produto");
+         } elseif ($validar_venda_sem_estoque == "N" and $estoque == 0) {
+            $retornar["dados"] =  array("sucesso" => false, "title" => "Não é possivel adicionar o produto, pois está sem estoque");
+         } elseif (($desconto_maximo_produto < $calula_desconto and ($desconto_maximo_produto != "") and ($check_autorizador != "true"))) {
+            $retornar["dados"] =  array("sucesso" => "autorizar", "title" => "Não é possivel alterar o produto, o desconto está acima do permitido, continue com a operação autorizando com a senha");
+         } elseif (validar_qtd_prod_venda($conecta, $id_produto, $codigo_nf, $quantidade) > $estoque) { //validar se a quantidade adicionado mais o mesmo produto que esta na venda atende o estoque
+            $retornar["dados"] =  array("sucesso" => false, "title" => "Não é possivel adicionar o produto, a demanda no estoque não atende");
+         } else {
+      
+            $update = "UPDATE `system_day`.`tb_nf_saida_item` SET `cl_descricao_item` = '$descricao_produto', `cl_quantidade` = '$quantidade',
+             `cl_valor_unitario` = '$preco_venda', `cl_valor_total` = '$valor_total', `cl_desconto` = '$desconto_real' WHERE `tb_nf_saida_item`.`cl_id` = $id_item_nf  ";
+            $operacao_update= mysqli_query($conecta,$update);
+            if ($operacao_update) {
+               $retornar["dados"] = array("sucesso" => true, "title" => "Produto alterado com sucesso");
+            } else {
+               $mensagem = utf8_decode("Tentativa do usuário $nome_usuario_logado alterar o produto de id $id_produto da venda sem sucesso");
+               registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+               $retornar["dados"] =  array("sucesso" => false, "title" => "Erro, não foi possivel alterar o produto, favor verifique com o suporte");
+            }
          }
       }
    }
 
+
+
    if ($acao == "create") { //criar a venda
       ///  $momento_venda = $_POST['momento_venda'];
-
-
       $ordem_item = 0;
-      $valor_total_bruto = 0;
       $produtosJSON = $_POST['produtos'];
       $produtos = json_decode($produtosJSON, true); //recuperar valor do array javascript decodificando o json
 
@@ -104,6 +195,7 @@ if (isset($_POST['venda_mercadoria'])) {
       $id_usuario_logado = $_POST["id_usuario_logado"];
       $perfil_usuario_logado = $_POST['perfil_usuario_logado'];
       $id_venda = $_POST['id'];
+      $codigo_nf = $_POST['codigo_nf'];
       $vendedor_id_venda = $_POST['vendedor_id_venda'];
       $parceiro_id = $_POST['parceiro_id'];
       $parceiro_descricao = $_POST['parceiro_descricao'];
@@ -113,27 +205,24 @@ if (isset($_POST['venda_mercadoria'])) {
       $autorizador_id = $_POST['autorizador_id'];
       $senha_autorizador = $_POST['senha_autorizador'];
 
-
-      // Percorrer os itens do array de produtos
-      foreach ($produtos as $itens) {
-         $valor_total = $itens['valor_total'];
-         $valor_total_bruto = $valor_total + $valor_total_bruto;
-      }
-
-
-      if ($desconto_venda_real == "") {
-         $desconto_venda_real = 0;
+      if (verficar_paramentro($conecta, "tb_parametros", "cl_id", "15") == "S") { //assumir a data que está no campo data movimento na venda
+         $data_lancamento = $_POST['data_movimento'];
+         $data_lancamento = formatarDataParaBancoDeDados($data_lancamento);
       } else {
-         if (verificaVirgula($desconto_venda_real)) { //verificar se tem virgula
-            $desconto_venda_real = formatDecimal($desconto_venda_real); // formatar virgula para ponto
-         }
+         $data_lancamento = $data_lancamento;
       }
 
-      if (verificaVirgula($valor_total_bruto)) { //verificar se tem virgula
-         $valor_total_bruto = formatDecimal($valor_total_bruto); // formatar virgula para ponto
+      $valor_total_bruto = valores_prod_nf($conecta, $codigo_nf); //valores total dos produtos
+
+
+
+      if (verificaVirgula($desconto_venda_real)) { //verificar se tem virgula
+         $desconto_venda_real = formatDecimal($desconto_venda_real); // formatar virgula para ponto
       }
 
-      if ($parceiro_id == "") {
+
+
+      if ($parceiro_id == "") { //se a venda não possuir cliente será colocado o cliente padrão que está setado no parametro
          $parceiro_id = $cliente_avulso_id;
          $parceiro_avulso = $parceiro_descricao;
       } else {
@@ -142,7 +231,9 @@ if (isset($_POST['venda_mercadoria'])) {
 
       if ($id_venda != "") {
          $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel finalizar essa venda, pois já foi finalizada");
-      } elseif ($valor_total_bruto == "") {
+      } elseif ($codigo_nf == "") {
+         $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel finalizar essa venda, não foi iniciado a venda");
+      } elseif ($valor_total_bruto == "" or $valor_total_bruto == 0) {
          $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel finalizar essa venda, não foi adicionado itens a venda");
       } elseif ($desconto_venda_real != "" and $desconto_venda_real < 0) {
          $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel finalizar essa venda, o desconto não pode ser negativo");
@@ -152,35 +243,16 @@ if (isset($_POST['venda_mercadoria'])) {
          $retornar["dados"] = array("sucesso" => false, "title" => mensagem_alerta_cadastro("forma de pagamento"));
       } elseif ($desconto_venda_real > (verifica_desconto_fpg($conecta, $forma_pagamento_id_venda)) and ($autorizador_id == "0" or $senha_autorizador == "")) {
          $retornar["dados"] =  array("sucesso" => "autorizar", "title" => "Não é possivel finalizar a venda, o desconto está acima do permitido, continue com a operação autorizando com a senha");
-      } elseif ($desconto_venda_real > (verifica_desconto_fpg($conecta, $forma_pagamento_id_venda)) and (validar_usuario($conecta,$autorizador_id,$senha_autorizador)==false)) {
+      } elseif ($desconto_venda_real > (verifica_desconto_fpg($conecta, $forma_pagamento_id_venda)) and (validar_usuario($conecta, $autorizador_id, $senha_autorizador) == false)) {
          $retornar["dados"] =  array("sucesso" => "autorizar", "title" => "Não é possivel finalizar a venda, senha incorreta, autorização não permitida");
-      }elseif(verifica_repeticao_doc($conecta,"tb_nf_saida","cl_serie_nf","cl_numero_nf",$serie_venda,$nf_novo)){//verificar se já existe essa venda se sim, não realizar a venda
+      } elseif (verifica_repeticao_doc($conecta, "tb_nf_saida", "cl_serie_nf", "cl_numero_nf", $serie_venda, $nf_novo)) { //verificar se já existe essa venda se sim, não realizar a venda
          $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel finalizar essa venda, o número de venda $nf_novo já está registrado no sistema, favor verifique");
       } else {
 
          $valor_liquido_venda = $valor_total_bruto - $desconto_venda_real; //valor liquido da venda
 
-
-         // Percorrer os itens do array de produtos
-         foreach ($produtos as $itens) {
-            // Acessar os dados de cada item do array
-            $id_produto = $itens['id_produto'];
-            $descricao_produto = utf8_decode($itens['descricao_produto']);
-            $unidade = utf8_decode($itens['unidade']);
-            $preco_venda = $itens['preco_venda'];
-            $quantidade = $itens['quantidade'];
-            $valor_total = $itens['valor_total'];
-            $referencia = utf8_decode($itens['referencia']);
-            $valor_total = $itens['valor_total'];
-            $ordem_item = $ordem_item + 1;
-
-            $insert = "INSERT INTO `system_day`.`tb_nf_saida_item` ( `cl_data_movimento`, `cl_usuario_id`, `cl_serie_nf`, `cl_numero_nf`, 
-         `cl_item_id`, `cl_descricao_item`, `cl_quantidade`,`cl_unidade`,`cl_valor_unitario`, `cl_valor_total`, `cl_desconto`, `cl_referencia`, `cl_item_ordem_nf` )
-          VALUES ('$data_lancamento', '$id_usuario_logado', '$serie_venda', '$nf_novo', '$id_produto', '$descricao_produto', '$quantidade','$unidade', '$preco_venda', '$valor_total', '0', '$referencia', '$ordem_item' )";
-            $operacao_insert = mysqli_query($conecta, $insert);
-         }
-
-         if (recebimento_nf_recebida($conecta, $forma_pagamento_id_venda, $data_lancamento, $serie_venda, $nf_novo, $parceiro_id, $classficacao_financeiro_id, $valor_liquido_venda, "$serie_venda $nf_novo")) {
+         /*recebimento da venda automaticamente de acordo com a configuracao da forma de pagamento*/
+         if (recebimento_nf_recebida($conecta, $forma_pagamento_id_venda, $data_lancamento, $serie_venda, $nf_novo, $parceiro_id, $classficacao_financeiro_id, $valor_liquido_venda, "$serie_venda$nf_novo", $codigo_nf)) {
             $status_recebimento = "2";
             $data_recebimento = $data_lancamento;
             $usuario_id_recebimento = $id_usuario_logado;
@@ -190,22 +262,21 @@ if (isset($_POST['venda_mercadoria'])) {
             $usuario_id_recebimento = $id_usuario_logado;
          }
 
-         $insert = "INSERT INTO `system_day`.`tb_nf_saida` ( `cl_data_movimento`,  `cl_parceiro_id`, `cl_parceiro_avulso`, 
+         $insert = "INSERT INTO `system_day`.`tb_nf_saida` ( `cl_data_movimento`, `cl_codigo_nf`,  `cl_parceiro_id`, `cl_parceiro_avulso`, 
          `cl_forma_pagamento_id`, `cl_numero_nf`, `cl_numero_venda`, `cl_serie_nf`, `cl_status_recebimento`, `cl_valor_bruto`, 
          `cl_valor_liquido`, `cl_valor_desconto`,`cl_usuario_id`,`cl_observacao`,`cl_data_recebimento`,`cl_usuario_id_recebimento`,`cl_operacao`,`cl_vendedor_id`,`cl_status_venda` ) VALUES
-            ( '$data_lancamento', '$parceiro_id', '$parceiro_avulso', '$forma_pagamento_id_venda', '$nf_novo', '$nf_novo', '$serie_venda', '$status_recebimento',
-            '$valor_total_bruto', '$valor_liquido_venda', '$desconto_venda_real','$id_usuario_logado','$observacao','$data_recebimento','$usuario_id_recebimento','VENDA', '$vendedor_id_venda','2')";//STATUS 2 PARA VENDA FINALIZADA
-         $operacao_insert = mysqli_query($conecta, $insert);
+            ( '$data_lancamento','$codigo_nf', '$parceiro_id', '$parceiro_avulso', '$forma_pagamento_id_venda', '$nf_novo', '$nf_novo', '$serie_venda', '$status_recebimento',
+            '$valor_total_bruto', '$valor_liquido_venda', '$desconto_venda_real','$id_usuario_logado','$observacao','$data_recebimento','$usuario_id_recebimento','VENDA', '$vendedor_id_venda','1')"; //STATUS 2 PARA VENDA FINALIZADA
+         $operacao_insert = mysqli_query($conecta, $insert); //inserindo os dados basicos da venda
          if ($operacao_insert) {
-            $retornar["dados"] = array("sucesso" => true, "title" => "Venda  Nº $nf_novo finalizada com sucesso ");
-
+            finalizar_produtos_nf($conecta, $codigo_nf, $serie_venda, $nf_novo, $desconto_venda_real, $data_lancamento, $parceiro_id, $id_usuario_logado, $forma_pagamento_id_venda); //atualizando os produtos da venda com valores corretos
 
             //atualizar valor em serie de venda
             adicionar_valor_serie($conecta, "12", $nf_novo);
-            
             $mensagem = utf8_decode("Usuário $nome_usuario_logado realizou a venda Nº $nf_novo");
             registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
 
+            $retornar["dados"] = array("sucesso" => true, "title" => "Venda  Nº $nf_novo finalizada com sucesso ");
          } else {
             $retornar["dados"] = array("sucesso" => false, "title" => "Erro ao finalizar a venda Nº $nf_novo, favor comunique o suporte do sistema");
             $mensagem = utf8_decode("Tentativa sem sucesso de finalizar a venda Nº $nf_novo");
@@ -214,6 +285,33 @@ if (isset($_POST['venda_mercadoria'])) {
       }
    }
 
+   if ($acao == "show_det_produto") {
+      $id_produto = $_POST['produto_id'];
+      $select = "SELECT * from tb_nf_saida_item where cl_id = $id_produto";
+      $consultar_produtos = mysqli_query($conecta, $select);
+      $linha = mysqli_fetch_assoc($consultar_produtos);
+      $descricao = utf8_encode($linha['cl_descricao_item']);
+      $quantidade = $linha['cl_quantidade'];
+      $valor_unitario = $linha['cl_valor_unitario'];
+      $valor_total = $linha['cl_valor_total'];
+      $unidade = utf8_encode($linha['cl_unidade']);
+      $item_id = ($linha['cl_item_id']);
+      $preco_venda_atual =  validar_prod_venda($conecta, $item_id, "cl_preco_venda"); //preco de venda do produto no cadastro
+
+      $desconto_percente =calcularPorcentagemDesconto($valor_unitario,$preco_venda_atual);
+      $informacao = array(
+         "descricao" => $descricao,
+         "quantidade" => $quantidade,
+         "preco_venda" => $valor_unitario,
+         "unidade" => $unidade,
+         "valor_total" => $valor_total,
+         "preco_venda_atual" => $preco_venda_atual,
+         "desconto" => $desconto_percente,
+         "id_produto" => $item_id,
+      );
+
+      $retornar["dados"] = array("sucesso" => true, "valores" => $informacao);
+   }
 
    echo json_encode($retornar);
 }
@@ -272,6 +370,8 @@ $consultar_vendedor = mysqli_query($conecta, $select);
 
 $select = "SELECT * from tb_forma_pagamento where cl_ativo ='S' ";
 $consultar_forma_pagamento = mysqli_query($conecta, $select);
+
+
 
 // //consultar status recebimento
 // $select = "SELECT * from tb_status_recebimento ";

@@ -1,8 +1,8 @@
 
 $(document).ready(function () {
-    var valor_bruto_Venda = $("#valor_bruto_venda").val()
-    $("#sub_total_venda").val(valor_bruto_Venda)
-    $("#valor_liquido_venda").val(valor_bruto_Venda)
+   // var valor_bruto_Venda = $("#valor_bruto_venda").val()
+//$("#sub_total_venda").val(valor_bruto_Venda)
+  //  $("#valor_liquido_venda").val(valor_bruto_Venda)
 
 })
 
@@ -20,10 +20,7 @@ $("#venda_mercadoria").submit(function (e) {
         confirmButtonText: 'Sim'
     }).then((result) => {
         if (result.isConfirmed) {
-            var retorno = create(formulario, produtos)
-            if (momento_venda.value == "") {
-                $('#fechar_modal').trigger('click'); // clicar automaticamente para realizar fechar o modal
-            }
+            var retorno = create(formulario, produtos);
         }
     })
 

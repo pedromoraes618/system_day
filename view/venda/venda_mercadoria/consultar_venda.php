@@ -24,7 +24,7 @@ include "../../../funcao/funcao.php";
                 <option value="3">Cancelado</option>
             </select>
         </div>
-       
+
         <div class="col-md  mb-2">
             <div class="input-group">
                 <input type="text" class="form-control" id="pesquisa_conteudo" placeholder="Tente pesquisar pelo Nº da venda ou cliente" aria-label="Recipient's username" aria-describedby="button-addon2">
@@ -32,10 +32,8 @@ include "../../../funcao/funcao.php";
             </div>
         </Div>
         <div class="col-md-auto  d-grid gap-2 d-sm-block mb-2">
-            <button type="button" id="adicionar_venda" class="btn btn-dark" >
-                Adicionar Venda
-            </button>
-         
+            <button type="button" id="adicionar_venda" class="btn btn-dark">Adicionar Venda</button>
+
         </div>
     </div>
 

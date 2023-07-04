@@ -3,6 +3,11 @@
 include "../../../conexao/conexao.php";
 include "../../../modal/autorizador/usuario.php";
 // include "/../../../funcao/funcao.php";
+if (isset($_GET['mensagem'])) {
+    $mensagem = $_GET['mensagem'];
+} else {
+    $mensagem = "";
+}
 ?>
 <div class="modal fade" id="modal_autorizar_acao" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -16,7 +21,7 @@ include "../../../modal/autorizador/usuario.php";
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md shadow mb-2">
-                        <p><?php echo $_GET['mensagem']; ?></p>
+                        <p><?php echo $mensagem; ?></p>
                     </div>
                 </div>
                 <hr>
@@ -27,8 +32,8 @@ include "../../../modal/autorizador/usuario.php";
                     <div class="col-md">
                         <select name="" class="form-control" id="id_usuario_autorizador">
                             <option value="">Selecione</option>
-                            <?php 
-                            while($linha = mysqli_fetch_assoc($consultar_usuarios_autorizados)){
+                            <?php
+                            while ($linha = mysqli_fetch_assoc($consultar_usuarios_autorizados)) {
                                 $id_usuario = $linha['cl_id'];
                                 $usuario = $linha['cl_usuario'];
                                 echo "<option value='$id_usuario'>$usuario</option>";

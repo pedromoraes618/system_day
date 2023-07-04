@@ -86,7 +86,7 @@ include "../../../funcao/funcao.php";
                                     </select>
 
 
-                                    <input type="password" name="senha_autorizador" class="form-control" placeholder="Digite a senha">
+                                    <input type="password" autocomplete="disabled" name="senha_autorizador" class="form-control" placeholder="Digite a senha">
 
                                 </div>
                             </div>
@@ -123,7 +123,7 @@ include "../../../funcao/funcao.php";
                                         <div class="col">
                                             <div class="input-group mb-1">
                                                 <span class="input-group-text ">Sub total </span>
-                                                <input type="text" aria-label="First name" readonly name="sub_total_venda" id="sub_total_venda" class="form-control">
+                                                <input type="text" aria-label="First name" readonly name="sub_total_venda" id="sub_total_venda" class="form-control" value="<?php echo $_GET['vlr_total_venda']; ?>">
                                             </div>
                                             <div class="input-group mb-1">
                                                 <span class="input-group-text ">Desconto</span>
@@ -132,7 +132,7 @@ include "../../../funcao/funcao.php";
                                             </div>
                                             <div class="input-group">
                                                 <span class="input-group-text">Total</span>
-                                                <input type="text" disabled aria-label="First name" id="valor_liquido_venda" class="form-control">
+                                                <input type="text" disabled aria-label="First name" id="valor_liquido_venda" class="form-control"  value="<?php echo $_GET['vlr_total_venda'];?>">
                                             </div>
                                         </div>
                                     </li>
