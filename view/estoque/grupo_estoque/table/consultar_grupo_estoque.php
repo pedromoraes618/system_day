@@ -20,7 +20,7 @@ if(!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente == 
     <tbody>
         <?php while($linha = mysqli_fetch_assoc($consultar_grupo_estoque)){
                 $id_grupo_b = $linha['cl_id'];
-                $descricao_b = $linha['cl_descricao'];
+                $descricao_b = utf8_encode($linha['cl_descricao']);
                 $grupo_venda_b = utf8_encode($linha['cl_grupo_venda']);
                 $grupo_servico_b = utf8_encode($linha['cl_grupo_servico']);
             ?>

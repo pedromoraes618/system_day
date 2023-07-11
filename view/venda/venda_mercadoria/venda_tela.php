@@ -4,13 +4,6 @@ include "../../../conexao/conexao.php";
 include "../../../modal/venda/venda_mercadoria/gerenciar_venda.php";
 include "../../../funcao/funcao.php";
 
-if (isset($_GET['form_id'])) {
-    $id_nf = $_GET['form_id'];
-    $tipo = $_GET['tipo'];
-} else {
-    $id_nf = "";
-    $tipo = "";
-}
 
 ?>
 <div class="modal fade" id="modal_adicionar_venda" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
@@ -23,7 +16,7 @@ if (isset($_GET['form_id'])) {
 
             <form action="" id="venda_mercadoria">
                 <?php include "../../input_include/usuario_logado.php" ?>
-                <input type="hidden" name="codigo_nf" id="codigo_nf" value="">
+                <input type="hidden" name="codigo_nf" id="codigo_nf" value="<?php echo $codigo_nf; ?>">
                 <input type="hidden" id="id" name="id" value="<?php echo $id_nf ?>">
                 <input type="hidden" id="tipo" name="tipo" value="<?php echo $tipo; ?>">
                 <!-- <input type="hidden" id="momento_venda" name="momento_venda" value=""> -->
@@ -35,7 +28,7 @@ if (isset($_GET['form_id'])) {
                     </div>
 
                     <div class="row  mb-2">
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end btn-acao">
                             <button type="button" id="iniciar_venda" class="btn btn-sm btn-primary">Iniciar venda</button>
                             <button type="button" id="modal_observacao" class="btn btn-sm btn-dark">Observação</button>
                             <button type="button" id="concluir_venda" onclick="calcula_v_liquido()" class="btn btn-sm btn-success">Concluir</button>
@@ -76,7 +69,7 @@ if (isset($_GET['form_id'])) {
                                                                             } ?> id="descricao_produto" placeholder="">
                                     <input type="hidden" class="form-control" name="produto_id" id="produto_id" value="">
                                     <input type="hidden" class="form-control" name="referencia" id="referencia" value="">
-                                    <input type="hidden" class="form-control" name="estoque" id="estoque" value="">
+                                    <!-- <input type="hidden" class="form-control" name="estoque" id="estoque" value=""> -->
                                     <button class="btn btn-outline-secondary" type="button" name="modal_produto" id="modal_produto">Pesquisar</button>
                                 </div>
                             </div>
@@ -85,6 +78,10 @@ if (isset($_GET['form_id'])) {
                             <div class="col-md-1 mb-2">
                                 <label for="quantidade" class="form-label">Unidade</label>
                                 <input type="text" class="form-control" disabled name="unidade" id="unidade" value="">
+                            </div>
+                            <div class="col-md-1  mb-2">
+                                <label for="estoque" class="form-label">Estoque</label>
+                                <input type="text" class="form-control" disabled name="estoque" id="estoque" value="">
                             </div>
                             <div class="col-md-2  mb-2">
                                 <label for="quantidade" class="form-label">Quantidade</label>
@@ -100,11 +97,11 @@ if (isset($_GET['form_id'])) {
                             </div>
 
 
-                            <div class="col-md  mb-2">
+                            <div class="col-md-2  mb-2">
                                 <label for="desconto" class="form-label">Desconto</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text">%</span>
-                                    <input type="text" class="form-control inputNumber" onblur="calcular_preco_venda();calcular_valor_total()" name="desconto" id="desconto" value="">
+                                    <input type="text" class="form-control inputNumber" disabled onblur="calcular_valor_total()" name="desconto" id="desconto" value="">
                                 </div>
                             </div>
                             <div class="col-md  mb-2">

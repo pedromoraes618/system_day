@@ -56,18 +56,18 @@
         }
     });
 
-    var faturamento_nota = [10000, 20000, 18000.52, 15000, 5000, 5000, 7000, 20000, 30000, 15000, 20000, 15000];
     var myChart = new Chart(chart2, {
         type: 'bar',
         data: {
             labels: ["Jan", "fev", "mar", "abr", "mai", "jun", 'jul', 'ago', 'set', 'out', 'nov', 'dez'],
-            datasets: [{
-                label: 'Faturamento R$',
-                data: faturamento_nota,
-                type: 'bar',
-                backgroundColor: 'blue',
-                fill: false
-            }, ]
+            datasets: [
+                {
+                    label: 'Quantidade vendas',
+                    data: quantidade_anul_vendas,
+                    backgroundColor: 'blue',
+                    fill: false
+                }, 
+              ]
         },
         options: {
             locale: 'br-BR',

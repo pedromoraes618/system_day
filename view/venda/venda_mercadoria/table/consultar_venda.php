@@ -29,6 +29,7 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
             while ($linha = mysqli_fetch_assoc($consultar_venda_mercadoria)) {
                 $id_b = ($linha['id']);
                 $data_movimento_b = ($linha['cl_data_movimento']);
+                $codigo_nf = ($linha['cl_codigo_nf']);
                 $numero_nf_b = ($linha['cl_numero_nf']);
                 $serie_nf_b = ($linha['cl_serie_nf']);
                 $status_recebmento_b = ($linha['cl_status_recebimento']);
@@ -39,7 +40,15 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                 $valor_desconto_b = ($linha['cl_valor_desconto']);
                 $valor_liquido_b = ($linha['cl_valor_liquido']);
                 $vendedor_b = utf8_encode($linha['vendedor']);
+                $tipo_pagamento = ($linha['tipopg']);
+                $status_venda = ($linha['cl_status_venda']);
                 $valor_total = $valor_liquido_b + $valor_total;
+
+                if ($tipo_pagamento != "3") {
+                    $tipo_pagamento = "cartao";
+                } else {
+                    $tipo_pagamento = "faturado";
+                }
             ?>
                 <tr>
                     <th scope="row"><?php echo formatDateB($data_movimento_b) ?></th>
@@ -63,12 +72,18 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                     <td><?php echo real_format($valor_desconto_b); ?></td>
                     <td><?php echo real_format($valor_liquido_b); ?></td>
 
-                    <?php if($status_recebmento_b_2=="1"){
-                       echo  "<td class='td-btn'> <button type='button' venda_mercadoria_id= echo $id_b class='btn   btn-sm receber_venda'><i class='bi bi-clipboard-check-fill text-success fs-4'></i></button></td>";
-                    }else{
+                    <?php if ($status_recebmento_b_2 == "1") {
+                        echo  "<td class='td-btn'> <button type='button'  tipo_pagamento='$tipo_pagamento' venda_mercadoria_id='$id_b' class='btn btn-sm receber_nf'><i class='bi bi-clipboard-check-fill text-success fs-4'></i></button></td>";
+                    } else {
                         echo "<td></td>";
-                    }?>
-                    <td class="td-btn"> <button type="button" venda_mercadoria_id="<?php echo $id_b; ?>" class="btn btn-info   btn-sm editar_venda_mercadoria">Editar</button></td>
+                    }
+
+
+                    if ($status_venda == "1") { //recibo
+                        echo  "<td class='td-btn'><button type='button' codigo_nf='$codigo_nf' serie_nf='$serie_nf_b'  class='btn btn-sm  btn-warning recibo_venda'><i class='bi bi-bookmark-fill'></i>Recibo</button></td>";
+                    }
+                    ?>
+                    <td class="td-btn"> <button type="button"  codigo_nf='<?php echo $codigo_nf; ?>' venda_mercadoria_id="<?php echo $id_b; ?>" class="btn btn-sm  btn-info editar_venda_mercadoria">Editar</button></td>
                 </tr>
 
             <?php } ?>

@@ -25,7 +25,7 @@
                 <option value="0">Selecione..</option>
                 <?php while($linha  = mysqli_fetch_assoc($consultar_grupo_estoque)){ 
                 $id_grupo = $linha['cl_id'];
-                $descricao_b = $linha['cl_descricao'];
+                $descricao_b = utf8_encode($linha['cl_descricao']);
 
                 echo "<option value='$id_grupo'> $descricao_b </option>'";
              }?>

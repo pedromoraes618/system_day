@@ -78,7 +78,7 @@ function show_det_produto(id) {
       $("#preco_venda_item_atual").val($dados.valores['preco_venda_atual'])
       $("#desconto_item").val($dados.valores['desconto'])
       $("#id_produto_item").val($dados.valores['id_produto'])
-
+      
     }
   }
 

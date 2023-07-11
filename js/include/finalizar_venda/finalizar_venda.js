@@ -1,10 +1,40 @@
 
-$(document).ready(function () {
-   // var valor_bruto_Venda = $("#valor_bruto_venda").val()
-//$("#sub_total_venda").val(valor_bruto_Venda)
-  //  $("#valor_liquido_venda").val(valor_bruto_Venda)
+var id_nf = $("#id").val()
+if (id_nf != "") {//editar nf
+    show_det_finalizar_nf(id_nf, codigo_nf.value)
+    $('#finalizar_venda').html("Alterar venda")
+    $("#modal_finalizar_venda .modal-title").html('Alterar venda')
+}
 
-})
+
+//mostrar as informações no formulario show
+function show_det_finalizar_nf(id, codigo_nf) {
+
+    $.ajax({
+        type: "POST",
+        data: "venda_mercadoria=true&acao=show&nf_id=" + id + "&codigo_nf=" + codigo_nf,
+        url: "modal/venda/venda_mercadoria/gerenciar_venda.php",
+        async: false
+    }).then(sucesso, falha);
+
+    function sucesso(data) {
+
+        $dados = $.parseJSON(data)["dados"];
+        if ($dados.sucesso == true) {
+            $("#sub_total_venda").val($dados.valores['sub_total_venda'])
+            $("#desconto_venda_real").val($dados.valores['desconto_venda_real'])
+            $("#valor_liquido_venda").val($dados.valores['valor_liquido_venda'])
+            $("#vendedor_id_venda").val($dados.valores['vendedor_id_venda'])
+            $("#id_forma_pagamento_venda").val($dados.valores['id_forma_pagamento_venda'])
+            $('.descricao_forma_pagamento_venda').html($dados.valores['descricao_forma_pagamento_venda'])
+        }
+    }
+
+    function falha() {
+        console.log("erro");
+    }
+
+}
 
 $("#venda_mercadoria").submit(function (e) {
     e.preventDefault()
@@ -20,7 +50,7 @@ $("#venda_mercadoria").submit(function (e) {
         confirmButtonText: 'Sim'
     }).then((result) => {
         if (result.isConfirmed) {
-            var retorno = create(formulario, produtos);
+            var retorno = create(formulario, produtos, codigo_nf.value);
         }
     })
 

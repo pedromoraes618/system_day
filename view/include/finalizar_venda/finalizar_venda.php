@@ -41,7 +41,7 @@ include "../../../funcao/funcao.php";
                         <div class="card mb-2">
                             <div class="card-header">Selecione o vendedor</div>
                             <div class="col">
-                                <select class="form-control" name="vendedor_id_venda" id="">
+                                <select class="form-control" name="vendedor_id_venda" id="vendedor_id_venda">
                                     <option value="0">Selecione..</option>
                                     <?php
                                     if (isset($_GET['id_user_logado'])) {
@@ -145,7 +145,7 @@ include "../../../funcao/funcao.php";
 
             <div class="modal-footer">
                 <button type="submit" class="btn btn-success" id="finalizar_venda">Finalizar venda</button>
-                <button type="submit" class="btn btn-warning" id="adiar">Finalizar venda</button>
+                <!-- <button type="submit" class="btn btn-warning" id="adiar">Finalizar venda</button> -->
                 <button type="button" id="fechar_modal" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
 
             </div>

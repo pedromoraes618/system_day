@@ -96,8 +96,6 @@ function show(id) {
             $("#cst_cofins_s").val($dados.valores['cofins_s'])
             $("#cst_cofins_e").val($dados.valores['cofins_e'])
             $("#observacao").val($dados.valores['observacao'])
-            $("#observacao").val($dados.valores['observacao'])
-            $("#observacao").val($dados.valores['observacao'])
         }
     }
 

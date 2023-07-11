@@ -15,6 +15,7 @@ include "../../../../modal/venda/venda_mercadoria/gerenciar_venda.php";
             <th scope="col">Qtd</th>
             <th scope="col">Total</th>
             <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody id="tabela_produtos">
@@ -45,8 +46,9 @@ include "../../../../modal/venda/venda_mercadoria/gerenciar_venda.php";
                 <td><?php echo real_format($valor_unitario); ?></td>
                 <td><?php echo ($quantidade); ?></td>
                 <td><?php echo real_format($Valor_total); ?></td>
-                <td><button type="button" produto_id='<?php echo $id; ?>' class="btn btn-sm btn-info alterar_produto_vnd">Editar</button></td>
-
+                <td><button type="button" quantidade_prod='<?php echo $quantidade; ?>' id_produto='<?php echo $item_id; ?>'  id_item_nf='<?php echo $id; ?>' title='Remover item'  class="btn btn-sm btn-danger remover_produto"><i style="font-size: 1.4em;" class="bi bi-trash"></i></button></td>
+                <td><button type="button" produto_id='<?php echo $id; ?>' title='Editar item' class="btn btn-sm btn-info alterar_produto_vnd">Editar</button></td>
+           
 
             </tr>
         <?php } ?>
@@ -62,6 +64,7 @@ include "../../../../modal/venda/venda_mercadoria/gerenciar_venda.php";
             <td></td>
             <th id="valor_total_produtos" scope="row"><?php echo real_format($somatorio_total); ?></th>
             <input type="hidden" id="vlr_total_prod" value="<?php echo $somatorio_total; ?>">
+            <td></td>
             <td></td>
         </tr>
     </tfoot>

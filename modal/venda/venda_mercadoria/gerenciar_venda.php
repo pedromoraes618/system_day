@@ -1,5 +1,16 @@
 <?php
 
+if (isset($_GET['form_id'])) {
+   $id_nf = $_GET['form_id'];
+   $tipo = $_GET['tipo'];
+   $codigo_nf = $_GET['codigo_nf'];
+} else {
+   $id_nf = "";
+   $tipo = "";
+   $codigo_nf = "";
+}
+
+
 //consultar informações para tabela
 if (isset($_GET['consultar_venda'])) {
    include "../../../../conexao/conexao.php";
@@ -14,9 +25,10 @@ if (isset($_GET['consultar_venda'])) {
 
    if ($consulta == "inicial") {
       $consultar_tabela_inicialmente =  verficar_paramentro($conecta, "tb_parametros", "cl_id", "1"); //VERIFICAR PARAMETRO ID - 1
-      $select = "SELECT  nf.cl_id as id,nf.cl_data_movimento,nf.cl_numero_nf,nf.cl_serie_nf,nf.cl_status_recebimento,user.cl_usuario as vendedor,
+      $select = "SELECT nf.cl_codigo_nf, nf.cl_status_venda, fpg.cl_tipo_pagamento_id as tipopg, nf.cl_id as id,nf.cl_data_movimento,nf.cl_numero_nf,nf.cl_serie_nf,nf.cl_status_recebimento,user.cl_usuario as vendedor,
       nf.cl_valor_desconto,nf.cl_valor_liquido,prc.cl_razao_social,prc.cl_nome_fantasia,fpg.cl_descricao as formapgt from tb_nf_saida as nf inner join tb_parceiros as prc on prc.cl_id = nf.cl_parceiro_id inner join
-       tb_forma_pagamento as fpg on fpg.cl_id = nf.cl_forma_pagamento_id inner join tb_users as user on user.cl_id = nf.cl_vendedor_id WHERE nf.cl_data_movimento between '$data_inicial' and '$data_final' order by nf.cl_status_recebimento asc";
+       tb_forma_pagamento as fpg on fpg.cl_id = nf.cl_forma_pagamento_id inner join tb_users as user on user.cl_id = nf.cl_vendedor_id WHERE
+        nf.cl_data_movimento between '$data_inicial' and '$data_final' order by nf.cl_id desc";
       $consultar_venda_mercadoria = mysqli_query($conecta, $select);
       if (!$consultar_venda_mercadoria) {
          die("Falha no banco de dados");
@@ -27,16 +39,17 @@ if (isset($_GET['consultar_venda'])) {
       $pesquisa = utf8_decode($_GET['conteudo_pesquisa']); //filtro
       $status_recebimento = $_GET['status_recebimento'];
 
-      $select = "SELECT nf.cl_id as id,nf.cl_data_movimento,nf.cl_numero_nf,nf.cl_serie_nf,nf.cl_status_recebimento,user.cl_usuario as vendedor,
-      nf.cl_valor_desconto,nf.cl_valor_liquido,prc.cl_razao_social,prc.cl_nome_fantasia,fpg.cl_descricao as formapgt from tb_nf_saida as nf inner join tb_parceiros as prc on prc.cl_id = nf.cl_parceiro_id inner join
+      $select = "SELECT nf.cl_codigo_nf, nf.cl_status_venda, fpg.cl_tipo_pagamento_id as tipopg, nf.cl_id as id,nf.cl_data_movimento,nf.cl_numero_nf,nf.cl_serie_nf,nf.cl_status_recebimento,user.cl_usuario as vendedor,
+      nf.cl_valor_desconto,nf.cl_valor_liquido,prc.cl_razao_social,prc.cl_nome_fantasia,fpg.cl_descricao as formapgt from tb_nf_saida as nf inner join
+       tb_parceiros as prc on prc.cl_id = nf.cl_parceiro_id inner join
        tb_forma_pagamento as fpg on fpg.cl_id = nf.cl_forma_pagamento_id inner join tb_users as user on user.cl_id = nf.cl_vendedor_id WHERE nf.cl_data_movimento between '$data_inicial' and '$data_final' and 
-      (nf.cl_numero_nf  like '%$pesquisa%' or prc.cl_razao_social  like '%$pesquisa%' or prc.cl_nome_fantasia  like '%$pesquisa%' )  ";
+      ( nf.cl_numero_nf  like '%$pesquisa%' or prc.cl_razao_social  like '%$pesquisa%' or prc.cl_nome_fantasia  like '%$pesquisa%' )    ";
 
       if ($status_recebimento != "0") {
          $select .= " and nf.cl_status_recebimento = '$status_recebimento' ";
       }
 
-      $select .= " order by nf.cl_status_recebimento asc";
+      $select .= " order by nf.cl_id desc";
       $consultar_venda_mercadoria = mysqli_query($conecta, $select);
       if (!$consultar_venda_mercadoria) {
          die("Falha no banco de dados");
@@ -64,6 +77,7 @@ if (isset($_POST['venda_mercadoria'])) {
    $nf_atual = consultar_valor_serie($conecta, "12"); //verificar a numeração da venda atual
    $cliente_avulso_id = verficar_paramentro($conecta, "tb_parametros", "cl_id", "8"); //verificar o id do cliente avulso
    $classficacao_financeiro_id = verficar_paramentro($conecta, "tb_parametros", "cl_id", "11"); //verificar o id do cliente avulso
+   $abrir_recibo = verficar_paramentro($conecta, "tb_parametros", "cl_id", "17"); //verificar o id do cliente avulso
    $nf_novo = $nf_atual + 1;
 
    if ($acao == "validar_produto") { //validar dados do produto
@@ -128,15 +142,15 @@ if (isset($_POST['venda_mercadoria'])) {
       // $registro = $_POST['resgistro'];
       $codigo_nf = $_POST['cd_nf'];
       $id_user_logado = $_POST['id_user'];
-     // $nome_usuario_logado = $_POST['user_nome'];
-     $nome_usuario_logado = consulta_tabela($conecta,"tb_users","cl_id",$id_user_logado,"cl_usuario");
+      // $nome_usuario_logado = $_POST['user_nome'];
+      $nome_usuario_logado = consulta_tabela($conecta, "tb_users", "cl_id", $id_user_logado, "cl_usuario");
       $check_autorizador = $_POST['check_autorizador'];
 
       $itensJSON = $_POST['itens']; //array de produtos
       $itens = json_decode($itensJSON, true); //recuperar valor do array javascript decodificando o json
 
-      $id_produto = $itens['id_produto'];//id do produto que está cadastrado no sistema
-      $id_item_nf = $itens['id_item_nf'];//id do produto na tabela nfe_saida_item
+      $id_produto = $itens['id_produto']; //id do produto que está cadastrado no sistema
+      $id_item_nf = $itens['id_item_nf']; //id do produto na tabela nfe_saida_item
       $descricao_produto = utf8_decode($itens['descricao_produto']);
       $preco_venda = $itens['preco_venda'];
       $quantidade = $itens['quantidade'];
@@ -168,10 +182,10 @@ if (isset($_POST['venda_mercadoria'])) {
          } elseif (validar_qtd_prod_venda($conecta, $id_produto, $codigo_nf, $quantidade) > $estoque) { //validar se a quantidade adicionado mais o mesmo produto que esta na venda atende o estoque
             $retornar["dados"] =  array("sucesso" => false, "title" => "Não é possivel adicionar o produto, a demanda no estoque não atende");
          } else {
-      
+
             $update = "UPDATE `system_day`.`tb_nf_saida_item` SET `cl_descricao_item` = '$descricao_produto', `cl_quantidade` = '$quantidade',
              `cl_valor_unitario` = '$preco_venda', `cl_valor_total` = '$valor_total', `cl_desconto` = '$desconto_real' WHERE `tb_nf_saida_item`.`cl_id` = $id_item_nf  ";
-            $operacao_update= mysqli_query($conecta,$update);
+            $operacao_update = mysqli_query($conecta, $update);
             if ($operacao_update) {
                $retornar["dados"] = array("sucesso" => true, "title" => "Produto alterado com sucesso");
             } else {
@@ -201,7 +215,7 @@ if (isset($_POST['venda_mercadoria'])) {
       $parceiro_descricao = $_POST['parceiro_descricao'];
       $desconto_venda_real = $_POST['desconto_venda_real'];
       $forma_pagamento_id_venda = $_POST['forma_pagamento_id_venda'];
-      $observacao = $_POST['observacao'];
+      $observacao = utf8_decode($_POST['observacao']);
       $autorizador_id = $_POST['autorizador_id'];
       $senha_autorizador = $_POST['senha_autorizador'];
 
@@ -266,7 +280,7 @@ if (isset($_POST['venda_mercadoria'])) {
          `cl_forma_pagamento_id`, `cl_numero_nf`, `cl_numero_venda`, `cl_serie_nf`, `cl_status_recebimento`, `cl_valor_bruto`, 
          `cl_valor_liquido`, `cl_valor_desconto`,`cl_usuario_id`,`cl_observacao`,`cl_data_recebimento`,`cl_usuario_id_recebimento`,`cl_operacao`,`cl_vendedor_id`,`cl_status_venda` ) VALUES
             ( '$data_lancamento','$codigo_nf', '$parceiro_id', '$parceiro_avulso', '$forma_pagamento_id_venda', '$nf_novo', '$nf_novo', '$serie_venda', '$status_recebimento',
-            '$valor_total_bruto', '$valor_liquido_venda', '$desconto_venda_real','$id_usuario_logado','$observacao','$data_recebimento','$usuario_id_recebimento','VENDA', '$vendedor_id_venda','1')"; //STATUS 2 PARA VENDA FINALIZADA
+            '$valor_total_bruto', '$valor_liquido_venda', '$desconto_venda_real','$id_usuario_logado','$observacao','$data_recebimento','$usuario_id_recebimento','VENDA', '$vendedor_id_venda','1')"; //STATUS 1 PARA VENDA FINALIZADA
          $operacao_insert = mysqli_query($conecta, $insert); //inserindo os dados basicos da venda
          if ($operacao_insert) {
             finalizar_produtos_nf($conecta, $codigo_nf, $serie_venda, $nf_novo, $desconto_venda_real, $data_lancamento, $parceiro_id, $id_usuario_logado, $forma_pagamento_id_venda); //atualizando os produtos da venda com valores corretos
@@ -276,13 +290,55 @@ if (isset($_POST['venda_mercadoria'])) {
             $mensagem = utf8_decode("Usuário $nome_usuario_logado realizou a venda Nº $nf_novo");
             registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
 
-            $retornar["dados"] = array("sucesso" => true, "title" => "Venda  Nº $nf_novo finalizada com sucesso ");
+
+            $retornar["dados"] = array("sucesso" => true, "title" => "Venda  Nº $nf_novo finalizada com sucesso ", "recibo" => $abrir_recibo);
          } else {
             $retornar["dados"] = array("sucesso" => false, "title" => "Erro ao finalizar a venda Nº $nf_novo, favor comunique o suporte do sistema");
             $mensagem = utf8_decode("Tentativa sem sucesso de finalizar a venda Nº $nf_novo");
             registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
          }
       }
+   }
+
+
+   if ($acao == "show") { //dados da nf
+      $nf_id = $_POST['nf_id'];
+      $codigo_nf = $_POST['codigo_nf'];
+
+
+      $select = "SELECT * from tb_nf_saida where cl_id = $nf_id and cl_codigo_nf ='$codigo_nf'";
+      $consultar_nf = mysqli_query($conecta, $select);
+      $linha = mysqli_fetch_assoc($consultar_nf);
+      $parceiro_id = ($linha['cl_parceiro_id']);
+      $data_movimento = formatDateB($linha['cl_data_movimento']);
+      $observacao = utf8_encode($linha['cl_observacao']);
+      $id_forma_pagamento_venda = ($linha['cl_forma_pagamento_id']);
+      $vendedor_id_venda = ($linha['cl_vendedor_id']);
+      $desconto_venda_real = ($linha['cl_valor_desconto']);
+      $valor_liquido_venda = ($linha['cl_valor_liquido']);
+      $sub_total_venda = ($linha['cl_valor_bruto']);
+
+
+      $parceiro_descricao = utf8_encode(consulta_tabela($conecta, "tb_parceiros", "cl_id", $parceiro_id, "cl_razao_social"));
+      $descricao_forma_pagamento_venda = utf8_encode(consulta_tabela($conecta, "tb_forma_pagamento", "cl_id", $id_forma_pagamento_venda, "cl_descricao"));
+
+
+
+      $informacao = array(
+         "data_movimento" => $data_movimento,
+         "parceiro_descricao" => $parceiro_descricao,
+         "parceiro_id" => $parceiro_id,
+         "observacao" => $observacao,
+         "valor_liquido_venda" => $valor_liquido_venda,
+         "sub_total_venda" => $sub_total_venda,
+         "desconto_venda_real" => $desconto_venda_real,
+         "vendedor_id_venda" => $vendedor_id_venda,
+         "id_forma_pagamento_venda" => $id_forma_pagamento_venda,
+         "descricao_forma_pagamento_venda" => $descricao_forma_pagamento_venda,
+
+      );
+
+      $retornar["dados"] = array("sucesso" => true, "valores" => $informacao);
    }
 
    if ($acao == "show_det_produto") {
@@ -298,7 +354,7 @@ if (isset($_POST['venda_mercadoria'])) {
       $item_id = ($linha['cl_item_id']);
       $preco_venda_atual =  validar_prod_venda($conecta, $item_id, "cl_preco_venda"); //preco de venda do produto no cadastro
 
-      $desconto_percente =calcularPorcentagemDesconto($valor_unitario,$preco_venda_atual);
+      $desconto_percente = calcularPorcentagemDesconto($valor_unitario, $preco_venda_atual);
       $informacao = array(
          "descricao" => $descricao,
          "quantidade" => $quantidade,
@@ -312,7 +368,25 @@ if (isset($_POST['venda_mercadoria'])) {
 
       $retornar["dados"] = array("sucesso" => true, "valores" => $informacao);
    }
+   if ($acao == "delete_item") {
+      $id_item_nf = $_POST['id_item_nf'];
+      $produto_id = $_POST['id_produto'];
+      $codigo_nf = $_POST['codigo_nf'];
+      $quantidade = $_POST['quantidade_prod'];
+      $id_user_logado = $_POST['id_user_logado'];
 
+      $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel remover o produto, produto não encontrado, favor verifique");
+
+      if ($id_item_nf == "" or $codigo_nf == "") {
+         $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel remover o produto, produto não encontrado, favor verifique");
+      } else {
+         if (delete_item_nf($conecta, $id_item_nf, $produto_id, $codigo_nf, $quantidade, $id_user_logado,$data)) {
+            $retornar["dados"] = array("sucesso" => true, "title" => "Produto removido com sucesso");
+         } else {
+            $retornar["dados"] = array("sucesso" => false, "title" => "Erro, favor comunique o suporte");
+         }
+      }
+   }
    echo json_encode($retornar);
 }
 
@@ -371,6 +445,51 @@ $consultar_vendedor = mysqli_query($conecta, $select);
 $select = "SELECT * from tb_forma_pagamento where cl_ativo ='S' ";
 $consultar_forma_pagamento = mysqli_query($conecta, $select);
 
+
+
+if (isset($_GET['recibo'])) {
+   $codigo_nf = $_GET['codigo_nf'];
+   $serie_nf = $_GET['serie_nf'];
+
+   /*dados da empresa */
+   $select = "SELECT  * from tb_empresa where cl_id ='1' ";
+   $consultar_empresa = mysqli_query($conecta, $select);
+   $linha = mysqli_fetch_assoc($consultar_empresa);
+   $empresa = utf8_encode($linha['cl_empresa']);
+   $cnpj_empresa  = ($linha['cl_cnpj']);
+   $endereco_empresa = utf8_encode($linha['cl_endereco']);
+   $numero_empresa = ($linha['cl_numero']);
+   $cep_empresa = ($linha['cl_cep']);
+   $telefone_empresa = ($linha['cl_telefone']);
+   $cidade_empresa =  utf8_encode($linha['cl_cidade']);
+   $estado_empresa = ($linha['cl_estado']);
+
+   /*dados da venda */
+   $select = "SELECT  nf.cl_codigo_nf, nf.cl_observacao,nf.cl_status_venda, fpg.cl_tipo_pagamento_id as tipopg, nf.cl_id as id,nf.cl_data_movimento,nf.cl_numero_nf,nf.cl_serie_nf,nf.cl_status_recebimento,user.cl_nome as vendedor,
+   nf.cl_valor_desconto,nf.cl_valor_liquido,prc.cl_razao_social,prc.cl_nome_fantasia,fpg.cl_descricao as formapgt from tb_nf_saida as nf inner join tb_parceiros as prc on prc.cl_id = nf.cl_parceiro_id inner join
+    tb_forma_pagamento as fpg on fpg.cl_id = nf.cl_forma_pagamento_id inner join tb_users as user on user.cl_id = nf.cl_vendedor_id
+     WHERE nf.cl_codigo_nf ='$codigo_nf' and nf.cl_serie_nf='$serie_nf' ";
+   $consultar_nf_saida = mysqli_query($conecta, $select);
+   $linha = mysqli_fetch_assoc($consultar_nf_saida);
+   $data_movimento_b = ($linha['cl_data_movimento']);
+   $numero_nf_b = ($linha['cl_numero_nf']);
+   $codigo_nf = ($linha['cl_codigo_nf']);
+   $serie_nf_b = ($linha['cl_serie_nf']);
+   $status_recebmento_b = ($linha['cl_status_recebimento']);
+   $status_recebmento_b_2 = ($linha['cl_status_recebimento']);
+   $forma_pagamento_b = utf8_encode($linha['formapgt']);
+   $razao_social_b = utf8_encode($linha['cl_razao_social']);
+   $nome_fantasia_b = utf8_encode($linha['cl_nome_fantasia']);
+   $valor_desconto_b = ($linha['cl_valor_desconto']);
+   $valor_liquido_b = ($linha['cl_valor_liquido']);
+   $vendedor_b = utf8_encode($linha['vendedor']);
+   $tipo_pagamento = ($linha['tipopg']);
+   $status_venda = ($linha['cl_status_venda']);
+   $observacao = utf8_encode($linha['cl_observacao']);
+
+   $select = "SELECT * from tb_nf_saida_item where cl_codigo_nf = '$codigo_nf' and cl_serie_nf='$serie_nf'";
+   $consultar_nf_saida_item = mysqli_query($conecta, $select);
+}
 
 
 // //consultar status recebimento

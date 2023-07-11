@@ -66,7 +66,7 @@ $("#modal_observacao").click(function () {
 });
 
 
-$(".fechar_tela_venda").click(function(){
+$(".fechar_tela_venda").click(function () {
     $('#pesquisar_filtro_pesquisa').trigger('click'); // clicar automaticamente para realizar fechar o modal
 })
 
@@ -181,6 +181,7 @@ if (id_formulario.value == "") {
 
     })
 
+
     $('#concluir_venda').click(function () {
         var cliente = $("#parceiro_descricao").val()
         var valor_total_produtos = $("#vlr_total_prod").val();
@@ -206,16 +207,92 @@ if (id_formulario.value == "") {
                 url: "view/include/finalizar_venda/finalizar_venda.php",
                 success: function (result) {
                     return $(".modal_externo_finalizar_venda").html(result) + $("#modal_finalizar_venda").modal('show')
-
                 },
-            });
+            })
         }
     })
 
-} else {
+} else {//editar venda
     $('#alterar_venda').html('Alterar');
-    $(".title .sub-title").html("Alterar lançamento")
-    show(id_formulario.value) // funcao para retornar os dados para o formulario
+    $(".title .sub-title").html("Alterar venda")//alterar a label cabeçalho
+    $(".title .status_momento_venda").html("Venda em alteração")//alterar a label cabeçalho
+    // show(id_formulario.value) // funcao para retornar os dados para o formulario
+    $("#iniciar_venda").css("display", "none");//inicar venda em none
+    // Criação do botão com classes do Bootstrap
+    var cancelarVendaButton = $("<button></button>")
+        .attr("id", "cancelar_nf")
+        .addClass("btn btn-danger")
+        .text("Cancelar Venda");
+
+    // Adiciona o botão ao elemento com a classe "btn-acao"
+    $(".btn-acao").prepend(cancelarVendaButton);
+
+    show(id_formulario.value, codigo_nf.value)//dados da nf
+    tabela_produtos(codigo_nf.value);
+
+    $("#adicionar_produto").click(function () {//adicionar o produto na venda
+        if (codigo_nf.value == "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Verifique!',
+                text: "A venda ainda não foi iniciada, Favor clique no botão Iniciar venda",
+                timer: 7500,
+            })
+        } else {//venda iniciada
+
+            /*pegar os valores  */
+            var id_produto = $("#produto_id").val()
+            var descricao_produto = $("#descricao_produto").val()
+            var unidade = $("#unidade").val()
+            var quantidade = $("#quantidade").val()
+            var preco_venda = $("#preco_venda").val()
+            var valor_total = $("#valor_total").val()
+            var referencia = $("#referencia").val()
+            //  var referencia = $("#referencia").val()
+
+            var itens = {
+                id_produto: id_produto,
+                descricao_produto: descricao_produto,
+                unidade: unidade,
+                preco_venda: preco_venda,
+                quantidade: quantidade,
+                valor_total: valor_total,
+                referencia: referencia,
+
+            };
+            adicionar_produto_venda(itens, codigo_nf.value, id_user_logado, user_logado, "false")//função para adicioonar o produto na venda validando as informações do produto e exibir a listagem de produtos
+        }
+    })
+
+    $('#concluir_venda').click(function () {
+        var cliente = $("#parceiro_descricao").val()
+        var valor_total_produtos = $("#vlr_total_prod").val();
+
+        if (codigo_nf.value == "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Verifique!',
+                text: "A venda ainda não foi iniciada, Favor clique no botão Iniciar venda",
+                timer: 7500,
+
+            })
+        } else {//venda iniciada
+
+            $.ajax({
+                type: 'GET',
+                data: {
+                    concluir_venda: true,
+                    id_user_logado: id_user_logado,
+                    cliente_razao: cliente,
+                    vlr_total_venda: valor_total_produtos,
+                },
+                url: "view/include/finalizar_venda/finalizar_venda.php",
+                success: function (result) {
+                    return $(".modal_externo_finalizar_venda").html(result) + $("#modal_finalizar_venda").modal('show')
+                },
+            })
+        }
+    })
 }
 
 function tabela_produtos(codigo_nf) {//tabela de produtos
@@ -231,7 +308,7 @@ function tabela_produtos(codigo_nf) {//tabela de produtos
 }
 
 
-function create(dados, produtos) {
+function create(dados, produtos, codigo_nf) {
 
     let produtosJSON = JSON.stringify(produtos); //codificar para json
     $.ajax({
@@ -252,22 +329,60 @@ function create(dados, produtos) {
                 showConfirmButton: false,
                 timer: 3500
             })
-            $("#codigo_nf").val('')//resetar o status da venda
             formulario_post.reset(); // redefine os valores do formulário
             $(".title .status_momento_venda").css("display", "none")//display none para a label que ira informar o usuario qual é o status momento da venda
-            produtos.length = 0 // resetar array de produtos
-            $('#tabela_produtos').empty();//resetar a tabela
-            $(".table #valor_total_produtos").html((0))
             $('#fechar_modal').trigger('click'); // clicar automaticamente para realizar fechar o modal
 
+            /*recibo */
+            if ($dados.recibo == "S") {//Recibo setado com S  para abrir o recibo ao finalizar a venda
+                var janela = "view/venda/venda_mercadoria/recibo/recibo_nf.php?recibo=true&codigo_nf=" + codigo_nf + "&serie_nf=VND";
+                window.open(janela, 'popuppage',
+                    'width=1500,toolbar=0,resizable=1,scrollbars=yes,height=800,top=100,left=100');
+            }
+
+            $("#codigo_nf").val('')//resetar o status da venda
+            tabela_produtos("");//resetar a tabela de produtos
+
+
+            //  tabela_produtos(codigo_nf);
+            //produtos.length = 0 // resetar array de produtos
+            // $('#tabela_produtos').empty();//resetar a tabela
+            // $(".table #valor_total_produtos").html((0))
         } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Verifique!',
                 text: $dados.title,
                 timer: 7500,
-
             })
+
+        }
+    }
+
+    function falha() {
+        console.log("erro");
+    }
+
+}
+
+//mostrar as informações no formulario show
+function show(id, codigo_nf) {
+
+    $.ajax({
+        type: "POST",
+        data: "venda_mercadoria=true&acao=show&nf_id=" + id + "&codigo_nf=" + codigo_nf,
+        url: "modal/venda/venda_mercadoria/gerenciar_venda.php",
+        async: false
+    }).then(sucesso, falha);
+
+    function sucesso(data) {
+
+        $dados = $.parseJSON(data)["dados"];
+        if ($dados.sucesso == true) {
+            $("#data_movimento").val($dados.valores['data_movimento'])
+            $("#parceiro_descricao").val($dados.valores['parceiro_descricao'])
+            $("#parceiro_id").val($dados.valores['parceiro_id'])
+            $("#observacao").val($dados.valores['observacao'])
 
         }
     }
@@ -330,6 +445,45 @@ function adicionar_produto_venda(itens, codigo_nf, id_user_logado, user_logado, 
                 timer: 7500,
 
             })
+        }
+    }
+
+    function falha() {
+        console.log("erro");
+    }
+
+}
+
+function delete_item(codigo_nf, id_item_nf, id_produto, quantidade, id_user_logado) {
+
+    $.ajax({
+        type: "POST",
+        data: "venda_mercadoria=true&acao=delete_item&id_item_nf=" + id_item_nf + "&id_produto=" + id_produto + "&codigo_nf=" + codigo_nf
+            + "&quantidade_prod=" + quantidade + "&id_user_logado=" + id_user_logado,
+        url: "modal/venda/venda_mercadoria/gerenciar_venda.php",
+        async: false
+    }).then(sucesso, falha);
+
+    function sucesso(data) {
+
+        $dados = $.parseJSON(data)["dados"];
+        if ($dados.sucesso == true) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: $dados.title,
+                showConfirmButton: false,
+                timer: 3500
+            })
+            tabela_produtos(codigo_nf);//recarregar a tabela de produtos
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Verifique!',
+                text: $dados.title,
+                timer: 7500,
+            })
+
         }
     }
 

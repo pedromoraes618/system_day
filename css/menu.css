@@ -1080,7 +1080,7 @@ table tr td{
 }
 
 .td-btn {
-    width: 20px;
+    width: 100px;
 }
 
 .label_box {
@@ -1288,3 +1288,4 @@ table tr td{
 .listar_fpg_venda li:hover{
    background-color: #e9ecef;
 }
+

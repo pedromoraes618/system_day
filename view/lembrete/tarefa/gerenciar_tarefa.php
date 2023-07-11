@@ -8,7 +8,7 @@
             <div class="col-sm-4 col-auto  mb-2">
                 <div class="input-group">
                     <span class="input-group-text">Dt. lançamento</span>
-                    <input type="text" class="form-control" maxlength="10" onkeyup="mascaraData(this);" id="data_inicial" name="data_incial" placeholder="Data inicial" value="<?php echo $data_inicial ?>">
+                    <input type="text" class="form-control" maxlength="10" onkeyup="mascaraData(this);" id="data_inicial" name="data_incial" placeholder="Data inicial" value="<?php echo $data_incial_lembrete ?>">
                     <input type="text" class="form-control" maxlength="10" onkeyup="mascaraData(this);" id="data_final" name="data_final" placeholder="Data Final" value="<?php echo $data_final; ?>">
 
                 </div>

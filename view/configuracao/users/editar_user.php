@@ -56,11 +56,19 @@ include "../../../modal/configuracao/users/usuario.php";
             <div class="col-md-2  mb-2">
                 <label for="cargo" class="form-label">Cargo</label>
                 <select name="cargo" class="form-select" id="cargo">
-                    <option value="s">Selecione...</option>
-                    <option <?php if($cargo_b =="VENDAS"){echo 'selected';}  ?>  value="VENDAS">Vendas</option>
-                    <option <?php if($cargo_b =="FINANCEIRO"){echo 'selected';}  ?> value="FINANCEIRO">Financeiro</option>
-                    <option <?php if($cargo_b =="GERENTE"){echo 'selected';}  ?> value="GERENTE">Gerente</option>
-                    <option <?php if($cargo_b =="ESTOQUE"){echo 'selected';}  ?> value="ESTOQUE">Estoque</option>
+                    <option value="0">Selecione...</option>
+                    <option <?php if ($cargo_b == "VENDAS") {
+                                echo 'selected';
+                            }  ?> value="VENDAS">Vendas</option>
+                    <option <?php if ($cargo_b == "FINANCEIRO") {
+                                echo 'selected';
+                            }  ?> value="FINANCEIRO">Financeiro</option>
+                    <option <?php if ($cargo_b == "GERENTE") {
+                                echo 'selected';
+                            }  ?> value="GERENTE">Gerente</option>
+                    <option <?php if ($cargo_b == "ESTOQUE") {
+                                echo 'selected';
+                            }  ?> value="ESTOQUE">Estoque</option>
                 </select>
             </div>
             <div class="col-md-4  mb-2">
@@ -69,12 +77,36 @@ include "../../../modal/configuracao/users/usuario.php";
             </div>
         </div>
         <div class="row">
-            <div class="col-md">
+            <div class="col-sm">
+                <span class="badge rounded-2 mb-3 d-area dv">Autoização de usuário</span>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-auto mb-2">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" <?php if($vendedor_b=="SIM"){echo 'checked';} ?>  name="vendedor" type="checkbox" id="vendedor">
+                    <input class="form-check-input" <?php if ($vendedor_b == "SIM") {
+                                                        echo 'checked';
+                                                    } ?> name="vendedor" type="checkbox" id="vendedor">
                     <label class="form-check-label" for="vendedor">Vendedor</label>
                 </div>
             </div>
+            <div class="col-md-auto  mb-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" <?php if ($cancelar_venda == "SIM") {
+                                                        echo 'checked';
+                                                    } ?>  name="cancelar_venda" type="checkbox" id="cancelar_venda">
+                    <label class="form-check-label" for="cancelar_venda">Cancelar venda</label>
+                </div>
+            </div>
+            <div class="col-md-auto  mb-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="autorizar_desconto" <?php if ($autorizar_desconto == "SIM") {
+                                                        echo 'checked';
+                                                    } ?>  type="checkbox" id="autorizar_desconto">
+                    <label class="form-check-label" for="autorizar_desconto">Autorizar desconto</label>
+                </div>
+            </div>
+
         </div>
         <div class="row">
             <div class="group-btn d-grid gap-2 d-sm-block">

@@ -5,9 +5,31 @@ function generateUniqueId() {
     return uniqueId;
 }
 
-$("#codigo_nf").val(generateUniqueId())
+
+
+if ($("#codigo_nf").val() == "") {//veriricar se está vazio se sim, será gerado um unicoid
+    $("#codigo_nf").val(generateUniqueId())
+}
 var codigo_nf = $("#codigo_nf").val()
 tabela_produtos(codigo_nf)//consultar tabela de ajst
+
+/*funcões */
+function resetarValoresProdutos() {
+    $("#produto_id").val('')
+    $("#descricao_produto").val('')
+    $("#unidade").val('')
+    $("#estoque").val('')
+    $("#qtd_ajuste").val('')
+    $("#tipo").val('0')
+    $("#preco_venda_atual").val('')
+}
+
+
+$('#fechar_modal_ajst_estoque').click(function () {
+    $('#pesquisar_filtro_pesquisa').trigger('click'); // clicar automaticamente para realizar fechar o modal
+})
+
+
 //modal para consultar o produto
 $("#modal_produto").click(function () {
     $.ajax({
@@ -20,6 +42,7 @@ $("#modal_produto").click(function () {
         },
     });
 });
+
 
 $("#ajuste_estoque").submit(function (e) {
     e.preventDefault()
@@ -36,13 +59,13 @@ $("#ajuste_estoque").submit(function (e) {
         confirmButtonText: 'Sim'
     }).then((result) => {
         if (result.isConfirmed) {
-            var retorno = create(formulario,codigo_nf)
+            var retorno = create(formulario, codigo_nf)
         }
     })
 })
 
 
-function create(dados,codigo_nf) {
+function create(dados, codigo_nf) {
     $.ajax({
         type: "POST",
         data: "fomulario_ajuste_estoque=true&acao=create&" + dados.serialize(),
@@ -62,6 +85,8 @@ function create(dados,codigo_nf) {
                 timer: 3500
             })
             tabela_produtos(codigo_nf)
+            $("#estoque").val($dados.qtd)//atualizar o valor do estoque no campo
+            resetarValoresProdutos()
         } else {
             Swal.fire({
                 icon: 'error',
@@ -79,6 +104,44 @@ function create(dados,codigo_nf) {
 
 }
 
+// function cancelar_ajuste(codigo_nf, id_ajst) {
+//     $.ajax({
+//         type: "POST",
+//         data: "fomulario_ajuste_estoque=true&acao=cancelar&id_ajuste=" + id_ajst,
+//         url: "modal/estoque/ajuste_estoque/gerenciar_ajuste_estoque.php",
+//         async: false
+//     }).then(sucesso, falha);
+
+
+//     function sucesso(data) {
+//         alert("ok")
+//         $dados = $.parseJSON(data)["dados"];
+//         if ($dados.sucesso == true) {
+//             Swal.fire({
+//                 position: 'center',
+//                 icon: 'success',
+//                 title: $dados.title,
+//                 showConfirmButton: false,
+//                 timer: 3500
+//             })
+//             tabela_produtos(codigo_nf)
+
+//         } else {
+//             Swal.fire({
+//                 icon: 'error',
+//                 title: 'Verifique!',
+//                 text: $dados.title,
+//                 timer: 7500,
+//             })
+
+//         }
+//     }
+
+//     function falha() {
+//         console.log("erro");
+//     }
+
+// }
 function tabela_produtos(codigo_nf) {//tabela de produtos
     $.ajax({
         type: 'GET',

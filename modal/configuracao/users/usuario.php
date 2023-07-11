@@ -44,10 +44,21 @@ if (isset($_POST['formulario_cadastrar_usuario'])) {
     $situacao =  $_POST["situacao"];
     $email =  $_POST["email"];
     $cargo =  $_POST["cargo"];
-    if (isset($_POST['vendedor'])) { //verificar se o usuario é um vendedor
+
+    if (isset($_POST['vendedor']) or $perfil == "adm" or $cargo == "VENDAS"or $cargo =="GERENTE") { //verificar se o usuario é um vendedor
         $vendedor = "SIM";
     } else {
         $vendedor = "NAO";
+    }
+    if (isset($_POST['cancelar_venda'])  or $perfil == "adm" or $cargo =="GERENTE") { //verificar se o usuario está habiltado a cancelar venda
+        $cancelar_venda = "SIM";
+    } else {
+        $cancelar_venda = "NAO";
+    }
+    if (isset($_POST['autorizar_desconto'])  or $perfil == "adm" or $cargo =="GERENTE") { //verificar se o usuario está habiltado a autorizar desconto em vendas
+        $autorizar_desconto = "SIM";
+    } else {
+        $autorizar_desconto = "NAO";
     }
 
     if ($nome == "") {
@@ -74,7 +85,9 @@ if (isset($_POST['formulario_cadastrar_usuario'])) {
             $retornar["mensagem"] = "Já existe uma pessoa com o mesmo nome de usuário, favor verifique";
         } else {
             $senha = base64_encode($senha); //criptografar a senha
-            $inset = "INSERT INTO tb_users (cl_data_cadastro,cl_nome,cl_usuario,cl_senha,cl_tipo,cl_ativo,cl_email,cl_usuario_area,cl_vendedor) VALUES ('$data','$nome','$usuario','$senha','$perfil','$situacao','$email','$cargo','$vendedor')";
+            $inset = "INSERT INTO tb_users (cl_data_cadastro,cl_nome,cl_usuario,cl_senha,cl_tipo,cl_ativo,cl_email,
+            cl_usuario_area,cl_vendedor,cl_autorizar_desconto,cl_cancelar_venda)
+             VALUES ('$data','$nome','$usuario','$senha','$perfil','$situacao','$email','$cargo','$vendedor','$autorizar_desconto','$cancelar_venda')";
             $operacao_inserir = mysqli_query($conecta, $inset);
             if ($operacao_inserir) {
                 $retornar["sucesso"] = true;
@@ -107,6 +120,8 @@ if (isset($_GET['editar_user']) == true or isset($_GET['resetar_senha']) == true
     $email_b = $linha['cl_email'];
     $cargo_b = $linha['cl_usuario_area'];
     $vendedor_b = $linha['cl_vendedor'];
+    $autorizar_desconto = $linha['cl_autorizar_desconto'];
+    $cancelar_venda = $linha['cl_cancelar_venda'];
 }
 
 
@@ -123,12 +138,21 @@ if (isset($_POST['formulario_editar_usuario'])) {
     $situacao =  $_POST["situacao"];
     $email =  $_POST["email"];
     $cargo =  $_POST["cargo"];
-    if (isset($_POST['vendedor'])) { //verificar se o usuario é um vendedor
+    if (isset($_POST['vendedor']) or $perfil == "adm" or $cargo == "VENDAS" or $cargo == "GERENTE") { //verificar se o usuario é um vendedor
         $vendedor = "SIM";
     } else {
         $vendedor = "NAO";
     }
-
+    if (isset($_POST['cancelar_venda'])  or $perfil == "adm" or $cargo == "GERENTE") { //verificar se o usuario está habiltado a cancelar venda
+        $cancelar_venda = "SIM";
+    } else {
+        $cancelar_venda = "NAO";
+    }
+    if (isset($_POST['autorizar_desconto'])  or $perfil == "adm" or $cargo == "GERENTE") { //verificar se o usuario está habiltado a autorizar desconto em vendas
+        $autorizar_desconto = "SIM";
+    } else {
+        $autorizar_desconto = "NAO";
+    }
 
     if ($nome == "") {
         $retornar["mensagem"] = mensagem_alerta_cadastro("nome");
@@ -138,12 +162,13 @@ if (isset($_POST['formulario_editar_usuario'])) {
         $retornar["mensagem"] = mensagem_alerta_cadastro("situacao");
     } elseif ((!filter_var($email, FILTER_VALIDATE_EMAIL) and $email != "")) {
         $retornar["mensagem"] = "Esse Email não é valido, favor verifique";
-    }  elseif ($cargo == "0") {
+    } elseif ($cargo == "0") {
         $retornar["mensagem"] = mensagem_alerta_cadastro("cargo");
     } else {
 
         if (verificar_user($conecta, $usuario, "editar") == $id_user or verificar_user($conecta, $usuario, "editar") == "") {
-            $update = "UPDATE tb_users set cl_nome = '$nome',cl_tipo = '$perfil',cl_ativo ='$situacao',cl_email='$email',cl_usuario_area ='$cargo',cl_vendedor='$vendedor' where cl_id = $id_user ";
+            $update = "UPDATE tb_users set cl_nome = '$nome',cl_tipo = '$perfil',cl_ativo ='$situacao',cl_email='$email',cl_usuario_area ='$cargo',
+            cl_vendedor='$vendedor',cl_autorizar_desconto='$autorizar_desconto', cl_cancelar_venda='$cancelar_venda' where cl_id = $id_user ";
             $operacao_update = mysqli_query($conecta, $update);
             if ($operacao_update) {
                 $retornar["sucesso"] = true;

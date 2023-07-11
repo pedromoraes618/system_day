@@ -9,7 +9,7 @@ if (isset($_GET['item_nf'])) {
 ?>
 
 <div class="modal fade" id="modal_item_nf" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5">Item</h1>
@@ -30,10 +30,11 @@ if (isset($_GET['item_nf'])) {
 
                 </div>
                 <div class="row">
-                    <div class="col-md-2  mb-2">
+                    <div class="col-md-1  mb-2">
                         <label for="unidade_item" class="form-label">Und</label>
                         <input type="text" class="form-control" disabled name="unidade_item" id="unidade_item" value="">
                     </div>
+               
                     <div class="col-md-2  mb-2">
                         <label for="quantidade_item" class="form-label">Quantidade</label>
                         <input type="text" class="form-control inputNumber" onblur="calcular_valor_total_item()" name="quantidade_item" id="quantidade_item" value="">
@@ -52,7 +53,7 @@ if (isset($_GET['item_nf'])) {
                         <label for="desconto" class="form-label">Desconto</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text">%</span>
-                            <input type="text" class="form-control inputNumber" onblur="calcular_preco_venda_item(); calcular_valor_total_item()" name="desconto_item" id="desconto_item" value="">
+                            <input type="text" class="form-control inputNumber" disabled onblur="calcular_valor_total_item()" name="desconto_item" id="desconto_item" value="">
                         </div>
                     </div>
                     <div class="col-md  mb-2">

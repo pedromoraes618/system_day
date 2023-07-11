@@ -48,7 +48,7 @@
             <div class="col-md-2  mb-2">
                 <label for="cargo" class="form-label">Cargo</label>
                 <select name="cargo" class="form-select" id="cargo">
-                    <option value="s">Selecione...</option>
+                    <option value="0">Selecione...</option>
                     <option value="VENDAS">Vendas</option>
                     <option value="FINANCEIRO">Financeiro</option>
                     <option value="GERENTE">Gerente</option>
@@ -61,14 +61,33 @@
             </div>
 
         </div>
+        <div class="row">
+            <div class="col-sm">
+                <span class="badge rounded-2 mb-3 d-area dv">Autoização de usuário</span>
+            </div>
+        </div>
         <div class="row mb-2">
-            <div class="col-sm  mb-2">
+            <div class="col-md-auto  mb-2">
 
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" name="vendedor" type="checkbox" id="vendedor">
                     <label class="form-check-label" for="vendedor">Vendedor</label>
                 </div>
             </div>
+
+            <div class="col-md-auto  mb-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="cancelar_venda" type="checkbox" id="cancelar_venda">
+                    <label class="form-check-label" for="cancelar_venda">Cancelar venda</label>
+                </div>
+            </div>
+            <div class="col-md-auto  mb-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="autorizar_desconto" type="checkbox" id="autorizar_desconto">
+                    <label class="form-check-label" for="autorizar_desconto">Autorizar desconto</label>
+                </div>
+            </div>
+
 
         </div>
         <div class="row">

@@ -39,14 +39,14 @@ include "../../../../../modal/dashboard/inicial/gerenciar_dashboard.php";
         </div>
     </div>
     <div class="col-sm m-1  mb-1 ">
-        <div id="card-top-1-3" class="card  border-0 Regular shadow">
+        <div  title="O Caixa Diário é composto pelas formas de pagamento associadas à conta financeira da Caixa, somado ao saldo inicial do período anterior e ao saldo atual" id="card-top-1-3" class="card  border-0 Regular shadow">
             <div class="card-header">
-                Caixa
+                Caixa Diário
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-8 ">
-                        <h5 class="card-title"><?php echo real_format($receita_total - $despesa_total); ?></h5>
+                        <h5 class="card-title"><?php echo real_format($valor_caixa_total); ?></h5>
                     </div>
                     <div class="col-4 text-center">
                         <i class="bi bi-bag-fill btn btn-outline-light"></i>
@@ -89,7 +89,7 @@ include "../../../../../modal/dashboard/inicial/gerenciar_dashboard.php";
     <div class="col-md p-0 m-1 border-0">
         <div class="card border-0 shadow">
             <div class="card-header header-card-dashboard   border-0">
-                <h6>Faturamento por nota fiscal</h6>
+                <h6>Análise de Vendas</h6>
             </div>
             <div class="card-body">
                 <canvas id="myChart-2"></canvas>
@@ -299,6 +299,15 @@ include "../../../../../modal/dashboard/inicial/gerenciar_dashboard.php";
         while ($i <= 11) {
             $i = $i + 1;
             echo       "'" . consultar_despesa_anual_anterior_detalhado($i, $ano) . "',";
+        }
+        ?>
+    ];
+    var quantidade_anul_vendas = [
+        <?php
+        $i = 0;
+        while ($i <= 11) {
+            $i = $i + 1;
+            echo       "'" . consulta_quantidade_venda_anual($i, $ano) . "',";
         }
         ?>
     ];

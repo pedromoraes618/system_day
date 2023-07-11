@@ -2,6 +2,13 @@
 include "../../../conexao/conexao.php";
 include "../../../modal/estoque/produto/gerenciar_produto.php";
 include "../../../funcao/funcao.php";
+if (isset($_GET['codigo_nf'])) {
+    $codigo_nf = $_GET['codigo_nf'];
+    $data_movimento = $_GET['data_lancamento'];
+} else {
+    $codigo_nf = "";
+    $data_movimento = $data_lancamento;
+}
 
 
 ?>
@@ -25,18 +32,18 @@ include "../../../funcao/funcao.php";
                     <div class="row  mb-2">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
 
-                            <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button type="button" class="btn btn-sm btn-secondary" id="fechar_modal_ajst_estoque" data-bs-dismiss="modal">Fechar</button>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <?php include "../../input_include/usuario_logado.php" ?>
                         <div class="col-md-3  mb-2">
                             <label for="descricao" class="form-label">Código</label>
-                            <input type="text" class="form-control" readonly id="codigo_nf" name="codigo_nf">
+                            <input type="text" class="form-control" readonly id="codigo_nf" value="<?php echo $codigo_nf ?>" name="codigo_nf">
                         </div>
                         <div class="col-md-2  mb-2">
                             <label for="descricao" class="form-label">Data movimento</label>
-                            <input type="text" class="form-control" maxlength="10" disabled id="data_movimento" name="data_movimento" value="<?php echo $data_final; ?>">
+                            <input type="text" class="form-control" maxlength="10" readonly id="data_movimento" name="data_movimento" value="<?php echo formatDateB($data_movimento); ?>">
                         </div>
 
                     </div>
@@ -57,12 +64,20 @@ include "../../../funcao/funcao.php";
                             <div class="input-group">
                                 <input type="text" class="form-control" disabled id="descricao_produto" placeholder="">
                                 <input type="hidden" class="form-control" name="produto_id" id="produto_id" value="">
-                                <button  type="button"  class="btn btn-outline-secondary"  name="modal_produto" id="modal_produto">Pesquisar</button>
+                                <button type="button" class="btn btn-outline-secondary" name="modal_produto" id="modal_produto">Pesquisar</button>
                             </div>
                         </div>
 
                     </div>
                     <div class="row mb-2">
+                        <div class="col-sm-6 col-md-2 mb-2">
+                            <label for="estoque" class="form-label">Estoque</label>
+                            <input type="text" class="form-control" disabled id="estoque" name="estoque" value="">
+                        </div>
+                        <div class="col-sm-6 col-md-2 mb-2">
+                            <label for="unidade" class="form-label">Unidade</label>
+                            <input type="text" class="form-control" disabled id="unidade" name="unidade" value="">
+                        </div>
                         <div class="col-sm-6 col-md-3  mb-2">
                             <label for="tipo" class="form-label">Tipo</label>
                             <SELect name="tipo" id="tipo" class="form-control">
@@ -76,19 +91,12 @@ include "../../../funcao/funcao.php";
                             <input type="text" class="form-control" id="qtd_ajuste" name="qtd_ajuste" value="">
                         </div>
 
-                        <div class="col-sm-6 col-md-2 mb-2">
-                            <label for="quantidade" class="form-label">Estoque</label>
-                            <input type="text" class="form-control" disabled id="quantidade" name="quantidade" value="">
-                        </div>
-                        <div class="col-sm-6 col-md-2 mb-2">
-                            <label for="unidade" class="form-label">Unidade</label>
-                            <input type="text" class="form-control" disabled id="unidade" name="unidade" value="">
-                        </div>
+
                         <div class="col-md  mb-2">
-                            <label for="preco_venda_atual" class="form-label">Valor Venda item</label>
+                            <label for="valor_item" class="form-label">Valor item</label>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">R$</span>
-                                <input type="text" class="form-control" readonly name="preco_venda_atual" id="preco_venda_atual" value="">
+                                <input type="text" class="form-control"  name="valor_item" id="preco_venda_atual" value="">
                                 <button type="submit" id="efetuar_ajst" class="btn btn-success">Adicionar</button>
                             </div>
                             <!-- <input type="hidden" class="form-control" name="valor_total_item" id="valor_total_item" value=""> -->

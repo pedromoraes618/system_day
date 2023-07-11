@@ -53,10 +53,10 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                     <td><?php echo $preco_venda_b; ?></td>
                     <td><span class='badge text-bg-<?php echo ($ativo == "SIM") ? 'success' : 'danger' ?>'><?php echo ($ativo == "SIM") ? 'Ativo' : 'Inativo' ?></td>
                     <td>
-                        <?php if ($estoque_b < $estoque_minimo_b) {
+                        <?php if ($estoque_maximo_b !=0 and $estoque_b < $estoque_minimo_b) {
                             echo "<i title='produto abaixo do estoque minimo' class='bi bi-emoji-expressionless-fill'></i>";
                         } ?>
-                        <?php if ($estoque_b > $estoque_maximo_b) {
+                        <?php if ($estoque_maximo_b !=0 and $estoque_b > $estoque_maximo_b) {
                             echo "<i title='produto acima do estoque maximo' class='bi bi-emoji-dizzy-fill'></i>";
                         } ?>
                     </td>
