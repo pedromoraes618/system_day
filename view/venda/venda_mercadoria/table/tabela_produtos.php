@@ -40,7 +40,7 @@ include "../../../../modal/venda/venda_mercadoria/gerenciar_venda.php";
             <tr>
                 <td><?php echo $item; ?></td>
                 <td><?php echo $item_id; ?></td>
-                <td><?php echo utf8_encode($descricao); ?></td>
+                <td><?php echo ($descricao); ?></td>
                 <td><?php echo $unidade; ?></td>
                 <td><?php echo $referencia; ?></td>
                 <td><?php echo real_format($valor_unitario); ?></td>

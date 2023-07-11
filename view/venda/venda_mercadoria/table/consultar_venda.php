@@ -18,7 +18,7 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                 <th scope="col">Desconto</th>
                 <th scope="col">Valor</th>
                 <th scope="col"></th>
-
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -42,6 +42,7 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                 $vendedor_b = utf8_encode($linha['vendedor']);
                 $tipo_pagamento = ($linha['tipopg']);
                 $status_venda = ($linha['cl_status_venda']);
+                $status_venda_id = ($linha['cl_status_venda']);
                 $valor_total = $valor_liquido_b + $valor_total;
 
                 if ($tipo_pagamento != "3") {
@@ -57,33 +58,38 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                         <hr class="mb-0"><?php echo $nome_fantasia_b; ?>
                     </td>
                     <td><?php echo $vendedor_b; ?></td>
-                    <td><span class='badge rounded-pill  text-bg-<?php if ($status_recebmento_b == "1") {
+                    <td><span class='badge rounded-pill  text-bg-<?php if ($status_venda == "1") {
                                                                         echo 'warning';
-                                                                        $status_recebmento_b = "Pendente";
-                                                                    } elseif ($status_recebmento_b == "2") {
+                                                                        $status_venda = "Finalizado";
+                                                                    } elseif ($status_venda == "2") {
                                                                         echo 'success';
-                                                                        $status_recebmento_b = "Recebido";
+                                                                        $status_venda = "Em andamento";
                                                                     } else {
                                                                         echo 'danger';
-                                                                        $status_recebmento_b = "Cancelado";
-                                                                    } ?>'><?php echo $status_recebmento_b; ?></td>
+                                                                        $status_venda = "Cancelado";
+                                                                    } ?>'><?php echo $status_venda; ?></td>
 
                     <td><span class="badge rounded-pill text-bg-primary"><?php echo ($forma_pagamento_b); ?></span></td>
                     <td><?php echo real_format($valor_desconto_b); ?></td>
                     <td><?php echo real_format($valor_liquido_b); ?></td>
 
-                    <?php if ($status_recebmento_b_2 == "1") {
-                        echo  "<td class='td-btn'> <button type='button'  tipo_pagamento='$tipo_pagamento' venda_mercadoria_id='$id_b' class='btn btn-sm receber_nf'><i class='bi bi-clipboard-check-fill text-success fs-4'></i></button></td>";
+                    <?php if ($status_recebmento_b == "1" and $status_venda_id != "3") {
+                        echo  "<td class='td-btn'> <button type='button'  tipo_pagamento='$tipo_pagamento' 
+                        venda_mercadoria_id='$id_b' class='btn btn-sm receber_nf'><i class='bi bi-clipboard-check-fill text-success fs-4'>
+                        </i></button></td>";
                     } else {
                         echo "<td></td>";
                     }
 
 
-                    if ($status_venda == "1") { //recibo
+                    if ($status_venda_id != "3") { //recibo
                         echo  "<td class='td-btn'><button type='button' codigo_nf='$codigo_nf' serie_nf='$serie_nf_b'  class='btn btn-sm  btn-warning recibo_venda'><i class='bi bi-bookmark-fill'></i>Recibo</button></td>";
+                    }else{
+                        echo "<td></td>";
+
                     }
                     ?>
-                    <td class="td-btn"> <button type="button"  codigo_nf='<?php echo $codigo_nf; ?>' venda_mercadoria_id="<?php echo $id_b; ?>" class="btn btn-sm  btn-info editar_venda_mercadoria">Editar</button></td>
+                    <td class="td-btn"> <button type="button" codigo_nf='<?php echo $codigo_nf; ?>' venda_mercadoria_id="<?php echo $id_b; ?>" class="btn btn-sm  btn-info editar_venda_mercadoria">Editar</button></td>
                 </tr>
 
             <?php } ?>
@@ -98,8 +104,11 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
             <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col"></th>
+            <th scope="col"></th>
             <th scope="col"><?php echo real_format($valor_total); ?></th>
-
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
 
         </tfoot>
     </table>

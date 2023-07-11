@@ -41,7 +41,7 @@ include "../../../../funcao/funcao.php";
                 </tr>
                 <tr>
                     <th>
-                        <p>Endereço: <?php echo $endereco_empresa ." ". $numero_empresa ?></p>
+                        <p>Endereço: <?php echo $endereco_empresa . " " . $numero_empresa ?></p>
                     </th>
                 </tr>
                 <tr>
@@ -51,7 +51,7 @@ include "../../../../funcao/funcao.php";
                 </tr>
                 <tr>
                     <th>
-                        <p><?php echo $cidade_empresa ." ".$estado_empresa ?></p>
+                        <p><?php echo $cidade_empresa . " " . $estado_empresa ?></p>
                     </th>
                 </tr>
             </table>
@@ -59,8 +59,7 @@ include "../../../../funcao/funcao.php";
 
         <div class="products">
             <table>
-                <tbody>
-
+                <thead>
                     <tr>
                         <th>Item</th>
                         <th>Produto</th>
@@ -69,8 +68,9 @@ include "../../../../funcao/funcao.php";
                         <th>Vlr unit</th>
                         <th>Vlr total</th>
                     </tr>
+                </thead>
+                <tbody>
                     <?php
-
                     $item = 0;
                     $vlr_total_itens = 0;
                     while ($linha = mysqli_fetch_assoc($consultar_nf_saida_item)) {
@@ -94,42 +94,21 @@ include "../../../../funcao/funcao.php";
                     <?php } ?>
 
                     <tr>
-                        <td>Total</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td colspan="5">Total</td>
                         <td><?php echo real_format($vlr_total_itens); ?></td>
-
                     </tr>
+
                     <?php if ($valor_desconto_b > 0) { ?>
                         <tr>
-                            <td>Desc <br> A pagar</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><?php 
-                            echo real_format($valor_desconto_b) . "<br>" . real_format($vlr_total_itens - $valor_desconto_b); ?></td>
+                            <td colspan="5">Desconto</td>
+                            <td><?php echo real_format($valor_desconto_b); ?></td>
                         </tr>
-                    <?php
-                    } else {
-                    ?>
                         <tr>
-                            <td>A pagar</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><?php echo real_format($vlr_total_itens); ?></td>
+                            <td colspan="5">Total</td>
+                            <td><?php echo real_format($vlr_total_itens - $valor_desconto_b); ?></td>
                         </tr>
-                    <?php
-                    } ?>
-
-
-
+                    <?php } ?>
                 </tbody>
-
             </table>
 
         </div>

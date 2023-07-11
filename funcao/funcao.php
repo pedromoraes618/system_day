@@ -742,7 +742,6 @@ function update_status_nf($conecta, $status, $data_recebimento, $usuario_recebim
 
 function delete_item_nf($conecta, $id_item_nf, $produto_id, $codigo_nf, $quantidade, $id_user_logado, $data)
 {
-
     $estoque = (consulta_tabela($conecta, "tb_produtos", "cl_id", $produto_id, "cl_estoque")); //verificar o estoque atual do produto
     $nome_usuario_logado = (consulta_tabela($conecta, "tb_users", "cl_id", $id_user_logado, "cl_usuario")); //Nome do usuário que está removendo o produto da venda
     $numero_nf = (consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_numero_nf")); //numero da venda
@@ -765,7 +764,7 @@ function delete_item_nf($conecta, $id_item_nf, $produto_id, $codigo_nf, $quantid
                 WHERE `tb_produtos`.`cl_id` = '$produto_id' ";
                 $operacao_update = mysqli_query($conecta, $update);
                 if ($operacao_update) {
-                    if (recalcular_valor_nf($conecta, $codigo_nf)) {//atualizar valor total da nota
+                    if (recalcular_valor_nf($conecta, $codigo_nf)) { //atualizar valor total da nota
                         $mensagem = utf8_decode("Usuário $nome_usuario_logado removeu $quantidade produto(s) de código $produto_id, $serie_nf  $numero_nf");
                         registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
                         return true;
@@ -807,52 +806,129 @@ function verificar_status_recebimento_vnd($conecta, $id, $codigo_nf)
 
 function recalcular_valor_nf($conecta, $codigo_nf)
 { //atualizar valor bruto e liquido da nf
-    $valor_desconto = (consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_valor_desconto")); //verificar o estoque atual do produto
 
-    $select = "SELECT sum(cl_valor_total) as valor from tb_nf_saida_item where cl_codigo_nf ='$codigo_nf' and cl_status ='1' ";
-    $consultar_produto_nf = mysqli_query($conecta, $select);
-    $linha = mysqli_fetch_assoc($consultar_produto_nf);
-    $valor_bruto = $linha['valor'];
+    $select = "SELECT * from tb_nf_saida where cl_codigo_nf ='$codigo_nf' ";
+    $consultar_nf = mysqli_query($conecta, $select);
+    $qtd_nf = mysqli_num_rows($consultar_nf);
 
-    $valor_liquido = $valor_bruto - $valor_desconto;
+    if ($qtd_nf > 0) { //verificar se existe uma nf já feita
+        $valor_desconto = (consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_valor_desconto")); //verificar o estoque atual do produto
 
-    $update = "UPDATE `system_day`.`tb_nf_saida` SET `cl_valor_bruto` = '$valor_bruto',`cl_valor_liquido` = '$valor_liquido' WHERE `tb_nf_saida`.`cl_codigo_nf` = '$codigo_nf' ";
-    $operacao_update_nf = mysqli_query($conecta, $update);
-    if ($operacao_update_nf) {
-        return true;
-    } else {
-        return false;
+        $select = "SELECT sum(cl_valor_total) as valor from tb_nf_saida_item where cl_codigo_nf ='$codigo_nf' and cl_status ='1' ";
+        $consultar_produto_nf = mysqli_query($conecta, $select);
+        $linha = mysqli_fetch_assoc($consultar_produto_nf);
+        $valor_bruto = $linha['valor'];
+
+        $valor_liquido = $valor_bruto - $valor_desconto;
+
+        $update = "UPDATE `system_day`.`tb_nf_saida` SET `cl_valor_bruto` = '$valor_bruto',`cl_valor_liquido` = '$valor_liquido' WHERE `tb_nf_saida`.`cl_codigo_nf` = '$codigo_nf' ";
+        $operacao_update_nf = mysqli_query($conecta, $update);
+        if ($operacao_update_nf) {
+            return true;
+        } else {
+            return false;
+        }
+        //adicionar ao ajuste de estoque
     }
-    //adicionar ao ajuste de estoque
-
-
 }
 
-// function cancelar_produto_ajst($conecta, $id_produto, $codigo_nf, $quantidade)
-// { //verificar se a venda já está recebida
 
-// }
+function cancelar_nf($conecta, $id_nf, $codigo_nf, $id_user_logado, $data)
+{
+    // $estoque = (consulta_tabela($conecta, "tb_produtos", "cl_id", $produto_id, "cl_estoque")); //verificar o estoque atual do produto
+    $nome_usuario_logado = (consulta_tabela($conecta, "tb_users", "cl_id", $id_user_logado, "cl_usuario")); //Nome do usuário que está removendo o produto da venda
+    $numero_nf = (consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_numero_nf")); //numero da venda
+    $serie_nf = (consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_serie_nf")); //serie nf
 
 
-// function recalcular_valor_nf($conecta,$codigo_nf){
-        
-//     $select = "SELECT * from tb_nf_saida_item where cl_codigo_nf ='$codigo_nf' ";
-//     $consultar_produto_nf = mysqli_query($conecta, $select);
-//     while ($linha = mysqli_fetch_assoc($consultar_produto_nf)) {
-//         $id_produto = $linha['cl_item_id'];
-//         $quantidade_vendida = $linha['cl_quantidade'];
-//         $prc_venda_unitario = $linha['cl_valor_unitario'];
 
-//     };
-    
-//     $update = "UPDATE `system_day`.`tb_nf_saida_item` SET `cl_numero_nf` = '$numero_nf', `cl_item_ordem` = '$ordem_item', 
-//     `cl_desconto_rat` = '$desconto_rat', `cl_status` = '1' WHERE `tb_nf_saida_item`.`cl_codigo_nf` = '$codigo_nf' ";
-//     $operacao_update = mysqli_query($conecta, $update);
-//     if ($operacao_update) {
-//         $update = "UPDATE `system_day`.`tb_produtos` SET `cl_estoque` = '$quantidade_atual' WHERE `tb_produtos`.`cl_id` = $id_produto ";
-//         $operacao_update_estoque = mysqli_query($conecta, $update);
-//         //adicionar ao ajuste de estoque
-//         ajuste_estoque($conecta, $data, "$serie_vnd-$numero_nf", "SAIDA", $id_produto, $quantidade_vendida, "1", $parceiro_id, $id_usuario_logado, $forma_pagamento_id, $prc_venda_unitario, "0", '0', '', "$codigo_nf");
-//     }
+    $select = "SELECT * FROM `system_day`.`tb_nf_saida_item` WHERE `tb_nf_saida_item`.`cl_codigo_nf` = '$codigo_nf' ";
+    $consultar_nf_saida_item = mysqli_query($conecta, $select);
+    $qtd_nf_saida_item = mysqli_num_rows($consultar_nf_saida_item);
 
-// }
+    $select = "SELECT * FROM `system_day`.`tb_lancamento_financeiro` WHERE `tb_lancamento_financeiro`.`cl_codigo_nf` = '$codigo_nf' ";
+    $consultar_lancamento_financeiro = mysqli_query($conecta, $select);
+    $qtd_lancamento_financeiro = mysqli_num_rows($consultar_nf_saida_item);
+
+    $select = "SELECT * FROM `system_day`.`tb_nf_saida` WHERE `tb_nf_saida`.`cl_codigo_nf` = '$codigo_nf' ";
+    $consultar_nf_saida = mysqli_query($conecta, $select);
+    $qtd_nf_saida = mysqli_num_rows($consultar_nf_saida);
+    if ($qtd_nf_saida > 0) { //atualizar o status da nf_saida para cancelado
+        $update = "UPDATE `system_day`.`tb_nf_saida` SET `cl_status_venda` = '3' 
+        WHERE `tb_nf_saida`.`cl_codigo_nf` = '$codigo_nf' and  cl_id='$id_nf' ";
+        $operacao_update  = mysqli_query($conecta, $update);
+        if ($operacao_update) {
+            if ($qtd_nf_saida_item > 0) {
+                while ($linha = mysqli_fetch_assoc($consultar_nf_saida_item)) {
+                    $id_item_nf = $linha['cl_id'];
+                    $produto_id = $linha['cl_item_id'];
+                    $quantidade = $linha['cl_quantidade'];
+                    $estoque = (consulta_tabela($conecta, "tb_produtos", "cl_id", $produto_id, "cl_estoque")); //verificar o estoque atual do produto
+                    $novo_estoque = $estoque + $quantidade;
+
+                    $update = "UPDATE `system_day`.`tb_nf_saida_item` SET `cl_status` = '3' 
+                WHERE `tb_nf_saida_item`.`cl_id` = '$id_item_nf' and  cl_codigo_nf='$codigo_nf' ";
+                    $operacao_update  = mysqli_query($conecta, $update); //atualizar o status dos itens na tabela nf_saida_item para cancelado
+                    if ($operacao_update) { //atualizar para cancelado o ajuste de estoque
+                        $update = "UPDATE `system_day`.`tb_ajuste_estoque` SET `cl_status` = 'cancelado' 
+                        WHERE `tb_ajuste_estoque`.`cl_produto_id` = '$produto_id' and  cl_codigo_nf='$codigo_nf' and cl_quantidade ='$quantidade' ";
+                        $operacao_update  = mysqli_query($conecta, $update);
+                        if ($operacao_update) { //atualizar o estoque
+                            $update = "UPDATE `system_day`.`tb_produtos` SET `cl_estoque` = '$novo_estoque' 
+                            WHERE `tb_produtos`.`cl_id` = '$produto_id' ";
+                            $operacao_update  = mysqli_query($conecta, $update);
+                            if (!$operacao_update) {
+                                return false;
+                                break;
+                            }
+                        } else {
+                            return false;
+                            break;
+                        }
+                    } else {
+                        return false;
+                        break;
+                    }
+                }
+            }
+            if ($qtd_lancamento_financeiro > 0) {
+                $delete = "DELETE FROM `system_day`.`tb_lancamento_financeiro` WHERE `tb_lancamento_financeiro`.`cl_codigo_nf` = '$codigo_nf'";
+                $operacao_delete  = mysqli_query($conecta, $delete);
+                if (!$operacao_delete) { //deletar o recebimento da venda
+                    return false;
+                }
+            }
+            $mensagem = utf8_decode("Usuário $nome_usuario_logado cancelou a $serie_nf $numero_nf ");
+            registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+function remover_nf_faturamento($conecta, $id, $codigo_nf, $id_user_logado, $data)
+{ //verificar se a venda já está recebida
+
+    $nome_usuario_logado = (consulta_tabela($conecta, "tb_users", "cl_id", $id_user_logado, "cl_usuario")); //Nome do usuário que está removendo o produto da venda
+    $numero_nf = (consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_numero_nf")); //numero da venda
+    $serie_nf = (consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_serie_nf")); //serie nf
+
+
+    $update = "UPDATE `system_day`.`tb_nf_saida` SET `cl_status_recebimento` = '1' 
+    WHERE `tb_nf_saida`.`cl_id` = '$id' and cl_codigo_nf ='$codigo_nf' ";
+    $operacao_update  = mysqli_query($conecta, $update);
+    if ($operacao_update) {
+        $delete = "DELETE FROM `system_day`.`tb_lancamento_financeiro` WHERE `tb_lancamento_financeiro`.`cl_codigo_nf` = '$codigo_nf'";
+        $operacao_delete  = mysqli_query($conecta, $delete);
+        if ($operacao_delete) {
+            $mensagem = utf8_decode("Usuário $nome_usuario_logado removeu a $serie_nf $numero_nf do faturamento ");
+            registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+}

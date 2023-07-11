@@ -219,11 +219,14 @@ if (id_formulario.value == "") {
     // show(id_formulario.value) // funcao para retornar os dados para o formulario
     $("#iniciar_venda").css("display", "none");//inicar venda em none
     // Criação do botão com classes do Bootstrap
-    var cancelarVendaButton = $("<button></button>")
+    var cancelarVendaButton = $("<button type='button'></button>")
         .attr("id", "cancelar_nf")
-        .addClass("btn btn-danger")
+        .addClass("btn btn-sm btn-danger")
         .text("Cancelar Venda");
-
+    var remover_faturamento = $("<button type='button'></button>")
+        .attr("id", "remover_nf_faturamento")
+        .addClass("btn btn-sm btn-warning")
+        .text("Remover do faturamento");
     // Adiciona o botão ao elemento com a classe "btn-acao"
     $(".btn-acao").prepend(cancelarVendaButton);
 
@@ -293,6 +296,44 @@ if (id_formulario.value == "") {
             })
         }
     })
+    $("#cancelar_nf").click(function () {
+
+        Swal.fire({
+            title: 'Tem certeza?',
+            text: "Deseja cancelar essa venda?",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Não',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                cancelar_nf(id_formulario.value, codigo_nf.value, id_user_logado)
+            }
+        })
+    })
+
+    $("#remover_nf_faturamento").click(function () {
+
+        Swal.fire({
+            title: 'Tem certeza?',
+            text: "Deseja remover essa venda do faturamento?",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Não',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                remover_nf_faturamento(id_formulario.value, codigo_nf.value, id_user_logado)
+            }
+        })
+    })
+
+
+
 }
 
 function tabela_produtos(codigo_nf) {//tabela de produtos
@@ -384,6 +425,23 @@ function show(id, codigo_nf) {
             $("#parceiro_id").val($dados.valores['parceiro_id'])
             $("#observacao").val($dados.valores['observacao'])
 
+            var status_venda = $dados.valores['status_venda']
+            var status_recebimento = $dados.valores['status_recebimento']
+
+
+            $('#venda_mercadoria .title').each(function () {
+                $(this).append('<label class="bg-primary">' + $dados.valores['serie_nf'] + " " + $dados.valores['numero_nf'] + '</label>')
+                if (status_venda == "3") {//botão cancelar venda
+                    $(this).append('<label class="bg-danger">Venda cancelada</label>')
+                }
+
+                if (status_recebimento == "2") {//botãoremover do faturamento
+                    $(".btn-acao").prepend(remover_faturamento)
+                }
+  
+
+            })
+
         }
     }
 
@@ -452,6 +510,87 @@ function adicionar_produto_venda(itens, codigo_nf, id_user_logado, user_logado, 
         console.log("erro");
     }
 
+}
+
+
+
+function cancelar_nf(id_formulario, codigo_nf, id_user_logado) {
+
+    $.ajax({
+        type: "POST",
+        data: "venda_mercadoria=true&acao=cancelar_nf&id_nf=" + id_formulario + "&codigo_nf=" + codigo_nf + "&id_user_logado=" + id_user_logado,
+        url: "modal/venda/venda_mercadoria/gerenciar_venda.php",
+        async: false
+    }).then(sucesso, falha);
+
+    function sucesso(data) {
+
+        $dados = $.parseJSON(data)["dados"];
+        if ($dados.sucesso == true) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: $dados.title,
+                showConfirmButton: false,
+                timer: 3500
+            })
+            //   tabela_produtos(codigo_nf);//recarregar a tabela de produtos
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Verifique!',
+                text: $dados.title,
+                timer: 7500,
+            })
+
+        }
+    }
+
+    function falha() {
+        console.log("erro");
+    }
+
+
+    
+}
+function remover_nf_faturamento(id_formulario, codigo_nf, id_user_logado) {
+
+    $.ajax({
+        type: "POST",
+        data: "venda_mercadoria=true&acao=remover_nf_faturamento&id_nf=" + id_formulario + "&codigo_nf=" + codigo_nf + "&id_user_logado=" + id_user_logado,
+        url: "modal/venda/venda_mercadoria/gerenciar_venda.php",
+        async: false
+    }).then(sucesso, falha);
+
+    function sucesso(data) {
+
+        $dados = $.parseJSON(data)["dados"];
+        if ($dados.sucesso == true) {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: $dados.title,
+                showConfirmButton: false,
+                timer: 3500
+            })
+            //   tabela_produtos(codigo_nf);//recarregar a tabela de produtos
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Verifique!',
+                text: $dados.title,
+                timer: 7500,
+            })
+
+        }
+    }
+
+    function falha() {
+        console.log("erro");
+    }
+
+
+    
 }
 
 function delete_item(codigo_nf, id_item_nf, id_produto, quantidade, id_user_logado) {

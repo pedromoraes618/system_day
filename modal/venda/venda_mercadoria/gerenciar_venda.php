@@ -122,18 +122,49 @@ if (isset($_POST['venda_mercadoria'])) {
          } elseif (validar_qtd_prod_venda($conecta, $id_produto, $codigo_nf, $quantidade) > $estoque) { //validar se a quantidade adicionado mais o mesmo produto que esta na venda atende o estoque
             $retornar["dados"] =  array("sucesso" => false, "title" => "Não é possivel adicionar o produto, a demanda no estoque não atende");
          } else {
-            $insert = "INSERT INTO `system_day`.`tb_nf_saida_item` ( `cl_data_movimento`, `cl_codigo_nf`, `cl_usuario_id`, `cl_serie_nf`, 
-              `cl_item_id`, `cl_descricao_item`, `cl_quantidade`, `cl_unidade`, `cl_valor_unitario`, `cl_valor_total`,
-             `cl_desconto`, `cl_referencia`,`cl_status`) VALUES ( '$data_lancamento', '$codigo_nf', '$id_user_logado', '$serie_venda',
-                  '$id_produto', '$descricao_produto', '$quantidade', '$unidade', '$preco_venda', '$valor_total', '$desconto_real',
-             '$referencia','2') ";
-            $operacao_insert = mysqli_query($conecta, $insert);
-            if ($operacao_insert) {
-               $retornar["dados"] =  array("sucesso" => true);
-            } else {
-               $mensagem = utf8_decode("Tentativa do usuário $nome_usuario_logado adicionar um produto em uma venda com erro");
-               registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
-               $retornar["dados"] =  array("sucesso" => false, "title" => "Erro, não foi possivel adicionar o produto, favor verifique com o suporte");
+            $nf = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_numero_nf");
+            if ($nf != "") { //Adicionando um prduto a uma venda já finalizada
+               $status_recebimento = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_status_recebimento");
+               $status_venda = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_status_venda");
+
+               if ($status_venda == "3") { //venda cancelada
+                  $retornar["dados"] = array("sucesso" => false, "title" => "Não é possível adicionar o produto, pois a venda foi cancelada");
+               } elseif ($status_recebimento == "2") { //a venda está recebida
+                  $retornar["dados"] = array("sucesso" => false, "title" => "Não é possível adicionar o produto, pois a venda já foi recebida, favor, remova-o do faturamento antes de prosseguir com a ação");
+               } else {
+                  $insert = "INSERT INTO `system_day`.`tb_nf_saida_item` ( `cl_data_movimento`, `cl_codigo_nf`,`cl_numero_nf`, `cl_usuario_id`, `cl_serie_nf`, 
+               `cl_item_id`, `cl_descricao_item`, `cl_quantidade`, `cl_unidade`, `cl_valor_unitario`, `cl_valor_total`,
+              `cl_desconto`, `cl_referencia`,`cl_status`) VALUES ( '$data_lancamento', '$codigo_nf','$nf', '$id_user_logado', '$serie_venda',
+                   '$id_produto', '$descricao_produto', '$quantidade', '$unidade', '$preco_venda', '$valor_total', '$desconto_real',
+              '$referencia','1') ";
+                  $operacao_insert = mysqli_query($conecta, $insert);
+                  if ($operacao_insert) {
+                     $retornar["dados"] =  array("sucesso" => true);
+                     recalcular_valor_nf($conecta, $codigo_nf);
+
+                     $mensagem = utf8_decode("Adicionou o produto de código $id_produto na $serie_venda $nf já finalizada");
+                     registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+                  } else {
+                     $mensagem = utf8_decode("Tentativa do usuário $nome_usuario_logado adicionar um produto em uma venda com já finalizada, erro");
+                     registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+                     $retornar["dados"] =  array("sucesso" => false, "title" => "Erro, não foi possivel adicionar o produto, favor verifique com o suporte");
+                  }
+               }
+            } else { //adicionar um produto em uma nova venda
+               $insert = "INSERT INTO `system_day`.`tb_nf_saida_item` ( `cl_data_movimento`, `cl_codigo_nf`, `cl_usuario_id`, `cl_serie_nf`, 
+               `cl_item_id`, `cl_descricao_item`, `cl_quantidade`, `cl_unidade`, `cl_valor_unitario`, `cl_valor_total`,
+              `cl_desconto`, `cl_referencia`,`cl_status`) VALUES ( '$data_lancamento', '$codigo_nf', '$id_user_logado', '$serie_venda',
+                   '$id_produto', '$descricao_produto', '$quantidade', '$unidade', '$preco_venda', '$valor_total', '$desconto_real',
+              '$referencia','2') ";
+               $operacao_insert = mysqli_query($conecta, $insert);
+               if ($operacao_insert) {
+                  $retornar["dados"] =  array("sucesso" => true);
+                  //   recalcular_valor_nf($conecta, $codigo_nf);
+               } else {
+                  $mensagem = utf8_decode("Tentativa do usuário $nome_usuario_logado adicionar um produto em uma venda com erro");
+                  registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+                  $retornar["dados"] =  array("sucesso" => false, "title" => "Erro, não foi possivel adicionar o produto, favor verifique com o suporte");
+               }
             }
          }
       }
@@ -156,6 +187,11 @@ if (isset($_POST['venda_mercadoria'])) {
       $quantidade = $itens['quantidade'];
       $unidade = utf8_decode($itens['unidade']);
 
+
+
+      $nf = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_numero_nf");
+
+
       if ($id_item_nf == "") { //validar se algum produto já foi selecionado
          $retornar["dados"] =  array("sucesso" => false, "title" => "Favor Selecione um produto");
       } else {
@@ -176,22 +212,47 @@ if (isset($_POST['venda_mercadoria'])) {
          if ($estoque == "" or $id_produto == "" or $descricao_produto == "" or $preco_venda == ""  or $quantidade == "" or $valor_total == ""  or $preco_venda_atual == "" or $quantidade == "0" or $preco_venda == "0" or $preco_venda_atual == "0") {
             $retornar["dados"] =  array("sucesso" => false, "title" => "Favor informe todas as informações do produto");
          } elseif ($validar_venda_sem_estoque == "N" and $estoque == 0) {
-            $retornar["dados"] =  array("sucesso" => false, "title" => "Não é possivel adicionar o produto, pois está sem estoque");
+            $retornar["dados"] =  array("sucesso" => false, "title" => "Não é possivel adicionar o produto, pois o produto está sem estoque");
          } elseif (($desconto_maximo_produto < $calula_desconto and ($desconto_maximo_produto != "") and ($check_autorizador != "true"))) {
             $retornar["dados"] =  array("sucesso" => "autorizar", "title" => "Não é possivel alterar o produto, o desconto está acima do permitido, continue com a operação autorizando com a senha");
-         } elseif (validar_qtd_prod_venda($conecta, $id_produto, $codigo_nf, $quantidade) > $estoque) { //validar se a quantidade adicionado mais o mesmo produto que esta na venda atende o estoque
+         } elseif ((validar_qtd_prod_venda($conecta, $id_produto, $codigo_nf, $quantidade) >  $estoque)) { //validar se a quantidade adicionado mais o mesmo produto que esta na venda atende o estoque
             $retornar["dados"] =  array("sucesso" => false, "title" => "Não é possivel adicionar o produto, a demanda no estoque não atende");
          } else {
 
-            $update = "UPDATE `system_day`.`tb_nf_saida_item` SET `cl_descricao_item` = '$descricao_produto', `cl_quantidade` = '$quantidade',
+            if ($nf != "") { //Adicionando um prduto a uma venda já finalizada
+               $status_recebimento = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_status_recebimento");
+               $status_venda = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_status_venda");
+
+               if ($status_venda == "3") { //venda cancelada
+                  $retornar["dados"] = array("sucesso" => false, "title" => "Não é possível alterar o produto, pois a venda foi cancelada");
+               } elseif ($status_recebimento == "2") { //a venda está recebida
+                  $retornar["dados"] = array("sucesso" => false, "title" => "Não é possível alterar o produto, pois a venda já foi recebida, favor, remova-o do faturamento antes de prosseguir com a ação");
+               } else { //alterar o produto com a venda já finalizada
+
+                  $update = "UPDATE `system_day`.`tb_nf_saida_item` SET `cl_descricao_item` = '$descricao_produto', `cl_quantidade` = '$quantidade',
+               `cl_valor_unitario` = '$preco_venda', `cl_valor_total` = '$valor_total', `cl_desconto` = '$desconto_real' WHERE `tb_nf_saida_item`.`cl_id` = $id_item_nf  ";
+                  $operacao_update = mysqli_query($conecta, $update);
+                  if ($operacao_update) {
+                     $retornar["dados"] = array("sucesso" => true, "title" => "Produto alterado com sucesso");
+                     recalcular_valor_nf($conecta, $codigo_nf);
+                  } else {
+                     $mensagem = utf8_decode("Tentativa do usuário $nome_usuario_logado alterar o produto de id $id_produto da venda sem sucesso");
+                     registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+                     $retornar["dados"] =  array("sucesso" => false, "title" => "Erro, não foi possivel alterar o produto, favor verifique com o suporte");
+                  }
+               }
+            } else { //alterar o produto com a venda em andamento
+
+               $update = "UPDATE `system_day`.`tb_nf_saida_item` SET `cl_descricao_item` = '$descricao_produto', `cl_quantidade` = '$quantidade',
              `cl_valor_unitario` = '$preco_venda', `cl_valor_total` = '$valor_total', `cl_desconto` = '$desconto_real' WHERE `tb_nf_saida_item`.`cl_id` = $id_item_nf  ";
-            $operacao_update = mysqli_query($conecta, $update);
-            if ($operacao_update) {
-               $retornar["dados"] = array("sucesso" => true, "title" => "Produto alterado com sucesso");
-            } else {
-               $mensagem = utf8_decode("Tentativa do usuário $nome_usuario_logado alterar o produto de id $id_produto da venda sem sucesso");
-               registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
-               $retornar["dados"] =  array("sucesso" => false, "title" => "Erro, não foi possivel alterar o produto, favor verifique com o suporte");
+               $operacao_update = mysqli_query($conecta, $update);
+               if ($operacao_update) {
+                  $retornar["dados"] = array("sucesso" => true, "title" => "Produto alterado com sucesso");
+               } else {
+                  $mensagem = utf8_decode("Tentativa do usuário $nome_usuario_logado alterar o produto de id $id_produto da venda sem sucesso");
+                  registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+                  $retornar["dados"] =  array("sucesso" => false, "title" => "Erro, não foi possivel alterar o produto, favor verifique com o suporte");
+               }
             }
          }
       }
@@ -317,6 +378,10 @@ if (isset($_POST['venda_mercadoria'])) {
       $desconto_venda_real = ($linha['cl_valor_desconto']);
       $valor_liquido_venda = ($linha['cl_valor_liquido']);
       $sub_total_venda = ($linha['cl_valor_bruto']);
+      $numero_nf = ($linha['cl_numero_nf']);
+      $serie_nf = ($linha['cl_serie_nf']);
+      $status_venda = ($linha['cl_status_venda']);
+      $status_recebimento = ($linha['cl_status_recebimento']);
 
 
       $parceiro_descricao = utf8_encode(consulta_tabela($conecta, "tb_parceiros", "cl_id", $parceiro_id, "cl_razao_social"));
@@ -335,10 +400,55 @@ if (isset($_POST['venda_mercadoria'])) {
          "vendedor_id_venda" => $vendedor_id_venda,
          "id_forma_pagamento_venda" => $id_forma_pagamento_venda,
          "descricao_forma_pagamento_venda" => $descricao_forma_pagamento_venda,
+         "numero_nf" => $numero_nf,
+         "serie_nf" => $serie_nf,
+         "status_venda" => $status_venda,
+         "status_recebimento" => $status_recebimento,
 
       );
 
       $retornar["dados"] = array("sucesso" => true, "valores" => $informacao);
+   }
+
+   if ($acao == "cancelar_nf") {
+      $id_nf = $_POST['id_nf'];
+      $codigo_nf = $_POST['codigo_nf'];
+      $id_user_logado = $_POST['id_user_logado'];
+      $status_venda = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_status_venda");
+      $autorizado_cancelar_venda = consulta_tabela($conecta, "tb_users", "cl_id", $id_user_logado, "cl_cancelar_venda");
+
+      if ($id_nf == "" or $codigo_nf == "") {
+         $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel cancelar a venda, venda não encontrada, favor verifique");
+      } elseif ($autorizado_cancelar_venda != "SIM") {
+         $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel cancelar a venda, o seu usuário não tem autorização");
+      } elseif ($status_venda == "3") {
+         $retornar["dados"] = array("sucesso" => false, "title" => "Não é possível cancelar a venda, pois ela já está cancelada");
+      } else {
+         if (cancelar_nf($conecta, $id_nf, $codigo_nf, $id_user_logado, $data)) {
+            $retornar["dados"] = array("sucesso" => true, "title" => "Venda cancelada com sucesso");
+         } else {
+            $retornar["dados"] = array("sucesso" => false, "title" => "Erro, favor comunique o suporte");
+         }
+      }
+   }
+   if ($acao == "remover_nf_faturamento") {
+      $id_nf = $_POST['id_nf'];
+      $codigo_nf = $_POST['codigo_nf'];
+      $id_user_logado = $_POST['id_user_logado'];
+      $status_venda = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_status_venda");
+
+
+      if ($id_nf == "" or $codigo_nf == "") {
+         $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel cancelar a venda, venda não encontrada, favor verifique");
+      } elseif ($status_venda == "3") {
+         $retornar["dados"] = array("sucesso" => false, "title" => "Não é possível remover a venda do faturamento, pois ela está cancelada");
+      } else {
+         if (remover_nf_faturamento($conecta, $id_nf, $codigo_nf, $id_user_logado, $data)) {
+            $retornar["dados"] = array("sucesso" => true, "title" => "Venda foi removida do faturamento com sucesso");
+         } else {
+            $retornar["dados"] = array("sucesso" => false, "title" => "Erro, favor comunique o suporte");
+         }
+      }
    }
 
    if ($acao == "show_det_produto") {
@@ -368,19 +478,26 @@ if (isset($_POST['venda_mercadoria'])) {
 
       $retornar["dados"] = array("sucesso" => true, "valores" => $informacao);
    }
+
    if ($acao == "delete_item") {
+
       $id_item_nf = $_POST['id_item_nf'];
       $produto_id = $_POST['id_produto'];
       $codigo_nf = $_POST['codigo_nf'];
       $quantidade = $_POST['quantidade_prod'];
       $id_user_logado = $_POST['id_user_logado'];
 
-      $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel remover o produto, produto não encontrado, favor verifique");
+      $status_recebimento = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_status_recebimento");
+      $status_venda = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_status_venda");
 
       if ($id_item_nf == "" or $codigo_nf == "") {
          $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel remover o produto, produto não encontrado, favor verifique");
+      } elseif ($status_venda == "3") {
+         $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel remover o produto, a venda está cancelada");
+      } elseif ($status_recebimento == "2") { //a venda está recebida
+         $retornar["dados"] = array("sucesso" => false, "title" => "Não é possível remover o produto, pois a venda já foi recebida, favor, remova-o do faturamento antes de prosseguir com a ação");
       } else {
-         if (delete_item_nf($conecta, $id_item_nf, $produto_id, $codigo_nf, $quantidade, $id_user_logado,$data)) {
+         if (delete_item_nf($conecta, $id_item_nf, $produto_id, $codigo_nf, $quantidade, $id_user_logado, $data)) {
             $retornar["dados"] = array("sucesso" => true, "title" => "Produto removido com sucesso");
          } else {
             $retornar["dados"] = array("sucesso" => false, "title" => "Erro, favor comunique o suporte");
