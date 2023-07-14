@@ -95,6 +95,7 @@ if (isset($_POST['fomulario_ajuste_estoque'])) {
         $codigo_nf = ($_POST["codigo_nf"]);
         $data_movimento = ($_POST["data_movimento"]);
         $valor_item = ($_POST["valor_item"]);
+        $data_validade = ($_POST["data_validade"]);
         $data_movimento = formatarDataParaBancoDeDados($data_movimento);
 
         if ($data_lancamento != $data_movimento) {
@@ -108,7 +109,10 @@ if (isset($_POST['fomulario_ajuste_estoque'])) {
             $retornar["dados"] = array("sucesso" => "false", "title" => mensagem_alerta_cadastro("quantidade"));
         } elseif ($motivo == "" and $parametro_motivo_obrigatorio == 'S') {
             $retornar["dados"] = array("sucesso" => "false", "title" => mensagem_alerta_cadastro("motivo"));
-        } else {
+        }elseif($data_validade!="" and datecheck($data_validade) == false){
+            $retornar["dados"] = array("sucesso" => "false", "title" => "Data válidade invalida, favor, verifique");
+        }else {
+            $retornar["dados"] = array("sucesso" => "false", "title" => "$data_validade");
 
             if (consulta_tabela($conecta, 'tb_produtos', 'cl_id', $id_produto, 'cl_status_ativo') != "SIM") { //verificar se o produto está ativo
                 $retornar["dados"] = array("sucesso" => "false", "title" => "Esse produto não está ativo, não é possivel realizar o ajuste");
@@ -173,7 +177,13 @@ if (isset($_POST['fomulario_ajuste_estoque'])) {
                             //adicionar ao ajuste de estoque
                             $juste = ajuste_estoque($conecta, $data, "AJST-$ajuste_estoque", $tipo, $id_produto, $quantidade, $empresa_ajuste, "", $id_usuario_logado, $forma_pagamento_ajuste, "$valor_venda", "$valor_compra", '0', $motivo, $codigo_nf);
                             if ($juste) { // verificar se o ajuste foi feito sem erro
-                                $ajustar_qtd_produto = ajuste_qtd_produto($conecta, $id_produto, $novo_estoque);
+                                if($data_validade!=""){
+                                    $data_validade = formatarDataParaBancoDeDados($data_validade);
+                                }else{
+                                    $data_validade = "";
+                                }
+                            
+                                $ajustar_qtd_produto = ajuste_qtd_produto($conecta, $id_produto, $novo_estoque,$data_validade);
                                 $retornar["dados"] = array("sucesso" => true, "title" => "Ajuste realizado com sucesso", "qtd" => $novo_estoque);
 
 

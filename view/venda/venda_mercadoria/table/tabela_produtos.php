@@ -48,8 +48,6 @@ include "../../../../modal/venda/venda_mercadoria/gerenciar_venda.php";
                 <td><?php echo real_format($Valor_total); ?></td>
                 <td><button type="button" quantidade_prod='<?php echo $quantidade; ?>' id_produto='<?php echo $item_id; ?>'  id_item_nf='<?php echo $id; ?>' title='Remover item'  class="btn btn-sm btn-danger remover_produto"><i style="font-size: 1.4em;" class="bi bi-trash"></i></button></td>
                 <td><button type="button" produto_id='<?php echo $id; ?>' title='Editar item' class="btn btn-sm btn-info alterar_produto_vnd">Editar</button></td>
-           
-
             </tr>
         <?php } ?>
     </tbody>

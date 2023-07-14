@@ -7,11 +7,11 @@ include "../../../funcao/funcao.php";
 <hr>
 <div class="row">
     <div class="row">
-        <div class="col-sm-4 col-auto  mb-2">
+        <div class="col-md-auto   mb-2">
             <div class="input-group">
                 <span class="input-group-text">Dt. Venda</span>
-                <input type="text" class="form-control" maxlength="10" onkeyup="mascaraData(this);" id="data_inicial" name="data_incial" title="Data vencimento" placeholder="Data Inicial" value="<?php echo $data_inicial ?>">
-                <input type="text" class="form-control" maxlength="10" onkeyup="mascaraData(this);" id="data_final" name="data_final" title="Data vencimento" placeholder="Data Final" value="<?php echo $data_final; ?>">
+                <input type="text" class="form-control inputNumber" maxlength="10" onkeyup="mascaraData(this);" id="data_inicial" name="data_incial" title="Data vencimento" placeholder="Data Inicial" value="<?php echo $data_inicial ?>">
+                <input type="text" class="form-control inputNumber" maxlength="10" onkeyup="mascaraData(this);" id="data_final" name="data_final" title="Data vencimento" placeholder="Data Final" value="<?php echo $data_final; ?>">
             </div>
         </div>
 
@@ -21,7 +21,6 @@ include "../../../funcao/funcao.php";
                 <option value="0">Status Recebimento</option>
                 <option value="1">Pendente</option>
                 <option value="2">Recebido</option>
-                <option value="3">Cancelado</option>
             </select>
         </div>
 
@@ -46,4 +45,5 @@ include "../../../funcao/funcao.php";
 </div>
 
 <?php include '../../../funcao/funcaojavascript.jar'; ?>
+<script src="js/funcao.js"></script>
 <script src="js/venda/venda_mercadoria/consultar_venda.js"></script>

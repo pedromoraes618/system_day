@@ -69,7 +69,7 @@ if (isset($_GET['codigo_nf'])) {
                         </div>
 
                     </div>
-                    <div class="row mb-2">
+                    <div class="row mb-1">
                         <div class="col-sm-6 col-md-2 mb-2">
                             <label for="estoque" class="form-label">Estoque</label>
                             <input type="text" class="form-control" disabled id="estoque" name="estoque" value="">
@@ -94,12 +94,19 @@ if (isset($_GET['codigo_nf'])) {
 
                         <div class="col-md  mb-2">
                             <label for="valor_item" class="form-label">Valor item</label>
-                            <div class="input-group mb-3">
+                            <div class="input-group mb-2">
                                 <span class="input-group-text">R$</span>
-                                <input type="text" class="form-control"  name="valor_item" id="preco_venda_atual" value="">
+                                <input type="text" class="form-control" name="valor_item" id="preco_venda_atual" value="">
                                 <button type="submit" id="efetuar_ajst" class="btn btn-success">Adicionar</button>
                             </div>
                             <!-- <input type="hidden" class="form-control" name="valor_total_item" id="valor_total_item" value=""> -->
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-2 mb-2">
+                            <label for="data_validade" class="form-label">Data válidade</label>
+                            <input type="text" maxlength="10"  onkeyup="mascaraData(this);" class="form-control inputNumber" name="data_validade" id="data_validade" value="">
                         </div>
 
                     </div>
@@ -112,11 +119,11 @@ if (isset($_GET['codigo_nf'])) {
     </div>
 </div>
 
-
-
 <div class="modal_externo">
 
 </div>
+
+<?php include '../../../funcao/funcaojavascript.jar'; ?>
 <script src="js/funcao.js"></script>
 <script src="js/configuracao/users/user_logado.js"></script>
 <script src="js/estoque/ajuste_estoque/ajuste_tela.js"></script>

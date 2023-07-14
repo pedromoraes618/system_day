@@ -13,10 +13,8 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form  id="produto">
-
+            <form id="produto">
                 <input type="hidden" id="id" name="id" value="<?php echo $form_id; ?>">
-
                 <div class="modal-body">
                     <div class="title mb-2">
                         <label class="form-label sub-title"></label>
@@ -98,10 +96,8 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
                                 <option value="0">Selecione..</option>
                                 <option selected value="SIM">Ativo</option>
                                 <option value="NAO">Inativo</option>
-
                             </select>
                         </div>
-
                     </div>
 
                     <div class="row">
@@ -174,8 +170,14 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
                             <label for="prc_promocao" class="form-label">Preço Promoção</label>
                             <input type="text" class="form-control inputNumber" id="prc_promocao" name="prc_promocao" value="">
                         </div>
-           
-
+                        <div class="col-sm-6 col-md-2   mb-2">
+                            <label for="data_valida_promocao" class="form-label">Data Promoção válida</label>
+                            <input type="text" class="form-control inputNumber" onkeyup="mascaraData(this);" id="data_valida_promocao" name="data_valida_promocao" value="">
+                        </div>
+                        <div class="col-sm-6 col-md-2   mb-2">
+                            <label for="data_validade" class="form-label">Data válida</label>
+                            <input type="text" class="form-control inputNumber" onkeyup="mascaraData(this);" id="data_validade" name="data_validade" value="">
+                        </div>
                     </div>
 
                     <div class="row">
@@ -300,7 +302,7 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
     </div>
 </div>
 
-
+<?php include '../../../funcao/funcaojavascript.jar'; ?>
 <div class="modal_externo">
 
 </div>

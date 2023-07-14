@@ -46,7 +46,7 @@ if (isset($_GET['consultar_venda'])) {
       ( nf.cl_numero_nf  like '%$pesquisa%' or prc.cl_razao_social  like '%$pesquisa%' or prc.cl_nome_fantasia  like '%$pesquisa%' )    ";
 
       if ($status_recebimento != "0") {
-         $select .= " and nf.cl_status_recebimento = '$status_recebimento' ";
+         $select .= " and nf.cl_status_recebimento = '$status_recebimento' and nf.cl_status_venda ='1' ";
       }
 
       $select .= " order by nf.cl_id desc";
@@ -96,12 +96,27 @@ if (isset($_POST['venda_mercadoria'])) {
       $quantidade = $itens['quantidade'];
       $unidade = utf8_decode($itens['unidade']);
 
+
+      if ($preco_venda != "") {
+         if (verificaVirgula($preco_venda)) { //verificar se tem virgula
+            $preco_venda = formatDecimal($preco_venda); // formatar virgula para ponto
+         }
+      }
+      if ($quantidade != "") {
+         if (verificaVirgula($quantidade)) { //verificar se tem virgula
+            $quantidade = formatDecimal($quantidade); // formatar virgula para ponto
+         }
+      }
+
+
       if ($id_produto == "") { //validar se algum produto já foi selecionado
          $retornar["dados"] =  array("sucesso" => false, "title" => "Favor Selecione um produto");
       } else {
          //$valor_total = $itens['valor_total'];
          $estoque =  validar_prod_venda($conecta, $id_produto, "cl_estoque"); //estoque disponivel do produto
          $preco_venda_atual =  validar_prod_venda($conecta, $id_produto, "cl_preco_venda"); //preco de venda do produto no cadastro
+         $preco_venda_promocao =  validar_prod_venda($conecta, $id_produto, "cl_preco_promocao"); //preco de venda do produto no cadastro
+
          $referencia =  validar_prod_venda($conecta, $id_produto, "cl_referencia"); //preco de venda do produto no cadastro
          $valor_total = $preco_venda * $quantidade;
 
@@ -110,6 +125,12 @@ if (isset($_POST['venda_mercadoria'])) {
             $calula_desconto = (100 - $calula_desconto); //desconto em porcentagem
 
             $desconto_real = $preco_venda_atual - $preco_venda; //desconto em real
+         }
+
+         if ($preco_venda == $preco_venda_promocao) {
+            $preco_venda = $preco_venda_promocao;
+            $desconto_real = 0;
+            $calula_desconto = 0;
          }
 
 
@@ -122,6 +143,11 @@ if (isset($_POST['venda_mercadoria'])) {
          } elseif (validar_qtd_prod_venda($conecta, $id_produto, $codigo_nf, $quantidade) > $estoque) { //validar se a quantidade adicionado mais o mesmo produto que esta na venda atende o estoque
             $retornar["dados"] =  array("sucesso" => false, "title" => "Não é possivel adicionar o produto, a demanda no estoque não atende");
          } else {
+
+     
+
+
+
             $nf = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_numero_nf");
             if ($nf != "") { //Adicionando um prduto a uma venda já finalizada
                $status_recebimento = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_status_recebimento");
@@ -188,8 +214,19 @@ if (isset($_POST['venda_mercadoria'])) {
       $unidade = utf8_decode($itens['unidade']);
 
 
-
+      if ($quantidade != "") {
+         if (verificaVirgula($quantidade)) { //verificar se tem virgula
+            $quantidade = formatDecimal($quantidade); // formatar virgula para ponto
+         }
+      }
+      if ($preco_venda != "") {
+         if (verificaVirgula($preco_venda)) { //verificar se tem virgula
+            $preco_venda = formatDecimal($preco_venda); // formatar virgula para ponto
+         }
+      }
+      
       $nf = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_numero_nf");
+      $preco_venda_promocao =  validar_prod_venda($conecta, $id_produto, "cl_preco_promocao"); //preco de venda do produto no cadastro
 
 
       if ($id_item_nf == "") { //validar se algum produto já foi selecionado
@@ -206,6 +243,12 @@ if (isset($_POST['venda_mercadoria'])) {
             $calula_desconto = (100 - $calula_desconto); //desconto em porcentagem
 
             $desconto_real = $preco_venda_atual - $preco_venda; //desconto em real
+         }
+
+         if ($preco_venda == $preco_venda_promocao) {
+            $preco_venda = $preco_venda_promocao;
+            $desconto_real = 0;
+            $calula_desconto = 0;
          }
 
 
@@ -297,6 +340,7 @@ if (isset($_POST['venda_mercadoria'])) {
 
 
 
+
       if ($parceiro_id == "") { //se a venda não possuir cliente será colocado o cliente padrão que está setado no parametro
          $parceiro_id = $cliente_avulso_id;
          $parceiro_avulso = $parceiro_descricao;
@@ -304,9 +348,10 @@ if (isset($_POST['venda_mercadoria'])) {
          $parceiro_avulso = "";
       }
 
-      if ($id_venda != "") {
-         $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel finalizar essa venda, pois já foi finalizada");
-      } elseif ($codigo_nf == "") {
+      $desconto_venda_finalizada = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_valor_desconto"); //verificar se essa venda já foi finalizada
+      $desconto_maximo_forma_pgt = verifica_desconto_fpg($conecta, $forma_pagamento_id_venda);
+
+      if ($codigo_nf == "") {
          $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel finalizar essa venda, não foi iniciado a venda");
       } elseif ($valor_total_bruto == "" or $valor_total_bruto == 0) {
          $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel finalizar essa venda, não foi adicionado itens a venda");
@@ -316,9 +361,9 @@ if (isset($_POST['venda_mercadoria'])) {
          $retornar["dados"] = array("sucesso" => false, "title" => mensagem_alerta_cadastro("vendedor"));
       } elseif ($forma_pagamento_id_venda == "") {
          $retornar["dados"] = array("sucesso" => false, "title" => mensagem_alerta_cadastro("forma de pagamento"));
-      } elseif ($desconto_venda_real > (verifica_desconto_fpg($conecta, $forma_pagamento_id_venda)) and ($autorizador_id == "0" or $senha_autorizador == "")) {
+      } elseif ($desconto_maximo_forma_pgt != "" and $desconto_venda_real > $desconto_maximo_forma_pgt and $desconto_venda_real != $desconto_venda_finalizada and ($autorizador_id == "0" or $senha_autorizador == "")) {
          $retornar["dados"] =  array("sucesso" => "autorizar", "title" => "Não é possivel finalizar a venda, o desconto está acima do permitido, continue com a operação autorizando com a senha");
-      } elseif ($desconto_venda_real > (verifica_desconto_fpg($conecta, $forma_pagamento_id_venda)) and (validar_usuario($conecta, $autorizador_id, $senha_autorizador) == false)) {
+      } elseif (($desconto_maximo_forma_pgt != "" and $desconto_venda_real > $desconto_maximo_forma_pgt) and $desconto_venda_real != $desconto_venda_finalizada and  (validar_usuario($conecta, $autorizador_id, $senha_autorizador) == false)) {
          $retornar["dados"] =  array("sucesso" => "autorizar", "title" => "Não é possivel finalizar a venda, senha incorreta, autorização não permitida");
       } elseif (verifica_repeticao_doc($conecta, "tb_nf_saida", "cl_serie_nf", "cl_numero_nf", $serie_venda, $nf_novo)) { //verificar se já existe essa venda se sim, não realizar a venda
          $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel finalizar essa venda, o número de venda $nf_novo já está registrado no sistema, favor verifique");
@@ -326,37 +371,65 @@ if (isset($_POST['venda_mercadoria'])) {
 
          $valor_liquido_venda = $valor_total_bruto - $desconto_venda_real; //valor liquido da venda
 
-         /*recebimento da venda automaticamente de acordo com a configuracao da forma de pagamento*/
-         if (recebimento_nf_recebida($conecta, $forma_pagamento_id_venda, $data_lancamento, $serie_venda, $nf_novo, $parceiro_id, $classficacao_financeiro_id, $valor_liquido_venda, "$serie_venda$nf_novo", $codigo_nf)) {
-            $status_recebimento = "2";
-            $data_recebimento = $data_lancamento;
-            $usuario_id_recebimento = $id_usuario_logado;
-         } else {
-            $status_recebimento = "1";
-            $data_recebimento = "";
-            $usuario_id_recebimento = $id_usuario_logado;
-         }
+         $nf = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_numero_nf"); //verificar se essa venda já foi finalizada
 
-         $insert = "INSERT INTO `system_day`.`tb_nf_saida` ( `cl_data_movimento`, `cl_codigo_nf`,  `cl_parceiro_id`, `cl_parceiro_avulso`, 
+         if ($nf != "") { //editar venda
+            $status_recebimento = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_status_recebimento"); //verificar se essa venda já foi finalizada
+            $status_venda = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_status_venda"); //verificar se essa venda já foi finalizada
+            if ($status_venda == "3") { //venda cancelada
+               $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel alterar a venda, a venda está cancelada");
+            } elseif ($status_recebimento == "2") { //venda recebida
+               $retornar["dados"] = array("sucesso" => false, "title" => "Não é possivel alterar a venda, é necessario remover a venda do faturamento");
+            } else {
+
+               $update = "UPDATE `system_day`.`tb_nf_saida` SET `cl_parceiro_id` = '$parceiro_id', `cl_parceiro_avulso` = '$parceiro_avulso', `cl_forma_pagamento_id` = '$forma_pagamento_id_venda',
+                `cl_valor_liquido` = '$valor_liquido_venda', `cl_valor_desconto` = '$desconto_venda_real', `cl_observacao` = '$observacao', `cl_vendedor_id` = '$vendedor_id_venda' WHERE `tb_nf_saida`.`cl_codigo_nf` ='$codigo_nf' ";
+               $operacao_update = mysqli_query($conecta, $update); //inserindo os dados basicos da venda
+               if ($operacao_update) {
+
+                  $retornar["dados"] = array("sucesso" => true, "title" => "Venda alterada com sucesso ", "recibo" => "N", "acao" => "alterar_venda");
+                  $mensagem = utf8_decode("Usuário $nome_usuario_logado alterou a $serie_venda $nf_novo");
+                  registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+               } else {
+
+                  $retornar["dados"] = array("sucesso" => false, "title" => "Erro ao alterar a $serie_venda $nf_novo, favor comunique o suporte do sistema");
+                  $mensagem = utf8_decode("Tentativa sem sucesso de alterar a venda $serie_venda $nf_novo");
+                  registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+               }
+            }
+         } else { //criar venda
+            /*recebimento da venda automaticamente de acordo com a configuracao da forma de pagamento*/
+            if (recebimento_nf_recebida($conecta, $forma_pagamento_id_venda, $data_lancamento, $serie_venda, $nf_novo, $parceiro_id, $classficacao_financeiro_id, $valor_liquido_venda, "$serie_venda$nf_novo", $codigo_nf)) {
+               $status_recebimento = "2";
+               $data_recebimento = $data_lancamento;
+               $usuario_id_recebimento = $id_usuario_logado;
+            } else {
+               $status_recebimento = "1";
+               $data_recebimento = "";
+               $usuario_id_recebimento = $id_usuario_logado;
+            }
+
+            $insert = "INSERT INTO `system_day`.`tb_nf_saida` ( `cl_data_movimento`, `cl_codigo_nf`,  `cl_parceiro_id`, `cl_parceiro_avulso`, 
          `cl_forma_pagamento_id`, `cl_numero_nf`, `cl_numero_venda`, `cl_serie_nf`, `cl_status_recebimento`, `cl_valor_bruto`, 
          `cl_valor_liquido`, `cl_valor_desconto`,`cl_usuario_id`,`cl_observacao`,`cl_data_recebimento`,`cl_usuario_id_recebimento`,`cl_operacao`,`cl_vendedor_id`,`cl_status_venda` ) VALUES
             ( '$data_lancamento','$codigo_nf', '$parceiro_id', '$parceiro_avulso', '$forma_pagamento_id_venda', '$nf_novo', '$nf_novo', '$serie_venda', '$status_recebimento',
             '$valor_total_bruto', '$valor_liquido_venda', '$desconto_venda_real','$id_usuario_logado','$observacao','$data_recebimento','$usuario_id_recebimento','VENDA', '$vendedor_id_venda','1')"; //STATUS 1 PARA VENDA FINALIZADA
-         $operacao_insert = mysqli_query($conecta, $insert); //inserindo os dados basicos da venda
-         if ($operacao_insert) {
-            finalizar_produtos_nf($conecta, $codigo_nf, $serie_venda, $nf_novo, $desconto_venda_real, $data_lancamento, $parceiro_id, $id_usuario_logado, $forma_pagamento_id_venda); //atualizando os produtos da venda com valores corretos
+            $operacao_insert = mysqli_query($conecta, $insert); //inserindo os dados basicos da venda
+            if ($operacao_insert) {
+               finalizar_produtos_nf($conecta, $codigo_nf, $serie_venda, $nf_novo, $desconto_venda_real, $data_lancamento, $parceiro_id, $id_usuario_logado, $forma_pagamento_id_venda); //atualizando os produtos da venda com valores corretos
 
-            //atualizar valor em serie de venda
-            adicionar_valor_serie($conecta, "12", $nf_novo);
-            $mensagem = utf8_decode("Usuário $nome_usuario_logado realizou a venda Nº $nf_novo");
-            registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+               //atualizar valor em serie de venda
+               adicionar_valor_serie($conecta, "12", $nf_novo);
+               $mensagem = utf8_decode("Usuário $nome_usuario_logado realizou a venda Nº $nf_novo");
+               registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
 
 
-            $retornar["dados"] = array("sucesso" => true, "title" => "Venda  Nº $nf_novo finalizada com sucesso ", "recibo" => $abrir_recibo);
-         } else {
-            $retornar["dados"] = array("sucesso" => false, "title" => "Erro ao finalizar a venda Nº $nf_novo, favor comunique o suporte do sistema");
-            $mensagem = utf8_decode("Tentativa sem sucesso de finalizar a venda Nº $nf_novo");
-            registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+               $retornar["dados"] = array("sucesso" => true, "title" => "Venda  Nº $nf_novo finalizada com sucesso ", "recibo" => $abrir_recibo, "acao" => "finalizar_venda");
+            } else {
+               $retornar["dados"] = array("sucesso" => false, "title" => "Erro ao finalizar a venda Nº $nf_novo, favor comunique o suporte do sistema");
+               $mensagem = utf8_decode("Tentativa sem sucesso de finalizar a venda Nº $nf_novo");
+               registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+            }
          }
       }
    }

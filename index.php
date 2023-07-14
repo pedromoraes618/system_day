@@ -1,7 +1,7 @@
 <?php 
 include("conexao/conexao.php");
 session_start();
-ini_set('session.gc_maxlifetime', 10800); // Expire em 1 hora (3600 segundos)
+//ini_set('session.gc_maxlifetime', 10800); // Expire em 1 hora (3600 segundos)
 
 if(!$_GET){ //verificar se foi definido valor via get
     if(isset($_SESSION["user_session_portal"])){//verificar se o usuario está logado

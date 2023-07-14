@@ -38,10 +38,16 @@ function show_det_finalizar_nf(id, codigo_nf) {
 
 $("#venda_mercadoria").submit(function (e) {
     e.preventDefault()
+    var id_nf = $("#id").val()
+    if(id_nf !=''){
+        var mensagem = "Deseja alterar essa venda?"
+    }else{
+        var mensagem = "Deseja finalizar essa venda?"
+    }
     var formulario = $(this);
     Swal.fire({
         title: 'Tem certeza?',
-        text: "Deseja finalizar esse venda?",
+        text: mensagem,
         icon: 'warning',
         showCancelButton: true,
         cancelButtonText: 'Não',

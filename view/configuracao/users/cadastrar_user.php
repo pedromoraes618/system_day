@@ -88,7 +88,12 @@
                 </div>
             </div>
 
-
+            <div class="col-md-auto  mb-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="receber_alerta" type="checkbox" id="receber_alerta">
+                    <label class="form-check-label" for="receber_alerta">Receber alerta</label>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-4  d-grid gap-2 d-sm-block mb-1  ">

@@ -25,7 +25,7 @@ include "../../../../../modal/dashboard/inicial/gerenciar_dashboard.php";
         <h6><i class="bi bi-exclamation-octagon"></i> Lembretes</h6>
     </div>
     <div class="card-body card-right p-1">
-        <?php if ($qtd_consultar_lembretes > 0) { ?>
+        <?php if ($qtd_consultar_lembretes > 0 or $qtd_consultar_validade_prd > 0) { ?>
             <?php while ($linha = mysqli_fetch_assoc($consultar_lembretes)) {
                 $id_tarefa_b = $linha['cl_id'];
                 $data_lancamento_b = ($linha['cl_data_lancamento']);
@@ -47,11 +47,23 @@ include "../../../../../modal/dashboard/inicial/gerenciar_dashboard.php";
                         <p class="card-text"><?php echo $descricao_b; ?></p>
                     </div>
                 </div>
-        <?php }
+            <?php }
+
+            while ($linha = mysqli_fetch_assoc($consultar_validade_prod)) {
+                $data_validade = $linha['cl_data_validade'];
+                $descricao = utf8_encode($linha['cl_descricao']);
+
+            ?>
+                <div class="card p-1 mb-2 border border-danger-subtle">
+                    <div class="card-body p-1">
+                        <h6 class="card-title"><?php echo "Vencimento " . formatDateB($data_validade) . ""; ?></h6>
+                        <p class="card-text"><?php echo "Produto " . $descricao . " com data de validade próxima ao vencimento"; ?></p>
+                    </div>
+                </div>
+                <?php }
         } else {
             echo '<div class="sem_registro"><img class="img-fluid img_sem_registro" src="img/sem_registro.svg"> </div>';
         } ?>
-
     </div>
 </div>
 
@@ -66,13 +78,13 @@ include "../../../../../modal/dashboard/inicial/gerenciar_dashboard.php";
                     <tr>
                         <tH>Vnd</td>
                         <tH>Vendedor</tH>
-                        <tH>Valor Vendas</tH>
+                        <tH>Vlr Vendas</tH>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if ($qtd_desempenho_equipe > 0) { ?>
                         <?php while ($linha = mysqli_fetch_assoc($consultar_desemepenho_equipe)) {
-                            $vendedor_b = $linha['vendedor'];
+                            $vendedor_b = utf8_encode($linha['vendedor']);
                             $valor_b = $linha['valor'];
                             $vendas_b = $linha['vendas'];
                         ?>
@@ -103,14 +115,14 @@ include "../../../../../modal/dashboard/inicial/gerenciar_dashboard.php";
                     <tr>
                         <tH>Rank</td>
                         <tH>Produto</tH>
-                        <tH>Quantidade</tH>
+                        <tH>Qtd</tH>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if ($qtd_prod_mais_vendidos > 0) {
                         $rank = 0;
                         while ($linha = mysqli_fetch_assoc($consultar_prod_mais_vendidos)) {
-                            $descricao = $linha['cl_descricao_item'];
+                            $descricao = utf8_encode($linha['cl_descricao_item']);
                             $quantidade = $linha['total_vendido'];
                             $valor_total = $linha['valor_total'];
 

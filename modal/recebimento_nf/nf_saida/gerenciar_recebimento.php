@@ -57,6 +57,11 @@ if (isset($_POST['recebimento_nf_saida'])) {
             while ($linha = mysqli_fetch_assoc($consultar_forma_pagamento)) {
                 $id_fpg = ($linha['cl_id']);
                 $valor = $_POST["$id_fpg"]; //valor informado pelo usuario na forma de pagamento
+                if ($valor != "") {
+                    if (verificaVirgula($valor)) { //verificar se tem virgula
+                       $valor = formatDecimal($valor); // formatar virgula para ponto
+                    }
+                 }
                 $valor_recebido = $valor + $valor_recebido;
             }
             if ($valor_recebido != $valor_liquido) {
@@ -65,7 +70,12 @@ if (isset($_POST['recebimento_nf_saida'])) {
                 while ($linha = mysqli_fetch_assoc($consultar_forma_pagamento_update)) {
                     $id_fpg = ($linha['cl_id']);
                     $valor = $_POST["$id_fpg"]; //valor informado pelo usuario na forma de pagamento
-
+                    if ($valor != "") {
+                        if (verificaVirgula($valor)) { //verificar se tem virgula
+                           $valor = formatDecimal($valor); // formatar virgula para ponto
+                        }
+                     }
+                 
                     if ($valor > 0 and $valor != "") {
                         recebimento_nf($conecta, $id_fpg, $data_lancamento, $serie_venda, $numero_nf, $parceiro_id, $classficacao_financeiro_id, $valor, "$serie_venda$numero_nf", $codigo_nf); //lancar no financeiro o recebimento
                     }

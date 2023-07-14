@@ -29,18 +29,18 @@ include "../../../funcao/funcao.php";
                     <div class="row mb-2">
                         <div class="col-md  mb-2">
                             <label for="data_movimento" class="form-label">Data Movimento</label>
-                            <input type="text" class="form-control " maxlength="10" disabled onkeyup="mascaraData(this);" id="data_movimento" name="data_movimento" value="<?php if (!isset($_GET['form_id'])) {
+                            <input type="text" class="form-control inputNumber" maxlength="10" disabled onkeyup="mascaraData(this);" id="data_movimento" name="data_movimento" value="<?php if (!isset($_GET['form_id'])) {
                                                                                                                                                                                 echo $data_final;
                                                                                                                                                                             } ?>">
                         </div>
 
                         <div class="col-md  mb-2">
                             <label for="data_vencimento" class="form-label">Data Vencimento</label>
-                            <input type="text" class="form-control " maxlength="10" onkeyup="mascaraData(this);" id="data_vencimento" name="data_vencimento" value="">
+                            <input type="text" class="form-control inputNumber" maxlength="10" onkeyup="mascaraData(this);" id="data_vencimento" name="data_vencimento" value="">
                         </div>
                         <div class="col-md  mb-2">
                             <label for="data_pagamento" class="form-label">Data Pagamento</label>
-                            <input type="text" class="form-control " maxlength="10" onkeyup="mascaraData(this);" id="data_pagamento" name="data_pagamento" value="">
+                            <input type="text" class="form-control inputNumber" maxlength="10" onkeyup="mascaraData(this);" id="data_pagamento" name="data_pagamento" value="">
                         </div>
 
                     </div>
@@ -216,7 +216,7 @@ include "../../../funcao/funcao.php";
 
 </div>
 
-
+<?php include '../../../funcao/funcaojavascript.jar'; ?>
 <script src="js/funcao.js"></script>
 <script src="js/configuracao/users/user_logado.js"></script>
 <script src="js/financeiro/lancamento_financeiro/lancamento_financeiro_tela.js"></script>

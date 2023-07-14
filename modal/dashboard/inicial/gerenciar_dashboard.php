@@ -38,6 +38,10 @@ if (isset($_GET['dashboard_inicial'])) {
 
 
     $consultar_contabilizacao_caixa =  verficar_paramentro($conecta, "tb_parametros", "cl_id", "6"); //VERIFICAR PARAMETRO ID - 6 // verificar se periodo do caixa vai ser contabilizado por dia ou mês
+    $dias_alerta_validade =  verficar_paramentro($conecta, "tb_parametros", "cl_id", "20"); //VERIFICAR PARAMETRO ID - 6 // verificar se periodo do caixa vai ser contabilizado por dia ou mês
+    if($dias_alerta_validade==""){
+        $dias_alerta_validade = 0;
+    }
     // Divide a data em partes
     $partes = explode('-', $data_lancamento);
 
@@ -51,6 +55,11 @@ if (isset($_GET['dashboard_inicial'])) {
 
     $select_despesa_caixa = "SELECT sum(cl_valor_liquido) as valor from tb_lancamento_financeiro as lcf inner join tb_forma_pagamento as fpg on fpg.cl_id = 
 lcf.cl_forma_pagamento_id where lcf.cl_status_id ='4'  "; //receita recbdo
+
+    $select_prod_validade = "SELECT * FROM tb_produtos
+    WHERE DATEDIFF(cl_data_validade, CURDATE()) <= $dias_alerta_validade and cl_status_ativo ='SIM' and (cl_data_validade !='' or cl_data_validade!='0000-00-00') "; //receita recbdo
+    $consultar_validade_prod = mysqli_query($conecta, $select_prod_validade); //valor da conta financeira caixa no financeiro receita
+    $qtd_consultar_validade_prd  = mysqli_num_rows($consultar_validade_prod);
 
     $select = "SELECT * FROM tb_caixa where cl_ano !='' and cl_conta ='CAIXA' ";
     if ($consultar_contabilizacao_caixa == "DIA") {
@@ -78,11 +87,11 @@ lcf.cl_forma_pagamento_id where lcf.cl_status_id ='4'  "; //receita recbdo
     $select_receita_caixa .= " and fpg.cl_conta_financeira = 'CAIXA' "; //valor da conta financeira caixa no financeiro receita
     $select_despesa_caixa .= " and fpg.cl_conta_financeira = 'CAIXA' "; //valor da conta financeira caixa no financeiro despesa
 
-    $consulta_valor_caixa_financeiro = mysqli_query($conecta, $select_receita_caixa);//valor da conta financeira caixa no financeiro receita
+    $consulta_valor_caixa_financeiro = mysqli_query($conecta, $select_receita_caixa); //valor da conta financeira caixa no financeiro receita
     $linha = mysqli_fetch_assoc($consulta_valor_caixa_financeiro);
     $valor_receita_caixa_financeiro = $linha['valor'];
 
-    $consulta_despesa_caixa_financeiro = mysqli_query($conecta, $select_despesa_caixa);//valor da conta financeira caixa no financeiro despesa
+    $consulta_despesa_caixa_financeiro = mysqli_query($conecta, $select_despesa_caixa); //valor da conta financeira caixa no financeiro despesa
     $linha = mysqli_fetch_assoc($consulta_despesa_caixa_financeiro);
     $valor_despesa_caixa_financeiro = $linha['valor'];
 

@@ -22,6 +22,7 @@ function resetarValoresProdutos() {
     $("#qtd_ajuste").val('')
     $("#tipo").val('0')
     $("#preco_venda_atual").val('')
+    $("#data_validade").val('')
 }
 
 

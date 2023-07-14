@@ -15,7 +15,7 @@ if (isset($_GET['consultar_produto'])) {
    if ($consulta == "inicial") {
       // $consultar_tabela_inicialmente =  verficar_paramentro($conecta,"tb_parametros","cl_id","1");//VERIFICAR PARAMETRO ID - 1
       $consultar_tabela_inicialmente = "N";
-      $select = "SELECT prd.cl_id as produtoid,prd.cl_codigo,prd.cl_estoque_minimo,prd.cl_estoque_maximo, prd.cl_descricao as descricao,prd.cl_status_ativo as ativo,prd.cl_referencia, subgrp.cl_descricao as subgrupo,und.cl_sigla as und,frb.cl_descricao as fabricante,prd.cl_estoque,prd.cl_preco_venda from tb_produtos as prd inner join tb_subgrupo_estoque as subgrp on subgrp.cl_id = prd.cl_grupo_id inner join
+      $select = "SELECT prd.cl_id as produtoid,prd.cl_preco_promocao,prd.cl_codigo,prd.cl_estoque_minimo,prd.cl_estoque_maximo, prd.cl_descricao as descricao,prd.cl_status_ativo as ativo,prd.cl_referencia, subgrp.cl_descricao as subgrupo,und.cl_sigla as und,frb.cl_descricao as fabricante,prd.cl_estoque,prd.cl_preco_venda from tb_produtos as prd inner join tb_subgrupo_estoque as subgrp on subgrp.cl_id = prd.cl_grupo_id inner join
             tb_unidade_medida as und on und.cl_id = prd.cl_und_id inner join tb_fabricantes as frb on frb.cl_id = prd.cl_fabricante_id ORDER BY prd.cl_id";
       $consultar_produtos = mysqli_query($conecta, $select);
       if (!$consultar_produtos) {
@@ -28,7 +28,7 @@ if (isset($_GET['consultar_produto'])) {
       if (isset($_GET['status_prod'])) {
          $status_prod = $_GET['status_prod'];
       }
-      $select = "SELECT prd.cl_id as produtoid,prd.cl_descricao as descricao,prd.cl_codigo,prd.cl_estoque_minimo,prd.cl_estoque_maximo,prd.cl_referencia,prd.cl_status_ativo as ativo, subgrp.cl_descricao as subgrupo,und.cl_sigla as und,frb.cl_descricao as fabricante,prd.cl_estoque,prd.cl_preco_venda 
+      $select = "SELECT prd.cl_id as produtoid,prd.cl_preco_promocao,prd.cl_descricao as descricao,prd.cl_codigo,prd.cl_estoque_minimo,prd.cl_estoque_maximo,prd.cl_referencia,prd.cl_status_ativo as ativo, subgrp.cl_descricao as subgrupo,und.cl_sigla as und,frb.cl_descricao as fabricante,prd.cl_estoque,prd.cl_preco_venda 
             from tb_produtos as prd inner join tb_subgrupo_estoque as subgrp on subgrp.cl_id = prd.cl_grupo_id inner join
             tb_unidade_medida as und on und.cl_id = prd.cl_und_id inner join tb_fabricantes as frb on frb.cl_id = prd.cl_fabricante_id where (prd.cl_descricao like '%{$pesquisa}%' or
             prd.cl_id  like '%{$pesquisa}%' or frb.cl_descricao like '%{$pesquisa}%' or prd.cl_referencia LIKE '%{$pesquisa}%' or prd.cl_codigo_barra LIKE '%{$pesquisa}%')";
@@ -88,8 +88,10 @@ if (isset($_POST['formulario_produto'])) {
       $pis_e_b = ($linha['cl_cst_pis_e']);
       $cofins_s_b = ($linha['cl_cst_cofins_s']);
       $cofins_e_b = ($linha['cl_cst_cofins_e']);
-      $observacao_b = utf8_encode($linha['cl_observacao']);
 
+      $observacao_b = utf8_encode($linha['cl_observacao']);
+      $data_valida_promocao =  formatDateB($linha['cl_data_valida_promocao']);
+      $data_validade =  formatDateB($linha['cl_data_validade']);
 
       $informacao = array(
          "descricao" => $descricao_b,
@@ -119,7 +121,9 @@ if (isset($_POST['formulario_produto'])) {
          "pis_e" => $pis_e_b,
          "cofins_s" => $cofins_s_b,
          "cofins_e" => $cofins_e_b,
-         "observacao" => $observacao_b
+         "observacao" => $observacao_b,
+         "data_valida_promocao" => $data_valida_promocao,
+         "data_validade" => $data_validade,
       );
 
       $retornar["dados"] = array("sucesso" => true, "valores" => $informacao);
@@ -158,6 +162,9 @@ if (isset($_POST['formulario_produto'])) {
       $cst_cofins_e = ($_POST["cst_cofins_e"]);
       $cfop_interno = ($_POST["cfop_interno"]);
       $cfop_externo = ($_POST["cfop_externo"]);
+      $data_valida_promocao = ($_POST["data_valida_promocao"]);
+      $data_validade = ($_POST["data_validade"]);
+
 
       if ($descricao == "") {
          $retornar["dados"] = array("sucesso" => "false", "title" => mensagem_alerta_cadastro("descricão"));
@@ -173,8 +180,20 @@ if (isset($_POST['formulario_produto'])) {
          $retornar["dados"] =  array("sucesso" => "false", "title" => mensagem_alerta_cadastro("unidade de medida"));
       } elseif ($ncm == "" and $ncm_obrigatorio == "S") {
          $retornar["dados"] =  array("sucesso" => "false", "title" => mensagem_alerta_cadastro("Ncm"));
+      } elseif ($data_valida_promocao != "" and (datecheck($data_valida_promocao) == false)) {
+         $retornar["dados"] =  array("sucesso" => "false", "title" => "A data de promoção está inválida, favor verifique ");
+      } elseif ($data_validade != "" and (datecheck($data_validade) == false)) {
+         $retornar["dados"] =  array("sucesso" => "false", "title" => "A data de promoção está inválida, favor verifique ");
+      } elseif ($prc_promocao > $prc_venda) {
+         $retornar["dados"] =  array("sucesso" => "false", "title" => "Preço promoção não pode ser maior do que o preço de venda, favor, verifique ");
       } else {
 
+         if ($data_valida_promocao != '') {
+            $data_valida_promocao = formatarDataParaBancoDeDados($data_valida_promocao);
+         }
+         if ($data_validade != '') {
+            $data_validade = formatarDataParaBancoDeDados($data_validade);
+         }
          if ($prc_custo != "") {
             if (verificaVirgula($prc_custo)) { //verificar se tem virgula
                $prc_custo = formatDecimal($prc_custo); // formatar virgula para ponto
@@ -255,11 +274,11 @@ if (isset($_POST['formulario_produto'])) {
             //    $codigo_produto = $codigo_produto + 1; //incremento para adicionar ao codigo do produto
 
             $inset = "INSERT INTO tb_produtos (cl_data_cadastro,cl_descricao,cl_tamanho,cl_localizacao,cl_referencia,cl_codigo_barra,cl_observacao,cl_preco_custo,cl_preco_venda,cl_estoque,
-           cl_preco_promocao,cl_margem_lucro,cl_cest,cl_ncm,cl_cst_icms,cl_cst_pis_s,cl_cst_pis_e,cl_cst_cofins_s,cl_cst_cofins_e,
-           cl_estoque_minimo,cl_estoque_maximo,cl_cfop_interno,cl_cfop_externo,cl_equivalencia,cl_fabricante_id,cl_und_id,cl_grupo_id,cl_tipo_id,cl_status_ativo)
+           cl_preco_promocao,cl_data_valida_promocao,cl_margem_lucro,cl_cest,cl_ncm,cl_cst_icms,cl_cst_pis_s,cl_cst_pis_e,cl_cst_cofins_s,cl_cst_cofins_e,
+           cl_estoque_minimo,cl_estoque_maximo,cl_cfop_interno,cl_cfop_externo,cl_equivalencia,cl_fabricante_id,cl_und_id,cl_grupo_id,cl_tipo_id,cl_status_ativo,cl_data_validade)
             VALUES ('$data_lancamento','$descricao','$tamanho','$local_produto','$referencia','$codigo_barras','$observacao','$prc_custo','$prc_venda','$estoque',
-            '$prc_promocao','$margem_lucro','$cest','$ncm','$cst_icms','$cst_pis_s','$cst_pis_e','$cst_cofins_s','$cst_cofins_e',
-            '$est_minimo','$est_maximo','$cfop_interno','$cfop_externo','$equivalencia','$fabricante','$unidade_md','$grupo_estoque','$tipo','$status')";
+            '$prc_promocao','$data_valida_promocao','$margem_lucro','$cest','$ncm','$cst_icms','$cst_pis_s','$cst_pis_e','$cst_cofins_s','$cst_cofins_e',
+            '$est_minimo','$est_maximo','$cfop_interno','$cfop_externo','$equivalencia','$fabricante','$unidade_md','$grupo_estoque','$tipo','$status','$data_validade')";
             $operacao_inserir = mysqli_query($conecta, $inset);
             if ($operacao_inserir) {
 
@@ -281,14 +300,14 @@ if (isset($_POST['formulario_produto'])) {
                $ajuste_estoque = $ajuste_estoque + 1; //incremento para adicionar na serie ajuste de estoque
 
                //adicionar ao ajuste de estoque
-               ajuste_estoque($conecta, $data, "$serie_ajst-$ajuste_estoque", "ENTRADA", $id_produto_b, $estoque, $empresa_ajuste, "", $id_usuario_logado, $forma_pagamento_ajuste, $prc_venda, "0", '1', '',"");
+               ajuste_estoque($conecta, $data, "$serie_ajst-$ajuste_estoque", "ENTRADA", $id_produto_b, $estoque, $empresa_ajuste, "", $id_usuario_logado, $forma_pagamento_ajuste, $prc_venda, "0", '1', '', "");
 
                // //atualizar valor em serie PRD
                // adicionar_valor_serie($conecta, "PRD", $codigo_produto);
 
                //atualizar valor em serie ajst // ajuste de estoque
                adicionar_valor_serie($conecta, "2", $ajuste_estoque);
-               $retornar["dados"] = array("sucesso" => true, "title" => "cadastro realizado com sucesso, código do produto $id_produto_b");
+               $retornar["dados"] = array("sucesso" => true, "title" => "Cadastro realizado com sucesso, código do produto $id_produto_b");
 
 
                //registrar no log
@@ -333,6 +352,8 @@ if (isset($_POST['formulario_produto'])) {
       $cst_cofins_e = ($_POST["cst_cofins_e"]);
       $cfop_interno = ($_POST["cfop_interno"]);
       $cfop_externo = ($_POST["cfop_externo"]);
+      $data_valida_promocao = ($_POST["data_valida_promocao"]);
+      $data_validade = ($_POST["data_validade"]);
 
       if ($descricao == "") {
          $retornar["dados"] = array("sucesso" => "false", "title" => mensagem_alerta_cadastro("descricão"));
@@ -348,7 +369,19 @@ if (isset($_POST['formulario_produto'])) {
          $retornar["dados"] =  array("sucesso" => "false", "title" => mensagem_alerta_cadastro("unidade de medida"));
       } elseif ($ncm == "" and $ncm_obrigatorio == "S") {
          $retornar["dados"] =  array("sucesso" => "false", "title" => mensagem_alerta_cadastro("ncm"));
-      } else {
+      } elseif ($data_valida_promocao != "" and (datecheck($data_valida_promocao) == false)) {
+         $retornar["dados"] =  array("sucesso" => "false", "title" => "A data de promoção está inválida, favor verifique ");
+      }elseif ($data_validade != "" and (datecheck($data_validade) == false)) {
+         $retornar["dados"] =  array("sucesso" => "false", "title" => "A data de promoção está inválida, favor verifique ");
+      }  else {
+
+         if ($data_valida_promocao != '') {
+            $data_valida_promocao = formatarDataParaBancoDeDados($data_valida_promocao);
+         }
+
+         if ($data_validade != '') {
+            $data_validade = formatarDataParaBancoDeDados($data_validade);
+         }
 
          if ($margem_lucro != "") {
             if (verificaVirgula($margem_lucro)) { //verificar se tem virgula
@@ -411,7 +444,7 @@ if (isset($_POST['formulario_produto'])) {
 
          $update = "UPDATE `tb_produtos` SET `cl_descricao`= '$descricao', `cl_tamanho` = '$tamanho', `cl_localizacao` = '$local_produto', `cl_referencia` = '$referencia',
          `cl_equivalencia` = '$equivalencia', `cl_observacao` = '$observacao', `cl_codigo_barra` = '$codigo_barras', `cl_preco_promocao` =
-         '$prc_promocao', `cl_margem_lucro` = '$margem_lucro', `cl_cest` = '$cest', `cl_ncm` = '$ncm', `cl_cst_icms` = '$cst_icms',
+         '$prc_promocao',`cl_data_valida_promocao`='$data_valida_promocao',`cl_data_validade`='$data_validade',`cl_margem_lucro` = '$margem_lucro', `cl_cest` = '$cest', `cl_ncm` = '$ncm', `cl_cst_icms` = '$cst_icms',
          `cl_cst_pis_s` = '$cst_pis_s', `cl_cst_pis_e` = '$cst_pis_e', `cl_cst_cofins_s` = '$cst_cofins_s', `cl_cst_cofins_e` = '$cst_cofins_e',
           `cl_estoque_minimo` = '$est_minimo', `cl_estoque_maximo`= '$est_maximo', `cl_cfop_interno` = '$cfop_interno', `cl_cfop_externo` = '$cfop_externo', 
           `cl_fabricante_id` = '$fabricante', `cl_grupo_id` = '$grupo_estoque', `cl_und_id` = '$unidade_md', `cl_tipo_id` = '$tipo', 

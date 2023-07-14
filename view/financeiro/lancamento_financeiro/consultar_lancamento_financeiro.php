@@ -10,8 +10,8 @@ include "../../../funcao/funcao.php";
         <div class="col-sm-4 col-auto  mb-2">
             <div class="input-group">
                 <span class="input-group-text">Dt. vencimento</span>
-                <input type="text" class="form-control" maxlength="10" onkeyup="mascaraData(this);" id="data_inicial" name="data_incial" title="Data vencimento" placeholder="Data Inicial" value="<?php echo $data_inicial ?>">
-                <input type="text" class="form-control" maxlength="10" onkeyup="mascaraData(this);" id="data_final" name="data_final" title="Data vencimento" placeholder="Data Final" value="<?php echo $data_final; ?>">
+                <input type="text" class="form-control  inputNumber" maxlength="10" onkeyup="mascaraData(this);" id="data_inicial" name="data_incial" title="Data vencimento" placeholder="Data Inicial" value="<?php echo $data_inicial ?>">
+                <input type="text" class="form-control inputNumber" maxlength="10" onkeyup="mascaraData(this);" id="data_final" name="data_final" title="Data vencimento" placeholder="Data Final" value="<?php echo $data_final; ?>">
             </div>
         </div>
 
@@ -65,4 +65,5 @@ include "../../../funcao/funcao.php";
 </div>
 
 <?php include '../../../funcao/funcaojavascript.jar'; ?>
+<script src="js/funcao.js"></script>
 <script src="js/financeiro/lancamento_financeiro/consultar_lancamento_financeiro.js"></script>

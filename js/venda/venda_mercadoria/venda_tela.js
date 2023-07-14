@@ -370,20 +370,23 @@ function create(dados, produtos, codigo_nf) {
                 showConfirmButton: false,
                 timer: 3500
             })
-            formulario_post.reset(); // redefine os valores do formulário
-            $(".title .status_momento_venda").css("display", "none")//display none para a label que ira informar o usuario qual é o status momento da venda
-            $('#fechar_modal').trigger('click'); // clicar automaticamente para realizar fechar o modal
 
-            /*recibo */
-            if ($dados.recibo == "S") {//Recibo setado com S  para abrir o recibo ao finalizar a venda
-                var janela = "view/venda/venda_mercadoria/recibo/recibo_nf.php?recibo=true&codigo_nf=" + codigo_nf + "&serie_nf=VND";
-                window.open(janela, 'popuppage',
-                    'width=1500,toolbar=0,resizable=1,scrollbars=yes,height=800,top=100,left=100');
+            if ($dados.acao == "finalizar_venda") {
+                formulario_post.reset(); // redefine os valores do formulário
+                $(".title .status_momento_venda").css("display", "none")//display none para a label que ira informar o usuario qual é o status momento da venda
+                $('#fechar_modal').trigger('click'); // clicar automaticamente para realizar fechar o modal
+
+
+                /*recibo */
+                if ($dados.recibo == "S") {//Recibo setado com S  para abrir o recibo ao finalizar a venda
+                    var janela = "view/venda/venda_mercadoria/recibo/recibo_nf.php?recibo=true&codigo_nf=" + codigo_nf + "&serie_nf=VND";
+                    window.open(janela, 'popuppage',
+                        'width=1500,toolbar=0,resizable=1,scrollbars=yes,height=800,top=100,left=100');
+                }
+
+                $("#codigo_nf").val('')//resetar o status da venda
+                tabela_produtos("");//resetar a tabela de produtos
             }
-
-            $("#codigo_nf").val('')//resetar o status da venda
-            tabela_produtos("");//resetar a tabela de produtos
-
 
             //  tabela_produtos(codigo_nf);
             //produtos.length = 0 // resetar array de produtos
@@ -438,7 +441,7 @@ function show(id, codigo_nf) {
                 if (status_recebimento == "2") {//botãoremover do faturamento
                     $(".btn-acao").prepend(remover_faturamento)
                 }
-  
+
 
             })
 
@@ -551,7 +554,7 @@ function cancelar_nf(id_formulario, codigo_nf, id_user_logado) {
     }
 
 
-    
+
 }
 function remover_nf_faturamento(id_formulario, codigo_nf, id_user_logado) {
 
@@ -590,7 +593,7 @@ function remover_nf_faturamento(id_formulario, codigo_nf, id_user_logado) {
     }
 
 
-    
+
 }
 
 function delete_item(codigo_nf, id_item_nf, id_produto, quantidade, id_user_logado) {

@@ -45,17 +45,17 @@ function mensagem_alerta_permissao()
 function mensagem_alerta_caixa($valor)
 {
     if ($valor == "VAZIO") {
-        return "O caixa desse período ainda não foi aberto, Favor verifique";
+        return "O caixa desse período ainda não foi aberto, favor, verifique";
     }
     if ($valor == "FECHADO") {
-        return "O caixa desse período já foi fechado, não é possivel realização a ação";
+        return "O caixa desse período já foi fechado, não é possivel realizar a ação";
     }
 }
 
 //mensagem de alerta de serie cadastrada
 function mensagem_serie_cadastrada()
 {
-    return "A serie não está cadastrada, não é possivel realizar a ação, favor verifique com o suporte";
+    return "A serie não está cadastrada, não é possivel realizar a ação, favor, verifique com o suporte";
 }
 
 //formatar data do banco de dados
@@ -212,10 +212,10 @@ function ajuste_estoque($conecta, $data, $doc, $tipo, $produto_id, $quantidade, 
 }
 
 //funcao para realizar ajuste na quantidade do produto
-function ajuste_qtd_produto($conecta, $produto_id, $quantidade)
+function ajuste_qtd_produto($conecta, $produto_id, $quantidade, $data_validade)
 {
 
-    $update = "UPDATE `tb_produtos` SET `cl_estoque`= $quantidade where cl_id = $produto_id";
+    $update = "UPDATE `tb_produtos` SET `cl_estoque`= '$quantidade',`cl_data_validade`= '$data_validade' where cl_id = $produto_id";
     $operacao_update = mysqli_query($conecta, $update);
     return $operacao_update;
 }
@@ -574,11 +574,16 @@ function recebimento_nf_recebida($conecta, $fpg_id, $data, $serie_nf, $numero_nf
 
 function verifica_desconto_fpg($conecta, $fpg_id)
 {
-    $select = "SELECT * FROM tb_forma_pagamento where cl_id = $fpg_id ";
-    $consulta_forma_pagamento = mysqli_query($conecta, $select);
-    $linha = mysqli_fetch_assoc($consulta_forma_pagamento);
-    $desconto_maximo = $linha['cl_desconto_maximo'];
-    return $desconto_maximo;
+    if ($fpg_id != "") {
+        $select = "SELECT * FROM tb_forma_pagamento where cl_id = $fpg_id ";
+        $consulta_forma_pagamento = mysqli_query($conecta, $select);
+        $linha = mysqli_fetch_assoc($consulta_forma_pagamento);
+        $desconto_maximo = $linha['cl_desconto_maximo'];
+
+        return $desconto_maximo;
+    } else {
+        return 0;
+    }
 }
 //verificar se doc está repetido
 function verifica_repeticao_doc($conecta, $tabela, $filtro1, $filtro2, $valor1, $valor2)
