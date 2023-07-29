@@ -17,9 +17,9 @@ include "../../../funcao/funcao.php";
     </div>
 
     <div class="col-md-auto  d-grid gap-2 d-sm-block mb-2">
-        <button class="btn btn-outline-success" id="resumo">Resumo</button>
-        <button class="btn btn-outline-success" id="venda_fpg">Vendas forma pagamento</button>
-        <button nclick="capturarTela()" class="btn btn-default" type="button">Imprimir</button>
+        <button class="btn btn-outline-success" id="resumo_caixa">Resumo</button>
+        <button class="btn btn-outline-success" id="venda_fpg_caixa">Vendas forma pagamento</button>
+        <button class="btn btn-default" id="print_relatorio" type="button">Imprimir</button>
     </div>
 
 
@@ -28,7 +28,6 @@ include "../../../funcao/funcao.php";
 <div class="tabela print">
 
 </div>
+<?php include '../../../funcao/funcaojavascript.jar'; ?>
 <script src="js/funcao.js"></script>
 <script src="js/caixa/movimento_caixa/consultar_movimento_caixa.js"></script>
-
-<?php include '../../../funcao/funcaojavascript.jar'; ?>

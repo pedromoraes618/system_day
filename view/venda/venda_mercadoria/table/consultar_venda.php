@@ -22,7 +22,6 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
             </tr>
         </thead>
         <tbody>
-
             <?php
             $valor_total = 0;
 

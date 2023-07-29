@@ -1,6 +1,7 @@
 //valores do campo de pesquisa //pesquisa via filtro
 var conteudo_pesquisa = document.getElementById("pesquisa_conteudo")
-var status_prod = document.getElementById("status")
+var status_prod = document.getElementById("status_prod")
+var tipo_produto = document.getElementById("tipo_produto")
 
 //consultar tabela
 $.ajax({
@@ -22,7 +23,7 @@ $("#pesquisar_filtro_pesquisa").click(function () {
     } else {
         $.ajax({
             type: 'GET',
-            data: "consultar_produto=detalhado&conteudo_pesquisa=" + conteudo_pesquisa.value + "&status_prod=" + status_prod.value,
+            data: "consultar_produto=detalhado&conteudo_pesquisa=" + conteudo_pesquisa.value + "&status_prod=" + status_prod.value + "&tipo_produto=" + tipo_produto.value,
             url: "view/estoque/produto/table/consultar_produto.php",
             success: function (result) {
                 return $(".bloco-pesquisa-menu .bloco-pesquisa-1 .tabela").html(result);

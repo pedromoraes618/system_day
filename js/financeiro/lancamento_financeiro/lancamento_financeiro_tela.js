@@ -44,8 +44,9 @@ if (id_formulario.value == "") {
 $("#lancamento_financeiro").submit(function (e) {
 
     e.preventDefault()
+    var formulario = $(this);
+    
     if (id_formulario.value == "") {//cadastrar
-        var formulario = $(this);
         Swal.fire({
             title: 'Tem certeza?',
             text: "Deseja adicionar esse lançamento?",
@@ -62,7 +63,7 @@ $("#lancamento_financeiro").submit(function (e) {
         })
     } else {//editar
         //e.preventDefault()
-        var formulario = $(this);
+
         Swal.fire({
             title: 'Tem certeza?',
             text: "Deseja alterar essa conta financeira",

@@ -13,7 +13,7 @@
             <?php include "../../input_include/usuario_logado.php" ?>
 
             <div class="col-auto mb-2 ">
-                <div class="bg-secondary bg-img-user rounded-circle">
+                <div class="bg-secondary img-upload bg-img-user rounded-circle">
                     <button type="button" class="btn btn-secondary border-0"  id="open_upload_img_user"><i class="bi bi-camera"></i></button>
                 </div>
             </div>

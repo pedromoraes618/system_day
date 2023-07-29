@@ -24,7 +24,7 @@ if (isset($_GET['extrato_financeiro'])) {
     $dia = $partes[2];
 
 
-    $select = "SELECT * FROM tb_caixa where cl_ano !='' and cl_conta ='CAIXA' ";
+    $select = "SELECT * FROM tb_caixa where cl_ano !='' and cl_conta ='$conta_financeira' ";
     if ($consultar_contabilizacao_caixa == "DIA") {
         $select .= " and cl_dia = '$dia' and cl_mes ='$mes' and cl_ano='$ano' "; // se for por periodo de contabilização em dia a dia vai verifiar o dia, o mes e o ano
     } elseif ($consultar_contabilizacao_caixa == "MES") {

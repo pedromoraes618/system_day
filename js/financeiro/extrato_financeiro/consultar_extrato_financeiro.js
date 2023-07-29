@@ -12,8 +12,9 @@ $("#consultar").click(function () {
     resumo_extrato_financeiro(data_inicial.value, data_final.value, conta_financeira.value);
 })
 
-
-
+$("#print_relatorio").click(function () {
+    print_ralatorio(data_inicial.value, data_final.value, conta_financeira.value)
+})
 
 function resumo_extrato_financeiro(data_inicial, data_final, conta_financeira) {
 
@@ -25,4 +26,11 @@ function resumo_extrato_financeiro(data_inicial, data_final, conta_financeira) {
             return $('.tabela').html(result);
         },
     });
+}
+
+
+function print_ralatorio(data_inicial, data_final, conta_financeira) {
+    var janela = "view/relatorio/modelo/modelo_1.php?relatorio=resumo_extrato_financeiro&data_inicial=" + data_inicial + "&data_final=" + data_final + "&conta_financeira=" + conta_financeira
+    window.open(janela, 'popuppage',
+        'width=1500,toolbar=0,resizable=1,scrollbars=yes,height=800,top=100,left=100');
 }

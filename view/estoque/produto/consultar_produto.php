@@ -4,10 +4,20 @@
 <hr>
 <div class="row">
     <div class="col-md-2 mb-2">
-        <select name="status" class="form-select" id="status">
+        <select name="status_prod" class="form-select" id="status_prod">
             <option value="0">Status..</option>
             <option value="SIM">Ativo</option>
             <option value="NAO">Inativo</option>
+        </select>
+    </div>
+    <div class="col-md-2 mb-2">
+        <select name="tipo_produto" class="form-select" id="tipo_produto">
+            <option value="0">Tipo..</option>
+            <option value="1">Venda</option>
+            <option value="2">Delivery</option>
+            <option value="3">Revenda</option>
+            <option value="4">Matéria prima</option>
+            <option value="5">Adicional</option>
         </select>
     </div>
     <div class="col-md  mb-2">
@@ -27,6 +37,7 @@
 <div class="tabela">
 
 </div>
+
 <div class="modal_show">
 
 </div>

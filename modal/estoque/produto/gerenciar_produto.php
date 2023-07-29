@@ -10,12 +10,14 @@ if (isset($_GET['form_id'])) {
 if (isset($_GET['consultar_produto'])) {
    include "../../../../conexao/conexao.php";
    include "../../../../funcao/funcao.php";
+
+   $imagem_tabela = verficar_paramentro($conecta, 'tb_parametros', "cl_id", "22");
    $consulta = $_GET['consultar_produto'];
 
    if ($consulta == "inicial") {
       // $consultar_tabela_inicialmente =  verficar_paramentro($conecta,"tb_parametros","cl_id","1");//VERIFICAR PARAMETRO ID - 1
       $consultar_tabela_inicialmente = "N";
-      $select = "SELECT prd.cl_id as produtoid,prd.cl_preco_promocao,prd.cl_codigo,prd.cl_estoque_minimo,prd.cl_estoque_maximo, prd.cl_descricao as descricao,prd.cl_status_ativo as ativo,prd.cl_referencia, subgrp.cl_descricao as subgrupo,und.cl_sigla as und,frb.cl_descricao as fabricante,prd.cl_estoque,prd.cl_preco_venda from tb_produtos as prd inner join tb_subgrupo_estoque as subgrp on subgrp.cl_id = prd.cl_grupo_id inner join
+      $select = "SELECT cl_img_produto, prd.cl_id as produtoid,prd.cl_preco_promocao,prd.cl_codigo,prd.cl_estoque_minimo,prd.cl_estoque_maximo, prd.cl_descricao as descricao,prd.cl_status_ativo as ativo,prd.cl_referencia, subgrp.cl_descricao as subgrupo,und.cl_sigla as und,frb.cl_descricao as fabricante,prd.cl_estoque,prd.cl_preco_venda from tb_produtos as prd inner join tb_subgrupo_estoque as subgrp on subgrp.cl_id = prd.cl_grupo_id inner join
             tb_unidade_medida as und on und.cl_id = prd.cl_und_id inner join tb_fabricantes as frb on frb.cl_id = prd.cl_fabricante_id ORDER BY prd.cl_id";
       $consultar_produtos = mysqli_query($conecta, $select);
       if (!$consultar_produtos) {
@@ -28,13 +30,20 @@ if (isset($_GET['consultar_produto'])) {
       if (isset($_GET['status_prod'])) {
          $status_prod = $_GET['status_prod'];
       }
-      $select = "SELECT prd.cl_id as produtoid,prd.cl_preco_promocao,prd.cl_descricao as descricao,prd.cl_codigo,prd.cl_estoque_minimo,prd.cl_estoque_maximo,prd.cl_referencia,prd.cl_status_ativo as ativo, subgrp.cl_descricao as subgrupo,und.cl_sigla as und,frb.cl_descricao as fabricante,prd.cl_estoque,prd.cl_preco_venda 
+
+      $select = "SELECT cl_img_produto, prd.cl_id as produtoid,prd.cl_preco_promocao,prd.cl_descricao as descricao,prd.cl_codigo,prd.cl_estoque_minimo,prd.cl_estoque_maximo,prd.cl_referencia,prd.cl_status_ativo as ativo, subgrp.cl_descricao as subgrupo,und.cl_sigla as und,frb.cl_descricao as fabricante,prd.cl_estoque,prd.cl_preco_venda 
             from tb_produtos as prd inner join tb_subgrupo_estoque as subgrp on subgrp.cl_id = prd.cl_grupo_id inner join
             tb_unidade_medida as und on und.cl_id = prd.cl_und_id inner join tb_fabricantes as frb on frb.cl_id = prd.cl_fabricante_id where (prd.cl_descricao like '%{$pesquisa}%' or
             prd.cl_id  like '%{$pesquisa}%' or frb.cl_descricao like '%{$pesquisa}%' or prd.cl_referencia LIKE '%{$pesquisa}%' or prd.cl_codigo_barra LIKE '%{$pesquisa}%')";
       if (isset($status_prod) and $status_prod != "0") {
          $select .= " and prd.cl_status_ativo = '$status_prod' ";
       }
+      if (isset($_GET['tipo_produto']) and $_GET['tipo_produto'] != 0) {
+         $tipo = $_GET['tipo_produto'];
+         $select .= " and prd.cl_tipo_id = '$tipo' ";
+        
+      }
+
       $select .= " ORDER BY prd.cl_id ";
       $consultar_produtos = mysqli_query($conecta, $select);
       if (!$consultar_produtos) {
@@ -52,6 +61,7 @@ if (isset($_POST['formulario_produto'])) {
    $retornar = array();
    $acao = $_POST['acao'];
 
+   $alterar_preco_venda = verficar_paramentro($conecta, 'tb_parametros', "cl_id", "25");
    $ncm_obrigatorio = verficar_paramentro($conecta, "tb_parametros", "cl_id", "13");
    $serie_ajst = verifcar_descricao_serie($conecta, 2);
 
@@ -90,8 +100,14 @@ if (isset($_POST['formulario_produto'])) {
       $cofins_e_b = ($linha['cl_cst_cofins_e']);
 
       $observacao_b = utf8_encode($linha['cl_observacao']);
+
       $data_valida_promocao =  formatDateB($linha['cl_data_valida_promocao']);
       $data_validade =  formatDateB($linha['cl_data_validade']);
+
+      /*delivery */
+      $descricao_delivery = utf8_encode($linha['cl_descricao_delivery']);
+      $descricao_ext_delivery = utf8_encode($linha['cl_descricao_extendida_delivery']);
+      $img_produto = ($linha['cl_img_produto']);
 
       $informacao = array(
          "descricao" => $descricao_b,
@@ -124,6 +140,9 @@ if (isset($_POST['formulario_produto'])) {
          "observacao" => $observacao_b,
          "data_valida_promocao" => $data_valida_promocao,
          "data_validade" => $data_validade,
+         "descricao_delivery" => $descricao_delivery,
+         "img_produto" => $img_produto,
+         "descricao_ext_delivery" => $descricao_ext_delivery,
       );
 
       $retornar["dados"] = array("sucesso" => true, "valores" => $informacao);
@@ -164,7 +183,9 @@ if (isset($_POST['formulario_produto'])) {
       $cfop_externo = ($_POST["cfop_externo"]);
       $data_valida_promocao = ($_POST["data_valida_promocao"]);
       $data_validade = ($_POST["data_validade"]);
-
+      $descricao_delivery = utf8_decode($_POST["descricao_delivery"]);
+      $descricao_ext_delivery = utf8_decode($_POST["descricao_ext_delivery"]);
+      $img_produto = ($_POST["img_produto"]);
 
       if ($descricao == "") {
          $retornar["dados"] = array("sucesso" => "false", "title" => mensagem_alerta_cadastro("descricão"));
@@ -186,6 +207,10 @@ if (isset($_POST['formulario_produto'])) {
          $retornar["dados"] =  array("sucesso" => "false", "title" => "A data de promoção está inválida, favor verifique ");
       } elseif ($prc_promocao > $prc_venda) {
          $retornar["dados"] =  array("sucesso" => "false", "title" => "Preço promoção não pode ser maior do que o preço de venda, favor, verifique ");
+      } elseif (strlen($descricao_delivery) > 100) {
+         $retornar["dados"] =  array("sucesso" => "false", "title" => "A descrição do delivery atingiu o limite de 100 caracteres, favor, verifique");
+      } elseif (strlen($descricao_ext_delivery) > 500) {
+         $retornar["dados"] =  array("sucesso" => "false", "title" => "A descrição completa do delivery atingiu o limite de 500 caracteres, favor, verifique");
       } else {
 
          if ($data_valida_promocao != '') {
@@ -275,10 +300,12 @@ if (isset($_POST['formulario_produto'])) {
 
             $inset = "INSERT INTO tb_produtos (cl_data_cadastro,cl_descricao,cl_tamanho,cl_localizacao,cl_referencia,cl_codigo_barra,cl_observacao,cl_preco_custo,cl_preco_venda,cl_estoque,
            cl_preco_promocao,cl_data_valida_promocao,cl_margem_lucro,cl_cest,cl_ncm,cl_cst_icms,cl_cst_pis_s,cl_cst_pis_e,cl_cst_cofins_s,cl_cst_cofins_e,
-           cl_estoque_minimo,cl_estoque_maximo,cl_cfop_interno,cl_cfop_externo,cl_equivalencia,cl_fabricante_id,cl_und_id,cl_grupo_id,cl_tipo_id,cl_status_ativo,cl_data_validade)
+           cl_estoque_minimo,cl_estoque_maximo,cl_cfop_interno,cl_cfop_externo,cl_equivalencia,cl_fabricante_id,cl_und_id,cl_grupo_id,cl_tipo_id,cl_status_ativo,
+           cl_data_validade,cl_descricao_delivery,cl_img_produto,cl_descricao_extendida_delivery )
             VALUES ('$data_lancamento','$descricao','$tamanho','$local_produto','$referencia','$codigo_barras','$observacao','$prc_custo','$prc_venda','$estoque',
             '$prc_promocao','$data_valida_promocao','$margem_lucro','$cest','$ncm','$cst_icms','$cst_pis_s','$cst_pis_e','$cst_cofins_s','$cst_cofins_e',
-            '$est_minimo','$est_maximo','$cfop_interno','$cfop_externo','$equivalencia','$fabricante','$unidade_md','$grupo_estoque','$tipo','$status','$data_validade')";
+            '$est_minimo','$est_maximo','$cfop_interno','$cfop_externo','$equivalencia','$fabricante','$unidade_md','$grupo_estoque','$tipo','$status','$data_validade',
+            '$descricao_delivery','$img_produto','$descricao_ext_delivery')";
             $operacao_inserir = mysqli_query($conecta, $inset);
             if ($operacao_inserir) {
 
@@ -311,7 +338,7 @@ if (isset($_POST['formulario_produto'])) {
 
 
                //registrar no log
-               $mensagem =  utf8_decode("Usuário $nome_usuario_logado adicionou ao cadastrar o produto o ajuste inicial $estoque, produto codigo $id_produto_b");
+               $mensagem =  utf8_decode("Usuário $nome_usuario_logado adicionou ao cadastrar o produto o ajuste inicial $estoque, produto código $id_produto_b");
                registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
             }
          }
@@ -342,6 +369,8 @@ if (isset($_POST['formulario_produto'])) {
       $unidade_md = ($_POST["unidade_md"]);
 
       $margem_lucro = ($_POST["margem_lucro"]);
+      $prc_venda = ($_POST["prc_venda"]);
+
       $prc_promocao = ($_POST["prc_promocao"]);
       $cest = ($_POST["cest"]);
       $ncm = ($_POST["ncm"]);
@@ -354,6 +383,11 @@ if (isset($_POST['formulario_produto'])) {
       $cfop_externo = ($_POST["cfop_externo"]);
       $data_valida_promocao = ($_POST["data_valida_promocao"]);
       $data_validade = ($_POST["data_validade"]);
+
+      $descricao_delivery = utf8_decode($_POST["descricao_delivery"]);
+      $descricao_ext_delivery = utf8_decode($_POST["descricao_ext_delivery"]);
+      $img_produto = ($_POST["img_produto"]);
+
 
       if ($descricao == "") {
          $retornar["dados"] = array("sucesso" => "false", "title" => mensagem_alerta_cadastro("descricão"));
@@ -371,9 +405,14 @@ if (isset($_POST['formulario_produto'])) {
          $retornar["dados"] =  array("sucesso" => "false", "title" => mensagem_alerta_cadastro("ncm"));
       } elseif ($data_valida_promocao != "" and (datecheck($data_valida_promocao) == false)) {
          $retornar["dados"] =  array("sucesso" => "false", "title" => "A data de promoção está inválida, favor verifique ");
-      }elseif ($data_validade != "" and (datecheck($data_validade) == false)) {
+      } elseif ($data_validade != "" and (datecheck($data_validade) == false)) {
          $retornar["dados"] =  array("sucesso" => "false", "title" => "A data de promoção está inválida, favor verifique ");
-      }  else {
+      } elseif (strlen($descricao_delivery) > 100) {
+         $retornar["dados"] =  array("sucesso" => "false", "title" => "A descrição do delivery atingiu o limite de 100 caracteres, favor, verifique");
+      } elseif (strlen($descricao_ext_delivery) > 500) {
+         $retornar["dados"] =  array("sucesso" => "false", "title" => "A descrição completa do delivery atingiu o limite de 500 caracteres, favor, verifique");
+      } else {
+
 
          if ($data_valida_promocao != '') {
             $data_valida_promocao = formatarDataParaBancoDeDados($data_valida_promocao);
@@ -448,12 +487,47 @@ if (isset($_POST['formulario_produto'])) {
          `cl_cst_pis_s` = '$cst_pis_s', `cl_cst_pis_e` = '$cst_pis_e', `cl_cst_cofins_s` = '$cst_cofins_s', `cl_cst_cofins_e` = '$cst_cofins_e',
           `cl_estoque_minimo` = '$est_minimo', `cl_estoque_maximo`= '$est_maximo', `cl_cfop_interno` = '$cfop_interno', `cl_cfop_externo` = '$cfop_externo', 
           `cl_fabricante_id` = '$fabricante', `cl_grupo_id` = '$grupo_estoque', `cl_und_id` = '$unidade_md', `cl_tipo_id` = '$tipo', 
-         `cl_status_ativo` = '$status'  WHERE `cl_id` = $id_produto";
+         `cl_status_ativo` = '$status',`cl_descricao_delivery` = '$descricao_delivery',`cl_descricao_extendida_delivery` = '$descricao_ext_delivery',
+         `cl_img_produto` = '$img_produto' ";
+         if ($alterar_preco_venda == "S") {
+            $update .= " , `cl_preco_venda` = '$prc_venda' ";
+         }
+         if (isset($_POST['max_add_obg'])) {
+            $max_add_obg = ($_POST["max_add_obg"]);
+            $update .= " , `cl_qtd_adicional_obrigatorio_delivery` = '$max_add_obg' ";
+         }
+         $update .= " WHERE `cl_id` = $id_produto";
          $operacao_update = mysqli_query($conecta, $update);
-         $retornar["dados"] = array("sucesso" => true, "title" => "Produto alterado com sucesso");
-         //registrar no log
-         $mensagem =  utf8_decode("Usúario $nome_usuario_logado Alterou o produto de codigo $id_produto");
-         registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+         if ($operacao_update) {
+
+            $select = "SELECT * from tb_produtos WHERE cl_status_ativo ='SIM' and cl_tipo_id ='5'"; //tipo adicinou poara delivery
+            $consultar_adicionais = mysqli_query($conecta, $select);
+            while ($linha = mysqli_fetch_assoc($consultar_adicionais)) {
+
+               $produto_add = $linha['cl_id'];
+               if (isset($_POST["add$produto_add"])) {
+                  atualizar_status_produto_adicional($conecta, $produto_add, $id_produto, "INCLUIR", "CHECK");
+               } else {
+                  atualizar_status_produto_adicional($conecta, $produto_add, $id_produto, "REMOVER", "NOTCHECK");
+               }
+
+               if (isset($_POST["addobg$produto_add"])) {
+                  atualizar_status_produto_adicional_obrigatorio($conecta, $produto_add, $id_produto, "INCLUIR", "CHECK");
+               } else {
+                  atualizar_status_produto_adicional_obrigatorio($conecta, $produto_add, $id_produto, "REMOVER", "NOTCHECK");
+               }
+            }
+
+            $retornar["dados"] = array("sucesso" => true, "title" => "Produto alterado com sucesso");
+
+            $mensagem =  utf8_decode("Usúario $nome_usuario_logado Alterou o produto de cádigo $id_produto, preço de venda $prc_venda");
+            registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+         } else {
+            $retornar["dados"] = array("sucesso" => false, "title" => "Erro, não foi possivel realizar a ação, favor, verifique com o suporte");
+            //registrar no log
+            $mensagem =  utf8_decode("Usúario $nome_usuario_logado tentou alterar o produto de código $id_produto sem sucesso, Erro");
+            registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
+         }
       }
    }
 
@@ -581,6 +655,18 @@ $select = "SELECT * from tb_cofins";
 $consultar_cofins_s = mysqli_query($conecta, $select);
 $consultar_cofins_e = mysqli_query($conecta, $select);
 
+
+if (isset($_GET['produto_delivery'])) { //Prroduto que estão incluidos na categoria adicional
+   include "../../../funcao/funcao.php";
+   $id_produto = $_GET['produto_id'];
+   $qtd_max_obg = consulta_tabela($conecta, "tb_produtos", "cl_id", $id_produto, "cl_qtd_adicional_obrigatorio_delivery");
+
+
+   $select = "SELECT * from tb_produtos WHERE cl_status_ativo ='SIM' and cl_tipo_id ='5'";
+   $consultar_produto_adicional_delivery_obg = mysqli_query($conecta, $select);
+   $qtd_consultar_produto_adicional_delivery_obg = mysqli_num_rows($consultar_produto_adicional_delivery_obg);
+   $consultar_produto_adicional_delivery = mysqli_query($conecta, $select);
+}
 
 
 

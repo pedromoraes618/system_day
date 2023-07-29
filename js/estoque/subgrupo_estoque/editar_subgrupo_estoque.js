@@ -151,3 +151,15 @@ function remover_subgrupo(id_subgrupo,user_logado) {
 
 }
 
+
+//modal para adicionar observacao
+$("#modal_delivery").click(function () {
+    $.ajax({
+        type: 'GET',
+        data: "subgrupo_delivery=true",
+        url: "view/include/subgrupo_estoque/subgrupo_delivery.php",
+        success: function (result) {
+            return $(".modal_externo").html(result) + $("#modal_subgrupo_delivery").modal('show');
+        },
+    });
+});

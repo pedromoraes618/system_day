@@ -22,6 +22,7 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
                     <div class="row  mb-2">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
                             <button type="submit" id="button_form" class="btn btn-sm btn-success"></button>
+                            <button type="button"  id="modal_delivery" class="btn btn-sm btn-dark">Delivery</button>
                             <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Fechar</button>
                         </div>
                     </div>
@@ -286,6 +287,9 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
                         <div class="">
                             <input type="hidden" class="form-control inputNumber" id="cfop_interno" name="cfop_interno" value="">
                             <input type="hidden" class="form-control inputNumber" id="cfop_externo" name="cfop_externo" value="">
+                            <input type="hidden" class="form-control" id="descricao_delivery" name="descricao_delivery" value="">
+                            <input type="hidden" class="form-control" id="img_produto" name="img_produto" value="">
+                            <input type="hidden" class="form-control" id="descricao_ext_delivery" name="descricao_ext_delivery" value="">
                         </div>
 
 
@@ -297,15 +301,18 @@ include "../../../modal/estoque/produto/gerenciar_produto.php";
                     // include "../../../view/estoque/produto/include/ncm.php";
                     ?>
                 </div>
+                <div class="modal_externo">
+
+                </div>
             </form>
         </div>
+        
     </div>
+    
 </div>
 
 <?php include '../../../funcao/funcaojavascript.jar'; ?>
-<div class="modal_externo">
 
-</div>
 <script src="js/funcao.js"></script>
 <script src="js/configuracao/users/user_logado.js"></script>
 <script src="js/estoque/produto/produto_tela.js"></script>

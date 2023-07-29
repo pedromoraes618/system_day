@@ -32,7 +32,7 @@ include "../../../funcao/funcao.php";
 
     <div class="col-md-auto  d-grid gap-2 d-sm-block mb-2">
         <button class="btn btn-dark" id="consultar">Consultar</button>
-        <button class="btn btn-dark" type="button">Imprimir</button>
+        <button class="btn btn-dark" id="print_relatorio" type="button">Imprimir</button>
     </div>
 
 

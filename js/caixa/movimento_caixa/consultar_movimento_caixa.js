@@ -1,12 +1,5 @@
 
 
-function capturarTela() {
-
-    html2canvas(document.querySelector(".print"), {scale: 2}).then(function(canvas) {
-      var novaJanela = window.open();
-      novaJanela.document.body.appendChild(canvas);
-    });
-  }
 
 
 var data_inicial = document.getElementById('data_inicial')
@@ -14,23 +7,49 @@ var data_final = document.getElementById('data_final')
 
 resumo_caixa(data_inicial.value,data_final.value);
 
-$("#resumo").click(function() {
+$("#resumo_caixa").click(function() {
     resumo_caixa(data_inicial.value,data_final.value);
 })
 
-$("#venda_fpg").click(function() {
+$("#venda_fpg_caixa").click(function() {
     vendas_fpg(data_inicial.value,data_final.value);
 })
+$("#print_relatorio").click(function() {
+    var botaoAtivo = $("button.active");
+  
+    // Verificar se há algum botão com a classe "active"
+    if (botaoAtivo.length > 0) {
+      // Obter o ID do botão ativo
+      var relatorio = botaoAtivo.attr("id");
+      print_ralatorio(data_inicial.value,data_final.value,relatorio)
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Verifique!',
+            text: "Informe o relatório",
+            timer: 7500,
+        })
+    }
+ //   print_ralatorio(data_inicial.value,data_final.value,"");
+})
+
+function print_ralatorio(data_inicial, data_final, relatorio) {
+    var janela = "view/relatorio/modelo/modelo_1.php?relatorio="+relatorio+"&data_inicial=" + data_inicial + "&data_final=" + data_final 
+    window.open(janela, 'popuppage',
+        'width=1500,toolbar=0,resizable=1,scrollbars=yes,height=800,top=100,left=100');
+}
 
 function resetar_btn(){
     $(".btn").removeClass("btn-dark")
     $(".btn").addClass("btn-outline-success")
+    $(".btn").removeClass("active")
 }
 function resumo_caixa(data_inicial,data_final){
     resetar_btn()
-    $("#resumo").removeClass("btn-outline-success")
-    $("#resumo").addClass("btn-dark")
-    
+    $("#resumo_caixa").removeClass("btn-outline-success")
+    $("#resumo_caixa").addClass("btn-dark")
+    $("#resumo_caixa").addClass("active")
+
     $.ajax({
         type: 'GET',
         data: "movimento_caixa=true&acao=resumo&data_inicial="+data_inicial+"&data_final="+data_final,
@@ -43,8 +62,9 @@ function resumo_caixa(data_inicial,data_final){
 
 function vendas_fpg(data_inicial,data_final){
     resetar_btn()
-    $("#venda_fpg").removeClass("btn-outline-success")
-    $("#venda_fpg").addClass("btn-dark")
+    $("#venda_fpg_caixa").removeClass("btn-outline-success")
+    $("#venda_fpg_caixa").addClass("btn-dark")
+    $("#venda_fpg_caixa").addClass("active")
     $.ajax({
         type: 'GET',
         data: "movimento_caixa=true&acao=vendas_fpg&data_inicial="+data_inicial+"&data_final="+data_final,

@@ -38,7 +38,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn  btn-sm btn-secondary" data-bs-dismiss="modal">Fechar</button>
             </div>
 
         </div>

@@ -1,0 +1,59 @@
+    /* Estilos personalizados para o cabeçalho e rodapé */
+    header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+      }
+      footer {
+        background-color: #333;
+        color: #969696;
+        padding: 2px;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        font-size: 0.1em;
+        width: 100%;
+      }
+      h1 {
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+      
+      p {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+      
+      /* Estilos adicionais para o conteúdo do relatório */
+      .dados {
+        margin-top: 30px;
+        text-align: center;
+      }
+      
+      h2 {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+      
+      table {
+        margin: 0 auto;
+        width: 100%;
+      }
+      
+      th, td {
+        padding: 0px;
+      }
+      .table td, .table th{
+          padding:2px;
+      } 
+
+      .info .titulo_tabela {
+        color: #6d6d6d; /* Cor do texto */
+        font-size: 1.05em; /* Tamanho da fonte */
+        font-weight: bold; /* Peso da fonte (negrito) */
+        text-align: center; /* Alinhamento do texto */
+        text-transform: uppercase; /* Transformar o texto em letras maiúsculas */
+        background-color: #f2f2f2; /* Cor de fundo */
+        
+    }

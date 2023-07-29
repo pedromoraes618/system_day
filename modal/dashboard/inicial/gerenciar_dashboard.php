@@ -36,6 +36,7 @@ if (isset($_GET['dashboard_inicial'])) {
         $usuario = $_GET['usuario'];
     }
 
+    
 
     $consultar_contabilizacao_caixa =  verficar_paramentro($conecta, "tb_parametros", "cl_id", "6"); //VERIFICAR PARAMETRO ID - 6 // verificar se periodo do caixa vai ser contabilizado por dia ou mês
     $dias_alerta_validade =  verficar_paramentro($conecta, "tb_parametros", "cl_id", "20"); //VERIFICAR PARAMETRO ID - 6 // verificar se periodo do caixa vai ser contabilizado por dia ou mês

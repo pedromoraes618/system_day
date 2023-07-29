@@ -1125,7 +1125,7 @@ table tr td{
 }
 
 /*tela do meu usuario*/
-.bg-img-user {
+.img-upload{
     width: 200px;
     height: 200px;
     border-radius: 50%;
@@ -1135,11 +1135,14 @@ table tr td{
     position: relative;
 }
 
-.bg-img-user button {
+.img-upload button {
     position: absolute;
     bottom: 0;
     right: 0;
 }
+
+
+
 
 #nav_info_user ul {
     list-style: none;

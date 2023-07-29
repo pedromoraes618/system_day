@@ -78,9 +78,14 @@ if (isset($_POST['venda_mercadoria'])) {
    $cliente_avulso_id = verficar_paramentro($conecta, "tb_parametros", "cl_id", "8"); //verificar o id do cliente avulso
    $classficacao_financeiro_id = verficar_paramentro($conecta, "tb_parametros", "cl_id", "11"); //verificar o id do cliente avulso
    $abrir_recibo = verficar_paramentro($conecta, "tb_parametros", "cl_id", "17"); //verificar o id do cliente avulso
+   $venda_prd_vlr_zerado = verficar_paramentro($conecta, "tb_parametros", "cl_id", "27"); //verificar o id do cliente avulso
    $nf_novo = $nf_atual + 1;
 
    if ($acao == "validar_produto") { //validar dados do produto
+      $preco_venda = 0;
+      $desconto_real = 0;
+      $calula_desconto = 0;
+
       // $registro = $_POST['resgistro'];
       $codigo_nf = $_POST['cd_nf'];
       $id_user_logado = $_POST['id_user'];
@@ -119,8 +124,9 @@ if (isset($_POST['venda_mercadoria'])) {
 
          $referencia =  validar_prod_venda($conecta, $id_produto, "cl_referencia"); //preco de venda do produto no cadastro
          $valor_total = $preco_venda * $quantidade;
+ 
 
-         if ($preco_venda != "" and $preco_venda_atual != "") {
+         if ($preco_venda != "" and $preco_venda_atual != "" and $preco_venda !=0 and $preco_venda_atual!=0) {
             $calula_desconto = (($preco_venda * 100) / $preco_venda_atual);
             $calula_desconto = (100 - $calula_desconto); //desconto em porcentagem
 
@@ -134,8 +140,10 @@ if (isset($_POST['venda_mercadoria'])) {
          }
 
 
-         if ($estoque == "" or $id_produto == "" or $descricao_produto == "" or $preco_venda == ""  or $quantidade == "" or $valor_total == ""  or $preco_venda_atual == "" or $quantidade == "0" or $preco_venda == "0" or $preco_venda_atual == "0") {
+         if ($estoque == "" or $id_produto == "" or $descricao_produto == "" or $preco_venda == ""  or $quantidade == ""  or $quantidade == "0"  ) {
             $retornar["dados"] =  array("sucesso" => false, "title" => "Favor informe todas as informações do produto");
+         }elseif($venda_prd_vlr_zerado !="S" and $preco_venda == 0){
+            $retornar["dados"] =  array("sucesso" => false, "title" => "Não é possivel adicionar o produto, o preço de venda não pode ser 0");
          } elseif ($validar_venda_sem_estoque == "N" and $estoque == 0) {
             $retornar["dados"] =  array("sucesso" => false, "title" => "Não é possivel adicionar o produto, pois está sem estoque");
          } elseif (($desconto_maximo_produto < $calula_desconto and ($desconto_maximo_produto != "") and ($check_autorizador != "true"))) {
@@ -143,11 +151,6 @@ if (isset($_POST['venda_mercadoria'])) {
          } elseif (validar_qtd_prod_venda($conecta, $id_produto, $codigo_nf, $quantidade) > $estoque) { //validar se a quantidade adicionado mais o mesmo produto que esta na venda atende o estoque
             $retornar["dados"] =  array("sucesso" => false, "title" => "Não é possivel adicionar o produto, a demanda no estoque não atende");
          } else {
-
-     
-
-
-
             $nf = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_numero_nf");
             if ($nf != "") { //Adicionando um prduto a uma venda já finalizada
                $status_recebimento = consulta_tabela($conecta, "tb_nf_saida", "cl_codigo_nf", $codigo_nf, "cl_status_recebimento");

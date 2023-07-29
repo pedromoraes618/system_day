@@ -9,8 +9,11 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
     <table class="table table-hover">
         <thead>
             <tr>
-             
+
                 <th scope="col">Código</th>
+                <?php if ($imagem_tabela == "S") {
+                    echo "<th scope='col'>Imagem</th>";
+                } ?>
                 <th scope="col">Descrição</th>
                 <th scope="col">Referência</th>
                 <th scope="col">Grupo</th>
@@ -25,12 +28,12 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
         </thead>
         <tbody>
             <?php
-           
+
             while ($linha = mysqli_fetch_assoc($consultar_produtos)) {
-            
+
                 $produto_id = $linha['produtoid'];
                 $codigo_produto_b = $linha['cl_codigo'];
-                $descricao_b = utf8_encode($linha['descricao']);
+                $descricao_b = utf8_encode($linha['descricao']);    
                 $referencia_b = utf8_encode($linha['cl_referencia']);
                 $estoque_minimo_b = utf8_encode($linha['cl_estoque_minimo']);
                 $estoque_maximo_b = utf8_encode($linha['cl_estoque_maximo']);
@@ -40,10 +43,14 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                 $estoque_b = $linha['cl_estoque'];
                 $preco_venda_b = real_format($linha['cl_preco_venda']);
                 $ativo = ($linha['ativo']);
+                $img_produto = ($linha['cl_img_produto']);
             ?>
                 <tr>
 
                     <th scope="row"><?php echo $produto_id ?></th>
+                    <?php if ($imagem_tabela == "S") {
+                        echo "<td><img src='img/produto/$img_produto' class='card-thumbnail mx-2 p-0 mb-0 rounded-circle' style='width: 35px; height: 35px;'></td>";
+                    } ?>
                     <td class="max_width_descricao"><?php echo $descricao_b; ?></td>
                     <td><?php echo $referencia_b; ?></td>
                     <td><?php echo $subgrupo_b; ?></td>
@@ -53,10 +60,10 @@ if (!isset($consultar_tabela_inicialmente) or ($consultar_tabela_inicialmente ==
                     <td><?php echo $preco_venda_b; ?></td>
                     <td><span class='badge text-bg-<?php echo ($ativo == "SIM") ? 'success' : 'danger' ?>'><?php echo ($ativo == "SIM") ? 'Ativo' : 'Inativo' ?></td>
                     <td>
-                        <?php if ($estoque_maximo_b !=0 and $estoque_b < $estoque_minimo_b) {
+                        <?php if ($estoque_maximo_b != 0 and $estoque_b < $estoque_minimo_b) {
                             echo "<i title='produto abaixo do estoque minimo' class='bi bi-emoji-expressionless-fill'></i>";
                         } ?>
-                        <?php if ($estoque_maximo_b !=0 and $estoque_b > $estoque_maximo_b) {
+                        <?php if ($estoque_maximo_b != 0 and $estoque_b > $estoque_maximo_b) {
                             echo "<i title='produto acima do estoque maximo' class='bi bi-emoji-dizzy-fill'></i>";
                         } ?>
                     </td>

@@ -7,6 +7,7 @@ let id_formulario = document.getElementById("id")
 let btn_form = document.getElementById('button_form')
 
 
+
 //retorna os dados para o formulario
 if (id_formulario.value == "") {
     $(".title .sub-title").html("Cadastro de produtos")//alterar a label cabeçalho
@@ -17,9 +18,11 @@ if (id_formulario.value == "") {
     show(id_formulario.value) // funcao para retornar os dados para o formulario
 }
 
+
 $("#produto").submit(function (e) {//adicionar o produto na venda
     e.preventDefault()
     var formulario = $(this);
+
     if (id_formulario.value == "") {//cadastrar
         Swal.fire({
             title: 'Tem certeza?',
@@ -51,6 +54,7 @@ $("#produto").submit(function (e) {//adicionar o produto na venda
             }
         })
     }
+
 })
 
 
@@ -81,7 +85,7 @@ function show(id) {
             $("#local_produto").val($dados.valores['local'])
             $("#tamanho").val($dados.valores['tamanho'])
             $("#unidade_md").val($dados.valores['und'])
-            $("#status_ativo").val($dados.valores['status_ativo'])
+            $("#status").val($dados.valores['status_ativo'])
             $("#prc_venda").val($dados.valores['preco_venda'])
             $("#prc_custo").val($dados.valores['preco_custo'])
             $("#margem_lucro").val($dados.valores['margem'])
@@ -98,6 +102,9 @@ function show(id) {
             $("#observacao").val($dados.valores['observacao'])
             $("#data_valida_promocao").val($dados.valores['data_valida_promocao'])
             $("#data_validade").val($dados.valores['data_validade'])
+            $("#descricao_delivery").val($dados.valores['descricao_delivery'])
+            $("#img_produto").val($dados.valores['img_produto'])
+            $("#descricao_ext_delivery").val($dados.valores['descricao_ext_delivery'])
         }
     }
 
@@ -249,6 +256,17 @@ $(".selecionar_ncm").click(function () {
     $('#modal_cunsultar_ncm').modal('hide')//fechar o modal
 })
 
+//modal para adicionar observacao
+$("#modal_delivery").click(function () {
+    $.ajax({
+        type: 'GET',
+        data: "produto_delivery=true&produto_id=" + id_formulario.value,
+        url: "view/include/produto/produto_delivery.php",
+        success: function (result) {
+            return $(".modal_externo").html(result) + $("#modal_produto_delivery").modal('show');
+        },
+    });
+});
 
 
 //calcular  margem de lucro

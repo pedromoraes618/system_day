@@ -215,7 +215,7 @@ function ajuste_estoque($conecta, $data, $doc, $tipo, $produto_id, $quantidade, 
 function ajuste_qtd_produto($conecta, $produto_id, $quantidade, $data_validade)
 {
 
-    $update = "UPDATE `tb_produtos` SET `cl_estoque`= '$quantidade',`cl_data_validade`= '$data_validade' where cl_id = $produto_id";
+    $update = "UPDATE `tb_produtos` SET `cl_estoque`= '$quantidade',`cl_data_validade`= '$data_validade'  where cl_id = $produto_id";
     $operacao_update = mysqli_query($conecta, $update);
     return $operacao_update;
 }
@@ -935,5 +935,108 @@ function remover_nf_faturamento($conecta, $id, $codigo_nf, $id_user_logado, $dat
         } else {
             return false;
         }
+    }
+}
+
+
+function atualizar_status_produto_adicional($conecta, $produto_adicional_id, $produto_id, $acao, $ischeck) //funcão referente ao adicional do delivery no produto
+{
+    $select = "SELECT * from tb_produto_adicional_delivery WHERE cl_produto_adicional_id ='$produto_adicional_id' and cl_produto_id ='$produto_id'
+     and cl_obrigatorio ='NAO' "; //tipo adicinou poara delivery
+    $consultar_adicionais = mysqli_query($conecta, $select);
+    $qtd_consultar_adicionais = mysqli_num_rows($consultar_adicionais);
+    if ($qtd_consultar_adicionais > 0) {
+        $linha = mysqli_fetch_assoc($consultar_adicionais);
+        $id = $linha['cl_id'];
+        $status = $linha['cl_status_ativo'];
+
+        if ($status == "NAO" and $acao == "INCLUIR") {
+            $update = "UPDATE `system_day`.`tb_produto_adicional_delivery` SET `cl_status_ativo` = 'SIM' 
+    WHERE `tb_produto_adicional_delivery`.`cl_id` = '$id' ";
+            $operacao_update  = mysqli_query($conecta, $update);
+        } elseif ($status == "SIM" and $acao == "REMOVER") {
+            $update = "UPDATE `system_day`.`tb_produto_adicional_delivery` SET `cl_status_ativo` = 'NAO' 
+            WHERE `tb_produto_adicional_delivery`.`cl_id` = '$id' ";
+            $operacao_update  = mysqli_query($conecta, $update);
+        }
+    } else {
+        if ($ischeck == 'CHECK') {
+            $insert = "INSERT INTO `system_day`.`tb_produto_adicional_delivery` (`cl_produto_adicional_id`, `cl_produto_id`,
+            `cl_status_ativo`, `cl_obrigatorio`) VALUES ('$produto_adicional_id', '$produto_id', 'SIM', 'NAO') ";
+            $operacao_inserir  = mysqli_query($conecta, $insert);
+        }
+    }
+}
+
+
+function verifica_status_produto_adicional($conecta, $produto_adicional_id, $produto_id) //funcão referente ao adicional do delivery no produto
+{
+    $select = "SELECT * from tb_produto_adicional_delivery WHERE cl_produto_adicional_id ='$produto_adicional_id' and cl_produto_id ='$produto_id' and cl_obrigatorio ='NAO' "; //tipo adicinou poara delivery
+    $consultar_adicionais = mysqli_query($conecta, $select);
+    $qtd_consultar_adicionais = mysqli_num_rows($consultar_adicionais);
+}
+
+function atualizar_status_produto_adicional_obrigatorio($conecta, $produto_adicional_id, $produto_id, $acao, $ischeck) //funcão referente ao adicional do delivery no produto
+{
+    $select = "SELECT * from tb_produto_adicional_delivery WHERE cl_produto_adicional_id ='$produto_adicional_id' and cl_produto_id ='$produto_id' and cl_obrigatorio ='SIM' "; //tipo adicinou poara delivery
+    $consultar_adicionais = mysqli_query($conecta, $select);
+    $qtd_consultar_adicionais = mysqli_num_rows($consultar_adicionais);
+    if ($qtd_consultar_adicionais > 0) {
+        $linha = mysqli_fetch_assoc($consultar_adicionais);
+        $id = $linha['cl_id'];
+        $status = $linha['cl_status_ativo'];
+
+        if ($status == "NAO" and $acao == "INCLUIR") {
+            $update = "UPDATE `system_day`.`tb_produto_adicional_delivery` SET `cl_status_ativo` = 'SIM' 
+    WHERE `tb_produto_adicional_delivery`.`cl_id` = '$id' ";
+            $operacao_update  = mysqli_query($conecta, $update);
+        } elseif ($status == "SIM" and $acao == "REMOVER") {
+            $update = "UPDATE `system_day`.`tb_produto_adicional_delivery` SET `cl_status_ativo` = 'NAO' 
+            WHERE `tb_produto_adicional_delivery`.`cl_id` = '$id' ";
+            $operacao_update  = mysqli_query($conecta, $update);
+        }
+    } else {
+        if ($ischeck == 'CHECK') {
+            $insert = "INSERT INTO `system_day`.`tb_produto_adicional_delivery` (`cl_produto_adicional_id`, `cl_produto_id`,
+         `cl_status_ativo`, `cl_obrigatorio`) VALUES ('$produto_adicional_id', '$produto_id', 'SIM', 'SIM') ";
+            $operacao_inserir  = mysqli_query($conecta, $insert);
+        }
+    }
+}
+
+
+function verifica_status_produto_adicional_obrigatorio($conecta, $produto_adicional_id, $produto_id) //funcão referente ao adicional do delivery no produto
+{
+    $select = "SELECT * from tb_produto_adicional_delivery WHERE cl_produto_adicional_id ='$produto_adicional_id' and cl_produto_id ='$produto_id' and cl_obrigatorio ='SIM' "; //tipo adicinou poara delivery
+    $consultar_adicionais = mysqli_query($conecta, $select);
+    $qtd_consultar_adicionais = mysqli_num_rows($consultar_adicionais);
+}
+
+
+function insert_produto_cotacao(
+    $conecta,
+    $data_lancamento,
+    $codigo_nf,
+    $cl_vendedor_id,
+    $item_id,
+    $descricao_item,
+    $referencia,
+    $quantidade,
+    $unidade,
+    $valor_unitario,
+    $desconto_item,
+    $valor_total,
+    $prazo_entrega,
+    $status_item
+) {
+    $insert = "INSERT INTO `system_day`.`tb_cotacao_item` (`cl_data_movimento`, `cl_codigo_nf`, `cl_vendedor_id`,
+ `cl_item_id`, `cl_descricao_item`, `cl_referencia`, `cl_quantidade`, `cl_unidade`, `cl_valor_unitario`, `cl_desconto_item`,
+  `cl_valor_total`, `cl_prazo_entrega`, `cl_status_item_id`)VALUES ('$data_lancamento', '$codigo_nf', '$cl_vendedor_id', '$item_id', '$descricao_item', '$referencia', '$quantidade', 
+  '$unidade', '$valor_unitario', '$desconto_item', '$valor_total', '$prazo_entrega', '$status_item')";
+    $operacao_insert = mysqli_query($conecta, $insert);
+    if ($operacao_insert) {
+        return true;
+    } else {
+        return false;
     }
 }

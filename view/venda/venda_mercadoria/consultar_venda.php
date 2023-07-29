@@ -6,8 +6,8 @@ include "../../../funcao/funcao.php";
 </div>
 <hr>
 <div class="row">
-    <div class="row">
-        <div class="col-md-auto   mb-2">
+    <div class="row mb-2">
+        <div class="col-sm-4  mb-2">
             <div class="input-group">
                 <span class="input-group-text">Dt. Venda</span>
                 <input type="text" class="form-control inputNumber" maxlength="10" onkeyup="mascaraData(this);" id="data_inicial" name="data_incial" title="Data vencimento" placeholder="Data Inicial" value="<?php echo $data_inicial ?>">

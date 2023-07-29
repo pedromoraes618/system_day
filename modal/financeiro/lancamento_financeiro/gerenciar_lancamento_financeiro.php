@@ -234,7 +234,7 @@ if (isset($_POST['formulario_lancamento_financeiro'])) {
          } else {
             $operacao_insert = mysqli_query($conecta, $insert);
             if ($operacao_insert) {
-               $retornar["dados"] = array("sucesso" => true, "title" => "Lançamento realizado om sucesso");
+               $retornar["dados"] = array("sucesso" => true, "title" => "Lançamento realizado com sucesso");
                $mensagem = utf8_decode("Usuário $nome_usuario_logado realizou o lançamento financeiro do tipo $tipo_lancamento no valor de $valor_liquido");
                registrar_log($conecta, $nome_usuario_logado, $data, $mensagem);
             }
